@@ -24,10 +24,11 @@ end
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'bootstrap-sass', '2.3.2.0'
-#gem 'bcrypt-ruby', '3.1.2'
+gem 'sprockets', '2.11.0'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
+gem 'carrierwave'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -50,7 +51,7 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'

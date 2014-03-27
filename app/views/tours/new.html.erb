@@ -1,0 +1,23 @@
+<% provide(:title, 'Create Tour') %>
+<h1>Create a Tour</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@tour) do |f| %>
+	    <%= render 'shared/error_messages', object: f.object %>
+    
+      <%= f.label :tourName %>
+      <%= f.text_field :tourName %>
+
+      <%= f.label :destination %>
+      <%= f.text_field :destination %>
+
+      <%= f.label :country %>
+      <%= f.text_field :country %>
+
+      <%= f.label :tourPrice, "Tour Price" %>
+      <%= f.text_field :tourPrice %>
+
+      <%= f.submit "Create a tour", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

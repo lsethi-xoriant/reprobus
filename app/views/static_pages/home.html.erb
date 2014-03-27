@@ -1,0 +1,11 @@
+<% provide(:title, 'Home') %>
+
+<div class="center hero-unit">
+  <h1>Home</h1>
+  <h2>Welcome to the Super Travel App</h2>
+
+  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  <br>
+  <br>
+  <p>Existing user? <%= link_to "Sign in", signin_path %></p>
+</div>
