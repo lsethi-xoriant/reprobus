@@ -5,9 +5,10 @@
       <h1>
         <%= @tour.tourName %>
       </h1>
+      <%= image_tag @tour.image_url.to_s %>
       <br>
       <br>
-      <h2>
+      <h2 text-align="left">
       <%= @tour.destination %>
         <br>
       <%= @tour.country %>

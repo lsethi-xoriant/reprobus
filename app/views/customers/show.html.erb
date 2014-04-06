@@ -1,0 +1,28 @@
+<% provide(:title, @customer.first_name + " " + @customer.last_name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= @customer.first_name + " " + @customer.last_name %>
+      </h1>
+      
+      <br>
+      <br>
+      <h2 text-align="left">
+        <%= @customer.title %>
+        <br>
+        <%= @customer.email %>
+        <br>
+        <%= @customer.alt_email %>
+        <br>
+        <%= @customer.phone %>
+        <br>
+        <%= @customer.mobile %>
+        <br>
+       <%= @customer.fax %>
+        <br>        
+      </h2>
+    </section>
+    <%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , @customer %>
+  </aside> 
+</div>

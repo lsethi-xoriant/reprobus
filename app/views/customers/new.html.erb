@@ -1,0 +1,29 @@
+<% provide(:title, 'Create Customer') %>
+<h1>Create a Customer</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @customer, :html => {:multipart => true} do |f| %>
+	    <%= render 'shared/error_messages', object: f.object %>
+    
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+      <%= f.label :alt_email, "Alternate Email" %>
+      <%= f.text_field :alt_email %>
+      <%= f.label :phone %>
+      <%= f.text_field :phone %>    
+      <%= f.label :mobile %>
+      <%= f.text_field :mobile %>    
+      <%= f.label :fax %>
+      <%= f.text_field :fax %>      
+    
+    
+        <%= f.submit "Create a Customer", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

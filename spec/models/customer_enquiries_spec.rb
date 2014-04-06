@@ -1,19 +1,17 @@
 # == Schema Information
 #
-# Table name: tours
+# Table name: customer_enquiries
 #
 #  id          :integer          not null, primary key
-#  tourName    :string(255)
-#  destination :string(255)
-#  country     :string(255)
-#  tourPrice   :decimal(, )
+#  customer_id :integer
+#  enquiry_id  :integer
+#  role        :string(32)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  image       :string(255)
 #
 
 require 'spec_helper'
 
-describe Tour do
+describe CustomerEnquiries do
   pending "add some examples to (or delete) #{__FILE__}"
 end

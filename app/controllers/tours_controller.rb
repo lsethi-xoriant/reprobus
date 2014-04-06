@@ -1,7 +1,7 @@
 class ToursController < ApplicationController
-   before_filter :signed_in_user,
+  before_filter :signed_in_user,
                 only: [:index, :edit, :update, :destroy]
-    before_filter :admin_user, only: :destroy
+  before_filter :admin_user, only: :destroy
   
   def index
     @tours = Tour.paginate(page: params[:page])
@@ -15,6 +15,10 @@ class ToursController < ApplicationController
     @tour = Tour.find(params[:id])
   end
   
+  def edit
+    @tour = Tour.find(params[:id])
+  end
+  
   def create
     @tour = Tour.new(tour_params)
     if @tour.save
@@ -24,10 +28,20 @@ class ToursController < ApplicationController
       render 'new'
     end
   end  
+
+  def update
+     @tour = Tour.find(params[:id])
+    if @tour.update_attributes(tour_params)
+      flash[:success] = "Tour updated"
+      redirect_to @tour
+    else
+      render 'edit'
+    end
+  end
   
 private
     def tour_params
-      params.require(:tour).permit(:tourName, :tourPrice, :destination,
-                                   :country, :image)
+      params.require(:customer).permit(:customerName, :customerPrice, :destination,
+                                   :country, :image, :remote_image_url)
     end  
 end

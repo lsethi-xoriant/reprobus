@@ -3,8 +3,9 @@ module SessionsHelper
   def sign_in(user)
     remember_token = User.new_remember_token
     cookies.permanent[:remember_token] = remember_token
-    user.update_attribute(:remember_token, User.encrypt(remember_token))
+    user.update_attribute(:remember_token, User.hash(remember_token))
     self.current_user = user
+    #session[:user_id] = user.id
   end
   
   def signed_in?
@@ -13,9 +14,10 @@ module SessionsHelper
   
   def sign_out
     current_user.update_attribute(:remember_token,
-                                  User.encrypt(User.new_remember_token))
+                                  User.hash(User.new_remember_token))
     cookies.delete(:remember_token)
     self.current_user = nil
+    #session[:user_id] = nil
   end
   
   def current_user=(user)
@@ -23,8 +25,18 @@ module SessionsHelper
   end
  
   def current_user
-    remember_token = User.encrypt(cookies[:remember_token])
-    @current_user ||= User.find_by(remember_token: remember_token)
+    remember_token = User.hash(cookies[:remember_token])
+    @current_user ||= User.find_by(remember_token: remember_token)   
+    
+#    tempUser ||= session[:user_id] && User.find(session[:user_id])
+    #if tempUser.nil?
+#      remember_token = User.hash(cookies[:remember_token])
+ #     tempUser ||= User.find_by(remember_token: remember_token)
+ #     if !tempUser.nil? && ! tempUser.remember_me then
+  #      tempUser = nil
+   #   end  
+   # end
+#    @current_user = tempUser;  
   end
   
   def current_user?(user)
@@ -32,10 +44,10 @@ module SessionsHelper
   end
   
   def signed_in_user
-	unless signed_in?
-	  store_location
-	  redirect_to signin_url, notice: "Please sign in."
-	end
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
   end
 	
   def redirect_back_or(default)

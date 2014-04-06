@@ -8,6 +8,8 @@ gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
+  gem 'annotate', ">=2.6.0"
+  gem 'meta_request'
 end
 
 group :production do
@@ -29,6 +31,7 @@ gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'carrierwave'
+gem 'rmagick'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

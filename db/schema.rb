@@ -11,10 +11,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327001301) do
+ActiveRecord::Schema.define(version: 20140406014057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_enquiries", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "enquiry_id"
+    t.string   "role",        limit: 32
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customers", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "lead_id"
+    t.integer  "assigned_to"
+    t.integer  "reports_to"
+    t.string   "first_name",      limit: 64,  default: "",    null: false
+    t.string   "last_name",       limit: 64,  default: "",    null: false
+    t.string   "title",           limit: 64
+    t.string   "source",          limit: 32
+    t.string   "email",           limit: 64
+    t.string   "alt_email",       limit: 64
+    t.string   "phone",           limit: 32
+    t.string   "mobile",          limit: 32
+    t.string   "fax",             limit: 32
+    t.string   "blog",            limit: 128
+    t.string   "linkedin",        limit: 128
+    t.string   "facebook",        limit: 128
+    t.string   "twitter",         limit: 128
+    t.date     "born_on"
+    t.boolean  "do_not_call",                 default: false, null: false
+    t.datetime "deleted_at"
+    t.string   "background_info"
+    t.string   "skype",           limit: 128
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
+
+  create_table "enquiries", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.string   "name",             limit: 64,                          default: "",       null: false
+    t.string   "access",           limit: 8,                           default: "Public"
+    t.string   "source",           limit: 32
+    t.string   "stage",            limit: 32
+    t.integer  "probability"
+    t.decimal  "amount",                      precision: 12, scale: 2
+    t.decimal  "discount",                    precision: 12, scale: 2
+    t.date     "closes_on"
+    t.datetime "deleted_at"
+    t.string   "background_info"
+    t.text     "subscribed_users"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
 
   create_table "tours", force: true do |t|
     t.string   "tourName"

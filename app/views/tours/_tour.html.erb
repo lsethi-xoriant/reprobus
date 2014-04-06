@@ -1,4 +1,5 @@
 <li>
+  <%= image_tag tour.image_url(:thumb).to_s %>
   <%= link_to tour.tourName, tour %>
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", tour, method: :delete,
