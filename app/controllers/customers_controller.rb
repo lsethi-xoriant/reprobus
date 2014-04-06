@@ -22,7 +22,7 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      flash[:success] = "customer Created!"
+      flash[:success] = "Customer created!"
       redirect_to @customer
     else
       render 'new'
@@ -32,7 +32,7 @@ class CustomersController < ApplicationController
   def update
      @customer = Customer.find(params[:id])
     if @customer.update_attributes(customer_params)
-      flash[:success] = "customer updated"
+      flash[:success] = "Customer updated"
       redirect_to @customer
     else
       render 'edit'

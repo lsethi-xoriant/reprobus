@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @assigned_enquiries = @user.assigned_enquiries.paginate(page: params[:page])
   end
 
   def new

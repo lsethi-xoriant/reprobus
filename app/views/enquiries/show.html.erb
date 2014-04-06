@@ -1,0 +1,33 @@
+<% provide(:title, @enquiry.name ) %>
+<div class="row">
+  <aside>
+    <section>
+      <h1>
+        <%= @enquiry.name %>
+.      </h1>
+      
+      <br>
+    <%= link_to "Edit " + @enquiry.name , edit_enquiry_path(@enquiry) %>      
+      <br>
+      <h2 text-align="left">
+        <table>
+        <% if @enquiry.assignee %>
+          <tr><td style="width:150px"> Assigned To</td><td> <%= link_to @enquiry.assigned_to_name, @enquiry.assignee %> </td> </tr>
+        <% else %>  
+          <tr><td style="width:150px"> Assigned To</td><td></td> </tr>
+        <% end %>
+          
+        <tr><td> Source </td><td> <%= @enquiry.source %> </td></tr>
+        <tr><td> Stage </td><td> <%= @enquiry.stage %> </td></tr>
+        <tr><td> Probability </td><td> <%= @enquiry.probability %> </td></tr>
+        <tr><td> Amount </td><td> <%= @enquiry.amount %> </td></tr>
+        <tr><td> Discount </td><td> <%= @enquiry.discount %> </td></tr>
+        <tr><td> Closes On </td><td> <%= @enquiry.closes_on.blank? ? '' : @enquiry.closes_on.strftime("%m/%d/%Y") %> </td></tr>
+        <tr><td> Background Info </td><td> <%= @enquiry.background_info %> </td></tr>
+        <tr><td> Created </td><td> <%= @enquiry.created_at.strftime("%m/%d/%Y") %> </td></tr>
+        <tr><td> Created By </td><td> <%= @enquiry.created_by_name %> </td> </tr>
+        </table>
+      </h2>
+    </section>
+  </aside> 
+</div>

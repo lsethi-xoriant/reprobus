@@ -1,0 +1,31 @@
+<% provide(:title, 'Create Enquiry') %>
+<h1>Create a Enquiry</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @enquiry, :html => {:multipart => true} do |f| %>
+	    <%= render 'shared/error_messages', object: f.object %>
+    
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :source %>
+      <%= f.text_field :source %>
+      <%= f.label :stage %>
+      <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>
+      <%= f.label :probability , "Probability %" %>
+      <%= f.text_field :probability %>
+      <%= f.label :amount %>
+      <%= f.text_field :amount %>    
+      <%= f.label :discount %>
+      <%= f.text_field :discount %>        
+      <%= f.label :background_info  %>
+      <%= f.text_field :background_info %>     
+      <%= f.label :assigned_to, "Assign To"  %>  
+      <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+     
+    
+        <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

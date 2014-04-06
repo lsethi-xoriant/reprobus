@@ -1,0 +1,12 @@
+<% provide(:title, 'All Enquiries') %>
+<h1>All Enquiries</h1>
+
+<p><strong>Create new <%= link_to "Enquiry", new_enquiry_path %></strong></p>
+
+<%= will_paginate %>
+
+<ul class="users">
+	<%= render @enquiries  %>
+</ul>
+
+<%= will_paginate %>
