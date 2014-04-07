@@ -9,6 +9,7 @@ class CustomersController < ApplicationController
   
   def new
     @customer = Customer.new
+    @home_address = @customer.build_home_address
   end
 
   def show

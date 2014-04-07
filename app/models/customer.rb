@@ -37,7 +37,6 @@ class Customer < ActiveRecord::Base
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false } 
   VALID_EMAIL_REGEX_INCL_BLANK = /\A^$|[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  
   validates :alt_email, presense: false,
                     format:     { with: VALID_EMAIL_REGEX_INCL_BLANK },
                     uniqueness: { case_sensitive: false }   
@@ -49,4 +48,8 @@ class Customer < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, :dependent => :destroy
   has_many    :enquiries, :through => :customer_enquiries, :uniq => true, :order => "enquiries.id DESC"
+  has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" 
+  has_one     :home_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type = 'Home'"
+  accepts_nested_attributes_for :home_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
+
 end

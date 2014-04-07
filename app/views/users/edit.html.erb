@@ -11,21 +11,19 @@
 
       <%= f.label :email %>
       <%= f.text_field :email %>
-
+    
       <%= f.label :password %>
       <%= f.password_field :password %>
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
     
-      <% if @user.admin? %>
+      <% if @user.admin? || current_user.admin? %>
         <%= f.check_box :admin %>  
         <%= f.label :admin, :class => "checkbox inline" %>
       <% end %> 
-      
       <br>
       <br>   
-
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 

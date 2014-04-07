@@ -21,9 +21,26 @@
       <%= f.text_field :mobile %>    
       <%= f.label :fax %>
       <%= f.text_field :fax %>      
+
+      <% f.fields_for :home_address do |builder| %>
+      <p>
+        <%= builder.label :street1 %> <br>
+        <%= builder.text_field :street1 %>
+        <%= builder.label :street2 %> <br>
+        <%= builder.text_field :street2 %>        
+        <%= builder.label :city %> <br>
+        <%= builder.text_field :city %>  
+        <%= builder.label :state %> <br>
+        <%= builder.text_field :state %>  
+        <%= builder.label :zipcode %> <br>
+        <%= builder.text_field :zipcode %>  
+        <%= builder.label :country %> <br>
+        <%= builder.text_field :country %>          
+      </p>
+      <% end %>
     
     
-        <%= f.submit "Create a Customer", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Create a Customer", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

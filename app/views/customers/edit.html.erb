@@ -1,5 +1,5 @@
 <% provide(:title, 'Edit Customer') %>
-<h1>Edit Tour</h1>
+<h1>Edit Customer</h1>
 <div class="row">
   <div class="span6 offset3">
     <%= form_for @customer, :html => {:multipart => true} do |f| %>
@@ -20,9 +20,27 @@
       <%= f.label :mobile %>
       <%= f.text_field :mobile %>        
       <%= f.label :fax  %>
-      <%= f.text_field :fax %>         
+      <%= f.text_field :fax %>      
+    
+      <% f.fields_for :home_address do |builder| %>
+      <p>
+        <%= builder.label :street1 %> <br>
+        <%= builder.text_field :street1 %>
+        <%= builder.label :street2 %> <br>
+        <%= builder.text_field :street2 %>        
+        <%= builder.label :city %> <br>
+        <%= builder.text_field :city %>  
+        <%= builder.label :state %> <br>
+        <%= builder.text_field :state %>  
+        <%= builder.label :zipcode %> <br>
+        <%= builder.text_field :zipcode %>  
+        <%= builder.label :country %> <br>
+        <%= builder.text_field :country %>          
+      </p>
+      <% end %>
     
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
+   
   </div>
 </div>

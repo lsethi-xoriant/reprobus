@@ -10,6 +10,7 @@ group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'annotate', ">=2.6.0"
   gem 'meta_request'
+  gem "better_errors"  
 end
 
 group :production do
