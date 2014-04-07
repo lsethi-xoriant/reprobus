@@ -2,13 +2,7 @@
   <%= link_to  enquiry.name, enquiry %>
   
   <% if enquiry.assigned_to  %>
-  
     ( <%= enquiry.assigned_to_name  %> )
- 
   <% end %>
   
-  <% if current_user.admin? && !current_user?(user) %>
-    | <%= link_to "delete", enquiry, method: :delete,
-                                  data: { confirm: "You sure?" } %>
-  <% end %>
 </li>

@@ -1,16 +1,25 @@
 <% provide(:title, @user.name) %>
 <div class="row">
   <aside class="span4">
-    <section>
+    <section>  
       <h1>
         <%= gravatar_for(@user, size: 52) %>
         <%= @user.name %>
       </h1>
+       <br>
+       <br>
       <br>
+      <% if current_user.admin? %>
+        <%= link_to "Edit " + @user.name , edit_user_path(@user) %>
+      <% end %>         
       <br>
       <h2>
       <%= @user.email %>
       </h2>
+      <br>
+      <% if current_user.admin? && !current_user?(@user) %>
+        <%= link_to "Delete ", @user, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>      
     </section>
   </aside> 
   

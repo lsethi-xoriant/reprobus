@@ -1,7 +1,3 @@
 <li>
   <%= link_to   customer.title + " " +  customer.first_name + " " +  customer.last_name , customer %>
-  <% if current_user.admin? && !current_user?(user) %>
-    | <%= link_to "delete", customer, method: :delete,
-                                  data: { confirm: "You sure?" } %>
-  <% end %>
 </li>

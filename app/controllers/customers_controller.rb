@@ -38,6 +38,13 @@ class CustomersController < ApplicationController
       render 'edit'
     end
   end
+
+    
+  def destroy
+    Customer.find(params[:id]).destroy
+    flash[:success] = "Customer deleted."
+    redirect_to customers_url
+  end  
   
 private
     def customer_params

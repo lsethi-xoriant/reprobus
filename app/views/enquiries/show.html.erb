@@ -7,7 +7,8 @@
 .      </h1>
       
       <br>
-    <%= link_to "Edit " + @enquiry.name , edit_enquiry_path(@enquiry) %>      
+      <%= link_to "Edit " + @enquiry.name , edit_enquiry_path(@enquiry) %>      
+      <br>
       <br>
       <h2 text-align="left">
         <table>
@@ -28,6 +29,10 @@
         <tr><td> Created By </td><td> <%= @enquiry.created_by_name %> </td> </tr>
         </table>
       </h2>
+      <br>
+      <% if current_user.admin? %>
+      <%= link_to "Delete " + @enquiry.name, @enquiry, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>     
     </section>
   </aside> 
 </div>

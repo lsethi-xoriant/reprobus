@@ -23,6 +23,9 @@
        <%= @customer.fax %>
         <br>        
       </h2>
+      <% if current_user.admin? %>
+        <%= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>      
     </section>
   </aside> 
 </div>
