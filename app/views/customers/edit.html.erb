@@ -22,21 +22,21 @@
       <%= f.label :fax  %>
       <%= f.text_field :fax %>      
     
-      <% f.fields_for :home_address do |builder| %>
-      <p>
-        <%= builder.label :street1 %> <br>
-        <%= builder.text_field :street1 %>
-        <%= builder.label :street2 %> <br>
-        <%= builder.text_field :street2 %>        
-        <%= builder.label :city %> <br>
-        <%= builder.text_field :city %>  
-        <%= builder.label :state %> <br>
-        <%= builder.text_field :state %>  
-        <%= builder.label :zipcode %> <br>
-        <%= builder.text_field :zipcode %>  
-        <%= builder.label :country %> <br>
-        <%= builder.text_field :country %>          
-      </p>
+    <%= f.fields_for :address do |a| %>
+        
+        <%= a.label :street1 %> 
+        <%= a.text_field :street1 %>
+        <%= a.label :street2 %> 
+        <%= a.text_field :street2 %>        
+        <%= a.label :city %> 
+        <%= a.text_field :city %>  
+        <%= a.label :state %> 
+        <%= a.text_field :state %>  
+        <%= a.label :zipcode %> 
+        <%= a.text_field :zipcode %>  
+        <%= a.label :country %> 
+        <%= a.text_field :country %>          
+      
       <% end %>
     
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>

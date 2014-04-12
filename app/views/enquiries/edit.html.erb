@@ -23,6 +23,7 @@
       <%= f.collection_select :assigned_to, User.order(:name), :id, :name, include_blank: true %>   
       <%= f.label :created_by_name, "Created By"  %>
       <%= f.text_field :created_by_name, :readonly => true %>     
+    <%= f.label :customer_ids, "Customer"  %>
       <%#= f.collection_select :customers,  Customer.order(:last_name), :id, :last_name, include_blank: true %>   
     <%= f.select :customer_ids, Customer.all.collect {|x| [x.first_name + " " + x.last_name, x.id]}, {}, :multiple => true %>
     

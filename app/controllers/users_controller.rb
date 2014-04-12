@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @assigned_enquiries = @user.assigned_enquiries.paginate(page: params[:page])
   end
-
+  
   def new
     @user = User.new
   end

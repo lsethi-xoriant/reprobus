@@ -33,7 +33,7 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.find(params[:id])
     if @enquiry.update_attributes(enquiry_params)
 
- #puts "hi hamish"
+#tidy up one day  - find better way to do this
     @enquiry.customers.clear
     params[:enquiry][:customer_ids].each do |cust| 
       @enquiry.add_customer(Customer.find(cust)) unless cust.blank?

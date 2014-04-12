@@ -20,12 +20,13 @@
       <%= f.text_field :discount %>        
       <%= f.label :background_info  %>
       <%= f.text_field :background_info %>     
-      <%= f.label :assigned_to, "Assign To"  %>  
-      <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
+      <% if current_user.admin %>
+        <%= f.label :assigned_to, "Assign To"  %>  
+        <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
+      <% end %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
-     
-    
-        <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
+
+      <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

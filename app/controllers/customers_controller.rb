@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
   
   def new
     @customer = Customer.new
-    @home_address = @customer.build_home_address
+    @address = @customer.build_address
   end
 
   def show
@@ -50,6 +50,6 @@ class CustomersController < ApplicationController
 private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title,
-                                   :source, :email, :alt_email, :phone, :mobile)      
+        :source, :email, :alt_email, :phone, :mobile,  address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
     end  
 end

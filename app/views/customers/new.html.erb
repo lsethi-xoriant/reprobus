@@ -22,7 +22,7 @@
       <%= f.label :fax %>
       <%= f.text_field :fax %>      
 
-      <% f.fields_for :home_address do |builder| %>
+      <% f.fields_for :address do |builder| %>
       <p>
         <%= builder.label :street1 %> <br>
         <%= builder.text_field :street1 %>
