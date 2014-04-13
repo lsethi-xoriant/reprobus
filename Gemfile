@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'pg'
+gem 'sqlite3'
+#gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
@@ -32,7 +33,7 @@ gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'carrierwave'
-gem 'rmagick'
+#gem 'rmagick'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

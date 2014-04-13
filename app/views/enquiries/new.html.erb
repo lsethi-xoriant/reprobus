@@ -5,24 +5,50 @@
     <%= form_for @enquiry, :html => {:multipart => true} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
     
-    
-      <%= f.label :name %>
+      <%= f.label :name, "Enquiry Name" %>
       <%= f.text_field :name %>
       <%= f.label :source %>
-      <%= f.text_field :source %>
-      <%= f.label :stage %>
-      <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>
+      <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	 
+
+	   
+	  <% f.fields_for :customers do |builder| %>
+      <p>
+        <%= builder.label :first_name %> <br>
+        <%= builder.text_field :first_name %>
+        <%= builder.label :last_name %> <br>
+        <%= builder.text_field :last_name %>        
+        <%= builder.label :title %> <br>
+        <%= builder.text_field :title %>  
+        <%= builder.label :phone %> <br>
+        <%= builder.text_field :phone %>  
+        <%= builder.label :email %> <br>
+        <%= builder.text_field :email %>         
+      </p>
+      <% end %>	 
+	  
+      <%= f.label :duration, "Trip Duration" %>
+      <%= f.select :duration, options_for_select(["1 Week", "2 Weeks", "3 Weeks", "1 Month"]) %>
+      <%= f.label :est_date, "Est. Travel Date" %>
+      <%= f.date_field :est_date %>	  
+      <%= f.label :num_people, "Number of People" %>
+      <%= f.text_field :num_people %>	  
+      <%= f.label :amount %>
+      <%= f.text_field :amount %>   	  
       <%= f.label :probability , "Probability %" %>
       <%= f.text_field :probability %>
-      <%= f.label :amount %>
-      <%= f.text_field :amount %>    
       <%= f.label :discount %>
-      <%= f.text_field :discount %>        
-      <%= f.label :background_info  %>
+      <%= f.text_field :discount %>
+      <%= f.label :stage, "Status"%>
+      <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>	  
+      <%= f.label :percent, "Percent Complete"%>
+      <%= f.text_field :percent %>		  
+      <%= f.label :background_info, "Additional Info" %>
       <%= f.text_field :background_info %>     
       <% if current_user.admin %>
         <%= f.label :assigned_to, "Assign To"  %>  
         <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
+	  <% else %>
+	    <%= f.hidden_field :assigned_to, :value => current_user.id %>
       <% end %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
 

@@ -6,6 +6,8 @@ class CreateCustomerEnquiries < ActiveRecord::Migration
       
       t.string   "role",           :limit => 32
       t.timestamps
+	  
+	  
     end
   end
 end

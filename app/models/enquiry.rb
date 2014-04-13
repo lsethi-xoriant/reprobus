@@ -26,12 +26,15 @@ class Enquiry < ActiveRecord::Base
   validates :stage, presence: true, length: { maximum: 32 }
   validates :probability, presence: true, :inclusion => { :in => (1..100) , :message => "Must be in range of 1-100" }
   validates :user_id, presence: true
-  
+  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
+
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, :dependent => :destroy
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
-  
+  accepts_nested_attributes_for :customers, :allow_destroy => false; 
+
+ 
   def created_by_name
     self.user.name
     #User.find(self.user_id).name

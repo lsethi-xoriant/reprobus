@@ -9,6 +9,7 @@ class EnquiriesController < ApplicationController
   
   def new
     @enquiry = Enquiry.new
+	@enquiry.customers.build
   end
 
   def show
@@ -25,7 +26,7 @@ class EnquiriesController < ApplicationController
       flash[:success] = "Enquiry Created!"
       redirect_to @enquiry
     else
-      render 'new'
+      render 'new'	
     end
   end  
 
@@ -52,6 +53,7 @@ class EnquiriesController < ApplicationController
 private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
-        :probability, :amount, :discount, :closes_on, :background_info, :user_id, :assigned_to)      
+        :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
+		:assigned_to, :num_people, :duration, :est_date, :percent )      
     end  
 end

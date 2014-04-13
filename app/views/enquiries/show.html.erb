@@ -18,10 +18,14 @@
           <tr><td style="width:150px"> Assigned To</td><td></td> </tr>
         <% end %>
           
+        <tr><td> Amount </td><td> <%= @enquiry.amount %> </td></tr>	 	  
+        <tr><td> Estimated Duration </td><td> <%= @enquiry.duration %> </td></tr>
+		<tr><td> Estimated Start Date </td><td> <%= @enquiry.est_date.strftime("%m/%d/%Y") %> </td></tr>
+        <tr><td> Probability </td><td> <%= @enquiry.probability %> % </td></tr>	
+		<tr><td> Number of People </td><td> <%= @enquiry.num_people %> </td></tr>	
+        <tr><td> Status </td><td> <%= @enquiry.stage %> </td></tr>
+		<tr><td> Percentage Complete </td><td> <%= @enquiry.percent %> % </td></tr>
         <tr><td> Source </td><td> <%= @enquiry.source %> </td></tr>
-        <tr><td> Stage </td><td> <%= @enquiry.stage %> </td></tr>
-        <tr><td> Probability </td><td> <%= @enquiry.probability %> </td></tr>
-        <tr><td> Amount </td><td> <%= @enquiry.amount %> </td></tr>
         <tr><td> Discount </td><td> <%= @enquiry.discount %> </td></tr>
         <tr><td> Closes On </td><td> <%= @enquiry.closes_on.blank? ? '' : @enquiry.closes_on.strftime("%m/%d/%Y") %> </td></tr>
         <tr><td> Background Info </td><td> <%= @enquiry.background_info %> </td></tr>

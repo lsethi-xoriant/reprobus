@@ -1,0 +1,12 @@
+Create customer & enquiry
+ - via phone assign to call taker  
+ - via email/web assigned to manager to allocate
+Statuses for enquires  
+ - easy to update 
+ - ability to add interactions with customer  
+ - tasks? workflow management for enquires? 
+Reporting view
+ - number enquires, status, etc  
+ - managers  
+ - users Website integration for new enquires? 
+Email integration
