@@ -4,26 +4,24 @@
       <!-- Single button -->
       <div class="pull-right btn-group">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span> </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href= <%= enquiry_path enquiry %> ><span class="glyphicon glyphicon-user"></span> More Info</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Tour Details</a></li>
-        <li class="divider"></li>
-        <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Email</a></li>
-      </ul>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href= <%= enquiry_path enquiry %> ><span class="glyphicon glyphicon-user"></span> More Info</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Tour Details</a></li>
+          <li class="divider"></li>
+          <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Email</a></li>
+        </ul>
       </div>
-	  <% if !enquiry.customers.empty? %>
-	    <h3><%= enquiry.customers.first.last_name + ", " + enquiry.customers.first.first_name %> <small><%= enquiry.customers.first.title  %></small></h3>
-	  <% else %>
-        <h3>Hoffman, Isabelle <small>Mrs</small></h3>
-	  <% end %>
-      <p> <span class="text-primary">Email: </span><span class="body"><%= enquiry.customers.first.email unless enquiry.customers.first.nil? %></span></p>
+      
+	    <h3><%= enquiry.dasboard_customer_name %> <small><%= enquiry.customer_title  %></small></h3>
+      <p> <span class="text-primary">Email: </span><span class="body"><%= enquiry.customer_email %></span></p>
       <p> <span class="text-primary">Type: </span><span class="body">General Enquiry</span></p>
       <p> <span class="text-primary">Category: </span><span class="body"><%= enquiry.name %></span></p>
       <p> <span class="text-primary">Latest Comm: </span><span class="label label-success">Email, 7 March 2014</span> </p>
-      <p> <span class="text-primary">Value: </span><span class="body">$<%= enquiry.amount%></span></p>
+      <p> <span class="text-primary">Value: </span><span class="body"><%= number_to_currency(enquiry.amount, precision: 0) %></span></p>
       <div class="progress">
-        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow=<%= enquiry.percent%> aria-valuemin="0" aria-valuemax="100" style="width: <%= enquiry.percent%>%;">
-          <%= enquiry.percent%>%
+        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow=<%= enquiry.percent_complete %> 
+          aria-valuemin="0" aria-valuemax="100" style="width: <%=  number_to_percentage(enquiry.percent_complete, precision: 0) %>;">
+          <%= number_to_percentage(enquiry.percent_complete, precision: 0) %>
         </div>
       </div>
     </div>

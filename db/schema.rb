@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140413095115) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "addresses", force: true do |t|
     t.string   "street1"
     t.string   "street2"
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 20140413095115) do
     t.datetime "deleted_at"
   end
 
-  add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type"
+  add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
   create_table "customer_enquiries", force: true do |t|
     t.integer  "customer_id"
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140413095115) do
     t.datetime "updated_at"
   end
 
-  add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to"
+  add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
 
   create_table "enquiries", force: true do |t|
     t.integer  "user_id"
@@ -91,7 +94,7 @@ ActiveRecord::Schema.define(version: 20140413095115) do
     t.integer  "percent"
   end
 
-  add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to"
+  add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
 
   create_table "tours", force: true do |t|
     t.string   "tourName"
@@ -114,7 +117,7 @@ ActiveRecord::Schema.define(version: 20140413095115) do
     t.boolean  "admin",           default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end

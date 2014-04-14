@@ -46,6 +46,31 @@ class Enquiry < ActiveRecord::Base
     end
   end
   
+  def dasboard_customer_name
+    if !self.customers.empty? 
+      self.customers.first.last_name + ", " + self.customers.first.first_name 
+    else 
+      "No Customer Details"
+    end
+  end  
+  
+  def customer_title
+    self.customers.first.title unless self.customers.empty?
+  end
+  
+  def customer_email
+    self.customers.first.email unless self.customers.empty?
+  end
+  
+    
+  def percent_complete
+    if self.percent.nil? then 
+      return "0"
+    else
+      return self.percent
+    end  
+  end
+  
   def add_customer(customer)
     self.customers << customer unless customer.nil?
   end  

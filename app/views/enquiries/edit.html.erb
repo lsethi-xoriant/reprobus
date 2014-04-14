@@ -15,11 +15,11 @@
       <%= f.date_field :est_date %>	  
       <%= f.label :num_people, "Number of People" %>
       <%= f.text_field :num_people %>	  
-      <%= f.label :amount %>
+      <%= f.label :amount, "Amount $" %>
       <%= f.text_field :amount %>   	  
       <%= f.label :probability , "Probability %" %>
       <%= f.text_field :probability %>
-      <%= f.label :discount %>
+      <%= f.label :discount, "Discount $" %>
       <%= f.text_field :discount %>
       <%= f.label :stage, "Status"%>
       <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>	  

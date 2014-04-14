@@ -24,7 +24,7 @@
   </aside> 
   
   <div class="span8">
-    <% if @user.enquiries.any? %>
+    <% if @user.assigned_enquiries.any? %>
       <h3>Enquiry (<%= @user.assigned_enquiries.count %>)</h3>
       <ol class="microposts">
         <%= render @assigned_enquiries %>

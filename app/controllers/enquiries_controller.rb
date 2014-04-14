@@ -54,6 +54,6 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
-		:assigned_to, :num_people, :duration, :est_date, :percent )      
+        :assigned_to, :num_people, :duration, :est_date, :percent,  customers_attributes: [:first_name, :last_name, :email, :phone, :title] )      
     end  
 end

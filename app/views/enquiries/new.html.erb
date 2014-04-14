@@ -10,20 +10,17 @@
       <%= f.label :source %>
       <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	 
 
-	   
-	  <% f.fields_for :customers do |builder| %>
-      <p>
-        <%= builder.label :first_name %> <br>
-        <%= builder.text_field :first_name %>
-        <%= builder.label :last_name %> <br>
-        <%= builder.text_field :last_name %>        
-        <%= builder.label :title %> <br>
-        <%= builder.text_field :title %>  
-        <%= builder.label :phone %> <br>
-        <%= builder.text_field :phone %>  
-        <%= builder.label :email %> <br>
-        <%= builder.text_field :email %>         
-      </p>
+	    <%= f.fields_for :customers do |c| %>
+        <%= c.label :first_name %> 
+        <%= c.text_field :first_name %>
+        <%= c.label :last_name %> 
+        <%= c.text_field :last_name %>        
+        <%= c.label :title %> 
+        <%= c.text_field :title %>  
+        <%= c.label :phone %> 
+        <%= c.text_field :phone %>  
+        <%= c.label :email %> 
+        <%= c.text_field :email %>         
       <% end %>	 
 	  
       <%= f.label :duration, "Trip Duration" %>
@@ -32,11 +29,11 @@
       <%= f.date_field :est_date %>	  
       <%= f.label :num_people, "Number of People" %>
       <%= f.text_field :num_people %>	  
-      <%= f.label :amount %>
+      <%= f.label :amount, "Amount $" %>
       <%= f.text_field :amount %>   	  
       <%= f.label :probability , "Probability %" %>
       <%= f.text_field :probability %>
-      <%= f.label :discount %>
+      <%= f.label :discount, "Discount $" %>
       <%= f.text_field :discount %>
       <%= f.label :stage, "Status"%>
       <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>	  
