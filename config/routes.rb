@@ -2,7 +2,11 @@ Reprobus::Application.routes.draw do
   resources :users
   resources :tours
   resources :customers
-  resources :enquiries
+  resources :enquiries do 
+    collection do
+      get 'customersearch'  # /enquires/search  
+    end
+  end 
   resources :sessions, only: [:new, :create, :destroy]
   root  'static_pages#home'
   match '/about',   to: 'static_pages#about',   via: 'get' 
@@ -10,6 +14,7 @@ Reprobus::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+
  
   
   # The priority is based upon order of creation: first created -> highest priority.

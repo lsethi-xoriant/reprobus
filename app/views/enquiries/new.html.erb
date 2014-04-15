@@ -1,5 +1,6 @@
 <% provide(:title, 'Create Enquiry') %>
 <h1>Create a Enquiry</h1>
+
 <div class="row">
   <div class="span6 offset3">
     <%= form_for @enquiry, :html => {:multipart => true} do |f| %>
@@ -9,7 +10,11 @@
       <%= f.text_field :name %>
       <%= f.label :source %>
       <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	 
-
+      
+      <%= f.label :customers, "Select Existing Customer" %>
+      <%= hidden_field_tag(:customers, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
+          data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> <br>
+    
 	    <%= f.fields_for :customers do |c| %>
         <%= c.label :first_name %> 
         <%= c.text_field :first_name %>

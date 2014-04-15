@@ -2,20 +2,35 @@ class EnquiriesController < ApplicationController
   before_filter :signed_in_user,
                 only: [:index, :edit, :update, :destroy]
   before_filter :admin_user, only: :destroy
-  
+
   def index
     @enquiries = Enquiry.paginate(page: params[:page])
   end
   
   def new
     @enquiry = Enquiry.new
-	@enquiry.customers.build
+	  @enquiry.customers.build
   end
 
   def show
     @enquiry = Enquiry.find(params[:id])
   end
   
+
+  def customersearch
+    @customers = Customer.select([:id, :last_name, :first_name]).
+                            where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
+                            order('last_name')
+  
+    # also add the total count to enable infinite scrolling
+    resources_count = Customer.select([:id, :last_name, :first_name]).
+      where("last_name ILIKE :q  OR first_name ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, customers: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
+    end
+  end
+    
   def edit
     @enquiry = Enquiry.find(params[:id])
   end
