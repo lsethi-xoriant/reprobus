@@ -1,6 +1,6 @@
 class EnquiriesController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy]
+                only: [:index, :edit, :update, :destroy, :new]
   before_filter :admin_user, only: :destroy
 
   def index
@@ -27,7 +27,8 @@ class EnquiriesController < ApplicationController
       where("last_name ILIKE :q  OR first_name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, customers: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
+      format.json { render json: {total: resources_count, 
+                    searchSet: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
     end
   end
     
@@ -36,11 +37,15 @@ class EnquiriesController < ApplicationController
   end
   
   def create
-    @enquiry = Enquiry.new(enquiry_params)
+    @enquiry = Enquiry.new(enquiry_params)     
     if @enquiry.save
+      if params[:existing_customer].to_i > 0 
+        @enquiry.customers.clear
+        @enquiry.add_customer(Customer.find(params[:existing_customer])) 
+      end
       flash[:success] = "Enquiry Created!"
       redirect_to @enquiry
-    else
+    else     
       render 'new'	
     end
   end  
@@ -69,6 +74,7 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
-        :assigned_to, :num_people, :duration, :est_date, :percent,  customers_attributes: [:first_name, :last_name, :email, :phone, :title] )      
+        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
+        customers_attributes: [:first_name, :last_name, :email, :phone, :title] )      
     end  
 end

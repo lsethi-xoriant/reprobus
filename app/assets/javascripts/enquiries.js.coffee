@@ -17,7 +17,7 @@ $(document).ready ->
           page: page
           per: 25
         results: (data, page) ->
-          results: data.customers
+          results: data.searchSet
           more: data.total > (page * 25) # adding the more: option enables infinite scrolling (select2 will load more content if available)
 
       options.dropdownCssClass = "bigdrop"

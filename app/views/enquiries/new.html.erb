@@ -11,10 +11,34 @@
       <%= f.label :source %>
       <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	 
       
-      <%= f.label :customers, "Select Existing Customer" %>
-      <%= hidden_field_tag(:customers, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
-          data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> <br>
+ <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->
+  
+    <%= label_tag :user_type, "Add Customer: " %><br />
+   <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon">   
+          <%= radio_button_tag :user_type, "Existing", class: "existing_fields"  %>
+        </span>
+        <%=  label_tag :user_type, "Existing", value: "Existing", :size => 20 %>
+        <span class="input-group-addon">   
+            <%= radio_button_tag :user_type, "New", class: "new_fields" %>      
+        </span>  
+        <%= label_tag :user_type, "New", value: "New", :size => 20 %>        
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->        
+  </div>
+  <!-- End dynamic display radio buttons --> 
     
+    <div id="existing_fields" style="display:none;">
+      <br>
+      <%= f.label :existing_customer, "Select Existing Customer" %>
+      <%= hidden_field_tag(:existing_customer, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
+                           data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> <br>
+    </div>
+    
+    <div id="new_fields" style="display:none;">
+      <%= f.label :new_customer, "Enter Customer Details" %>
 	    <%= f.fields_for :customers do |c| %>
         <%= c.label :first_name %> 
         <%= c.text_field :first_name %>
@@ -27,7 +51,8 @@
         <%= c.label :email %> 
         <%= c.text_field :email %>         
       <% end %>	 
-	  
+    </div>
+    
       <%= f.label :duration, "Trip Duration" %>
       <%= f.select :duration, options_for_select(["1 Week", "2 Weeks", "3 Weeks", "1 Month"]) %>
       <%= f.label :est_date, "Est. Travel Date" %>
@@ -49,7 +74,7 @@
       <% if current_user.admin %>
         <%= f.label :assigned_to, "Assign To"  %>  
         <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
-	  <% else %>
+	    <% else %>
 	    <%= f.hidden_field :assigned_to, :value => current_user.id %>
       <% end %>
       <%= f.hidden_field :user_id, :value => current_user.id %>

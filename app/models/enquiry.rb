@@ -72,7 +72,8 @@ class Enquiry < ActiveRecord::Base
   end
   
   def add_customer(customer)
-    self.customers << customer unless customer.nil?
+    self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
+    #self.customers << customer unless customer.nil?
   end  
   
 end
