@@ -11,29 +11,36 @@
       <%= f.label :source %>
       <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	 
       
- <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->  
+ <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->
+  
     <%= label_tag :user_type, "Add Customer: " %><br />
-    <div>
-      <label class="radio-inline">    
-        New
-        <%= radio_button_tag :user_type, "New", class: "new_fields" %>             
-      </label>
-      <label class="radio-inline">     
-        Existing
-        <%= radio_button_tag :user_type, "Existing", class: "existing_fields" %>    
-      </label>        
-    </div>
+   <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <span class="input-group-addon">      
+          <%= radio_button_tag :user_type, "Existing", class: "existing_fields" %>    
+         </span>   
+          <%=  label_tag :user_type, "Existing", value: "Existing" %>
+       
+        <span class="input-group-addon">   
+            <%= radio_button_tag :user_type, "New", class: "new_fields" %>      
+        </span>          
+        <%= label_tag :user_type, "New", value: "New" %>        
+          
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->        
+  </div>
   <!-- End dynamic display radio buttons --> 
     
-    <div id="existing_fields" style="display:block; border: 2px solid gray" >
+    <div id="existing_fields" style="display:none;">
+      <br>
       <%= f.label :existing_customer, "Select Existing Customer" %>
       <%= hidden_field_tag(:existing_customer, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
                            data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> <br>
     </div>
     
-    <div id="new_fields" style="display:none; border: 2px solid gray">
+    <div id="new_fields" style="display:none;">
       <%= f.label :new_customer, "Enter Customer Details" %>
-      <br>
 	    <%= f.fields_for :customers do |c| %>
         <%= c.label :first_name %> 
         <%= c.text_field :first_name %>
