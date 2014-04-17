@@ -38,11 +38,9 @@ class EnquiriesController < ApplicationController
   
   def create
     @enquiry = Enquiry.new(enquiry_params)     
-    if @enquiry.save
-      if params[:existing_customer].to_i > 0 
-        @enquiry.customers.clear
-        @enquiry.add_customer(Customer.find(params[:existing_customer])) 
-      end
+    @enquiry.customers.clear if params[:existing_customer].to_i > 0 
+    if @enquiry.save    
+      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0 
       flash[:success] = "Enquiry Created!"
       redirect_to @enquiry
     else     
@@ -55,8 +53,8 @@ class EnquiriesController < ApplicationController
     if @enquiry.update_attributes(enquiry_params)
 
 #tidy up one day  - find better way to do this
-    @enquiry.customers.clear
-    params[:enquiry][:customer_ids].each do |cust| 
+      @enquiry.customers.clear
+      params[:enquiry][:customer_ids].each do |cust| 
       @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
       #puts cust
     end
