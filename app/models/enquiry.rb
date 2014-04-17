@@ -61,7 +61,22 @@ class Enquiry < ActiveRecord::Base
   def customer_email
     self.customers.first.email unless self.customers.empty?
   end
-  
+
+  def enquiry_display_str
+    str = "( "
+    if self.assigned_to 
+      str = str + self.assigned_to_name 
+    else
+      str = str + "UNASSIGNED" 
+    end
+    
+    if self.customers.count > 0 then 
+      str = str + " | " + self.dasboard_customer_name
+    else
+      str = str + " | NO CUSTOMER" 
+    end
+    str = str + " )"
+  end
     
   def percent_complete
     if self.percent.nil? then 

@@ -1,8 +1,4 @@
 <li>
   <%= link_to  enquiry.name, enquiry %>
-  
-  <% if enquiry.assigned_to  %>
-    ( <%= enquiry.assigned_to_name  %> )
-  <% end %>
-  
+  <%= enquiry.enquiry_display_str  %>
 </li>

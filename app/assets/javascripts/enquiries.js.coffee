@@ -20,6 +20,11 @@ $(document).ready ->
           results: data.searchSet
           more: data.total > (page * 25) # adding the more: option enables infinite scrolling (select2 will load more content if available)
 
+        initSelection: (e, callback) ->
+          elementText = $(e).attr("data-init-text")
+          callback term: elementText
+          return        
+          
       options.dropdownCssClass = "bigdrop"
 
     select.select2(options)

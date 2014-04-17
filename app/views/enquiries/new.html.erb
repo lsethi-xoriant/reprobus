@@ -1,5 +1,11 @@
 <% provide(:title, 'Create Enquiry') %>
 <h1>Create a Enquiry</h1>
+<% if  @enquiry.errors.any? %>
+<%#= custNum = params[:existing_customer] %>
+<%#= custName = Customer.find(custNum).fullname %>
+<input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
+
+<% end %>
 
 <div class="row">
   <div class="span6 offset3">
@@ -30,6 +36,9 @@
       <%= hidden_field_tag(:existing_customer, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
                            data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> <br>
     </div>
+    
+  
+
     
     <div id="new_fields" style="display:none; border: 2px solid gray">
       <%= f.label :new_customer, "Enter Customer Details" %>
@@ -70,7 +79,7 @@
         <%= f.label :assigned_to, "Assign To"  %>  
         <%= f.collection_select :assigned_to, User.order(:name),:id, :name, include_blank: true %>
 	    <% else %>
-	    <%= f.hidden_field :assigned_to, :value => current_user.id %>
+	       <%= f.hidden_field :assigned_to, :value => current_user.id %>
       <% end %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
 
