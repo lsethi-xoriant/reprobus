@@ -41,7 +41,7 @@ class EnquiriesController < ApplicationController
     @enquiry.customers.clear if params[:existing_customer].to_i > 0 
     if @enquiry.save    
       @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0 
-      flash[:success] = "Enquiry Created!"
+      flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
     else     
       render 'new'	
@@ -51,23 +51,33 @@ class EnquiriesController < ApplicationController
   def update
     @enquiry = Enquiry.find(params[:id])
     if @enquiry.update_attributes(enquiry_params)
-
 #tidy up one day  - find better way to do this
       @enquiry.customers.clear
+      
       params[:enquiry][:customer_ids].each do |cust| 
-      @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
-      #puts cust
-    end
-    @enquiry.save
+        @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
+      end
+      
+      @enquiry.save
 #end bad code
       
-      flash[:success] = "Enquiry updated"
+      undo_link = view_context.link_to("(Undo)", 
+        revert_version_path(@enquiry.versions.last), :method => :post)
+      
+      flash[:success] = "Enquiry updated.  #{undo_link}" 
       redirect_to @enquiry
     else
       render 'edit'
     end
   end
-  
+
+  def destroy 
+    @enquiry = Enquiry.find(params[:id])
+    @enquiry.destroy
+    flash[:success] = "Enquiry deleted.  #{undo_link}"
+    redirect_to enquiries_url
+  end  
+
 private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
@@ -75,4 +85,9 @@ private
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         customers_attributes: [:first_name, :last_name, :email, :phone, :title] )      
     end  
+
+    def undo_link
+      view_context.link_to("(Undo)",  
+        revert_version_path(@enquiry.versions.scoped.last), :method => :post)
+    end
 end

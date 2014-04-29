@@ -1,0 +1,27 @@
+<li class="highlight">[version]
+  <div class="body">
+    <% item_type = version.item_type.underscore.humanize %>
+    <% if user = User.find_by_id(version.whodunnit) %>
+      <% user_name = user.name %>
+    <% else %>
+      <% user_name = t('version.anonymous') %>
+    <% end %>
+    <% # If translation doesn't exist, just print event message %>
+    <% if t('version.' + version.event, :default => 0) != 0 %>
+      <%= t('version.' + version.event, :item => item_type, :by => user_name, :default => version.event) %>
+    <% else %>
+      <%= auto_link(version.event).html_safe %>
+    <% end %>
+    <small>
+      <%= time_ago_in_words(version.created_at).html_safe %>
+    </small>
+    <tt>
+      <% if !version.changeset.nil? %>
+      <% version.changeset.each do |attr_name, change| %>
+        <% label, first, second = parse_version(attr_name, change) %>
+        <%= render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second} %>
+      <% end %>
+      <% end %>
+    </tt>
+  </div>
+</li>

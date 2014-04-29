@@ -24,6 +24,9 @@ class Enquiry < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 64 }
   validates :source, presence: true, length: { maximum: 32 }  
   validates :stage, presence: true, length: { maximum: 32 }
+  validates :num_people, allow_nil: true,  numericality: { only_integer: true }, allow_blank: true  
+  validates :amount, numericality: true,  allow_blank: true  
+  validates :discount, numericality: true,  allow_blank: true  
   validates :probability, presence: true, :inclusion => { :in => (1..100) , :message => "Must be in range of 1-100" }
   validates :user_id, presence: true
   validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
@@ -33,8 +36,9 @@ class Enquiry < ActiveRecord::Base
   has_many    :customer_enquiries, :dependent => :destroy
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
-
  
+  has_paper_trail
+  
   def created_by_name
     self.user.name
     #User.find(self.user_id).name

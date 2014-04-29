@@ -21,3 +21,18 @@
 
 en:
   hello: "Hello world"
+  
+  activerecord:
+    attributes:
+      enquiry:
+        num_people: "Number of People"  
+
+  versions: History
+  version:
+    create: ! '%{item} created by %{by}'
+    update: ! '%{item} modified by %{by}'
+    destroy: ! '%{item} destroyed by %{by}'
+    set_html: ! '%{attr} set to %{to}'
+    unset_html: ! '%{attr} unset'
+    change_html: ! '%{attr} changed from %{from} to %{to}'
+    anonymous: anonymous

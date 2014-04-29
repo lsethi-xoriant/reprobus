@@ -1,8 +1,8 @@
 <% provide(:title, 'Create Enquiry') %>
 <h1>Create a Enquiry</h1>
 <% if  @enquiry.errors.any? %>
-<%#= custNum = params[:existing_customer] %>
-<%#= custName = Customer.find(custNum).fullname %>
+<%= custNum = params[:existing_customer] %>
+<%= custName = Customer.find(custNum).fullname unless custNum.blank? %>
 <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
 
 <% end %>
@@ -21,16 +21,16 @@
     <%= label_tag :user_type, "Add Customer: " %><br />
     <div>
       <label class="radio-inline">    
-        New
-        <%= radio_button_tag :user_type, "New", class: "new_fields" %>             
+        <%= radio_button_tag :user_type, "New", class: "new_fields" %>      
       </label>
+      New
       <label class="radio-inline">     
-        Existing
         <%= radio_button_tag :user_type, "Existing", class: "existing_fields" %>    
-      </label>        
+      </label>   
+      Existing
     </div>
   <!-- End dynamic display radio buttons --> 
-    
+    <br>
     <div id="existing_fields" style="display:block; border: 2px solid gray" >
       <%= f.label :existing_customer, "Select Existing Customer" %>
       <%= hidden_field_tag(:existing_customer, '', id: 'res_select', class: 'select2 ajax', style: 'width: 100%;',
@@ -56,7 +56,7 @@
         <%= c.text_field :email %>         
       <% end %>	 
     </div>
-    
+     <br>   
       <%= f.label :duration, "Trip Duration" %>
       <%= f.select :duration, options_for_select(["1 Week", "2 Weeks", "3 Weeks", "1 Month"]) %>
       <%= f.label :est_date, "Est. Travel Date" %>

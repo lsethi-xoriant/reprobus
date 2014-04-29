@@ -1,0 +1,11 @@
+<div id="versions">
+  <br/>
+    <div>
+      <div class="list">
+        <% versions = object.versions.paginate(:page => 1, :per_page => 20) %>
+
+        <%= render :partial => "versions/version", :collection => versions %>
+      </div>
+      <%#= paginate( collection: versions, id: 'versions_pagination', params: { action: 'versions' } ) %>
+    </div>
+</div>

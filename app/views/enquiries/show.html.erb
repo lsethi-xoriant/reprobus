@@ -37,9 +37,12 @@
         </table>
       </h2>
       <br>
+      
       <% if current_user.admin? %>
       <%= link_to "Delete " + @enquiry.name, @enquiry, method: :delete, data: { confirm: "You sure?" } %>
-      <% end %>     
+      <% end %>
+      <br>
+      <%= render "versions/versions", :object => @enquiry %>
     </section>
   </aside> 
 </div>
