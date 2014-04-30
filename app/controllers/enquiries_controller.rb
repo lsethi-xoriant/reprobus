@@ -57,7 +57,7 @@ class EnquiriesController < ApplicationController
       params[:enquiry][:customer_ids].each do |cust| 
         @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
       end
-      
+      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered. 
       @enquiry.save
 #end bad code
       

@@ -1,4 +1,4 @@
-<li class="highlight">[version]
+<li>
   <div class="body">
     <% item_type = version.item_type.underscore.humanize %>
     <% if user = User.find_by_id(version.whodunnit) %>
@@ -12,15 +12,24 @@
     <% else %>
       <%= auto_link(version.event).html_safe %>
     <% end %>
-    <small>
-      <%= time_ago_in_words(version.created_at).html_safe %>
-    </small>
+    <%= time_ago_in_words(version.created_at).html_safe + ' ago' %>
     <tt>
       <% if !version.changeset.nil? %>
-      <% version.changeset.each do |attr_name, change| %>
-        <% label, first, second = parse_version(attr_name, change) %>
-        <%= render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second} %>
-      <% end %>
+        <% version.changeset.each do |attr_name, change| %>
+          <%#= attr_name %>    
+          <%# next if attr_name == "updated_at" %>
+          
+          <% label, first, second = parse_version(attr_name, change) %>
+          <%= render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second} %>
+        <% end %>
+        <% if version.item_type = "Enquiry" %>
+            <%  version2 = @enquiry.versions[(@enquiry.versions.index(version) - 1)] %>
+      <%#=  version.customer_names + " version: " + version.id.to_s %>
+      <%#=  version2.customer_names + " version2: " + version2.id.to_s %>
+            <% if version.customer_names != version2.customer_names %>
+              <%= render :partial => 'versions/version_item', :locals => {:label => "Customers", :first => "", :second => version.customer_names} %>
+          <% end %>
+        <% end %>
       <% end %>
     </tt>
   </div>

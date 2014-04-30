@@ -9,4 +9,11 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+  
+  #         options = { renderer: {...} , params: {...}
+  def paginate(options = {})
+    collection = options.delete(:collection)
+    options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
+    will_paginate(collection, options)
+  end  
 end

@@ -5,17 +5,13 @@
 #------------------------------------------------------------------------------
 require 'paper_trail'
 
-PaperTrail::Version.const_set :ASSETS, %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-PaperTrail::Version.const_set :EVENTS, %w(all_events create view update destroy)
-PaperTrail::Version.const_set :DURATION, %w(one_hour one_day two_days one_week two_weeks one_month)
-
 PaperTrail::Version.class_eval do
 
 
   belongs_to :related, :polymorphic => true
   belongs_to :user, :foreign_key => :whodunnit
 
-  scope :default_order,  order('created_at DESC')
+  scope :default_order,  order('created_at ASC')
   scope :include_events, lambda { |*events| where(:event => events) }
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
   scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }

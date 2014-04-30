@@ -37,7 +37,8 @@ class Enquiry < ActiveRecord::Base
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
  
-  has_paper_trail
+  has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
+
   
   def created_by_name
     self.user.name
@@ -56,7 +57,16 @@ class Enquiry < ActiveRecord::Base
     else 
       "No Customer Details"
     end
-  end  
+  end
+  
+  def customer_names
+    str = ""
+    self.customers.each do |cust| 
+      str = str + cust.first_name + " " + cust.last_name + ", " 
+     end
+    
+    return str.chomp(", ")
+  end
   
   def customer_title
     self.customers.first.title unless self.customers.empty?

@@ -15,4 +15,5 @@ class CustomerEnquiry < ActiveRecord::Base
   belongs_to :customer
   belongs_to :enquiry
   validates_presence_of :customer_id, :enquiry_id 
+  has_paper_trail :ignore => [:created_at, :updated_at]
 end

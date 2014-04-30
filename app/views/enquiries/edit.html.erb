@@ -1,4 +1,15 @@
 <% provide(:title, 'Edit Enquiry') %>
+<% 
+if @enquiry.new_record? 
+  duration = "1 Week"
+  source = "Phone"
+  stage = "New"
+else
+  duration = @enquiry.duration
+  source = @enquiry.source
+  stage = @enquiry.stage
+end
+%>
 <h1>Edit Enquiry</h1>
 <div class="row">
   <div class="span6 offset3">
@@ -8,9 +19,9 @@
       <%= f.label :name, "Enquiry Name" %>
       <%= f.text_field :name %>
       <%= f.label :source %>
-      <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], "Phone") %>	  
+      <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], source) %>	  
       <%= f.label :duration, "Trip Duration" %>
-      <%= f.select :duration, options_for_select(["1 Week", "2 Weeks", "3 Weeks", "1 Month"]) %>
+      <%= f.select :duration, options_for_select(["1 Week", "2 Weeks", "3 Weeks", "1 Month"], duration) %>
       <%= f.label :est_date, "Est. Travel Date" %>
       <%= f.date_field :est_date %>	  
       <%= f.label :num_people, "Number of People" %>
@@ -22,7 +33,7 @@
       <%= f.label :discount, "Discount $" %>
       <%= f.text_field :discount %>
       <%= f.label :stage, "Status"%>
-      <%= f.select :stage, options_for_select(["New", "On going", "Closed"], "New") %>	  
+      <%= f.select :stage, options_for_select(["New", "On going", "Closed"], stage) %>	  
       <%= f.label :percent, "Percent Complete"%>
       <%= f.text_field :percent %>	 	  
       <%= f.label :background_info, "Additional Info" %>
