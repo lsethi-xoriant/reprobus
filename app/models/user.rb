@@ -21,7 +21,11 @@ class User < ActiveRecord::Base
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, length: { minimum: 6 }
+#  validates :password, length: { minimum: 6 }
+  
+  validates :password, presence: true, length: {minimum: 6, maximum: 120}, on: :create
+  validates :password, length: {minimum: 5, maximum: 120}, on: :update, allow_blank: true
+  
   before_create :create_remember_token
   
   has_many    :customers
@@ -36,9 +40,20 @@ class User < ActiveRecord::Base
   def User.hash(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
-
+  
+  def send_password_reset
+    generate_token_pw_reset
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+    
 private
     def create_remember_token
       self.remember_token = User.hash(User.new_remember_token)
     end
+  
+    def generate_token_pw_reset
+       self.password_reset_token = User.new_remember_token
+    end    
 end
