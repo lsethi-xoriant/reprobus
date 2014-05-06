@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140430105228) do
+ActiveRecord::Schema.define(version: 20140505105253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20140430105228) do
     t.string   "access",           limit: 8,                           default: "Public"
     t.string   "source",           limit: 32
     t.string   "stage",            limit: 32
-    t.integer  "probability"
+    t.string   "probability"
     t.decimal  "amount",                      precision: 12, scale: 2
     t.decimal  "discount",                    precision: 12, scale: 2
     t.date     "closes_on"
@@ -92,9 +92,23 @@ ActiveRecord::Schema.define(version: 20140430105228) do
     t.date     "est_date"
     t.string   "num_people"
     t.integer  "percent"
+    t.date     "fin_date"
+    t.string   "standard"
+    t.boolean  "insurance"
+    t.date     "reminder"
+    t.text     "destinations"
+    t.text     "stopovers"
+    t.text     "carriers"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tours", force: true do |t|
     t.string   "tourName"

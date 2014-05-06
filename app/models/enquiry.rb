@@ -18,6 +18,10 @@
 #  subscribed_users :text
 #  created_at       :datetime
 #  updated_at       :datetime
+#  duration         :string(255)
+#  est_date         :date
+#  num_people       :string(255)
+#  percent          :integer
 #
 
 class Enquiry < ActiveRecord::Base
@@ -27,10 +31,14 @@ class Enquiry < ActiveRecord::Base
   validates :num_people, allow_nil: true,  numericality: { only_integer: true }, allow_blank: true  
   validates :amount, numericality: true,  allow_blank: true  
   validates :discount, numericality: true,  allow_blank: true  
-  validates :probability, presence: true, :inclusion => { :in => (1..100) , :message => "Must be in range of 1-100" }
+#  validates :probability, presence: true, :inclusion => { :in => (1..100) , :message => "Must be in range of 1-100" }
   validates :user_id, presence: true
-  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
+#  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
 
+  serialize :destinations
+  serialize :stopovers
+  serialize :carriers
+  
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, :dependent => :destroy

@@ -18,6 +18,10 @@
 #  subscribed_users :text
 #  created_at       :datetime
 #  updated_at       :datetime
+#  duration         :string(255)
+#  est_date         :date
+#  num_people       :string(255)
+#  percent          :integer
 #
 
 require 'spec_helper'

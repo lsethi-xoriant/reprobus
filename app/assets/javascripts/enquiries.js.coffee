@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  $('.select2').each (i, e) =>
+  $('#res_select').each (i, e) =>
     select = $(e)
     options =
       placeholder: select.data('placeholder')

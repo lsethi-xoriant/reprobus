@@ -8,8 +8,17 @@ class EnquiriesController < ApplicationController
   end
   
   def new
-    @enquiry = Enquiry.new
-	  @enquiry.customers.build
+    
+#    if session[:enquiry]
+#      @enquiry = Enquiry.new(enquiry_params)
+#      @enquiry.valid? # run validations to to populate the errors[]
+# puts "HELLO HAMISH"     
+#    else
+      @enquiry = Enquiry.new
+	    @enquiry.customers.build
+      @enquiry.customers.first.build_address
+#    end
+    
   end
 
   def show
@@ -82,8 +91,9 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
-        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
-        customers_attributes: [:first_name, :last_name, :email, :phone, :title] )      
+        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer, 
+        :fin_date, :standard, :destinations, :stopovers, :carriers, :insurance, :reminder,
+        customers_attributes: [:first_name, :last_name, :email, :phone, :mobile, :title] )      
     end  
 
     def undo_link
