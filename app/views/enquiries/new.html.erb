@@ -1,10 +1,32 @@
 <% provide(:title, 'Create Enquiry') %>
 <h1>Create a Enquiry</h1>
 <% if  @enquiry.errors.any? %>
-<% custNum = params[:existing_customer] %>
-<% custName = Customer.find(custNum).fullname unless custNum.blank? %>
-<input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
+  <% custNum = params[:existing_customer] %>
+  <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
+  <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
 <% end %>
+
+<% 
+  if params[:user_type] == "New"  
+     newCustDisplay = "display:block;"
+     existCustDisplay = "display:none;"
+   elsif params[:user_type] == "Existing" 
+     newCustDisplay = "display:none;" 
+     existCustDisplay = "display:block;"
+   else
+     newCustDisplay = "display:block;" 
+     existCustDisplay = "display:none;"
+  end 
+  if params[:assigned_to] && params[:assigned_to] > '0' then 
+    #existUser = User.find(params[:assigned_to]).name
+  else
+    existUser = current_user.name
+  end
+    
+   if params[:existing_customer] && params[:existing_customer] > '0' then 
+     existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name 
+  end   
+%>
 
     <%= form_for @enquiry, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
@@ -20,12 +42,14 @@
       <%= label_tag :user_type, "Add Customer", class: "col-sm-3 control-label" %>
       <div class="col-sm-1">
         <label class="radio-inline">  
-          <%= radio_button_tag :user_type, "New",  true, class: "new_fields form-control"  %> New 
+          <%= radio_button_tag :user_type, "New",  (params[:user_type].blank? || (params[:user_type] == "New")), class: "new_fields form-control"  %> 
+          New 
         </label>   
       </div>
       <div class="col-sm-1">
         <label class="radio-inline">     
-          <%= radio_button_tag :user_type, "Existing", false, class: "existing_fields form-control" %> Existing
+          <%= radio_button_tag :user_type, "Existing", (params[:user_type] == "Existing"), class: "existing_fields form-control" %> 
+          Existing
         </label>   
       </div>
     </div>      
@@ -43,18 +67,18 @@
     </div>
 
     <!-- Search fields displayed when Existing customer to be entered --> 
-    <div id="existing_fields" style="display:none;">
+    <div id="existing_fields" style='<%= existCustDisplay %>'>
       <div class="form-group">
       <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label" %>
         <div class="col-sm-5">
-          <%= hidden_field_tag(:existing_customer, '', id: 'res_select', class: 'ajax form-control', style: 'width: 100%;',
+          <%= hidden_field_tag(:existing_customer, existCust, id: 'res_select', class: 'ajax form-control', style: 'width: 100%;',
                            data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %>
         </div>
       </div>
     </div>
    
     <!-- Fields displayed when NEW CUSTOMER to be entered    --> 
-    <div id="new_fields" style="display:block;" >
+    <div id="new_fields" style='<%= newCustDisplay %>' >
 	    <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
       <div class="form-group">
         <%= c.label :name, "Name", class: "col-sm-3 control-label" %> 
@@ -194,9 +218,10 @@
 
     <div class="form-group">
       <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"  %>
-      <div class="col-sm-4">
-        <%= f.collection_select :assigned_to, User.order(:name), :id, :name, include_blank: true %>
-      </div>
+        <div class="col-sm-2">
+          <%= hidden_field_tag(:assigned_to, existUser, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;',
+                           data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %>
+        </div>   
     </div>
 
     <div class="form-group">   

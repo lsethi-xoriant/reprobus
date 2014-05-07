@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy]
+                only: [:index, :edit, :update, :destroy, :show, :usersearch]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
   
@@ -46,7 +46,20 @@ class UsersController < ApplicationController
     redirect_to users_url
   end  
 
+  def usersearch
+    @users = User.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
   
+    # also add the total count to enable infinite scrolling
+      resources_count = @users.count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+                  searchSet: @users.map { |e| {id: e.id, text: "#{e.name}"} }} }
+    end
+  end
+
 private
     def user_params
       params.require(:user).permit(:name, :email, :password,

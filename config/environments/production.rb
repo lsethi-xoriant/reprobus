@@ -29,9 +29,10 @@ Reprobus::Application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 
-  # allow fonts to be precompiled - added to allow  bootstrap glyphs to be uploaded to heroku
+  # allow fonts to be precompiled - added to allow  bootstrap glyphs to be uploaded to heroku 
+  #  -- Although doesnt seem to work. changed above to .compile=true which fixed problem
   config.assets.precompile += %w( '.woff', '.eot', '.svg', '.ttf' )
-  
+
   # Generate digests for assets URLs.
   config.assets.digest = true
 

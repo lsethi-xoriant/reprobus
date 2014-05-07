@@ -7,7 +7,7 @@ $(document).ready ->
     select = $(e)
     options =
       placeholder: select.data('placeholder')
-
+      minimumInputLength: 1
     if select.hasClass('ajax') # only add ajax functionality if this class is present
       options.ajax =
         url: select.data('source')

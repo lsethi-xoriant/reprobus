@@ -1,6 +1,6 @@
 class EnquiriesController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :new]
+                only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch]
   before_filter :admin_user, only: :destroy
 
   def index
@@ -8,17 +8,9 @@ class EnquiriesController < ApplicationController
   end
   
   def new
-    
-#    if session[:enquiry]
-#      @enquiry = Enquiry.new(enquiry_params)
-#      @enquiry.valid? # run validations to to populate the errors[]
-# puts "HELLO HAMISH"     
-#    else
       @enquiry = Enquiry.new
 	    @enquiry.customers.build
       @enquiry.customers.first.build_address
-#    end
-    
   end
 
   def show

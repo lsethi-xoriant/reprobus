@@ -2,14 +2,20 @@ Reprobus::Application.routes.draw do
   get "password_resets/new"
   post "versions/:id/revert" => "versions#revert", as:   
        "revert_version"
-  resources :users
+
+  resources :users do
+    collection do
+      get 'usersearch'  # /users/usersearch  
+    end
+  end
+
   resources :tours
   resources :customers
   resources :password_resets
   
   resources :enquiries do 
     collection do
-      get 'customersearch'  # /enquires/search  
+      get 'customersearch'  # /enquires/customersearch  
     end
   end 
   resources :sessions, only: [:new, :create, :destroy]
