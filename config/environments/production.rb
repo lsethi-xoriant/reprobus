@@ -27,7 +27,7 @@ Reprobus::Application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # allow fonts to be precompiled - added to allow  bootstrap glyphs to be uploaded to heroku
   config.assets.precompile += %w( '.woff', '.eot', '.svg', '.ttf' )
