@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
 
 /* mixins, variables, etc. */
 
@@ -15,7 +16,12 @@ $grayMediumLight: #eaeaea;
   vertical-align: top;
 }
 
-/* fix Select2 select boxes not fitting in bootstrap form-control css*/
+/* fix date picker not lining up.  */
+.input-group.date {
+  left: 15px;
+}
+
+/* fix Select2 select boxes not fitting in bootstrap form-control css */
 .form-control .select2-choice {
     border: 0;
     border-radius: 2px;

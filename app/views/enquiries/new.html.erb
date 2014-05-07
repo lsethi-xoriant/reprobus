@@ -29,7 +29,6 @@
         </label>   
       </div>
     </div>      
-
     <!-- End dynamic display radio buttons --> 
 
     <div class="form-group">
@@ -114,15 +113,25 @@
     </div>
     <!-- End NEW CUSTOMER --> 
 
-     <br>   
+    <!-- To/From Dates -->
     <div class="form-group">
       <%= f.label :est_date, "Travel From", class: "col-sm-3 control-label" %>
       <div class="col-sm-2">
-        <%= f.date_field :est_date, class: "form-control" %>
-      </div>
+        <div class="form-group">
+          <div class='input-group date' id='datetimepicker1' >
+            <%= f.text_field :est_date, class: "form-control" %>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+          </div>                            
+        </div>
       <%= f.label :fin_date, "To", class: "col-sm-1 control-label" %>
       <div class="col-sm-2">
-        <%= f.date_field :fin_date, class: "form-control" %>	  
+        <div class="form-group">
+          <div class='input-group date'id='datetimepicker2' >
+             <%= f.text_field :fin_date, class: "form-control" %>	  
+             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+        </div>            
       </div>
     </div>
 
@@ -146,28 +155,29 @@
     <div class="form-group">
       <%= f.label :destinations, "Destinations", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field :destinations, class: "form-control", placeholder: "Add Destinations", id: 'e12' %>
+        <%= f.text_field :destinations, class: "form-control tags", placeholder: "Add Destinations" %>
       </div>
     </div>
-
     <div class="form-group">
       <%= f.label :stopovers, "Stopovers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field :stopovers, class: "form-control", placeholder: "Add Stopovers", id: 'e13' %>
+        <%= f.text_field :stopovers, class: "form-control tags", placeholder: "Add Stopovers" %>
       </div>
     </div>
-
     <div class="form-group">
       <%= f.label :carriers, "Preferred Carriers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field :carriers, class: "form-control", placeholder: "Add Carrier", id: 'e14' %>
+        <%= f.text_field :carriers, class: "form-control tags", placeholder: "Add Carrier" %>
       </div>
     </div>
 
     <div class="form-group">
       <%= f.label :insurance, class: "col-sm-3 control-label"  %>
       <div class="col-sm-2">
-        <%= f.check_box :insurance, class: "form-control" %> Required
+        <label class="checkbox-inline">  
+        <%= f.check_box :insurance, class: "form-control" %> 
+        </label>
+        <p class="checkbox-inline">Required</p>
       </div>
     </div>
 
@@ -176,23 +186,28 @@
       <div class="col-sm-2">
         <%= f.text_field :amount, class: "form-control", placeholder: "$0.00" %>
       </div>
-      <%= f.label :probability, class: "col-sm-3 control-label"  %>
+      <%= f.label :probability, class: "col-sm-1 control-label"  %>
       <div class="col-sm-2">
-        <%= f.text_field :probability, class: "form-control" %>
+        <%= f.select :probability, options_for_select(["High", "Medium", "Low"], @enquiry.probability ), {}, class: 'form-control' %>   
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"   %>
+      <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"  %>
       <div class="col-sm-4">
         <%= f.collection_select :assigned_to, User.order(:name), :id, :name, include_blank: true %>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group">   
       <%= f.label :reminder, "Set Reminder", class: "col-sm-3 control-label"   %>
-      <div class="col-sm-4">
-        <%= f.date_field :reminder, class: "form-control"%>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <div class='input-group date'>
+            <%= f.text_field :reminder, class: "form-control"%>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+          </div>                      
       </div>
     </div>
 
