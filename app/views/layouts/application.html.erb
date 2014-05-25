@@ -11,7 +11,7 @@
     <%= render 'layouts/header' %>
     <%= render 'layouts/sidebar' %>
     
-    <div class="container">
+    <div class="content">
 	    <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= raw(value) %></div>
       <% end %>
