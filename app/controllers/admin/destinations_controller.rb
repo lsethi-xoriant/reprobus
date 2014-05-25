@@ -2,7 +2,7 @@ class Admin::DestinationsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @destination = Destination.paginate(page: params[:page])
+    @destinations = Destination.paginate(page: params[:page])
   end
   def new
     @destination = Destination.new

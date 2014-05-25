@@ -1,7 +1,7 @@
 <% provide(:title, 'All Destinations') %>
 <h1>Destinations</h1>
-<%= link_to 'New Destination', new_admin_carrier_path %>
-<% @destination.each do |destination| %> 
+<%= link_to 'New Destination', new_admin_destination_path %>
+<% @destinations.each do |destination| %> 
 <div> 
   <h2><%= link_to destination.name, edit_admin_destination_path(destination) %>
     | <%= link_to "delete",admin_destination_path(destination), method: :delete,

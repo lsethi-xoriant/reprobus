@@ -1,51 +1,80 @@
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to "Otter", root_path, id: "logo" %>
-    </div>
-    
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
+<div class="navbar">
+  
+    <div class="navbar-inner">
+      <ul class="nav pull-right">
+        
         <% if signed_in? %>
-        <li><%= link_to "Dashboard", dashboard_path %></li>
-        <li><%= link_to "New Enquiry", new_enquiry_path %></li>
+        <li>
+	        <form class="search form-inline">
+	          <input type="text" placeholder="Search...">
+	          <button class="search-submit btn-search" value="" type="submit"><i class="icon-search"></i></button>                        
+	        </form>                        
+	      </li>
         
-        <li id="fat-menu" class="dropdown"> 
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Quick Views | All<b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Enquiries", enquiries_path %></li>
-            <li><%= link_to "Customers", customers_path %></li>
-            <li><%= link_to "Tours", tours_path %></li>
-            <li><%= link_to "Users", users_path %></li>
-          </ul>
-        </li>
         
-        <li id="fat-menu" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            User Settings <b class="caret"></b>
+  
+        <li class="dropdown header-border">
+          <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="email-notify"><i class="icon-envelope-alt"></i><span class="email-alert"><i class="icon-circle"></i> </span></span>
           </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Edit Details", edit_user_path(current_user) %></li>
-            <li><%= link_to "Change Password", edit_user_path(current_user) %></li>
-            <li class="divider"></li>
-            <li>
-              <%= link_to "Sign out", signout_path, method: "delete" %>
+
+          <ul class="dropdown-menu block-dark messages">
+            <li class="view-all"><a href="#">View all messages</a></li>   
+            <li><a href="#">
+              <div class="avatar"><img height="45" width="45" src= <%= asset_path "face-1.jpg" %> alt="Your profile"></div>
+              <div class="info">Antonio Heide <span class="timer">36 min</span></div>    
+              <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem necessitatibus.</div>
+              </a>
             </li>
+            <li><a href="#">
+              <div class="avatar"><img height="45" width="45" src= <%= asset_path "face-2.jpg" %> alt="Your profile"></div>
+              <div class="info">Melissa Evans <span class="timer">52 min</span></div>    
+              <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis optio ad placeat incidunt iste non enim nisi quae culpa.</div>
+              </a>
+            </li>                                               
+          </ul>
+        </li>   
+
+        <li class="dropdown header-border">
+          <a href="#" role="button" class="dropdown-toggle " data-toggle="dropdown">
+            <div class="notify">7</div>
+          </a>
+
+          <ul class="dropdown-menu block-dark messages msg-notify">
+            <li class="view-all"><a href="#">View all notifications</a></li>   
+            <li><a href="#"><div><i class="icon-comment"></i>  new comment <span class="timer">2 min</span></div></a>                        
+            <li><a href="#"><div><i class="icon-twitter"></i>  new follower <span class="timer">6 min</span></div></a> 
+            <li><a href="#"><div><i class="icon-thumbs-up"></i> new like <span class="timer">9 min</span></div></a>                        
+            <li><a href="#"><div><i class="icon-twitter"></i>  new follower <span class="timer">25 min</span></div></a> 
+            <li><a href="#"><div><i class="icon-user"></i>  new registration <span class="timer">32 min</span></div></a>                        
+            <li><a href="#"><div><i class="icon-comment"></i>  new comment <span class="timer">2 hours</span></div></a>     
+            <li><a href="#"><div><i class="icon-map-marker"></i>  new localization <span class="timer">Yesterday</span></div></a>     
+          </ul>
+        </li>                                   
+
+        <li class="dropdown header-border">
+          <a href="#" role="button" class="dropdown-toggle " data-toggle="dropdown">
+            <div class="thumb-account">
+              <img height="20" width="20" src= <%= asset_path "timeline-team.jpg" %> alt="Your profile">
+              <span><i class="icon-caret-down"></i></span>
+            </div>
+          </a>
+
+          <ul class="dropdown-menu block-dark account">
+            <li class="first"><a tabindex="-1" href="#"><i class="icon-user"></i> Your profile</a></li>
+            <li><a tabindex="-1" href= <%= edit_user_path(current_user) %> ><i class="icon-cogs"></i> Settings</a></li>
+            <li><a tabindex="-1" href="sign-in.html"><i class="icon-signin"></i> Log in</a></li>
+            <li class="last notify-disabled"><a data-method="delete" tabindex="-1" href= <%= signout_path %> <i class="icon-signout" rel="nofollow"></i> Logout</a></li>
           </ul>
         </li>
+        
         <% else %>
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Sign in", signin_path %></li>
         <% end %>
+        
+        
       </ul>
+      <a class="brand" href="/"><span class="title">TripEase</span></a>
     </div>
-  </div>
-</nav>
+</div>

@@ -1,5 +1,6 @@
 Reprobus::Application.routes.draw do
-
+   root  'static_pages#home' 
+  
   get "password_resets/new"
   post "versions/:id/revert" => "versions#revert", as:   
        "revert_version"
@@ -20,7 +21,7 @@ Reprobus::Application.routes.draw do
     end
   end 
   resources :sessions, only: [:new, :create, :destroy]
-  root  'static_pages#home'
+
   match '/about',   to: 'static_pages#about',   via: 'get' 
   match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'   
   match '/signup',  to: 'users#new',            via: 'get'
@@ -33,7 +34,7 @@ Reprobus::Application.routes.draw do
     resources :destinations 
     resources :stopovers 
   end 
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
