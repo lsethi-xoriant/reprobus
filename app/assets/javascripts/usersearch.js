@@ -22,4 +22,5 @@ $(document).ready(function() {
     },
     dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
     });
+  
  });

@@ -1,0 +1,10 @@
+<% provide(:title, 'All Carriers') %>
+<h1>Carriers</h1>
+<%= link_to 'New Carrier', new_admin_carrier_path %>
+<% @carriers.each do |carrier| %> 
+<div> 
+  <h2><%= link_to carrier.name, edit_admin_carrier_path(carrier) %>
+    | <%= link_to "delete",admin_carrier_path(carrier), method: :delete,
+                                  data: { confirm: "You sure?" } %></h2> 
+</div> 
+<% end %> 

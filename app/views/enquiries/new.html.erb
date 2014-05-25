@@ -72,7 +72,7 @@
       <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label" %>
         <div class="col-sm-5">
           <%= hidden_field_tag(:existing_customer, existCust, id: 'res_select', class: 'ajax form-control', style: 'width: 100%;',
-                           data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %>
+                                data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' } ) %>
         </div>
       </div>
     </div>
@@ -191,7 +191,7 @@
     <div class="form-group">
       <%= f.label :carriers, "Preferred Carriers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field :carriers, class: "form-control tags", placeholder: "Add Carrier" %>
+        <%= f.text_field :carriers, class: "form-control", placeholder: "Add Carrier", id: "carriers" %>
       </div>
     </div>
 

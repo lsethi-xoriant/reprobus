@@ -1,7 +1,11 @@
 $(document).ready(function () {
   // default setting for allowing random tags in Select2 boxes 
   $(".tags").select2({ tags:[] });
-
+  
+    $("#carriers").select2({
+              data:[{id:0,text:'Virgin'},{id:1,text:'Air NZ'},{id:2,text:'JetStar'},{id:3,text:'Walking'},{id:4,text:'Ryan Air'}], multiple: true
+    });
+  
   // date picker main method. works on all text fields with the class='date'
   $('.date').datetimepicker({
     pickTime: false

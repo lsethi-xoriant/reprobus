@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505105253) do
+ActiveRecord::Schema.define(version: 20140525001148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,11 +34,38 @@ ActiveRecord::Schema.define(version: 20140505105253) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
+  create_table "carriers", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customer_carriers", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "carrier_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customer_destinations", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "destination_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customer_enquiries", force: true do |t|
     t.integer  "customer_id"
     t.integer  "enquiry_id"
     t.string   "role",        limit: 32
     t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customer_stopovers", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "stopover_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,6 +99,12 @@ ActiveRecord::Schema.define(version: 20140505105253) do
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
 
+  create_table "destinations", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "enquiries", force: true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
@@ -103,9 +136,8 @@ ActiveRecord::Schema.define(version: 20140505105253) do
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
 
-  create_table "products", force: true do |t|
+  create_table "stopovers", force: true do |t|
     t.string   "name"
-    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
