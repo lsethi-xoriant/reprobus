@@ -1,5 +1,4 @@
 <% provide(:title, @user.name + " Dashboard" ) %>
-<h3>Enquiry (<%= @user.assigned_enquiries.count %>)</h3>
 <div class="wrapper-content">
 <div class="container-fluid">
     <div class="row-fluid">
@@ -7,6 +6,8 @@
     <% @user.assigned_enquiries.each do |enquiry| %>
       <%= render partial: 'enquiries/dashboard_enquiry', locals: { enquiry: enquiry } %>
     <% end %>
+  <% else %>
+      <h3>No Enquiries</h3>
   <% end %>
       </div>
   </div>

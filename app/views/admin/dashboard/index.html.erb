@@ -1,6 +1,19 @@
 <h1>Administration</h1> 
-<ul>
-  <li><%= link_to 'Manage Carriers', admin_carriers_path %></li>
-  <li><%= link_to 'Manage Stopovers', admin_stopovers_path %></li>
-  <li><%= link_to 'Manage Destinations', admin_destinations_path %></li>
-</ul>
+ <div class="rails_admin"> 
+<table class="table table-condensed table-striped table-hover">
+  <thead>
+    <tr>
+    <th class="shrink model-name">Model name</th>
+    <th class="records">Records</th>
+    <th class="shrink controls"></th>
+    </tr>
+  </thead>
+<tbody>
+  <%= render partial: 'admin/dashboard/tablerow', locals: { entity: Carrier } %>
+  <%= render partial: 'admin/dashboard/tablerow', locals: { entity: Destination } %>
+  <%= render partial: 'admin/dashboard/tablerow', locals: { entity: Stopover } %>
+  
+</tbody>
+</table>
+</div>
+
