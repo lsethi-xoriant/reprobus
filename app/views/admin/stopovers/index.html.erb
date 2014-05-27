@@ -1,10 +1,6 @@
 <% provide(:title, 'All Stopovers') %>
-<h1>Stopovers</h1>
-<%= link_to 'New Stopover', new_admin_stopover_path %>
-<% @stopovers.each do |stopover| %> 
-<div> 
-  <h2><%= link_to stopover.name, edit_admin_stopover_path(stopover) %>
-    | <%= link_to "delete",admin_stopover_path(stopover), method: :delete,
-                                  data: { confirm: "You sure?" } %></h2> 
+<div class="row-fluid">
+  <div class="page-header">
+    <%= render partial: 'admin/dashboard/entitydisplay', locals: { entity: Stopover, collect: @stopovers } %>
+  </div>
 </div> 
-<% end %> 
