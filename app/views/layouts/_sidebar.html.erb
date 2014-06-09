@@ -1,57 +1,91 @@
-<div data-offset-top="360" data-spy="affix" class="sidebar-nav affix-top">
-  <% if signed_in? %>
-	    <form class="search form-inline">
-	        <input type="text" placeholder="Search...">
-	        <button class="search-submit btn-search" value="" type="submit"><i class="icon-search"></i></button>                        
-	    </form>    
-
-	    <div class="sidebar-avatar">
-	        <img src= <%= asset_path "team-1.jpg" %> alt="avatar" class="thumbnail-avatar">
-	        <a href="#"><div class="sidebar-avatar-message"><div class="notify notify-message"><i class="icon-envelope"></i></div></div></a>
-	        <a href="#"><div class="sidebar-avatar-notify"><div class="notify ">7</div></div></a>
-	     </div>
-
-
-	    <a data-toggle="collapse" data-target=".nav-collapse" class="btn-sidebar">
-	        <span class="notify navigation span12"><i class="icon-reorder"></i> Navigation <span class="pull-right label sidebar-label label-danger"><i class="icon-angle-down"></i> </span></span>
-	    </a>
-
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/">TripEase</a>
+  </div>
   
-	    <div class="nav-collapse subnav-collapse ">     
-	        <a href= <%= dashboard_path %> class="nav-header active"><i class="icon-dashboard"></i>Dashboard</a>
-          <a href= <%= new_enquiry_path %> class="nav-header active"><i class="icon-signin"></i>New Enquiry</a>
-        
-	        <a href="#form" class="nav-header" data-toggle="collapse"><i class="icon-edit"></i>Quick Views<span class="label sidebar-label label-info"><i class="icon-angle-down"></i> </span></a>
-	        <ul id="form" class="nav nav-list collapse">
-	            <li><a href= <%= enquiries_path %> ><i class="icon-table"></i> Enquiries</a></li>
-	            <li><a href= <%= customers_path %> ><i class="icon-table"></i> Customers</a></li>
-	            <li><a href= <%= tours_path %> ><i class="icon-table"></i> Tours</a></li>
-	            <li><a href= <%= users_path %> ><i class="icon-table"></i> Users</a></li>
-	        </ul>                     
-          
-          <% if current_user.admin? %>
-        
-	        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-cogs"></i>Admin<span class="label sidebar-label label-info"><i class="icon-angle-down"></i> </span></a>
-	        <ul id="accounts-menu" class="nav nav-list collapse">
-              <li><a href= <%= admin_path %> ><i class="icon-reorder"></i> All</a></li>
-	            <li><a href= <%= admin_carriers_path %> ><i class="icon-reorder"></i> Carriers</a></li>
-            <li><a href= <%= admin_stopovers_path %> ><i class="icon-reorder"></i> Stopovers</a></li>
-            <li><a href= <%= admin_destinations_path %> ><i class="icon-reorder"></i> Destinations</a></li>
-	        </ul>   
-         <% end %>
-                              
+ <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <% if signed_in? %>
+          <ul class="nav navbar-nav side-nav">
+            <li><a href= <%= dashboard_path %> ><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href=<%= new_enquiry_path %>><i class="fa fa-edit"></i> New Enquiry</a></li>
+             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-desktop"></i> Quick Views <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href=<%= enquiries_path %>>Enquiries</a></li>
+                <li><a href=<%= customers_path %>>Customers</a></li>
+                <li><a href=<%= tours_path %>>Tours</a></li>
+                <li><a href=<%= users_path %>>Users</a></li>
+              </ul>
+            </li>
+             <li class="dropdown">
+              <a href=<%= admin_path %> class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href=<%= admin_carriers_path %>><i class="fa fa-table"></i> Carriers</a></li>
+                <li><a href=<%= admin_stopovers_path %>><i class="fa fa-table"></i> Stopovers</a></li>
+                <li><a href=<%= admin_destinations_path %>><i class="fa fa-table"></i> Destinations</a></li>
+              </ul>
+            </li>
 
-	        <a href="inbox.html" class="nav-header"><i class="icon-envelope"></i>Inbox</a>            
+          </ul>
 
-	        <a href="calendar.html" class="nav-header"><i class="icon-calendar"></i>Calendar</a>
-
-	        <a href="maps.html" class="nav-header"><i class="icon-map-marker"></i>Maps</a>
-
-	        <a href="gallery.html" class="nav-header"><i class="icon-camera"></i>Gallery</a>
-
-
-	    </div>
-
-
-    <% end %>
-	</div>
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            <li class="dropdown messages-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">7 New Messages</li>
+                <li class="message-preview">
+                  <a href="#">
+                    <span class="avatar"><img src=<%= asset_path "team-1.jpg" %>></span>
+                    <span class="name">Hamish Gardiner:</span>
+                    <span class="message">Hey there, I wanted to ask you something...</span>
+                    <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li class="message-preview">
+                  <a href="#">
+                    <span class="avatar"><img src="http://placehold.it/50x50"></span>
+                    <span class="name">John Smith:</span>
+                    <span class="message">Hey there, I wanted to ask you something...</span>
+                    <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">View Inbox <span class="badge">7</span></a></li>
+              </ul>
+            </li>
+            <li class="dropdown alerts-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alerts <span class="badge">3</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Default <span class="label label-default">Default</span></a></li>
+                <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
+                <li><a href="#">Success <span class="label label-success">Success</span></a></li>
+                <li><a href="#">Info <span class="label label-info">Info</span></a></li>
+                <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
+                <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">View All</a></li>
+              </ul>
+            </li>
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= current_user.name %> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href= <%= edit_user_path(current_user) %>><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fa fa-envelope"></i> Inbox <span class="badge">7</span></a></li>
+                <li><a href= <%= edit_user_path(current_user) %>><i class="fa fa-gear"></i> Settings</a></li>
+                <li class="divider"></li>
+                <li><a href=<%= signout_path %>><i class="fa fa-power-off"></i> Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+      <% end %>
+ </div><!-- /.navbar-collapse -->
+</nav>  
+  

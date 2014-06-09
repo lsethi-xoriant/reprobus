@@ -1,37 +1,8 @@
 <h1><%=entity.name.pluralize%></h1>
 
-<ul class="nav nav-tabs">
-  <li title="" rel="" class="icon index_collection_link active">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>">
-      <i class="icon-th-list"></i>
-      <span>List</span>
-    </a>
-  </li>
+<%= render partial: 'admin/dashboard/tableheader', locals: { entity: entity, state: "index" } %>
 
-  <li title="" rel="" class="icon new_collection_link ">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/new">
-      <i class="icon-plus"></i>
-      <span>Add new</span>
-    </a>
-  </li>
-
-  <li title="" rel="" class="icon export_collection_link ">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/export">
-      <i class="icon-share"></i>
-      <span>Export</span>
-    </a>
-  </li>
-
-  <li title="" rel="" class="icon history_index_collection_link ">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/import">
-      <i class="icon-exchange"></i>
-      <span>Import</span>
-    </a>
-  </li>
-</ul>
-
-
-<table class="table table-condensed table-hover ">
+  <table class="table table-condensed table-hover ">
       <thead>
         <tr>
           <th>#</th>
@@ -44,10 +15,12 @@
         <tr>
           <td><%= ob.id %></td>
   
-          <td><%= link_to ob.name, "admin/#{entity.name.pluralize.downcase}/#{ob.id}/edit" %></td> 
-          <td><%= link_to "Delete", "admin/#{entity.name.pluralize.downcase}/#{ob.id}", method: :delete,
+          <td><%= link_to ob.name, "#{entity.name.pluralize.downcase}/#{ob.id}/edit" %></td> 
+          <td><%= link_to "Delete", "#{entity.name.pluralize.downcase}/#{ob.id}", method: :delete,
                                           data: { confirm: "You sure?" } %></td> 
         </tr>
         <% end %> 
       </tbody>
     </table>
+
+<%= will_paginate collect %>

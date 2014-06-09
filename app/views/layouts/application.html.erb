@@ -8,16 +8,25 @@
     <%= render 'layouts/shim' %>
   </head>
   <body>
-    <%= render 'layouts/header' %>
+    <div id="wrapper">
+     
     <%= render 'layouts/sidebar' %>
+      
+    <div id="page-wrapper">
+
+      <div class="row">
+        <div class="col-lg-12"> 
     
-    <div class="content">
-	    <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= raw(value) %></div>
-      <% end %>
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin %>
-    </div>
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= raw(value) %></div>
+        <% end %>
+        <%= yield %>
+        <%= render 'layouts/footer' %>
+        <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && current_user.name == "Hamish Gardiner" %>
+        </div>
+      </div><!-- /.row -->
+
+    </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
   </body>
 </html>

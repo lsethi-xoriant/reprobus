@@ -36,6 +36,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'select2-rails'
 gem 'paper_trail'
+gem "font-awesome-rails"
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
