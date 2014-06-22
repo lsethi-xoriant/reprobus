@@ -46,7 +46,6 @@ class Enquiry < ActiveRecord::Base
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
  
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
-
   
   def created_by_name
     self.user.name

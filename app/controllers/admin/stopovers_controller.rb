@@ -20,7 +20,7 @@ class Admin::StopoversController < ApplicationController
     @stopover = Stopover.new(stopover_params)
     if @stopover.save
       flash[:success] = "Stopover created!"
-      redirect_to admin_stopover_path(@stopover)
+      redirect_to admin_stopovers_path
     else
       render 'new'
     end

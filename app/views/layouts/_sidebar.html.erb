@@ -25,8 +25,9 @@
               </ul>
             </li>
              <li class="dropdown">
-              <a href=<%= admin_path %> class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
               <ul class="dropdown-menu">
+                <li><a href=<%= admin_path %>><i class="fa fa-wrench"></i> All</a></li>
                 <li><a href=<%= admin_carriers_path %>><i class="fa fa-table"></i> Carriers</a></li>
                 <li><a href=<%= admin_stopovers_path %>><i class="fa fa-table"></i> Stopovers</a></li>
                 <li><a href=<%= admin_destinations_path %>><i class="fa fa-table"></i> Destinations</a></li>
@@ -77,7 +78,7 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= current_user.name %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href= <%= edit_user_path(current_user) %>><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href= <%= user_path(current_user) %>><i class="fa fa-user"></i> Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox <span class="badge">7</span></a></li>
                 <li><a href= <%= edit_user_path(current_user) %>><i class="fa fa-gear"></i> Settings</a></li>
                 <li class="divider"></li>

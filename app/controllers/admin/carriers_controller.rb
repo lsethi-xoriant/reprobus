@@ -20,7 +20,7 @@ class Admin::CarriersController < ApplicationController
     @carrier = Carrier.new(carrier_params)
     if @carrier.save
       flash[:success] = "Carrier created!"
-      redirect_to admin_carrier_path(@carrier)
+      redirect_to admin_carriers_path
     else
       render 'new'
     end

@@ -20,7 +20,7 @@ class Admin::DestinationsController < ApplicationController
     @destination = Destination.new(destination_params)
     if @destination.save
       flash[:success] = "Destination created!"
-      redirect_to admin_destination_path(@Destination)
+      redirect_to admin_destinations_path
     else
       render 'new'
     end
