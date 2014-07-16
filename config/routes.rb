@@ -1,5 +1,5 @@
 Reprobus::Application.routes.draw do
-   root  'static_pages#home' 
+  root  'static_pages#home' 
   
   get "password_resets/new"
   post "versions/:id/revert" => "versions#revert", as:   
@@ -18,6 +18,7 @@ Reprobus::Application.routes.draw do
   resources :enquiries do 
     collection do
       get 'customersearch'  # /enquires/customersearch  
+      get 'carriersearch'  # /enquires/carriersearch  
     end
   end 
   resources :sessions, only: [:new, :create, :destroy]
@@ -29,12 +30,23 @@ Reprobus::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
+  get "admin/carriers/export"
+  get "admin/destinations/export"
+  get "admin/stopovers/export"
+  get "admin/carriers/import"
+  get "admin/destinations/import"
+  get "admin/stopovers/import"
+  post "admin/carriers/importfile"
+  post "admin/destinations/importfile"
+  post "admin/stopovers/importfile"
+  
   namespace :admin do 
     get '', to: 'dashboard#index', as: '/' 
     resources :carriers 
     resources :destinations 
     resources :stopovers 
   end 
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

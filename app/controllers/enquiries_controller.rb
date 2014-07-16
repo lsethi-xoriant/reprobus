@@ -33,7 +33,22 @@ class EnquiriesController < ApplicationController
                     searchSet: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
     end
   end
-    
+
+  def carriersearch
+    @entities = Carrier.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
+  
+    # also add the total count to enable infinite scrolling
+    resources_count = Carrier.select([:id, :name]).
+      where("name ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+                    searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
+    end
+  end
+
   def edit
     @enquiry = Enquiry.find(params[:id])
   end

@@ -3,6 +3,11 @@ class Admin::DestinationsController < ApplicationController
   
   def index
     @destinations = Destination.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.csv { send_data @destinations.to_csv }
+      format.xls
+    end 
   end
   def new
     @destination = Destination.new
@@ -11,6 +16,21 @@ class Admin::DestinationsController < ApplicationController
   def edit
     @destination = Destination.find(params[:id])
   end
+ 
+  def export
+  end
+  def import
+  end  
+  def importfile
+    if !params[:file].nil? then 
+      Destination.import(params[:file])
+      flash[:success] = "Destinations imported!"
+      redirect_to admin_destinations_path
+    else
+      flash[:warning] = "No File!"
+      redirect_to admin_destinations_import_path
+    end
+  end  
   
   def show
     @destination = Destination.find(params[:id])

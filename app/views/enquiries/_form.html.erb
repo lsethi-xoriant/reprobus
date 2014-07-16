@@ -1,10 +1,10 @@
-<% provide(:title, 'Create Enquiry') %>
-<h1>Create a Enquiry</h1>
+
+
 <% if  @enquiry.errors.any? %>
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
   <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
-<%#= custNum + "  "  + custName %>
+<%= custNum + "  "  + custName %>
 <% end %>
 
 <% 
@@ -29,7 +29,6 @@
   end   
 %>
 
-<%= existCust %>
     <%= form_for @enquiry, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
       <div class="form-group">
@@ -71,14 +70,14 @@
     <!-- Search fields displayed when Existing customer to be entered --> 
     <div id="existing_fields" style='<%= existCustDisplay %>'>
       <div class="form-group">
-      <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label",  data_init_text: custName, data_init_id: custNum.to_s %>
+      <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label" %>
         <div class="col-sm-5">
-          <%= hidden_field_tag(:existing_customer, custNum.to_s, value: custNum.to_s, id: 'res_select', class: 'ajax form-control', style: 'width: 100%;',  data_init_text: custName, data_init_id: custNum.to_s,
+          <%= hidden_field_tag(:existing_customer, existCust, id: 'res_select', class: 'ajax form-control', style: 'width: 100%;',
                                 data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' } ) %>
         </div>
       </div>
     </div>
-<!--   existCust  -->
+   
     <!-- Fields displayed when NEW CUSTOMER to be entered    --> 
     <div id="new_fields" style='<%= newCustDisplay %>' >
 	    <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
@@ -193,10 +192,13 @@
     <div class="form-group">
       <%= f.label :carriers, "Preferred Carriers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field( :carriers, value: @enquiry.carrier_names,  class: "ajax form-control", placeholder: "Add Carrier", id: "carriersearch",  data_id: @enquiry.carriers, data_text: @enquiry.carrier_names,
-                                  data: { source: carriersearch_enquiries_path, placeholder: 'Search for a name'}) %>
+        <%= f.text_field( :carriers, class: "ajax form-control", placeholder: "Add Carrier", id: "carriersearch",
+                                  data: { source: carriersearch_enquiries_path, placeholder: 'Search for a name' }) %>
       </div>
     </div>
+<!--           <%= hidden_field_tag(:assigned_to, existUser, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;',
+                           data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %> -->
+
 
     <div class="form-group">
       <%= f.label :insurance, "Insurance Required", class: "col-sm-3 control-label"  %>
@@ -236,6 +238,7 @@
           </div>                      
       </div>
     </div>
+
 
       <%#= f.label :percent, "Percent Complete"%>
       <%#= f.text_field :percent, class: "form-control" %>		  

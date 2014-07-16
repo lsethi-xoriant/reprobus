@@ -3,7 +3,13 @@ class Admin::StopoversController < ApplicationController
   
   def index
     @stopovers = Stopover.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.csv { send_data @stopovers.to_csv }
+      format.xls
+    end 
   end
+  
   def new
     @stopover = Stopover.new
   end
@@ -11,6 +17,21 @@ class Admin::StopoversController < ApplicationController
   def edit
     @stopover = Stopover.find(params[:id])
   end
+  
+  def export
+  end  
+  def import
+  end
+  def importfile
+    if !params[:file].nil? then 
+      Stopover.import(params[:file])
+      flash[:success] = "Stopovers imported!"
+      redirect_to admin_stopovers_path
+    else
+      flash[:warning] = "No File!"
+      redirect_to admin_stopovers_import_path
+    end
+  end  
   
   def show
     @stopover = Stopover.find(params[:id])

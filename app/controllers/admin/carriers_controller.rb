@@ -3,6 +3,11 @@ class Admin::CarriersController < ApplicationController
   
   def index
     @carriers = Carrier.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.csv { send_data @carriers.to_csv }
+      format.xls
+    end 
   end
   def new
     @carrier = Carrier.new
@@ -12,6 +17,21 @@ class Admin::CarriersController < ApplicationController
     @carrier = Carrier.find(params[:id])
   end
   
+  def export
+  end
+  def import
+  end  
+  def importfile
+    if !params[:file].nil? then 
+      Carrier.import(params[:file])
+      flash[:success] = "Carriers imported!"
+      redirect_to admin_carriers_path
+    else
+      flash[:warning] = "No File!"
+      redirect_to admin_carriers_import_path
+    end
+  end  
+    
   def show
     @carrier = Carrier.find(params[:id])
   end

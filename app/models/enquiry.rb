@@ -70,8 +70,7 @@ class Enquiry < ActiveRecord::Base
     str = ""
     self.customers.each do |cust| 
       str = str + cust.first_name + " " + cust.last_name + ", " 
-     end
-    
+    end  
     return str.chomp(", ")
   end
   
@@ -82,7 +81,24 @@ class Enquiry < ActiveRecord::Base
   def customer_email
     self.customers.first.email unless self.customers.empty?
   end
+  
+  def customer_phone
+    self.customers.first.phone unless self.customers.empty?
+  end
+  
+  def carrier_names
+    str = ""
 
+    if self.carriers.to_s != ''
+      cars = self.carriers.split(',')
+      cars.each do |car| 
+        carrier = Carrier.find(car.to_i)
+        str = str + carrier.name + "," 
+      end
+    end
+   return str.chomp(",")
+  end
+  
   def enquiry_display_str
     str = "( "
     if self.assigned_to 

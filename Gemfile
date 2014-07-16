@@ -36,7 +36,9 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'select2-rails'
 gem 'paper_trail'
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
+gem 'roo'
+gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
