@@ -1,9 +1,14 @@
 <% provide(:title, 'All Customers') %>
 <h1 class="page-header">All Customers</h1>
 
-<p><strong>Create new <%= link_to "Customer", new_customer_path %></strong></p>
-                                     
-      <table id="customers" class="table table-striped table-bordered table-hover" >
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    All Customers
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">                                    
+    <table id="customers" class="table table-striped table-bordered table-hover" >
       <thead>
         <tr>
           <th>Name</th>
@@ -14,13 +19,14 @@
       </thead>
       <tbody>
         <% @customers.each do |cust| %>
-          <tr>
-            <td><%= link_to(cust.fullname, cust) %></td>
-            <td><%= cust.title %></td>
-            <td><%= cust.email %></td>
-            <td><%= cust.phone %></td>
-          </tr>
+        <tr>
+          <td><%= link_to(cust.fullname, cust) %></td>
+          <td><%= cust.title %></td>
+          <td><%= cust.email %></td>
+          <td><%= cust.phone %></td>
+        </tr>
         <% end %>
       </tbody>
-      </table>
-
+    </table>
+  </div>
+</div>
