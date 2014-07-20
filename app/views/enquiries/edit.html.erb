@@ -1,5 +1,5 @@
 <% provide(:title, 'Edit Enquiry') %>
-<h1>Edit an Enquiry</h1>
+<h1 class="page-header">Edit an Enquiry</h1>
 <%  params[:user_type] = "Existing" %>
 <%  params[:existing_customer] = @enquiry.customers.first.id.to_s unless @enquiry.customers.empty? %>
 

@@ -1,5 +1,5 @@
 <% provide(:title, 'Create Enquiry') %>
-<h1>Create a Enquiry</h1>
+<h1 class="page-header">Create a Enquiry</h1>
 <% if  @enquiry.errors.any? %>
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
@@ -241,11 +241,9 @@
       <%#= f.text_field :percent, class: "form-control" %>		  
  
       <%= f.hidden_field :user_id, :value => current_user.id %>
-      <div class="form-group">   
-      <div class="col-sm-3">
-      </div>
-      <div class="col-sm-3">
+<div class="row">
+      <div class="col-sm-2 col-md-offset-3">
       <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
       </div>
-      </div>
+</div>
     <% end %>
