@@ -9,7 +9,7 @@
 #  access           :string(8)        default("Public")
 #  source           :string(32)
 #  stage            :string(32)
-#  probability      :integer
+#  probability      :string(255)
 #  amount           :decimal(12, 2)
 #  discount         :decimal(12, 2)
 #  closes_on        :date
@@ -22,6 +22,13 @@
 #  est_date         :date
 #  num_people       :string(255)
 #  percent          :integer
+#  fin_date         :date
+#  standard         :string(255)
+#  insurance        :boolean
+#  reminder         :date
+#  destinations     :text
+#  stopovers        :text
+#  carriers         :text
 #
 
 class Enquiry < ActiveRecord::Base

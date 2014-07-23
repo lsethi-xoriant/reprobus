@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy]
+                only: [:index, :edit, :update, :destroy, :new, :show, :create]
   before_filter :admin_user, only: :destroy
   
   def index
@@ -40,7 +40,6 @@ class CustomersController < ApplicationController
     end
   end
 
-    
   def destroy
     Customer.find(params[:id]).destroy
     flash[:success] = "Customer deleted."
@@ -50,6 +49,8 @@ class CustomersController < ApplicationController
 private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title,
-        :source, :email, :alt_email, :phone, :mobile,  address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
+        :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, 
+        :place_of_issue, :passport_num, :insurance, :gender, :born_on, 
+        address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
     end  
 end

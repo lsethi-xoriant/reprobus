@@ -1,7 +1,7 @@
 <% provide(:title, 'Create Tour') %>
 <h1 class="page-header">Create a Tour</h1>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset2">
     <%= form_for @tour, :html => {:multipart => true} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
     

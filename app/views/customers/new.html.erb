@@ -1,7 +1,7 @@
 <% provide(:title, 'Create Customer') %>
 <h1 class="page-header">Create a Customer</h1>
 <div class="row">
-  <div class="span6 offset3">
+  <div class="span6 offset2">
     <%= form_for @customer, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
     
@@ -40,6 +40,30 @@
       <div class="form-group">  <%= f.label :fax %>
         <div class="col-sm-6">  <%= f.text_field :fax %>  </div> 
       </div>
+    
+      <div class="form-group">  <%= f.label :fax %>
+        <div class="col-sm-6">  <%= f.text_field :fax %>  </div> 
+      </div>
+    
+      <div class="form-group">  <%= f.label :fax %>
+        <div class="col-sm-6">  <%= f.text_field :fax %>  </div> 
+      </div>
+
+   
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "gender", f: f } %>
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "born_on", f: f } %>
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "issue_date", f: f } %>
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "expiry_date", f: f } %>
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "passport_num", f: f } %>
+    <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "insurance", f: f } %>
+    
+    
+<!--     add_column :customers, :issue_date, :date    
+    add_column :customers, :expiry_date, :date    
+    add_column :customers, :place_of_issue, :stringc
+    add_column :customers, :passport_num, :string
+    add_column :customers, :insurance, :string
+    add_column :customers, :gender, :string           -->
 
       <% f.fields_for :address do |builder| %>
       <p>

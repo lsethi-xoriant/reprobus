@@ -8,6 +8,7 @@ $(document).ready ->
     options =
       placeholder: select.data('placeholder')
       minimumInputLength: 1
+      
     if select.hasClass('ajax') # only add ajax functionality if this class is present
       options.ajax =
         url: select.data('source')
@@ -19,12 +20,12 @@ $(document).ready ->
         results: (data, page) ->
           results: data.searchSet
           more: data.total > (page * 25) # adding the more: option enables infinite scrolling (select2 will load more content if available)
-
-        initSelection: (e, callback) ->
-          elementText = $(e).attr("data-init-text")
-          callback term: elementText
-          return        
           
+          
+          initSelection: (e, callback) ->
+          #elementText = $(e).attr("data-init-text")
+          callback term: elementText
+          return  
+        
       options.dropdownCssClass = "bigdrop"
-
     select.select2(options)

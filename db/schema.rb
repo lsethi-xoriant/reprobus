@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140525001148) do
+ActiveRecord::Schema.define(version: 20140723075304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: true do |t|
+    t.string   "type"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", force: true do |t|
     t.string   "street1"
@@ -36,6 +43,13 @@ ActiveRecord::Schema.define(version: 20140525001148) do
 
   create_table "carriers", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customer_activities", force: true do |t|
+    t.integer  "activity_id"
+    t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -95,6 +109,12 @@ ActiveRecord::Schema.define(version: 20140525001148) do
     t.string   "skype",           limit: 128
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "issue_date"
+    t.date     "expiry_date"
+    t.string   "place_of_issue"
+    t.string   "passport_num"
+    t.string   "insurance"
+    t.string   "gender"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -150,6 +170,13 @@ ActiveRecord::Schema.define(version: 20140525001148) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
+  end
+
+  create_table "user_activities", force: true do |t|
+    t.integer  "activity_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

@@ -27,6 +27,12 @@
 #  skype           :string(128)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  issue_date      :date
+#  expiry_date     :date
+#  place_of_issue  :string(255)
+#  passport_num    :string(255)
+#  insurance       :string(255)
+#  gender          :string(255)
 #
 
 require 'spec_helper'
