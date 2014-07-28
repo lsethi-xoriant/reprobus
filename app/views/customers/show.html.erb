@@ -131,9 +131,11 @@
 
           <div class="well well-sm">
             <h4>Add a Note</h4>
-            <textarea class="form-control" rows="5"></textarea>
-            <button type="button" class="btn btn-primary add-note">Add a note</button>
-            <div class="clearfix"></div>
+            <%= form_for @customer, url: customers_addnote_path, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+              <%= f.text_area :note, rows: "5", class: "form-control" %>
+              <%= f.submit "Add a note", class: "btn btn-primary add-note" %>      
+              <div class="clearfix"></div>
+            <% end %>
           </div>
             <!-- /well -->
           <div class="activity"></div>
