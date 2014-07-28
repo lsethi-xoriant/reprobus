@@ -31,6 +31,11 @@ module ApplicationHelper
             "Hon"]
   end
   
+  def formated_date(date) 
+    if !date.nil? then 
+      return date.to_formatted_s(:rfc822)
+    end
+  end
   
   module BootstrapExtension
     FORM_CONTROL_CLASS = "form-control"

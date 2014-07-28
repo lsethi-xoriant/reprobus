@@ -46,13 +46,13 @@
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Place of Issue</div>
               <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.place_of_issue %></div>
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Issue Date</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.issue_date.to_formatted_s(:rfc822) %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.issue_date) %></div>
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Expiry Date</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.expiry_date.to_formatted_s(:rfc822) %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.expiry_date ) %></div>
             </li>
-            <%= Date.today.to_formatted_s(:rfc822)  %>
+
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.created_at.to_formatted_s(:rfc822) %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.created_at) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned to</li>
             <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
@@ -132,10 +132,13 @@
 
           <div class="well well-sm">
             <h4>Add a Note</h4>
-            <%= form_for @customer, url: customers_addnote_path, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
-              <%= f.text_area :note, rows: "5", class: "form-control" %>
-              <%= f.hidden_field :type, :value => "Note" %>
-              <%= f.submit "Add a note", class: "btn btn-primary add-note" %>      
+            <%#= form_for @customer, url: addnote_customers_path, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+            <%=  form_tag({controller: "customers", action: "addnote"}, method: "get", class: "form-horizontal") do %>
+              <%= text_area_tag :note, nil, rows: "5", class: "form-control" %>
+              <%= hidden_field_tag :type, '', :value => "Note" %>
+              <%= hidden_field_tag :id, '', :value => @customer.id %>
+              <%#= hidden_field_tag :customer, '', :value => @customer.id %>
+              <%= submit_tag "Add a note", class: "btn btn-primary add-note" %>      
               <div class="clearfix"></div>
             <% end %>
           </div>
