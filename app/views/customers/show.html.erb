@@ -1,31 +1,147 @@
 <% provide(:title, @customer.first_name + " " + @customer.last_name) %>
 <div class="row">
-  <aside class="span4">
+  <aside class="col-lg-12">
     <section>
-      <h1 class="page-header" >
-        <%= @customer.first_name + " " + @customer.last_name %>
-      </h1>
+      <h1 class="page-header" >Customer Details</h1>
+        
+        
+       <div class="row">
+        <div class="col-lg-6">     
+          <div class="row">
+            <div class="col-lg-3 "> <img src="images/alagoon.jpg" alt="" class="avatar img-circle"/> </div>
+            <div class="col-lg-9 profile-name">
+              <h2><%= @customer.first_name + " " + @customer.last_name %></h2>
+              <i class="fa fa-pencil editicon"><%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , edit_customer_path(@customer) %></i>
+              <ul>
+                <li><i class="fa fa-envelope"></i> <a href="mailto:<%= @customer.email %>"><%= @customer.email %></a></li>
+                <li><i class="fa fa-phone"></i> <%= @customer.phone %> (Landline) </li>
+                <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>
+              </ul>
+            </div>
+          </div>
+          <ul class="row profile-details">
+            <% if @customer.enquiries.empty? %>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
+              <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
+            <% else %>
+              <% @customer.enquiries.each do |e| %>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= enquiry_path e %>><%= e.name %></a></li>
+              <% end %>
+            <% end %> 
+            
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Customer ID</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.id %></li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
+            <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Gender</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.gender %></li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">D.O.B</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.born_on %></li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Insurance</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.insurance %></li>
+            <li class="col-lg-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Passport No</div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.passport_num %></div>
+              <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Place of Issue</div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.place_of_issue %></div>
+              <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Issue Date</div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.issue_date.to_formatted_s(:rfc822) %></div>
+              <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Expiry Date</div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.expiry_date.to_formatted_s(:rfc822) %></div>
+            </li>
+            <%= Date.today.to_formatted_s(:rfc822)  %>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.created_at.to_formatted_s(:rfc822) %></li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned to</li>
+            <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.background_info %></li>
+          </ul>
+        </div>
+          
+        <% if current_user.admin? %>
+          <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
+        <% end %>   
       
-      <br>
-    <%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , edit_customer_path(@customer) %>      
-      <br>
-      <h2 text-align="left">
-        <%= @customer.title %>
-        <br>
-        <%= @customer.email %>
-        <br>
-        <%= @customer.alt_email %>
-        <br>
-        <%= @customer.phone %>
-        <br>
-        <%= @customer.mobile %>
-        <br>
-       <%= @customer.fax %>
-        <br>        
-      </h2>
-      <% if current_user.admin? %>
-        <%= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
-      <% end %>      
+        <div class="col-lg-6 details-activity">
+          <h3>Activity Stream</h3>
+          <div class="timeline-centered">
+            <article class="timeline-entry">
+
+            <div class="timeline-entry-inner">
+              <div class="timeline-icon">
+                <i class="fa fa-edit"></i>
+              </div>
+
+              <div class="timeline-label">
+                <h6><a href="#">New Note</a> <span>added by Tim Farquahar</span></h6>
+                <p>Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.</p>
+              </div>
+            </div>
+            </article>
+
+            <article class="timeline-entry">
+            <div class="timeline-entry-inner">
+              <div class="timeline-icon">
+                  <i class="fa fa-calendar "></i>
+              </div>
+              <div class="timeline-label">
+                <h6><a href="#">New Booking</a> <span>added by Tim Farquahar</span></h6>
+                    <p> <span class="bookingadded"><strong>Booking $23,500 </strong></span></p>
+              </div>
+            </div>
+        </article>
+
+            <article class="timeline-entry">
+            <div class="timeline-entry-inner">
+              <div class="timeline-icon">
+                  <i class="fa fa-envelope "></i>
+              </div>
+              <div class="timeline-label">
+                <h6><a href="#">Email Sent</a> by Tim Farquahar</h6>
+                <p>email from incrediapp - Cheers Tim Farquahar Head Office: Level 6, 115 Pitt St, Sydney NSW, Australia 2000 Call: + 611300 575 752 Direct: +64 2 1 352 236 Web: eclipsetravel.com.au</p>
+              </div>
+            </div>
+        </article>
+
+            <article class="timeline-entry">
+            <div class="timeline-entry-inner">
+            <div class="timeline-icon">
+                <i class="fa fa-envelope-o "></i>
+            </div>
+            <div class="timeline-label">
+                <h6><a href="#">Email Recieved</a> from Matthew Brone-Smith</h6>
+                <p>Hi Tim<br>
+                the quote looks good thanks let's go with that. Exciting!
+                </p>
+            </div>
+            </div>
+        </article>
+
+
+            <article class="timeline-entry begin">
+            <div class="timeline-entry-inner">
+            <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+                <i class="entypo-flight"></i> +
+            </div>
+            </div>
+        </article>
+          </div>         
+
+          <div class="well well-sm">
+            <h4>Add a Note</h4>
+            <textarea class="form-control" rows="5"></textarea>
+            <button type="button" class="btn btn-primary add-note">Add a note</button>
+            <div class="clearfix"></div>
+          </div>
+            <!-- /well -->
+          <div class="activity"></div>
+            <!-- /activity --> 
+        </div>
+      </div>
+     
+      
     </section>
   </aside> 
 </div>
