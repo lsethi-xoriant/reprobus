@@ -17,6 +17,20 @@ module ApplicationHelper
     will_paginate(collection, options)
   end  
    
+  def titles_list
+    list = ["Ms", 
+            "Miss", 
+            "Mrs",   
+            "Mr",
+            "Master",
+            "Rev",
+            "Father",
+            "Dr",
+            "Atty",
+            "Prof",
+            "Hon"]
+  end
+  
   
   module BootstrapExtension
     FORM_CONTROL_CLASS = "form-control"
