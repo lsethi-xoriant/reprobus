@@ -43,7 +43,7 @@ class CustomersController < ApplicationController
   def addnote
     @customer = Customer.find(params[:id])
   
-    if @customer.activities.create(type: "Note", description: customer_params[:note])
+    if @customer.activities.create(type: customer_params[:type], description: customer_params[:note])
       flash[:success] = "Note added"
     end
     redirect_to @customer
@@ -59,7 +59,7 @@ private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, 
-        :place_of_issue, :passport_num, :insurance, :gender, :born_on, :note,
+        :place_of_issue, :passport_num, :insurance, :gender, :born_on, :note, :type,
         address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
     end  
 end
