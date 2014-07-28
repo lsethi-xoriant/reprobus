@@ -64,6 +64,7 @@
           <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
         <% end %>   
       
+      
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
           <div class="timeline-centered">
@@ -133,6 +134,7 @@
             <h4>Add a Note</h4>
             <%= form_for @customer, url: customers_addnote_path, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
               <%= f.text_area :note, rows: "5", class: "form-control" %>
+              <%= f.hidden_field :type, :value => "Note" %>
               <%= f.submit "Add a note", class: "btn btn-primary add-note" %>      
               <div class="clearfix"></div>
             <% end %>
