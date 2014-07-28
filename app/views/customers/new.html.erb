@@ -10,7 +10,7 @@
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "last_name", f: f } %>
 
       <div class="form-group">  <%= f.label :title %>
-        <div class="col-sm-6">  <%= f.text_field :title %>  </div>
+        <div class="col-sm-6">   <%= f.select :title, options_for_select(titles_list, @customer.title ), {}, class: 'form-control' %>  </div>
       </div>
     
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "gender", f: f } %>
