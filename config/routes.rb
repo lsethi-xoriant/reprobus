@@ -12,9 +12,14 @@ Reprobus::Application.routes.draw do
   end
   
   resources :tours
-  resources :customers
   resources :password_resets
   
+  resources :customers do 
+    collection do
+      get 'addnote'  # /enquires/customersearch  
+    end
+  end
+
   resources :enquiries do 
     collection do
       get 'customersearch'  # /enquires/customersearch  
