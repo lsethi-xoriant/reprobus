@@ -1,4 +1,6 @@
 class AddSettings < ActiveRecord::Migration
+  #NOTE THESE TABLES ARE NAMED WRONG - SHOULD BE CUSTOMERS_XXXX
+  
   def change    
     drop_table :products
     

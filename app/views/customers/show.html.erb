@@ -8,7 +8,8 @@
        <div class="row">
         <div class="col-lg-6">     
           <div class="row">
-            <div class="col-lg-3 "> <img src="images/alagoon.jpg" alt="" class="avatar img-circle"/> </div>
+            <div class="col-lg-3 "> <%= image_tag "team-1.jpg", class: "avatar img-circle" %> </div>
+      
             <div class="col-lg-9 profile-name">
               <h2><%= @customer.first_name + " " + @customer.last_name %></h2>
               <i class="fa fa-pencil editicon"><%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , edit_customer_path(@customer) %></i>
@@ -67,60 +68,13 @@
       
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
+
           <div class="timeline-centered">
-            <article class="timeline-entry">
-
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon">
-                <i class="fa fa-edit"></i>
-              </div>
-
-              <div class="timeline-label">
-                <h6><a href="#">New Note</a> <span>added by Tim Farquahar</span></h6>
-                <p>Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.</p>
-              </div>
-            </div>
-            </article>
-
-            <article class="timeline-entry">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon">
-                  <i class="fa fa-calendar "></i>
-              </div>
-              <div class="timeline-label">
-                <h6><a href="#">New Booking</a> <span>added by Tim Farquahar</span></h6>
-                    <p> <span class="bookingadded"><strong>Booking $23,500 </strong></span></p>
-              </div>
-            </div>
-        </article>
-
-            <article class="timeline-entry">
-            <div class="timeline-entry-inner">
-              <div class="timeline-icon">
-                  <i class="fa fa-envelope "></i>
-              </div>
-              <div class="timeline-label">
-                <h6><a href="#">Email Sent</a> by Tim Farquahar</h6>
-                <p>email from incrediapp - Cheers Tim Farquahar Head Office: Level 6, 115 Pitt St, Sydney NSW, Australia 2000 Call: + 611300 575 752 Direct: +64 2 1 352 236 Web: eclipsetravel.com.au</p>
-              </div>
-            </div>
-        </article>
-
-            <article class="timeline-entry">
-            <div class="timeline-entry-inner">
-            <div class="timeline-icon">
-                <i class="fa fa-envelope-o "></i>
-            </div>
-            <div class="timeline-label">
-                <h6><a href="#">Email Recieved</a> from Matthew Brone-Smith</h6>
-                <p>Hi Tim<br>
-                the quote looks good thanks let's go with that. Exciting!
-                </p>
-            </div>
-            </div>
-        </article>
-
-
+            
+            <% @customer.activities.each do |act| %>
+              <%= render partial: 'timeline', locals: { activity: act } %>
+            <% end %>  
+            
             <article class="timeline-entry begin">
             <div class="timeline-entry-inner">
             <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">

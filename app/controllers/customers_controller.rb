@@ -42,8 +42,10 @@ class CustomersController < ApplicationController
 
   def addnote
     @customer = Customer.find(params[:id])
-  
-    if @customer.activities.create(type: params[:type], description: params[:note])
+    act = @customer.activities.create(type: params[:type], description: params[:note])
+    
+    if act
+      current_user.activities<<(act)
       flash[:success] = "Note added"
     end
     redirect_to @customer

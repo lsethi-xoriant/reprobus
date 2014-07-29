@@ -30,6 +30,7 @@ module Reprobus
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
     config.assets.enabled = true
     config.assets.paths << "#{Rails.root}/app/assets/fonts" 
+    config.autoload_paths += %W(#{config.root}/app/models/activities)
     
   end
 end

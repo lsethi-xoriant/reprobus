@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723075304) do
+ActiveRecord::Schema.define(version: 20140729083317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20140723075304) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "customer_id"
+    t.integer  "user_id"
   end
 
   create_table "addresses", force: true do |t|
@@ -43,13 +45,6 @@ ActiveRecord::Schema.define(version: 20140723075304) do
 
   create_table "carriers", force: true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "customer_activities", force: true do |t|
-    t.integer  "activity_id"
-    t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -119,6 +114,13 @@ ActiveRecord::Schema.define(version: 20140723075304) do
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
 
+  create_table "customers_activities", force: true do |t|
+    t.integer  "activity_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "destinations", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -172,13 +174,6 @@ ActiveRecord::Schema.define(version: 20140723075304) do
     t.string   "image"
   end
 
-  create_table "user_activities", force: true do |t|
-    t.integer  "activity_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
@@ -194,6 +189,13 @@ ActiveRecord::Schema.define(version: 20140723075304) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+
+  create_table "users_activities", force: true do |t|
+    t.integer  "activity_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "versions", force: true do |t|
     t.string   "item_type",      null: false
