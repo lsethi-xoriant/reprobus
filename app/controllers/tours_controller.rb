@@ -41,7 +41,7 @@ class ToursController < ApplicationController
   
 private
     def tour_params
-      params.require(:customer).permit(:customerName, :customerPrice, :destination,
+      params.require(:tour).permit(:tourName, :tourPrice, :destination,
                                    :country, :image, :remote_image_url)
     end  
 end

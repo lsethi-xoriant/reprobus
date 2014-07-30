@@ -13,7 +13,7 @@ module ApplicationHelper
   # Returns a dash if the passed in value is nil 
   # (for use in some bootstrap Divs that need a value to size correctly)
   def value_or_dash(value)
-    if value.empty?
+    if value.nil?
       return " - "
     else
       return value

@@ -1,4 +1,4 @@
 jQuery ->
-        $('#customers').dataTable
+        $('#sort_table').dataTable
           "sPaginationType": "bootstrap"
 
