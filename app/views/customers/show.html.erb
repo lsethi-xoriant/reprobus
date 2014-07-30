@@ -32,24 +32,24 @@
             <% end %> 
             
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Customer ID</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.id %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.nice_id %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
             <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Gender</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.gender %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.gender ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">D.O.B</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.born_on %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.born_on ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Insurance</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.insurance %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.insurance ) %></li>
             <li class="col-lg-12">
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Passport No</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.passport_num %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.passport_num ) %></div>
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Place of Issue</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= @customer.place_of_issue %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.place_of_issue ) %></div>
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Issue Date</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.issue_date) %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( formated_date(@customer.issue_date)) %></div>
               <div class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Expiry Date</div>
-              <div class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.expiry_date ) %></div>
+              <div class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( formated_date(@customer.expiry_date)) %></div>
             </li>
 
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
@@ -57,7 +57,7 @@
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned to</li>
             <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.background_info %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.background_info ) %></li>
           </ul>
         </div>
           
