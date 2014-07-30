@@ -58,4 +58,9 @@ class Customer < ActiveRecord::Base
   def fullname 
     "#{self.first_name} #{self.last_name}"
   end
+  
+  def nice_id
+    self.id.to_s.rjust(6, '0')  
+  end
+
 end
