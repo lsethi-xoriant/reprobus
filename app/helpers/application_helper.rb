@@ -10,6 +10,16 @@ module ApplicationHelper
     end
   end
   
+  # Returns a dash if the passed in value is nil 
+  # (for use in some bootstrap Divs that need a value to size correctly)
+  def value_or_dash(value)
+    if value.empty?
+      return " - "
+    else
+      return value
+    end
+  end
+  
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
@@ -31,12 +41,14 @@ module ApplicationHelper
             "Hon"]
   end
   
+  # adds nice date like: 14 Dec 2014
   def formated_date(date) 
     if !date.nil? then 
       return date.to_formatted_s(:rfc822)
     end
   end
   
+     
   module BootstrapExtension
     FORM_CONTROL_CLASS = "form-control"
     LABEL_CONTROL_CLASS = "col-sm-3 control-label"
