@@ -6,7 +6,7 @@
     <%= render partial: 'admin/dashboard/tableheader', locals: { entity: Carrier, state: "new" } %>
 
     <%#= form_for @carrier, :url => admin_carrier_path(@carrier), :html => {:multipart => true} do |f| %>
-  <%= form_for [:admin, @carrier], :html => {:multipart => true} do |f| %>
+  <%= form_for [:admin, @carrier], :html => {:multipart => true, :class => "form-horizontal" } do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
     
     <%= f.label :name %>
