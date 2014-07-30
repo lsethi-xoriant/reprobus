@@ -1,7 +1,7 @@
 <% provide(:title, "Reset Password") %>
 <h1 class="page-header">Reset Password</h1>
 
-<%= form_for @user, :url => password_reset_path(params[:id]) do |f| %>
+<%= form_for @user, :url => password_reset_path(params[:id]), :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
   <% if @user.errors.any? %>
     <div class="error_messages">
       <h2>Form is invalid</h2>
