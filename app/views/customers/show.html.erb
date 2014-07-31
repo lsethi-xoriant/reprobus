@@ -71,7 +71,7 @@
 
           <div class="timeline-centered">
             
-            <% @customer.activities.each do |act| %>
+            <% @customer.activities.reverse_each do |act| %>
               <%= render partial: 'timeline', locals: { activity: act } %>
             <% end %>  
             
