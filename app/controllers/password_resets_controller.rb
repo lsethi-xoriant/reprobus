@@ -1,4 +1,6 @@
 class PasswordResetsController < ApplicationController
+  layout "plain"
+  
   def new
   end
   
