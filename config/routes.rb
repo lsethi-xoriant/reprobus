@@ -52,7 +52,7 @@ Reprobus::Application.routes.draw do
     resources :stopovers 
   end 
   
-  post "static_pages/post"
+  post "emails/post"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
