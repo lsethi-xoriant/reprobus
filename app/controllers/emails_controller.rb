@@ -25,7 +25,7 @@ class EmailsController < ApplicationController
     
       er = EmailReceiver.find_by(uniqueID: substring)
       cust = er.customer
-      cust.activities.create(type: "Email", description: actual_body)
+      cust.activities.create(type: "Note", description: actual_body)
     
      render :text => "OK"
 puts "header key: #{sender}, header value: #{subject}, header value: #{recipient} 
