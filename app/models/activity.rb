@@ -7,6 +7,8 @@
 #  description :text
 #  created_at  :datetime
 #  updated_at  :datetime
+#  customer_id :integer
+#  user_id     :integer
 #
 
 class Activity < ActiveRecord::Base

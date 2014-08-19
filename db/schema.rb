@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818024414) do
+ActiveRecord::Schema.define(version: 20140819000321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,8 @@ ActiveRecord::Schema.define(version: 20140818024414) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "email_receivers", ["uniqueID"], name: "index_email_receivers_on_uniqueID", using: :btree
 
   create_table "enquiries", force: true do |t|
     t.integer  "user_id"

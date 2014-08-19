@@ -14,7 +14,8 @@
               <h2><%= @customer.first_name + " " + @customer.last_name %></h2>
               <i class="fa fa-pencil editicon"><%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , edit_customer_path(@customer) %></i>
               <ul>
-                <li><i class="fa fa-envelope"></i> <a href="mailto:<%= @customer.email %>"><%= @customer.email %></a></li>
+               
+                <li><i class="fa fa-envelope"></i> <%= mail_to(@customer.email, @customer.email, bcc: @customer.create_email_link)%>" </li>
                 <li><i class="fa fa-phone"></i> <%= @customer.phone %> (Landline) </li>
                 <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>
               </ul>
@@ -69,8 +70,7 @@
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
 
-          <div class="timeline-centered">
-            
+          <div class="timeline-centered">        
             <% @customer.activities.reverse_each do |act| %>
               <%= render partial: 'timeline', locals: { activity: act } %>
             <% end %>  

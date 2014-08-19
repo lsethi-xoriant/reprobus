@@ -27,6 +27,12 @@
 #  skype           :string(128)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  issue_date      :date
+#  expiry_date     :date
+#  place_of_issue  :string(255)
+#  passport_num    :string(255)
+#  insurance       :string(255)
+#  gender          :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -61,6 +67,15 @@ class Customer < ActiveRecord::Base
   
   def nice_id
     self.id.to_s.rjust(6, '0')  
+  end
+  
+  def create_email_link
+    email_receiver = EmailReceiver.new
+    email_receiver.uniqueID = SecureRandom.urlsafe_base64
+    email_receiver.customer = self
+    email_receiver.save
+
+    return email_receiver.uniqueID  + "@app24117064.mailgun.org"
   end
 
 end
