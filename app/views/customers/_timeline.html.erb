@@ -1,6 +1,8 @@
 
 <% if activity.user_id == 0 
-    userName = "Unknown"
+    userName = "system"
+  elsif activity.user_id.nil?
+    userName = "system"
   else
     userName = User.find(activity.user_id).name   
   end %>
