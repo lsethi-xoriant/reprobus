@@ -52,7 +52,7 @@
       </div>
       <div class="timeline-label">
         <h6><a href="#">Email Recieved</a> from <%= @customer.fullname %> </h6>
-        <p><%= activity.description %></p>
+        <p><%= simple_format(activity.description) %></p>
       </div>
     </div>
   </article>
