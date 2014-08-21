@@ -27,7 +27,7 @@ class EmailsController < ApplicationController
     
       cust = Customer.find_by(emailID: substring)
       if !cust.nil?
-        cust.activities.create(type: "EmailSent", description: actual_body, user_email: semder)
+        cust.activities.create(type: "EmailSent", description: actual_body, user_email: sender)
       end
     
      render :text => "OK"
