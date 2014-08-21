@@ -15,6 +15,8 @@ class EmailsController < ApplicationController
      # the quoted part
      actual_body = params["stripped-text"]
 
+    actual_body = "Subject: #{subject}\n\n#{actual_body}" 
+     
     # process all attachments: - removed to get up and running
 #      count = params['attachment-count'].to_i
 #      count.times do |i|
@@ -25,7 +27,7 @@ class EmailsController < ApplicationController
     
       cust = Customer.find_by(emailID: substring)
       if !cust.nil?
-        cust.activities.create(type: "EmailSent", description: actual_body)
+        cust.activities.create(type: "EmailSent", description: actual_body, user_email: semder)
       end
     
      render :text => "OK"

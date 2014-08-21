@@ -9,6 +9,7 @@
 #  updated_at  :datetime
 #  customer_id :integer
 #  user_id     :integer
+#  user_email  :string(255)
 #
 
 class Activity < ActiveRecord::Base
