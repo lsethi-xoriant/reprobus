@@ -23,13 +23,14 @@ class EmailsController < ApplicationController
 #        data = stream.read()
 #      end
     
-      er = EmailReceiver.find_by(uniqueID: substring)
-      cust = er.customer
-      cust.activities.create(type: "Note", description: actual_body)
+      cust = Customer.find_by(emailID: substring)
+      if !cust.nil?
+        cust.activities.create(type: "EmailSent", description: actual_body)
+      end
     
      render :text => "OK"
-puts "header key: #{sender}, header value: #{subject}, header value: #{recipient} 
-, header value: #{substring}"
+#puts "header key: #{sender}, header value: #{subject}, header value: #{recipient}, header value: #{substring}"
+    
    end 
   
 end

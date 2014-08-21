@@ -7,8 +7,7 @@
     userName = User.find(activity.user_id).name   
   end %>
 
-<% if activity.type = "Note" %>
-
+<% if activity.type == "Note" %>
   <article class="timeline-entry">
     <div class="timeline-entry-inner">
       <div class="timeline-icon">
@@ -21,7 +20,7 @@
       </div>
     </div>
   </article>
-<% elsif activity.type = "Booking" %>
+<% elsif activity.type == "Booking" %>
   <article class="timeline-entry">
     <div class="timeline-entry-inner">
       <div class="timeline-icon">
@@ -33,7 +32,7 @@
       </div>
     </div>
   </article>
-<% elsif activity.type = "EmailSent" %>
+<% elsif activity.type == "EmailSent" %>
   <article class="timeline-entry">
     <div class="timeline-entry-inner">
       <div class="timeline-icon">
@@ -45,7 +44,7 @@
       </div>
     </div>
   </article>
-<% elsif activity.type = "EmailRecieved" %>
+<% elsif activity.type == "EmailRecieved" %>
   <article class="timeline-entry">
     <div class="timeline-entry-inner">
       <div class="timeline-icon">

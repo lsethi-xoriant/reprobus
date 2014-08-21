@@ -33,6 +33,7 @@
 #  passport_num    :string(255)
 #  insurance       :string(255)
 #  gender          :string(255)
+#  emailID         :string(255)
 #
 
 require 'spec_helper'

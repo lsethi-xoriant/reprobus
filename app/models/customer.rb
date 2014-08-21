@@ -33,6 +33,7 @@
 #  passport_num    :string(255)
 #  insurance       :string(255)
 #  gender          :string(255)
+#  emailID         :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -70,12 +71,12 @@ class Customer < ActiveRecord::Base
   end
   
   def create_email_link
-    email_receiver = EmailReceiver.new
-    email_receiver.uniqueID = SecureRandom.urlsafe_base64
-    email_receiver.customer = self
-    email_receiver.save
+    #email_receiver = EmailReceiver.new
+    #email_receiver.uniqueID = SecureRandom.urlsafe_base64
+    #email_receiver.customer = self
+    #email_receiver.save
 
-    return email_receiver.uniqueID  + "@app24117064.mailgun.org"
+    return self.emailID  + "@app24117064.mailgun.org"
   end
 
 end
