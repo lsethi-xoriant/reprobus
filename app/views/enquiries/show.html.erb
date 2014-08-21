@@ -10,7 +10,7 @@
       <%= link_to "Edit " + @enquiry.name , edit_enquiry_path(@enquiry) %>      
       <br>
       <br>
-      <h2 text-align="left">
+
         <table>
         <% if @enquiry.assignee %>
           <tr><td style="width:150px"> Assigned To</td><td> <%= link_to @enquiry.assigned_to_name, @enquiry.assignee %> </td> </tr>
@@ -35,7 +35,7 @@
         <tr><td> Created </td><td> <%= @enquiry.created_at.strftime("%m/%d/%Y") %> </td></tr>
         <tr><td> Created By </td><td> <%= @enquiry.created_by_name %> </td> </tr>
         </table>
-      </h2>
+
       <br>
       
       <% if current_user.admin? %>
