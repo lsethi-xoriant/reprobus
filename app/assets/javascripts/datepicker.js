@@ -7,8 +7,16 @@ $(document).ready(function () {
     });
   
   // date picker main method. works on all text fields with the class='date'
+  // documentaion: http://eonasdan.github.io/bootstrap-datetimepicker/
+  
   $('.date').datetimepicker({
-    pickTime: false
+    pickTime: false,
+    icons: {
+      time: "fa fa-clock-o",
+      date: "fa fa-calendar",
+      up: "fa fa-arrow-up",
+      down: "fa fa-arrow-down"
+            }
     });
   
   // specific code to link date pickers on enquiry pages => so From cannot be > than To etc

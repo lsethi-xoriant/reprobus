@@ -20,27 +20,16 @@ $(document).ready(function() {
             }
     },
     initSelection: function(element, callback) {
-    // var elementText;
-    // elementText = element.attr("data_init_text");
-    // console.log(elementText);  // HG need to pull in values from page to put into call back. 
-     
-      var data = [];
-      var elementText;
-      var elementID;
-     // elementText = element.attr('data_id');
-      //elementID = element.attr('data_text');
-     // console.log(elementText);
-     // console.log(elementID);
-     // console.log("hi hamish2");
-
-      $(element.val().split(",")).each(function () {
-        data.push({id: this, text: this});
-      });
-      callback(data);
-      //var data = {id: element.val(), text: element.val()};
-      //console.log("hi hamish2");
-       // callback(data);
-    },
+            var id=$(element).val();
+            if (id!=="") {
+                $.ajax("/admin/carriers/"+id+".json", {
+                    dataType: "json"
+                }).done(function(data) {
+                    var selected = {id: element.val(), text: data.name };
+                    callback(selected);
+                });
+            }
+        },
     dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
     });
   

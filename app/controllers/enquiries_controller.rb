@@ -3,7 +3,6 @@ class EnquiriesController < ApplicationController
                 only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch, :carriersearch]
   before_filter :admin_user, only: :destroy
   
-
   def index
     @enquiries = Enquiry.paginate(page: params[:page])
   end
@@ -17,9 +16,66 @@ class EnquiriesController < ApplicationController
   def show
     @enquiry = Enquiry.find(params[:id])
   end
-  
 
-  def customersearch
+  def edit
+    @enquiry = Enquiry.find(params[:id])
+  end
+  
+  def create
+    @enquiry = Enquiry.new(enquiry_params)     
+    @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+    
+    @enquiry.customers.clear if params[:existing_customer].to_i > 0 
+    if @enquiry.save    
+      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0 
+      flash[:success] = "Enquiry Created!  #{undo_link}"
+      redirect_to @enquiry
+    else     
+      render 'new'	
+    end
+  end  
+
+  def update
+    if params[:existing_customer].to_i > 0 
+      params[:enquiry].delete(:customers_attributes)
+    end
+    
+    @enquiry = Enquiry.find(params[:id])
+    @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+
+    if @enquiry.update_attributes(enquiry_params)
+#tidy up one day  - find better way to do this
+      @enquiry.customers.clear
+      
+      if params[:existing_customer].to_i > 0 
+        @enquiry.add_customer(Customer.find(params[:existing_customer]))
+      else
+        params[:enquiry][:customer_ids].each do |cust| 
+          @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
+        end
+      end
+      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered. 
+      @enquiry.save
+#end bad code
+      
+      undo_link = view_context.link_to("(Undo)", 
+      revert_version_path(@enquiry.versions.last), :method => :post)
+      
+      flash[:success] = "Enquiry updated.  #{undo_link}" 
+      redirect_to @enquiry
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy 
+    @enquiry = Enquiry.find(params[:id])
+    @enquiry.destroy
+    flash[:success] = "Enquiry deleted.  #{undo_link}"
+    redirect_to enquiries_url
+  end  
+
+    def customersearch
     @customers = Customer.select([:id, :last_name, :first_name]).
                             where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
@@ -48,52 +104,6 @@ class EnquiriesController < ApplicationController
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
   end
-
-  def edit
-    @enquiry = Enquiry.find(params[:id])
-  end
-  
-  def create
-    @enquiry = Enquiry.new(enquiry_params)     
-    @enquiry.customers.clear if params[:existing_customer].to_i > 0 
-    if @enquiry.save    
-      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0 
-      flash[:success] = "Enquiry Created!  #{undo_link}"
-      redirect_to @enquiry
-    else     
-      render 'new'	
-    end
-  end  
-
-  def update
-    @enquiry = Enquiry.find(params[:id])
-    if @enquiry.update_attributes(enquiry_params)
-#tidy up one day  - find better way to do this
-      @enquiry.customers.clear
-      
-      params[:enquiry][:customer_ids].each do |cust| 
-        @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
-      end
-      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered. 
-      @enquiry.save
-#end bad code
-      
-      undo_link = view_context.link_to("(Undo)", 
-        revert_version_path(@enquiry.versions.last), :method => :post)
-      
-      flash[:success] = "Enquiry updated.  #{undo_link}" 
-      redirect_to @enquiry
-    else
-      render 'edit'
-    end
-  end
-
-  def destroy 
-    @enquiry = Enquiry.find(params[:id])
-    @enquiry.destroy
-    flash[:success] = "Enquiry deleted.  #{undo_link}"
-    redirect_to enquiries_url
-  end  
 
 private
     def enquiry_params

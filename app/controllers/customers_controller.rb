@@ -17,6 +17,10 @@ class CustomersController < ApplicationController
     # @activities = @customer.activities.paginate(page: params[:page], :per_page => 5)
     # reverse order (replaces above line)
     @activities = @customer.activities.order('created_at ASC').page(params[:page]).per_page(5)
+    respond_to do |format|
+      format.html
+      format.json { render json: {name: @customer.fullname, id: @customer.id  }}
+    end    
   end
   
   def edit

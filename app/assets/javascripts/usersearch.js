@@ -17,9 +17,16 @@ $(document).ready(function() {
             }
     },
     initSelection: function(element, callback) {
-     var data = {id: element.val(), text: element.val()};
-        callback(data);
-    },
+            var id=$(element).val();
+            if (id!=="") {
+                $.ajax("/users/"+id+".json", {
+                    dataType: "json"
+                }).done(function(data) {
+                    var selected = {id: element.val(), text: data.name };
+                    callback(selected);
+                });
+            }
+        },
     dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
     });
   

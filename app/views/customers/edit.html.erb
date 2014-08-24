@@ -23,8 +23,8 @@
       
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "passport_num", f: f } %>    
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "place_of_issue", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "issue_date", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "expiry_date", f: f } %>
+      <%= render partial: 'shared/std_grp_datefield', locals: { name: :issue_date, id: :issue_date, f: f } %>
+      <%= render partial: 'shared/std_grp_datefield', locals: { name: :expiry_date, id: :expiry_date, f: f } %>
       
     
     <%= f.fields_for :address do |a| %>

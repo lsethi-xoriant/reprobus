@@ -4,7 +4,7 @@
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
   <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
-<%#= custNum + "  "  + custName %>
+<%= custNum + "  "  + custName %>
 <% end %>
 
 <% 
@@ -29,7 +29,7 @@
   end   
 %>
 
-<%= existCust %>
+
     <%= form_for @enquiry, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>
       <div class="form-group">
@@ -73,7 +73,7 @@
       <div class="form-group">
       <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label",  data_init_text: custName, data_init_id: custNum.to_s %>
         <div class="col-sm-5">
-          <%= hidden_field_tag(:existing_customer, "", id: 'cust_select', class: 'select2 ajax form-control', style: 'width: 100%;', data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' } ) %>
+          <%= hidden_field_tag(:existing_customer, @enquiry.get_first_customer_num, id: 'cust_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' } ) %>
         </div>
       </div>
     </div>
@@ -142,22 +142,12 @@
     <!-- To/From Dates -->
     <div class="form-group">
       <%= f.label :est_date, "Travel From", class: "col-sm-3 control-label" %>
-      <div class="col-sm-2">
-        <div class="form-group">
-          <div class='input-group date' id='datetimepicker1' >
-            <%= f.text_field :est_date, class: "form-control" %>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-          </div>                            
-        </div>
+     <div class="col-sm-2">
+        <%= render partial: 'shared/std_datefield', locals: { name: :est_date, id: 'datetimepicker1', f: f } %>                        
+      </div>
       <%= f.label :fin_date, "To", class: "col-sm-1 control-label" %>
       <div class="col-sm-2">
-        <div class="form-group">
-          <div class='input-group date'id='datetimepicker2' >
-             <%= f.text_field :fin_date, class: "form-control" %>	  
-             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-          </div>
-        </div>            
+        <%= render partial: 'shared/std_datefield', locals: { name: :fin_date, id: 'datetimepicker2', f: f } %>    
       </div>
     </div>
 
@@ -193,7 +183,7 @@
     <div class="form-group">
       <%= f.label :carriers, "Preferred Carriers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field( :carriers, value: @enquiry.carrier_names,  class: "ajax form-control", placeholder: "Add Carrier", id: "carriersearch",  data_id: @enquiry.carriers, data_text: @enquiry.carrier_names,
+        <%= f.text_field( :carriers, value: @enquiry.carriers,  class: "ajax form-control", placeholder: "Add Carrier", id: "carriersearch",  data_id: @enquiry.carriers, data_text: @enquiry.carrier_names,
                                   data: { source: carriersearch_enquiries_path, placeholder: 'Search for a name'}) %>
       </div>
     </div>
@@ -216,34 +206,28 @@
         <%= f.select :probability, options_for_select(["High", "Medium", "Low"], @enquiry.probability ), {}, class: 'form-control' %>   
       </div>
     </div>
-<!-- 
+
     <div class="form-group">
       <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"  %>
-        <div class="col-sm-2"> -->
-          <%= hidden_field_tag(:assigned_to, existUser, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;',
-                           data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' }) %>
-<!--         </div>   
+        <div class="col-sm-2"> 
+          <%= hidden_field_tag(:assigned_to, @enquiry.assigned_to, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;') %>
+      </div>   
     </div>
- -->
+
     <div class="form-group">   
       <%= f.label :reminder, "Set Reminder", class: "col-sm-3 control-label"   %>
-      <div class="col-sm-2">
-        <div class="form-group">
-          <div class='input-group date'>
-            <%= f.text_field :reminder, class: "form-control"%>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-          </div>                      
+        <div class="col-sm-2">      
+          <%= render partial: 'shared/std_datefield', locals: { name: :reminder, id: "", f: f } %>    
       </div>
     </div>
 
-      <%#= f.label :percent, "Percent Complete"%>
+
       <%#= f.text_field :percent, class: "form-control" %>		  
  
       <%= f.hidden_field :user_id, :value => current_user.id %>
-<div class="row">
-      <div class="col-sm-2 col-md-offset-3">
-      <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
+      <div class="row">
+            <div class="col-sm-2 col-md-offset-3">
+            <%= f.submit "Create a Enquiry", class: "btn btn-large btn-primary" %>
+            </div>
       </div>
-</div>
     <% end %>

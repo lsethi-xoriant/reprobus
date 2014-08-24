@@ -34,6 +34,10 @@ class Admin::CarriersController < ApplicationController
     
   def show
     @carrier = Carrier.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: {name: @carrier.name, id: @carrier.id  }}
+    end   
   end
   
   def create

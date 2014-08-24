@@ -135,4 +135,13 @@ class Enquiry < ActiveRecord::Base
     #self.customers << customer unless customer.nil?
   end  
   
+  def duration_in_days
+    if !self.est_date.nil? && !self.fin_date.nil? 
+      duration = (self.fin_date - self.est_date).to_i.to_s + " days" 
+    end 
+  end
+    
+  def get_first_customer_num
+    num = self.customers.first.id unless self.customers.empty?
+  end  
 end

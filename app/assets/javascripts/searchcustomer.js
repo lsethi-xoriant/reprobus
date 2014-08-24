@@ -1,45 +1,33 @@
-// $(document).ready(function() {  
-//   $('#res_select').each(function() {
-//     var url = $(this).data('source'); 
-//     console.log(url);
-//     var placeholder = $(this).data('placeholder'); 
-//     //var saved = jQuery.parseJSON($(this).data('saved'));
-//     $(this).select2({
-//       minimumInputLength: 2,
-//       //multiple: true,
-//       placeholder : placeholder,
-//       //allowClear: true,
-//       ajax: {
-//         url: url,
-//         dataType: 'json',
-//         quietMillis: 500,
-//         data: function (term) {
-//           return {
-//             name: term
-//           };
-//         },
-//         results: function (data) {
-//           return {results: data};
-//         }
-//       },
-
-//       formatResult: function (item, page) {
-//         return item.name; 
-//       },
-
-//       formatSelection: function (item, page) {
-//         return item.name; 
-//       },
-
-//       initSelection : function (element, callback) {
-//         var elementText;
-//         console.log("hi hamish3");
-//         elementText = element.attr("data_init_text");
-//         return callback({
-//           term: elementText
-//         });
-//       }
-
-//     });
-//   });
-// });
+$(document).ready(function() {
+    $("#cust_select").select2({
+      placeholder: "Search for customer",
+      allowClear: true,
+      //minimumInputLength: 1,
+      ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        url: "/enquiries/customersearch",
+        dataType: 'json',
+        data: function (term, page) {
+            return {
+              q: term, // search term
+              page_limit: 10
+              };
+    },
+    results: function (data, page) { // parse the results into the format expected by Select2.
+            return {results: data.searchSet};
+            }
+    },
+    initSelection: function(element, callback) {
+            var id=$(element).val();
+            if (id!=="") {
+                $.ajax("/customers/"+id+".json", {
+                    dataType: "json"
+                }).done(function(data) {
+                    var selected = {id: element.val(), text: data.name };
+                    callback(selected);
+                });
+            }
+        },
+    dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+    });
+  
+ });
