@@ -12,9 +12,14 @@
       
             <div class="col-lg-9 profile-name">
               <h2><%= @customer.first_name + " " + @customer.last_name %></h2>
-              <i class="fa fa-pencil editicon"><%= link_to "Edit " + @customer.first_name + " " +  @customer.last_name , edit_customer_path(@customer) %></i>
+              <%= link_to edit_customer_path(@customer) do %>
+                <i class="fa fa-pencil editicon"></i>
+              <% end %>   
+
               <ul>
-               
+
+                
+                
                 <li><i class="fa fa-envelope"></i> <%= mail_to(@customer.email, @customer.email, bcc: @customer.create_email_link)%></li>
                 <li><i class="fa fa-phone"></i> <%= @customer.phone %> (Landline) </li>
                 <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>
@@ -65,25 +70,29 @@
         <% if current_user.admin? %>
           <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
         <% end %>   
-      
-      
+
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
 
           <div class="timeline-centered">        
-            <% @customer.activities.reverse_each do |act| %>
+            <%# @customer.activities.reverse_each do |act| %>
+             <% @activities.reverse_each do |act| %>
               <%= render partial: 'timeline', locals: { activity: act } %>
             <% end %>  
             
             <article class="timeline-entry begin">
             <div class="timeline-entry-inner">
-            <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+              <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
                 <i class="entypo-flight"></i> +
+              </div>
             </div>
-            </div>
-        </article>
-          </div>         
-
+            </article>
+          </div> 
+          
+          <ul class="pagination">
+            <%= will_paginate  @activities, :container => false %>
+          </ul>
+        
           <div class="well well-sm">
             <h4>Add a Note</h4>
             <%#= form_for @customer, url: addnote_customers_path, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>

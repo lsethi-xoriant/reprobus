@@ -3,7 +3,7 @@
 # # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  $('#res_select').each (i, e) =>
+  $('#cust_select').each (i, e) =>
     select = $(e)
     options =
       placeholder: select.data('placeholder')
@@ -19,13 +19,9 @@ $(document).ready ->
           per: 25
         results: (data, page) ->
           results: data.searchSet
-          more: data.total > (page * 25) # adding the more: option enables infinite scrolling (select2 will load more content if available)
-          
-          
-          initSelection: (e, callback) ->
-          #elementText = $(e).attr("data-init-text")
-          callback term: elementText
-          return  
+          more: data.total > (page * 25) # adding the more: option enables infinite scrolling (select2 will load more content if available)      
         
       options.dropdownCssClass = "bigdrop"
     select.select2(options)
+    
+  

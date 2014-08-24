@@ -1,4 +1,4 @@
-/*
+@charset "UTF-8";/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -13,7 +13,6 @@
 
 
  */
-
 /*
   RailsAdmin main CSS
   Keep it clean, people
@@ -330,6 +329,11 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+
+.profile .profile-name h2{
+	float: left;
+	font-weight: bold;
+}
 
 .clearfix {
   *zoom: 1;
@@ -9639,163 +9643,14 @@ button.close {
 }
 /*override some bootstrap stuff*/
 /* mixins, variables, etc. */
-/* line 15, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.radio-inline {
-  width: 40px;
-  vertical-align: top;
-}
-
-/* fix date picker not lining up.  */
-/* line 21, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.input-group.date {
-  left: 15px;
-}
-
-/* fix Select2 select boxes not fitting in bootstrap form-control css */
-/* line 26, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-choice {
-  border: 0;
-  border-radius: 2px;
-}
-
-/* line 31, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-choice .select2-arrow {
-  border-radius: 0 2px 2px 0;
-}
-
-/* line 35, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container {
-  height: auto !important;
-  padding: 0px;
-}
-
-/* line 40, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container.select2-dropdown-open {
-  border-color: #5897FB;
-  border-radius: 3px 3px 0 0;
-}
-
-/* line 45, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-container.select2-dropdown-open .select2-choices {
-  border-radius: 3px 3px 0 0;
-}
-
-/* line 49, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container .select2-choices {
-  border: 0 !important;
-  border-radius: 3px;
-}
-
-/* universal */
-/* line 56, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-html {
-  overflow-y: scroll;
-}
-
-/* line 60, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-body {
-  padding-top: 10px;
-}
-
-/* line 64, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-section {
-  overflow: auto;
-}
-
-/* line 68, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-textarea {
-  resize: vertical;
-}
-
-/* line 72, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.center {
-  text-align: center;
-}
-/* line 74, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.center h1 {
-  margin-bottom: 10px;
-}
-
-/* typography */
-/* line 81, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-/* line 85, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-/* line 92, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: #999999;
-}
-
-/*p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}*/
-/* header */
-/* line 109, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-#logo {
+/* line 16, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name h2 {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #999999;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
-  line-height: 1;
-}
-/* line 119, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-#logo:hover {
-  color: #333333;
-  text-decoration: none;
 }
 
-/* footer */
-/* line 127, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #999999;
-}
-/* line 132, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer a {
-  color: #555555;
-}
-/* line 134, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer a:hover {
-  color: #222222;
-}
-/* line 138, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer small {
-  float: left;
-}
-/* line 141, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer ul {
-  float: right;
-  list-style: none;
-}
-/* line 144, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer ul li {
-  float: left;
-  margin-left: 10px;
-}
-
-/* miscellaneous */
-/* line 153, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* hamish */
+/* line 23, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .debug_dump {
   clear: both;
   float: left;
@@ -9806,150 +9661,282 @@ footer ul li {
   box-sizing: border-box;
 }
 
-/* sidebar */
-/* line 164, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section {
-  padding: 10px 0;
-  border-top: 1px solid #eeeeee;
-}
-/* line 167, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section:first-child {
-  border: 0;
-  padding-top: 0;
-}
-/* line 171, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section span {
-  display: block;
-  margin-bottom: 3px;
-  line-height: 1;
-}
-/* line 176, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section h1 {
-  font-size: 1.4em;
-  text-align: left;
-  letter-spacing: -1px;
-  margin-bottom: 3px;
-  margin-top: 0px;
-}
-
-/* line 186, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 31, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .gravatar {
   float: left;
   margin-right: 10px;
 }
 
-/* line 191, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 36, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats {
   overflow: auto;
 }
-/* line 193, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 38, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a {
   float: left;
   padding: 0 10px;
   border-left: 1px solid #eeeeee;
   color: gray;
 }
-/* line 198, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 43, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a:first-child {
   padding-left: 0;
   border: 0;
 }
-/* line 202, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 47, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a:hover {
   text-decoration: none;
   color: #0064cd;
 }
-/* line 207, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 52, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats strong {
   display: block;
 }
 
-/* line 212, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 57, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .user_avatars {
   overflow: auto;
   margin-top: 10px;
 }
-/* line 215, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 60, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .user_avatars .gravatar {
   margin: 1px 1px;
 }
 
-/* forms */
-/* line 222, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 5px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-/* line 229, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-input {
-  height: auto !important;
-}
-
-/* line 233, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 65, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 #error_explanation {
   color: #f00;
 }
-/* line 235, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 67, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 #error_explanation ul {
   list-style: none;
   margin: 0 0 18px 0;
 }
 
-/* Users index */
-/* line 248, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users {
-  list-style: none;
-  margin: 0;
-}
-/* line 251, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users li {
-  overflow: auto;
-  padding: 10px 0;
-  border-top: 1px solid #eeeeee;
-}
-/* line 255, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users li:last-child {
-  border-bottom: 1px solid #eeeeee;
-}
-
-/* microposts */
-/* line 263, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.microposts {
-  list-style: none;
-  margin: 10px 0 0 0;
-}
-/* line 267, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.microposts li {
-  padding: 10px 0;
-  border-top: 1px solid #e8e8e8;
-}
-
-/* line 272, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.content {
-  display: block;
-  padding-left: 10px;
-}
-
-/* line 276, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.timestamp {
-  color: #999999;
-}
-
-/* line 279, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 78, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .gravatar {
   float: left;
   margin-right: 10px;
 }
 
-/* line 284, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside textarea {
-  height: 100px;
-  margin-bottom: 5px;
+/* line 83, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999999;
+}
+/* line 88, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer a {
+  color: #555555;
+}
+/* line 90, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer a:hover {
+  color: #222222;
+}
+/* line 94, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer small {
+  float: left;
+}
+/* line 97, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer ul {
+  float: right;
+  list-style: none;
+}
+/* line 100, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+/* STEVE */
+/* line 110, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.editicon {
+  padding-top: 30px;
+  padding-left: 10px;
+}
+
+/* line 115, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name h2 {
+  float: left;
+  font-weight: bold;
+}
+
+/* line 120, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name button {
+  float: right;
+  margin: 20px 0px 0px 0px;
+}
+
+/* line 125, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  clear: both;
+}
+
+/* line 132, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul li {
+  padding: 5px 0px;
+}
+
+/* line 136, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i {
+  float: left;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+/* line 142, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i.fa-phone {
+  font-size: 16px;
+}
+
+/* line 146, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i.fa-mobile {
+  margin-top: -5px;
+  font-size: 30px;
+}
+
+/* line 151, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details {
+  margin: 0px;
+  padding: 20px 0px 0px 0px;
+  list-style: none;
+}
+
+/* line 157, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details li {
+  padding: 10px 0px 10px 0px;
+}
+
+/* line 161, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details li.col-lg-5 {
+  clear: both;
+}
+
+/* line 165, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details div {
+  padding: 0px;
+}
+
+/* line 169, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details-field {
+  color: #989898;
+  font-weight: bold;
+}
+
+/* line 174, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .well {
+  margin-top: 20px;
+}
+
+/* line 178, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .btn.add-note {
+  float: right;
+  font-weight: bold;
+  margin: 10px 0px 0px 0px;
+}
+
+/* line 184, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .activity h4, .details-activity .activity .btn-group {
+  float: left;
+}
+
+/* line 188, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .activity .btn-group {
+  margin: 3px 0px 0px 10px;
+}
+
+/* line 192, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history {
+  width: 100%;
+  margin: 0px;
+  padding: 10px 0px 0px 0px;
+  list-style: none;
+}
+
+/* line 199, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-bottom: 1px solid #BBBBBB;
+}
+
+/* line 206, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li .text-left {
+  float: left;
+}
+
+/* line 210, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li i, .history li .glyphicon {
+  float: left;
+  margin-top: 3px;
+  margin-right: 20px;
+}
+
+/* line 216, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li .text-right {
+  float: right;
+}
+
+/* line 220, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.avatar {
+  margin-top: 18px;
+}
+
+/* line 224, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.dashwell {
+  margin-right: 10px;
+}
+
+/* line 228, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.radio-inline {
+  width: 40px;
+  vertical-align: top;
+}
+
+/* fix date picker not lining up.  */
+/* line 234, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.input-group.date {
+  left: 15px;
+}
+
+/* fix Select2 select boxes not fitting in bootstrap form-control css */
+/* line 239, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-choice {
+  border: 0;
+  border-radius: 2px;
+}
+
+/* line 244, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-choice .select2-arrow {
+  border-radius: 0 2px 2px 0;
+}
+
+/* line 248, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container {
+  height: auto !important;
+  padding: 0px;
+}
+
+/* line 253, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container.select2-dropdown-open {
+  border-color: #5897FB;
+  border-radius: 3px 3px 0 0;
+}
+
+/* line 258, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-container.select2-dropdown-open .select2-choices {
+  border-radius: 3px 3px 0 0;
+}
+
+/* line 262, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container .select2-choices {
+  border: 0 !important;
+  border-radius: 3px;
 }
 /* line 3, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
 .profile .profile-name h2 {
@@ -10659,6 +10646,303 @@ table.dataTable thead .sorting:after {
 .show-grid {
     margin: 15px 0;
 }
+
+/* CSS Document */
+
+
+
+.bookingadded {
+	color: #009933;
+}
+
+timeline-img {
+    vertical-align: middle;
+}
+
+.timeline-img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+.timeline-img-rounded {
+    border-radius: 3px;
+}
+
+.timeline-img-thumbnail {
+    background-color: #fff;
+    border: 1px solid #ededf0;
+    border-radius: 3px;
+    display: inline-block;
+    height: auto;
+    line-height: 1.428571429;
+    max-width: 100%;
+    moz-transition: all .2s ease-in-out;
+    o-transition: all .2s ease-in-out;
+    padding: 2px;
+    transition: all .2s ease-in-out;
+    webkit-transition: all .2s ease-in-out;
+}
+
+.timeline-img-circle {
+    border-radius: 50%;
+}
+
+.timeline-centered {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+    .timeline-centered:before, .timeline-centered:after {
+        content: " ";
+        display: table;
+    }
+
+    .timeline-centered:after {
+        clear: both;
+    }
+
+    .timeline-centered:before, .timeline-centered:after {
+        content: " ";
+        display: table;
+    }
+
+    .timeline-centered:after {
+        clear: both;
+    }
+
+    .timeline-centered:before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 4px;
+        background: #f5f5f6;
+        /*left: 50%;*/
+        top: 20px;
+        bottom: 20px;
+        margin-left: 30px;
+    }
+
+    .timeline-centered .timeline-entry {
+        position: relative;
+        /*width: 50%;
+        float: right;*/
+        margin-top: 5px;
+        margin-left: 30px;
+        margin-bottom: 10px;
+        clear: both;
+    }
+
+        .timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline-centered .timeline-entry:after {
+            clear: both;
+        }
+
+        .timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline-centered .timeline-entry:after {
+            clear: both;
+        }
+
+        .timeline-centered .timeline-entry.begin {
+            margin-bottom: 0;
+        }
+
+        .timeline-centered .timeline-entry.left-aligned {
+            float: left;
+        }
+
+            .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner {
+                margin-left: 0;
+                margin-right: -18px;
+            }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-time {
+                    left: auto;
+                    right: -100px;
+                    text-align: left;
+                }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-icon {
+                    float: right;
+                }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-label {
+                    margin-left: 0;
+                    margin-right: 70px;
+                }
+
+                    .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-label:after {
+                        left: auto;
+                        right: 0;
+                        margin-left: 0;
+                        margin-right: -9px;
+                        -moz-transform: rotate(180deg);
+                        -o-transform: rotate(180deg);
+                        -webkit-transform: rotate(180deg);
+                        -ms-transform: rotate(180deg);
+                        transform: rotate(180deg);
+                    }
+
+        .timeline-centered .timeline-entry .timeline-entry-inner {
+            position: relative;
+            margin-left: -20px;
+        }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                content: " ";
+                display: table;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                clear: both;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                content: " ";
+                display: table;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                clear: both;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time {
+                position: absolute;
+                left: -100px;
+                text-align: right;
+                padding: 10px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span {
+                    display: block;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span:first-child {
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span:last-child {
+                        font-size: 12px;
+                    }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon {
+                background: #fff;
+                color: #737881;
+                display: block;
+                width: 40px;
+                height: 40px;
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                text-align: center;
+                -moz-box-shadow: 0 0 0 5px #f5f5f6;
+                -webkit-box-shadow: 0 0 0 5px #f5f5f6;
+                box-shadow: 0 0 0 5px #f5f5f6;
+                line-height: 40px;
+                font-size: 15px;
+                float: left;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-primary {
+                    background-color: #303641;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-secondary {
+                    background-color: #ee4749;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success {
+                    background-color: #00a651;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-info {
+                    background-color: #21a9e1;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-warning {
+                    background-color: #fad839;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-danger {
+                    background-color: #cc2424;
+                    color: #fff;
+                }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
+                position: relative;
+                background: #f5f5f6;
+                padding: 1em;
+                margin-left: 60px;
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 9px 9px 9px 0;
+                    border-color: transparent #f5f5f6 transparent transparent;
+                    left: 0;
+                    top: 10px;
+                    margin-left: -9px;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p {
+                    color: #737881;
+                    font-family: "Noto Sans",sans-serif;
+                    font-size: 12px;
+                    margin: 0;
+                    line-height: 1.428571429;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p + p {
+                        margin-top: 15px;
+                    }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {
+                        color: #303641;
+                    }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 span {
+                        -webkit-opacity: .6;
+                        -moz-opacity: .6;
+                        opacity: .6;
+                        -ms-filter: alpha(opacity=60);
+                        filter: alpha(opacity=60);
+                    }
 
 
 

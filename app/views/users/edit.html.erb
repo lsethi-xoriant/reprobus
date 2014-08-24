@@ -6,28 +6,28 @@
     <%= form_for(@user,:html => {:multipart => true, :class => "form-horizontal"}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "name", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
-    
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-
-      <%= f.label :password_confirmation, "Confirm Password" %>
-      <%= f.password_field :password_confirmation %>
-    
-      <% if @user.admin? || current_user.admin? %>
-        <%= f.check_box :admin %>  
-        <%= f.label :admin, :class => "checkbox inline" %>
-      <% end %> 
-      <br>
-      <br>   
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-    <% end %>
-
+      <%= render partial: 'shared/std_grp_pw_field', locals: { field: :password, f: f } %>
+      <%= render partial: 'shared/std_grp_pw_field', locals: { field: :password_confirmation, f: f } %>
+    <div class="row"><div class="col-sm-4 col-md-offset-4">
     <%= gravatar_for(@user, size: 52) %>
     <a href="http://gravatar.com/emails">change</a>
-  </div>
+    </div></div>
+    
+      <% if @user.admin? || current_user.admin? %>
+        <div class="form-group"> 
+          <%= f.check_box :admin %>  
+          <div class="col-sm-6"> 
+          <%= f.label :admin, :class => "checkbox inline" %>
+          </div></div>
+      <% end %> 
+
+    <%= render partial: 'shared/std_grp_btn_pos', locals: { name: "Save changes", f: f } %>
+    <% end %>
+    </div>
 </div>
+
+
+

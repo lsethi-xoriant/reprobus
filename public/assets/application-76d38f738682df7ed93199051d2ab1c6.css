@@ -1,4 +1,4 @@
-/*
+@charset "UTF-8";/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -14,6 +14,11 @@
 
  */
 
+
+.profile .profile-name h2{
+	float: left;
+	font-weight: bold;
+}
 /*
   RailsAdmin main CSS
   Keep it clean, people
@@ -9639,163 +9644,14 @@ button.close {
 }
 /*override some bootstrap stuff*/
 /* mixins, variables, etc. */
-/* line 15, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.radio-inline {
-  width: 40px;
-  vertical-align: top;
-}
-
-/* fix date picker not lining up.  */
-/* line 21, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.input-group.date {
-  left: 15px;
-}
-
-/* fix Select2 select boxes not fitting in bootstrap form-control css */
-/* line 26, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-choice {
-  border: 0;
-  border-radius: 2px;
-}
-
-/* line 31, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-choice .select2-arrow {
-  border-radius: 0 2px 2px 0;
-}
-
-/* line 35, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container {
-  height: auto !important;
-  padding: 0px;
-}
-
-/* line 40, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container.select2-dropdown-open {
-  border-color: #5897FB;
-  border-radius: 3px 3px 0 0;
-}
-
-/* line 45, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control .select2-container.select2-dropdown-open .select2-choices {
-  border-radius: 3px 3px 0 0;
-}
-
-/* line 49, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.form-control.select2-container .select2-choices {
-  border: 0 !important;
-  border-radius: 3px;
-}
-
-/* universal */
-/* line 56, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-html {
-  overflow-y: scroll;
-}
-
-/* line 60, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-body {
-  padding-top: 10px;
-}
-
-/* line 64, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-section {
-  overflow: auto;
-}
-
-/* line 68, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-textarea {
-  resize: vertical;
-}
-
-/* line 72, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.center {
-  text-align: center;
-}
-/* line 74, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.center h1 {
-  margin-bottom: 10px;
-}
-
-/* typography */
-/* line 81, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-/* line 85, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-/* line 92, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: #999999;
-}
-
-/*p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}*/
-/* header */
-/* line 109, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-#logo {
+/* line 16, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name h2 {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #999999;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
   font-weight: bold;
-  line-height: 1;
-}
-/* line 119, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-#logo:hover {
-  color: #333333;
-  text-decoration: none;
 }
 
-/* footer */
-/* line 127, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #999999;
-}
-/* line 132, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer a {
-  color: #555555;
-}
-/* line 134, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer a:hover {
-  color: #222222;
-}
-/* line 138, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer small {
-  float: left;
-}
-/* line 141, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer ul {
-  float: right;
-  list-style: none;
-}
-/* line 144, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-footer ul li {
-  float: left;
-  margin-left: 10px;
-}
-
-/* miscellaneous */
-/* line 153, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* hamish */
+/* line 23, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .debug_dump {
   clear: both;
   float: left;
@@ -9806,1103 +9662,650 @@ footer ul li {
   box-sizing: border-box;
 }
 
-/* sidebar */
-/* line 164, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section {
-  padding: 10px 0;
-  border-top: 1px solid #eeeeee;
-}
-/* line 167, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section:first-child {
-  border: 0;
-  padding-top: 0;
-}
-/* line 171, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section span {
-  display: block;
-  margin-bottom: 3px;
-  line-height: 1;
-}
-/* line 176, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside section h1 {
-  font-size: 1.4em;
-  text-align: left;
-  letter-spacing: -1px;
-  margin-bottom: 3px;
-  margin-top: 0px;
-}
-
-/* line 186, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 31, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .gravatar {
   float: left;
   margin-right: 10px;
 }
 
-/* line 191, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 36, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats {
   overflow: auto;
 }
-/* line 193, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 38, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a {
   float: left;
   padding: 0 10px;
   border-left: 1px solid #eeeeee;
   color: gray;
 }
-/* line 198, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 43, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a:first-child {
   padding-left: 0;
   border: 0;
 }
-/* line 202, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 47, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats a:hover {
   text-decoration: none;
   color: #0064cd;
 }
-/* line 207, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 52, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .stats strong {
   display: block;
 }
 
-/* line 212, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 57, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .user_avatars {
   overflow: auto;
   margin-top: 10px;
 }
-/* line 215, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 60, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .user_avatars .gravatar {
   margin: 1px 1px;
 }
 
-/* forms */
-/* line 222, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 5px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-/* line 229, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-input {
-  height: auto !important;
-}
-
-/* line 233, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 65, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 #error_explanation {
   color: #f00;
 }
-/* line 235, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 67, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 #error_explanation ul {
   list-style: none;
   margin: 0 0 18px 0;
 }
 
-/* Users index */
-/* line 248, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users {
-  list-style: none;
-  margin: 0;
-}
-/* line 251, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users li {
-  overflow: auto;
-  padding: 10px 0;
-  border-top: 1px solid #eeeeee;
-}
-/* line 255, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.users li:last-child {
-  border-bottom: 1px solid #eeeeee;
-}
-
-/* microposts */
-/* line 263, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.microposts {
-  list-style: none;
-  margin: 10px 0 0 0;
-}
-/* line 267, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.microposts li {
-  padding: 10px 0;
-  border-top: 1px solid #e8e8e8;
-}
-
-/* line 272, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.content {
-  display: block;
-  padding-left: 10px;
-}
-
-/* line 276, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-.timestamp {
-  color: #999999;
-}
-
-/* line 279, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+/* line 78, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
 .gravatar {
   float: left;
   margin-right: 10px;
 }
 
-/* line 284, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
-aside textarea {
-  height: 100px;
-  margin-bottom: 5px;
+/* line 83, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999999;
 }
-/* line 2, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.dashbox {
-  -moz-box-sizing: border-box;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 10px;
-  background: none repeat scroll 0 0 #f2f2f2;
-  border: 1px solid #cccccc;
+/* line 88, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer a {
+  color: #555555;
 }
-
-/*Blocks sign*/
-/* line 13, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.sign-block {
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.15);
-  -webkit-box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
+/* line 90, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer a:hover {
+  color: #222222;
 }
-
-/*Blocks*/
-/* line 20, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block {
-  border: 1px solid #e6e6e6;
-  background: white;
-  margin: 1em 0em;
-  border-radius: 3px;
+/* line 94, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer small {
+  float: left;
+}
+/* line 97, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer ul {
+  float: right;
+  list-style: none;
+}
+/* line 100, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+footer ul li {
+  float: left;
+  margin-left: 10px;
 }
 
-/* line 26, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading {
-  border-radius: 0 3px 3px 0;
-  border-bottom: 1px solid #e6e6e6;
-  border-left: none;
-  color: #CCCCCC;
-  display: block;
-  margin-bottom: 0px;
-  text-shadow: none;
-  text-transform: none;
+/* STEVE */
+/* line 110, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.editicon {
+  padding-top: 30px;
+  padding-left: 10px;
+}
+
+/* line 115, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name h2 {
+  float: left;
   font-weight: bold;
-  font-size: 1.1em;
-  line-height: 3em;
+}
+
+/* line 120, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name button {
+  float: right;
+  margin: 20px 0px 0px 0px;
+}
+
+/* line 125, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  clear: both;
+}
+
+/* line 132, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul li {
+  padding: 5px 0px;
+}
+
+/* line 136, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i {
+  float: left;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+/* line 142, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i.fa-phone {
+  font-size: 16px;
+}
+
+/* line 146, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile .profile-name ul i.fa-mobile {
+  margin-top: -5px;
+  font-size: 30px;
+}
+
+/* line 151, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details {
+  margin: 0px;
+  padding: 20px 0px 0px 0px;
+  list-style: none;
+}
+
+/* line 157, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details li {
+  padding: 10px 0px 10px 0px;
+}
+
+/* line 161, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details li.col-lg-5 {
+  clear: both;
+}
+
+/* line 165, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details div {
+  padding: 0px;
+}
+
+/* line 169, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.profile-details-field {
+  color: #989898;
+  font-weight: bold;
+}
+
+/* line 174, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .well {
+  margin-top: 20px;
+}
+
+/* line 178, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .btn.add-note {
+  float: right;
+  font-weight: bold;
+  margin: 10px 0px 0px 0px;
+}
+
+/* line 184, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .activity h4, .details-activity .activity .btn-group {
+  float: left;
+}
+
+/* line 188, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.details-activity .activity .btn-group {
+  margin: 3px 0px 0px 10px;
+}
+
+/* line 192, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history {
+  width: 100%;
+  margin: 0px;
+  padding: 10px 0px 0px 0px;
+  list-style: none;
+}
+
+/* line 199, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-bottom: 1px solid #BBBBBB;
+}
+
+/* line 206, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li .text-left {
+  float: left;
+}
+
+/* line 210, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li i, .history li .glyphicon {
+  float: left;
+  margin-top: 3px;
+  margin-right: 20px;
+}
+
+/* line 216, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.history li .text-right {
+  float: right;
+}
+
+/* line 220, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.avatar {
+  margin-top: 18px;
+}
+
+/* line 224, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.dashwell {
+  margin-right: 10px;
+}
+
+/* line 228, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.radio-inline {
+  width: 40px;
+  vertical-align: top;
+}
+
+/* fix date picker not lining up.  */
+/* line 234, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.input-group.date {
+  left: 15px;
+}
+
+/* fix Select2 select boxes not fitting in bootstrap form-control css */
+/* line 239, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-choice {
+  border: 0;
+  border-radius: 2px;
+}
+
+/* line 244, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-choice .select2-arrow {
+  border-radius: 0 2px 2px 0;
+}
+
+/* line 248, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container {
+  height: auto !important;
+  padding: 0px;
+}
+
+/* line 253, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container.select2-dropdown-open {
+  border-color: #5897FB;
+  border-radius: 3px 3px 0 0;
+}
+
+/* line 258, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control .select2-container.select2-dropdown-open .select2-choices {
+  border-radius: 3px 3px 0 0;
+}
+
+/* line 262, /home/action/reprobus/app/assets/stylesheets/custom.css.scss */
+.form-control.select2-container .select2-choices {
+  border: 0 !important;
+  border-radius: 3px;
+}
+/* line 3, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name h2 {
+  float: left;
+  font-weight: bold;
+}
+
+/* line 8, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name button {
+  float: right;
+  margin: 20px 0px 0px 0px;
+}
+
+/* line 13, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  clear: both;
+}
+
+/* line 20, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name ul li {
+  padding: 5px 0px;
+}
+
+/* line 24, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name ul i {
+  float: left;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+/* line 30, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name ul i.fa-phone {
+  font-size: 16px;
+}
+
+/* line 34, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile .profile-name ul i.fa-mobile {
+  margin-top: -5px;
+  font-size: 30px;
 }
 
 /* line 39, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading .block-icon {
-  border-right: 1px solid #AAA;
-  border-left: none;
+.profile-details {
+  margin: 0px;
+  padding: 20px 0px 0px 0px;
+  list-style: none;
 }
 
-/* line 43, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading .block-icon a {
-  padding: 0 10px;
+/* line 45, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile-details li {
+  padding: 10px 0px 10px 0px;
 }
 
-/* line 46, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading .block-icon [class*="icon-"] {
-  padding: 0em 1em;
-  line-height: 1em;
+/* line 49, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile-details li.col-lg-5 {
+  clear: both;
 }
 
-/* line 50, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading .block-icon.pull-right {
-  border-left: 1px solid #e6e6e6;
-  border-right: none;
+/* line 53, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile-details div {
+  padding: 0px;
 }
 
-/* line 54, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-heading .label {
+/* line 57, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.profile-details-field {
+  color: #989898;
+  font-weight: bold;
+}
+
+/* line 62, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.details-activity .well {
+  margin-top: 20px;
+}
+
+/* line 66, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.details-activity .btn.add-note {
   float: right;
-  margin-top: 1em;
-  margin-right: .75em;
-  line-height: 1.5em;
-  -webkit-box-shadow: 1px 1px 0px #ffffff;
-  box-shadow: 1px 1px 0px #ffffff;
+  font-weight: bold;
+  margin: 10px 0px 0px 0px;
 }
 
-/* line 64, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-p.block-heading,
-a.block-heading,
-.block-heading a {
-  color: #888;
-  background: #f7f7f7;
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
-  display: block;
-  padding-left: 1em;
-  outline: none;
+/* line 72, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.details-activity .activity h4, .details-activity .activity .btn-group {
+  float: left;
 }
 
-/* line 73, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-a.block-heading:hover,
-.block-heading a:hover {
-  background: #f7f7f7;
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(enabled=false)";
-  color: #888;
+/* line 76, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.details-activity .activity .btn-group {
+  margin: 3px 0px 0px 10px;
 }
 
-/* line 78, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-body {
-  margin: 1em;
-  min-height: .25em;
+/* line 80, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.history {
+  width: 100%;
+  margin: 0px;
+  padding: 10px 0px 0px 0px;
+  list-style: none;
 }
 
 /* line 87, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-body h1,
-.block-body h2,
-.block-body h3,
-.block-body h4,
-.block-body h5,
-.block-body h6 {
-  margin-top: 12px;
-}
-
-/* line 90, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-body.collapse {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-
-/* line 95, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-maps {
-  margin: -10px 0 -5px 0;
-}
-
-/*Span sizings*/
-/* line 102, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span12 {
-  width: 940px;
-}
-
-/* line 106, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span11 {
-  width: 860px;
-}
-
-/* line 110, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span10 {
-  width: 780px;
-}
-
-/* line 114, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span9 {
-  width: 700px;
-}
-
-/* line 118, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span8 {
-  width: 620px;
-}
-
-/* line 122, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span7 {
-  width: 540px;
-}
-
-/* line 126, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span6 {
-  width: 460px;
-}
-
-/* line 130, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span5 {
-  width: 380px;
-}
-
-/* line 134, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span4 {
-  width: 300px;
-}
-
-/* line 138, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span3 {
-  width: 220px;
-}
-
-/* line 142, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span2 {
-  width: 140px;
-}
-
-/* line 146, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.span1 {
-  width: 60px;
-}
-
-/*BUTTONS!*/
-/* line 154, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn {
+.history li {
   display: inline-block;
-  *display: inline;
-  /* padding: 4px 12px; */
-  /* margin-bottom: 0; */
-  *margin-left: .3em;
-  font-size: 14px;
-  line-height: 20px;
-  color: #333333;
-  text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-  vertical-align: middle;
-  cursor: pointer;
-  background-color: #f5f5f5;
-  *background-color: #e6e6e6;
-  background-image: -moz-linear-gradient(top, white, #e6e6e6);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(top, white, #e6e6e6);
-  background-image: -o-linear-gradient(top, white, #e6e6e6);
-  background-image: linear-gradient(to bottom, white, #e6e6e6);
-  background-repeat: repeat-x;
-  border: 1px solid #cccccc;
-  *border: 0;
-  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  border-bottom-color: #b3b3b3;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-  *zoom: 1;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* line 196, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.active,
-.btn.disabled,
-.btn[disabled] {
-  color: #333333;
-  background-color: #e6e6e6;
-  *background-color: #d9d9d9;
-}
-
-/* line 203, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn:active,
-.btn.active {
-  background-color: #cccccc \9;
-}
-
-/* line 207, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn:first-child {
-  *margin-left: 0;
-}
-
-/* line 212, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn:hover,
-.btn:focus {
-  color: #333333;
-  text-decoration: none;
-  background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-  -moz-transition: background-position 0.1s linear;
-  -o-transition: background-position 0.1s linear;
-  transition: background-position 0.1s linear;
-}
-
-/* line 222, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-/* line 229, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn.active,
-.btn:active {
-  background-image: none;
-  outline: 0;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* line 238, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn.disabled,
-.btn[disabled] {
-  cursor: default;
-  background-image: none;
-  opacity: 0.65;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-
-/* line 248, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-large {
-  padding: 11px 19px;
-  font-size: 17.5px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-}
-
-/* line 257, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-large [class^="icon-"],
-.btn-large [class*=" icon-"] {
-  margin-top: 4px;
-}
-
-/* line 261, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-small {
-  padding: 2px 10px;
-  font-size: 11.9px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
-/* line 270, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-small [class^="icon-"],
-.btn-small [class*=" icon-"] {
-  margin-top: 0;
-}
-
-/* line 275, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-mini [class^="icon-"],
-.btn-mini [class*=" icon-"] {
-  margin-top: -1px;
-}
-
-/* line 279, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-mini {
-  padding: 0 6px;
-  font-size: 10.5px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
-/* line 287, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-block {
-  display: block;
   width: 100%;
-  padding-right: 0;
-  padding-left: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  padding: 10px 0px 10px 0px;
+  border-bottom: 1px solid #BBBBBB;
 }
 
-/* line 297, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-block + .btn-block {
-  margin-top: 5px;
+/* line 94, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.history li .text-left {
+  float: left;
 }
 
-/* line 303, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-input[type="submit"].btn-block,
-input[type="reset"].btn-block,
-input[type="button"].btn-block {
-  width: 100%;
+/* line 98, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.history li i, .history li .glyphicon {
+  float: left;
+  margin-top: 3px;
+  margin-right: 20px;
 }
 
-/* line 312, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-primary.active,
-.btn-warning.active,
-.btn-danger.active,
-.btn-success.active,
-.btn-info.active,
-.btn-inverse.active {
-  color: rgba(255, 255, 255, 0.75);
+/* line 104, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.history li .text-right {
+  float: right;
 }
 
-/* line 316, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-primary {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #006dcc;
-  *background-color: #0044cc;
-  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -o-linear-gradient(top, #0088cc, #0044cc);
-  background-image: linear-gradient(to bottom, #0088cc, #0044cc);
-  background-repeat: repeat-x;
-  border-color: #0044cc #0044cc #002a80;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+/* line 108, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.avatar {
+  margin-top: 18px;
 }
 
-/* line 338, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-  color: #ffffff;
-  background-color: #0044cc;
-  *background-color: #003bb3;
-}
-
-/* line 345, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-primary:active,
-.btn-primary.active {
-  background-color: #003399 \9;
-}
-
-/* line 349, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-warning {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #faa732;
-  *background-color: #f89406;
-  background-image: -moz-linear-gradient(top, #fbb450, #f89406);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#f89406));
-  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
-  background-image: -o-linear-gradient(top, #fbb450, #f89406);
-  background-image: linear-gradient(to bottom, #fbb450, #f89406);
-  background-repeat: repeat-x;
-  border-color: #f89406 #f89406 #ad6704;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-/* line 371, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-warning:hover,
-.btn-warning:focus,
-.btn-warning:active,
-.btn-warning.active,
-.btn-warning.disabled,
-.btn-warning[disabled] {
-  color: #ffffff;
-  background-color: #f89406;
-  *background-color: #df8505;
-}
-
-/* line 378, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-warning:active,
-.btn-warning.active {
-  background-color: #c67605 \9;
-}
-
-/* line 382, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-danger {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #da4f49;
-  *background-color: #bd362f;
-  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));
-  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
-  background-repeat: repeat-x;
-  border-color: #bd362f #bd362f #802420;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-/* line 404, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-danger:hover,
-.btn-danger:focus,
-.btn-danger:active,
-.btn-danger.active,
-.btn-danger.disabled,
-.btn-danger[disabled] {
-  color: #ffffff;
-  background-color: #bd362f;
-  *background-color: #a9302a;
-}
-
-/* line 411, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-danger:active,
-.btn-danger.active {
-  background-color: #942a25 \9;
-}
-
-/* line 415, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-success {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #5bb75b;
-  *background-color: #51a351;
-  background-image: -moz-linear-gradient(top, #62c462, #51a351);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
-  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
-  background-image: -o-linear-gradient(top, #62c462, #51a351);
-  background-image: linear-gradient(to bottom, #62c462, #51a351);
-  background-repeat: repeat-x;
-  border-color: #51a351 #51a351 #387038;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-/* line 437, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-success:hover,
-.btn-success:focus,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  color: #ffffff;
-  background-color: #51a351;
-  *background-color: #499249;
-}
-
-/* line 444, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-success:active,
-.btn-success.active {
-  background-color: #408140 \9;
-}
-
-/* line 448, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-info {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #49afcd;
-  *background-color: #2f96b4;
-  background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
-  background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
-  background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
-  background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
-  background-repeat: repeat-x;
-  border-color: #2f96b4 #2f96b4 #1f6377;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-/* line 470, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-info:hover,
-.btn-info:focus,
-.btn-info:active,
-.btn-info.active,
-.btn-info.disabled,
-.btn-info[disabled] {
-  color: #ffffff;
-  background-color: #2f96b4;
-  *background-color: #2a85a0;
-}
-
-/* line 477, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-info:active,
-.btn-info.active {
-  background-color: #24748c \9;
-}
-
-/* line 481, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-inverse {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #363636;
-  *background-color: #222222;
-  background-image: -moz-linear-gradient(top, #444444, #222222);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#222222));
-  background-image: -webkit-linear-gradient(top, #444444, #222222);
-  background-image: -o-linear-gradient(top, #444444, #222222);
-  background-image: linear-gradient(to bottom, #444444, #222222);
-  background-repeat: repeat-x;
-  border-color: #222222 #222222 #000000;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-/* line 503, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-inverse:hover,
-.btn-inverse:focus,
-.btn-inverse:active,
-.btn-inverse.active,
-.btn-inverse.disabled,
-.btn-inverse[disabled] {
-  color: #ffffff;
-  background-color: #222222;
-  *background-color: #151515;
-}
-
-/* line 510, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-inverse:active,
-.btn-inverse.active {
-  background-color: #080808 \9;
-}
-
-/* line 515, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-button.btn,
-input[type="submit"].btn {
-  *padding-top: 3px;
-  *padding-bottom: 3px;
-}
-
-/* line 521, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-button.btn::-moz-focus-inner,
-input[type="submit"].btn::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
-/* line 527, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-button.btn.btn-large,
-input[type="submit"].btn.btn-large {
-  *padding-top: 7px;
-  *padding-bottom: 7px;
-}
-
-/* line 533, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-button.btn.btn-small,
-input[type="submit"].btn.btn-small {
-  *padding-top: 3px;
-  *padding-bottom: 3px;
-}
-
-/* line 539, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-button.btn.btn-mini,
-input[type="submit"].btn.btn-mini {
-  *padding-top: 1px;
-  *padding-bottom: 1px;
-}
-
-/* line 546, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-link,
-.btn-link:active,
-.btn-link[disabled] {
-  background-color: transparent;
-  background-image: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-
-/* line 554, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-link {
-  color: #0088cc;
-  cursor: pointer;
-  border-color: transparent;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-/* line 564, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-link:hover,
-.btn-link:focus {
-  color: #005580;
-  text-decoration: underline;
-  background-color: transparent;
-}
-
-/* line 571, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-link[disabled]:hover,
-.btn-link[disabled]:focus {
-  color: #333333;
-  text-decoration: none;
-}
-
-/* line 576, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group {
-  position: relative;
-  display: inline-block;
-  *display: inline;
-  *margin-left: .3em;
-  font-size: 0;
-  white-space: nowrap;
-  vertical-align: middle;
-  *zoom: 1;
-}
-
-/* line 587, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group:first-child {
-  *margin-left: 0;
-}
-
-/* line 591, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group + .btn-group {
-  margin-left: 5px;
-}
-
-/* line 595, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-toolbar {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 0;
-}
-
-/* line 603, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-toolbar > .btn + .btn,
-.btn-toolbar > .btn-group + .btn,
-.btn-toolbar > .btn + .btn-group {
-  margin-left: 5px;
-}
-
-/* line 607, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn {
-  position: relative;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-/* line 614, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn + .btn {
-  margin-left: -1px;
-}
-
-/* line 620, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn,
-.btn-group > .dropdown-menu,
-.btn-group > .popover {
-  font-size: 14px;
-}
-
-/* line 624, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-mini {
-  font-size: 10.5px;
-}
-
-/* line 628, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-small {
-  font-size: 11.9px;
-}
-
-/* line 632, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-large {
-  font-size: 17.5px;
-}
-
-/* line 636, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn:first-child {
-  margin-left: 0;
-  -webkit-border-bottom-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  -webkit-border-top-left-radius: 4px;
-  border-top-left-radius: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  -moz-border-radius-topleft: 4px;
-}
-
-/* line 647, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn:last-child,
-.btn-group > .dropdown-toggle {
-  -webkit-border-top-right-radius: 4px;
-  border-top-right-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  -moz-border-radius-bottomright: 4px;
-}
-
-/* line 656, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn.large:first-child {
-  margin-left: 0;
-  -webkit-border-bottom-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  -webkit-border-top-left-radius: 6px;
-  border-top-left-radius: 6px;
-  -moz-border-radius-bottomleft: 6px;
-  -moz-border-radius-topleft: 6px;
-}
-
-/* line 667, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn.large:last-child,
-.btn-group > .large.dropdown-toggle {
-  -webkit-border-top-right-radius: 6px;
-  border-top-right-radius: 6px;
-  -webkit-border-bottom-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  -moz-border-radius-topright: 6px;
-  -moz-border-radius-bottomright: 6px;
-}
-
-/* line 679, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn:hover,
-.btn-group > .btn:focus,
-.btn-group > .btn:active,
-.btn-group > .btn.active {
-  z-index: 2;
-}
-
-/* line 684, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group .dropdown-toggle:active,
-.btn-group.open .dropdown-toggle {
-  outline: 0;
-}
-
-/* line 688, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn + .dropdown-toggle {
-  *padding-top: 5px;
-  padding-right: 8px;
-  *padding-bottom: 5px;
-  padding-left: 8px;
-  -webkit-box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* line 698, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-mini + .dropdown-toggle {
-  *padding-top: 2px;
-  padding-right: 5px;
-  *padding-bottom: 2px;
-  padding-left: 5px;
-}
-
-/* line 705, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-small + .dropdown-toggle {
-  *padding-top: 5px;
-  *padding-bottom: 4px;
-}
-
-/* line 710, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group > .btn-large + .dropdown-toggle {
-  *padding-top: 7px;
-  padding-right: 12px;
-  *padding-bottom: 7px;
-  padding-left: 12px;
-}
-
-/* line 717, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .dropdown-toggle {
-  background-image: none;
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* line 724, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn.dropdown-toggle {
-  background-color: #e6e6e6;
-}
-
-/* line 728, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-primary.dropdown-toggle {
-  background-color: #0044cc;
-}
-
-/* line 732, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-warning.dropdown-toggle {
-  background-color: #f89406;
-}
-
-/* line 736, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-danger.dropdown-toggle {
-  background-color: #bd362f;
-}
-
-/* line 740, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-success.dropdown-toggle {
-  background-color: #51a351;
-}
-
-/* line 744, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-info.dropdown-toggle {
-  background-color: #2f96b4;
-}
-
-/* line 748, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group.open .btn-inverse.dropdown-toggle {
-  background-color: #222222;
-}
-
-/* line 752, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn .caret {
-  margin-top: 8px;
-  margin-left: 0;
-}
-
-/* line 757, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-large .caret {
-  margin-top: 6px;
-}
-
-/* line 761, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-large .caret {
-  border-top-width: 5px;
-  border-right-width: 5px;
-  border-left-width: 5px;
-}
-
-/* line 768, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-mini .caret,
-.btn-small .caret {
-  margin-top: 8px;
-}
-
-/* line 772, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.dropup .btn-large .caret {
-  border-bottom-width: 5px;
-}
-
-/* line 781, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-primary .caret,
-.btn-warning .caret,
-.btn-danger .caret,
-.btn-info .caret,
-.btn-success .caret,
-.btn-inverse .caret {
-  border-top-color: #ffffff;
-  border-bottom-color: #ffffff;
-}
-
-/* line 786, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical {
-  display: inline-block;
-  *display: inline;
-  /* IE7 inline-block hack */
-  *zoom: 1;
-}
-
-/* line 794, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn {
-  display: block;
-  float: none;
-  max-width: 100%;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-/* line 803, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn + .btn {
-  margin-top: -1px;
-  margin-left: 0;
-}
-
-/* line 808, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn:first-child {
-  -webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
-}
-
-/* line 814, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn:last-child {
-  -webkit-border-radius: 0 0 4px 4px;
-  -moz-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px;
-}
-
-/* line 820, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn-large:first-child {
-  -webkit-border-radius: 6px 6px 0 0;
-  -moz-border-radius: 6px 6px 0 0;
-  border-radius: 6px 6px 0 0;
-}
-
-/* line 826, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.btn-group-vertical > .btn-large:last-child {
-  -webkit-border-radius: 0 0 6px 6px;
-  -moz-border-radius: 0 0 6px 6px;
-  border-radius: 0 0 6px 6px;
-}
-
-/* line 832, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
-.block-head-btn .block-heading .pull-right {
+/* line 112, /home/action/reprobus/app/assets/stylesheets/dashboard.css.scss */
+.dashwell {
   margin-right: 10px;
-  background: #F7F7F7;
+}
+div.dataTables_length label {
+    float: left;
+    text-align: left;
+    font-weight: normal;
+}
+
+div.dataTables_length select {
+    width: 75px;
+}
+
+div.dataTables_filter label {
+    float: right;
+    font-weight: normal;
+}
+
+div.dataTables_filter input {
+    width: 16em;
+}
+
+div.dataTables_info {
+    padding-top: 8px;
+}
+
+div.dataTables_paginate {
+    float: right;
+    margin: 0;
+}
+
+div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+}
+
+table.dataTable,
+table.dataTable td,
+table.dataTable th {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+table.dataTable {
+    clear: both;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    cursor: pointer;
+}
+
+table.dataTable thead .sorting {
+    background: url('../images/sort_both.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_asc {
+    background: url('../images/sort_asc.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_desc {
+    background: url('../images/sort_desc.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_asc_disabled {
+    background: url('../images/sort_asc_disabled.png') no-repeat center right;
+}
+
+table.dataTable thead .sorting_desc_disabled {
+    background: url('../images/sort_desc_disabled.png') no-repeat center right;
+}
+
+table.dataTable th:active {
+    outline: none;
+}
+
+/* Scrolling */
+
+div.dataTables_scrollHead table {
+    margin-bottom: 0 !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+div.dataTables_scrollHead table thead tr:last-child th:first-child,
+div.dataTables_scrollHead table thead tr:last-child td:first-child {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+div.dataTables_scrollBody table {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-top: none;
+}
+
+div.dataTables_scrollBody tbody tr:first-child th,
+div.dataTables_scrollBody tbody tr:first-child td {
+    border-top: none;
+}
+
+div.dataTables_scrollFoot table {
+    margin-top: 0 !important;
+    border-top: none;
+}
+
+/*
+ * TableTools styles
+ */
+
+.table tbody tr.active td,
+.table tbody tr.active th {
+    color: white;
+    background-color: #08C;
+}
+
+.table tbody tr.active:hover td,
+.table tbody tr.active:hover th {
+    background-color: #0075b0 !important;
+}
+
+.table tbody tr.active a {
+    color: white;
+}
+
+.table-striped tbody tr.active:nth-child(odd) td,
+.table-striped tbody tr.active:nth-child(odd) th {
+    background-color: #017ebc;
+}
+
+table.DTTT_selectable tbody tr {
+    cursor: pointer;
+}
+
+div.DTTT .btn {
+    font-size: 12px;
+    color: #333 !important;
+}
+
+div.DTTT .btn:hover {
+    text-decoration: none !important;
+}
+
+ul.DTTT_dropdown.dropdown-menu {
+    z-index: 2003;
+}
+
+ul.DTTT_dropdown.dropdown-menu a {
+    color: #333 !important; /* needed only when demo_page.css is included */
+}
+
+ul.DTTT_dropdown.dropdown-menu li {
+    position: relative;
+}
+
+ul.DTTT_dropdown.dropdown-menu li:hover a {
+    color: white !important;
+    background-color: #0088cc;
+}
+
+div.DTTT_collection_background {
+    z-index: 2002;
+}
+
+/* TableTools information display */
+
+div.DTTT_print_info.modal {
+    height: 150px;
+    margin-top: -75px;
+    text-align: center;
+}
+
+div.DTTT_print_info h6 {
+    margin: 1em;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 28px;
+}
+
+div.DTTT_print_info p {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/*
+ * FixedColumns styles
+ */
+
+div.DTFC_LeftHeadWrapper table,
+div.DTFC_LeftFootWrapper table,
+div.DTFC_RightHeadWrapper table,
+div.DTFC_RightFootWrapper table,
+table.DTFC_Cloned tr.even {
+    background-color: white;
+}
+
+div.DTFC_RightHeadWrapper table,
+div.DTFC_LeftHeadWrapper table {
+    margin-bottom: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+div.DTFC_RightHeadWrapper table thead tr:last-child th:first-child,
+div.DTFC_RightHeadWrapper table thead tr:last-child td:first-child,
+div.DTFC_LeftHeadWrapper table thead tr:last-child th:first-child,
+div.DTFC_LeftHeadWrapper table thead tr:last-child td:first-child {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+div.DTFC_RightBodyWrapper table,
+div.DTFC_LeftBodyWrapper table {
+    margin-bottom: 0 !important;
+    border-top: none;
+}
+
+div.DTFC_RightBodyWrapper tbody tr:first-child th,
+div.DTFC_RightBodyWrapper tbody tr:first-child td,
+div.DTFC_LeftBodyWrapper tbody tr:first-child th,
+div.DTFC_LeftBodyWrapper tbody tr:first-child td {
+    border-top: none;
+}
+
+div.DTFC_RightFootWrapper table,
+div.DTFC_LeftFootWrapper table {
+    border-top: none;
 }
 /* 
 Author: Start Bootstrap - http://startbootstrap.com
@@ -10916,159 +10319,631 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 
 /* Global Styles */
 
+/* ------------------------------- */
+
 
 body {
-  margin-top: 50px;
+    padding-top: 100px;
+    background-color: #f8f8f8;
 }
 
+@media(min-width:768px) {
+    body {
+        padding-top: 50px;
+    }
+}
+
+/* Wrappers */
+
+/* ------------------------------- */
+
 #wrapper {
-  padding-left: 0;
+    width: 100%;
 }
 
 #page-wrapper {
-  width: 100%;
-  padding: 5px 15px;
+    padding: 0 15px;
+    min-height: 568px;
+    background-color: #fff;
 }
 
-/* Nav Messages */
-
-.messages-dropdown .dropdown-menu .message-preview .avatar,
-.messages-dropdown .dropdown-menu .message-preview .name,
-.messages-dropdown .dropdown-menu .message-preview .message,
-.messages-dropdown .dropdown-menu .message-preview .time {
-  display: block;
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        padding: 0 30px;
+        min-height: 1300px;
+        border-left: 1px solid #e7e7e7;
+    }
 }
 
-.messages-dropdown .dropdown-menu .message-preview .avatar {
-  float: left;
-  margin-right: 15px;
+/* Navigation */
+
+/* ------------------------------- */
+
+/* Top Right Navigation Dropdown Styles */
+
+.navbar-top-links li {
+    display: inline-block;
 }
 
-.messages-dropdown .dropdown-menu .message-preview .name {
-  font-weight: bold;
+.navbar-top-links li:last-child {
+    margin-right: 15px;
 }
 
-.messages-dropdown .dropdown-menu .message-preview .message {
-  font-size: 12px;
+.navbar-top-links li a {
+    padding: 15px;
+    min-height: 50px;
 }
 
-.messages-dropdown .dropdown-menu .message-preview .time {
-  font-size: 12px;
+.navbar-top-links .dropdown-menu li {
+    display: block;
 }
 
-
-/* Nav Announcements */
-
-.announcement-heading {
-  font-size: 50px;
-  margin: 0;
+.navbar-top-links .dropdown-menu li:last-child {
+    margin-right: 0;
 }
 
-.announcement-text {
-  margin: 0;
+.navbar-top-links .dropdown-menu li a {
+    padding: 3px 20px;
+    min-height: 0;
 }
 
-/* Table Headers */
-
-table.tablesorter thead {
-  cursor: pointer;
+.navbar-top-links .dropdown-menu li a div {
+    white-space: normal;
 }
 
-table.tablesorter thead tr th:hover {
-  background-color: #f5f5f5;
+.navbar-top-links .dropdown-messages,
+.navbar-top-links .dropdown-tasks,
+.navbar-top-links .dropdown-alerts {
+    width: 310px;
+    min-width: 0;
+}
+
+.navbar-top-links .dropdown-messages {
+    margin-left: 5px;
+}
+
+.navbar-top-links .dropdown-tasks {
+    margin-left: -59px;
+}
+
+.navbar-top-links .dropdown-alerts {
+    margin-left: -123px;
+}
+
+.navbar-top-links .dropdown-user {
+    right: 0;
+    left: auto;
+}
+
+/* Sidebar Menu Styles */
+
+.navbar-static-side ul li {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.sidebar-search {
+    padding: 15px;
+}
+
+.arrow {
+    float: right;
+}
+
+.fa.arrow:before {
+    content: "\f104";
+}
+
+.active > a > .fa.arrow:before {
+    content: "\f107";
+}
+
+.nav-second-level li,
+.nav-third-level li {
+    border-bottom: none !important;
+}
+
+.nav-second-level li a {
+    padding-left: 37px;
+}
+
+.nav-third-level li a {
+    padding-left: 52px;
+}
+
+@media(min-width:768px) {
+    .navbar-static-side {
+        z-index: 1;
+        position: absolute;
+        width: 250px;
+        margin-top: 51px;
+    }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        margin-left: auto;
+    }
+}
+
+@media(max-height:600px) and (max-width:767px) {
+    .sidebar-collapse {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+}
+
+@media(max-height:400px) and (max-width:767px) {
+    .sidebar-collapse {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+}
+
+/* Buttons */
+
+/* ------------------------------- */
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}
+
+/* Pages */
+
+/* ------------------------------- */
+
+/* Dashboard Chat */
+
+.chat {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body {
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+    margin-right: 60px;
+}
+
+.chat li .chat-body p {
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+    margin-right: 5px;
+}
+
+.chat-panel .panel-body {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+/* Login Page */
+
+.login-panel {
+    margin-top: 25%;
 }
 
 /* Flot Chart Containers */
 
 .flot-chart {
-  display: block;
-  height: 400px;
+    display: block;
+    height: 400px;
 }
 
 .flot-chart-content {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-/* Edit Below to Customize Widths > 768px */
-@media (min-width:768px) {
+/* DataTables Overrides */
 
-  /* Wrappers */
-
-  #wrapper {
-	padding-left: 225px;
-  }
-
-  #page-wrapper {
-	padding: 15px 25px;
-  }
-
-  /* Side Nav */
-
-  .side-nav {
-	margin-left: -225px;
-	left: 225px;
-	width: 225px;
-	position: fixed;
-	top: 50px;
-	height: 100%;
-	border-radius: 0;
-	border: none;
-	background-color: #222222;
-	overflow-y: auto;
-  }
-
-  /* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
-
-  .side-nav>li.dropdown>ul.dropdown-menu {
-	position: relative;
-	min-width: 225px;
-	margin: 0;
-	padding: 0;
-	border: none;
-	border-radius: 0;
-	background-color: transparent;
-	box-shadow: none;
-	-webkit-box-shadow: none;
-  }
-
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a {
-	color: #999999;
-	padding: 15px 15px 15px 25px;
-  }
-
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
-  .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-	color: #fff;
-	background-color: #080808;
-  }
-
-  .side-nav>li>a {
-	width: 225px;
-  }
-
-  .navbar-inverse .navbar-nav>li>a:hover,
-  .navbar-inverse .navbar-nav>li>a:focus {
-	background-color: #080808;
-  }
-
-  /* Nav Messages */
-
-  .messages-dropdown .dropdown-menu {
-	min-width: 300px;
-  }
-
-  .messages-dropdown .dropdown-menu li a {
-	white-space: normal;
-  }
-
-  .navbar-collapse {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    background: transparent;
 }
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    content: "\f0dc";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+
+/* Circle Buttons */
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+}
+
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.show-grid [class^="col-"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee !important;
+}
+
+.show-grid {
+    margin: 15px 0;
+}
+
+/* CSS Document */
+
+
+
+.bookingadded {
+	color: #009933;
+}
+
+timeline-img {
+    vertical-align: middle;
+}
+
+.timeline-img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+.timeline-img-rounded {
+    border-radius: 3px;
+}
+
+.timeline-img-thumbnail {
+    background-color: #fff;
+    border: 1px solid #ededf0;
+    border-radius: 3px;
+    display: inline-block;
+    height: auto;
+    line-height: 1.428571429;
+    max-width: 100%;
+    moz-transition: all .2s ease-in-out;
+    o-transition: all .2s ease-in-out;
+    padding: 2px;
+    transition: all .2s ease-in-out;
+    webkit-transition: all .2s ease-in-out;
+}
+
+.timeline-img-circle {
+    border-radius: 50%;
+}
+
+.timeline-centered {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+    .timeline-centered:before, .timeline-centered:after {
+        content: " ";
+        display: table;
+    }
+
+    .timeline-centered:after {
+        clear: both;
+    }
+
+    .timeline-centered:before, .timeline-centered:after {
+        content: " ";
+        display: table;
+    }
+
+    .timeline-centered:after {
+        clear: both;
+    }
+
+    .timeline-centered:before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 4px;
+        background: #f5f5f6;
+        /*left: 50%;*/
+        top: 20px;
+        bottom: 20px;
+        margin-left: 30px;
+    }
+
+    .timeline-centered .timeline-entry {
+        position: relative;
+        /*width: 50%;
+        float: right;*/
+        margin-top: 5px;
+        margin-left: 30px;
+        margin-bottom: 10px;
+        clear: both;
+    }
+
+        .timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline-centered .timeline-entry:after {
+            clear: both;
+        }
+
+        .timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline-centered .timeline-entry:after {
+            clear: both;
+        }
+
+        .timeline-centered .timeline-entry.begin {
+            margin-bottom: 0;
+        }
+
+        .timeline-centered .timeline-entry.left-aligned {
+            float: left;
+        }
+
+            .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner {
+                margin-left: 0;
+                margin-right: -18px;
+            }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-time {
+                    left: auto;
+                    right: -100px;
+                    text-align: left;
+                }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-icon {
+                    float: right;
+                }
+
+                .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-label {
+                    margin-left: 0;
+                    margin-right: 70px;
+                }
+
+                    .timeline-centered .timeline-entry.left-aligned .timeline-entry-inner .timeline-label:after {
+                        left: auto;
+                        right: 0;
+                        margin-left: 0;
+                        margin-right: -9px;
+                        -moz-transform: rotate(180deg);
+                        -o-transform: rotate(180deg);
+                        -webkit-transform: rotate(180deg);
+                        -ms-transform: rotate(180deg);
+                        transform: rotate(180deg);
+                    }
+
+        .timeline-centered .timeline-entry .timeline-entry-inner {
+            position: relative;
+            margin-left: -20px;
+        }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                content: " ";
+                display: table;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                clear: both;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                content: " ";
+                display: table;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner:after {
+                clear: both;
+            }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time {
+                position: absolute;
+                left: -100px;
+                text-align: right;
+                padding: 10px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span {
+                    display: block;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span:first-child {
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-time > span:last-child {
+                        font-size: 12px;
+                    }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon {
+                background: #fff;
+                color: #737881;
+                display: block;
+                width: 40px;
+                height: 40px;
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+                text-align: center;
+                -moz-box-shadow: 0 0 0 5px #f5f5f6;
+                -webkit-box-shadow: 0 0 0 5px #f5f5f6;
+                box-shadow: 0 0 0 5px #f5f5f6;
+                line-height: 40px;
+                font-size: 15px;
+                float: left;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-primary {
+                    background-color: #303641;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-secondary {
+                    background-color: #ee4749;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success {
+                    background-color: #00a651;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-info {
+                    background-color: #21a9e1;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-warning {
+                    background-color: #fad839;
+                    color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-danger {
+                    background-color: #cc2424;
+                    color: #fff;
+                }
+
+            .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
+                position: relative;
+                background: #f5f5f6;
+                padding: 1em;
+                margin-left: 60px;
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+            }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 9px 9px 9px 0;
+                    border-color: transparent #f5f5f6 transparent transparent;
+                    left: 0;
+                    top: 10px;
+                    margin-left: -9px;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p {
+                    color: #737881;
+                    font-family: "Noto Sans",sans-serif;
+                    font-size: 12px;
+                    margin: 0;
+                    line-height: 1.428571429;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p + p {
+                        margin-top: 15px;
+                    }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {
+                        color: #303641;
+                    }
+
+                    .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 span {
+                        -webkit-opacity: .6;
+                        -moz-opacity: .6;
+                        opacity: .6;
+                        -ms-filter: alpha(opacity=60);
+                        filter: alpha(opacity=60);
+                    }
 
 
 
