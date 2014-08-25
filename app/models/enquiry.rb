@@ -1,4 +1,4 @@
-# == Schema Information
+ # == Schema Information
 #
 # Table name: enquiries
 #
@@ -143,5 +143,9 @@ class Enquiry < ActiveRecord::Base
     
   def get_first_customer_num
     num = self.customers.first.id unless self.customers.empty?
-  end  
+  end 
+    
+  def first_customer
+    return self.customers.first unless self.customers.empty?
+  end    
 end

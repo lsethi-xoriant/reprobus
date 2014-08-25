@@ -71,12 +71,12 @@ class Customer < ActiveRecord::Base
   end
   
   def create_email_link
-    #email_receiver = EmailReceiver.new
-    #email_receiver.uniqueID = SecureRandom.urlsafe_base64
-    #email_receiver.customer = self
-    #email_receiver.save
-
     return self.emailID  + "@app24117064.mailgun.org"
   end
-
+  
+  def assigned_to_name
+    if !self.assignee.nil?
+      return self.assignee.name
+    end
+  end
 end

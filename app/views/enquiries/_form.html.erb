@@ -4,7 +4,7 @@
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
   <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
-<%= custNum + "  "  + custName %>
+
 <% end %>
 
 <% 
@@ -71,7 +71,7 @@
     <!-- Search fields displayed when Existing customer to be entered --> 
     <div id="existing_fields" style='<%= existCustDisplay %>'>
       <div class="form-group">
-      <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label",  data_init_text: custName, data_init_id: custNum.to_s %>
+      <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label" %>
         <div class="col-sm-5">
           <%= hidden_field_tag(:existing_customer, @enquiry.get_first_customer_num, id: 'cust_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: customersearch_enquiries_path, placeholder: 'Search for a name' } ) %>
         </div>

@@ -58,7 +58,7 @@
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.created_at) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned to</li>
-            <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.assigned_to_name ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.background_info ) %></li>
           </ul>
