@@ -1,5 +1,4 @@
 
-
 <% if  @enquiry.errors.any? %>
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
@@ -129,18 +128,15 @@
           </div> 
       </div>
       
-     <div class="form-group"> 
-        <%= c.label :title, class: "col-sm-3 control-label" %> 
-        <div class="col-sm-7">
-        <%= c.text_field :title, class: "form-control" %>  
-        </div>
-      </div>
+      <div class="form-group">  <%=  c.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-7">   <%= c.select :title, options_for_select(titles_list), {}, class: 'form-control' %>  </div>
+      </div>      
       <% end %>	 
     </div>
     <!-- End NEW CUSTOMER --> 
 
     <!-- To/From Dates -->
-    <div class="form-group">
+<!--     <div class="form-group">
       <%= f.label :est_date, "Travel From", class: "col-sm-3 control-label" %>
      <div class="col-sm-2">
         <%= render partial: 'shared/std_datefield', locals: { name: :est_date, id: 'datetimepicker1', f: f } %>                        
@@ -149,7 +145,10 @@
       <div class="col-sm-2">
         <%= render partial: 'shared/std_datefield', locals: { name: :fin_date, id: 'datetimepicker2', f: f } %>    
       </div>
-    </div>
+    </div> -->
+
+    <%= f.label :est_date, "Travel Between", class: "col-sm-3 control-label" %>
+    <%= render partial: 'shared/std_date_range', locals: { from_name: :est_date, to_name: :fin_date, f: f } %>  
 
     <div class="form-group">
       <%= f.label :num_people, "Pax", class: "col-sm-3 control-label" %>
@@ -221,12 +220,13 @@
       </div>
     </div>
 
+
       <%#= f.text_field :percent, class: "form-control" %>		  
  
       <%= f.hidden_field :user_id, :value => current_user.id %>
       <div class="row">
             <div class="col-sm-2 col-md-offset-3">
-              <%= f.submit "Update an Enquiry", class: "btn btn-large btn-primary" %>
+              <%= f.submit buttontxt, class: "btn btn-large btn-primary" %>
             </div>
       </div>
     <% end %>

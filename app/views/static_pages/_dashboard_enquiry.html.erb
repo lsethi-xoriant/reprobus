@@ -3,7 +3,7 @@
   <a href=<%= enquiry_path enquiry %> > 
   <button class="btn btn-info pull-right"  data-toggle="modal"> <i class="fa fa-cog"></i> </button></a>
   <h4><%= enquiry.dasboard_customer_name %></h4>
-  <p> <span><i class="fa fa-envelope"></i></span><span class="body"> <%= mail_to(@customer.email, @customer.email, bcc: @customer.create_email_link)%> </span></p>
+  <p> <span><i class="fa fa-envelope"></i></span><span class="body"> <%= mail_to(enquiry.first_customer.email, enquiry.first_customer.email, bcc: enquiry.first_customer.create_email_link) unless enquiry.first_customer.nil? %> </span></p>
   <p> <span><i class="fa fa-tag"></i> </span><span class="body">"General Enquiry"</span></p>
   <p> <span><i class="fa fa-map-marker"> </i> </span><span class="body">"Best of South America" </span></p>
   <p> <span><i class="fa fa-comment"> </i> </span><span class="label label-danger">Email, 7 March 2014</span> </p>

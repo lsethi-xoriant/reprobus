@@ -50,8 +50,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 
 # datepicker gems
-gem 'momentjs-rails', '~> 2.8.1'
-gem 'bootstrap3-datetimepicker-rails', '~> 3.1.2'
+#gem 'momentjs-rails', '~> 2.8.1' #OLD removed due to conflict with tablesorter
+#gem 'bootstrap3-datetimepicker-rails', '~> 3.1.2' #OLD removed due to conflict with tablesorter
+gem 'bootstrap-datepicker-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
