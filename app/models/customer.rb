@@ -79,4 +79,10 @@ class Customer < ActiveRecord::Base
       return self.assignee.name
     end
   end
+  
+  def initialize(*args)
+     super(*args)
+     self.emailID = SecureRandom.urlsafe_base64
+  end
+  
 end

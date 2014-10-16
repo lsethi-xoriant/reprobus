@@ -52,6 +52,7 @@ module ApplicationHelper
   module BootstrapExtension
     FORM_CONTROL_CLASS = "form-control"
     LABEL_CONTROL_CLASS = "col-sm-3 control-label"
+    LABEL_CONTROL_CLASS_PLAIN = "control-label"
 
     # Override the 'text_field_tag' method defined in FormTagHelper[1]
     #
@@ -67,7 +68,7 @@ module ApplicationHelper
           " #{class_name} ".index(" #{FORM_CONTROL_CLASS} ").nil?
       end
 
-      # Call the original 'text_field_tag' method to do the real work
+      # Call the original 'text_field' method to do the real work
       super
     end
     
@@ -94,9 +95,9 @@ module ApplicationHelper
       else
         # Add ' form-control' to the class if it doesn't already exist
         options[:class] << " #{LABEL_CONTROL_CLASS}" if
-          " #{class_name} ".index(" #{LABEL_CONTROL_CLASS} ").nil?
+          " #{class_name} ".index(" #{LABEL_CONTROL_CLASS} ").nil? && " #{class_name} ".index(" #{LABEL_CONTROL_CLASS_PLAIN} ").nil?
       end
-      # Call the original 'text_field_tag' method to do the real work
+      # Call the original 'label' method to do the real work
       super
     end
     
@@ -110,7 +111,7 @@ module ApplicationHelper
         options[:class] << " #{FORM_CONTROL_CLASS}" if
           " #{class_name} ".index(" #{FORM_CONTROL_CLASS} ").nil?
       end
-      # Call the original 'text_field_tag' method to do the real work
+      # Call the original 'password_field' method to do the real work
       super
     end    
   end

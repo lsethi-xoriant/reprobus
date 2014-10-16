@@ -1,4 +1,4 @@
-<% provide(:title, 'All users') %>
+<!-- <% provide(:title, 'All users') %>
 <h1 class="page-header">All Users</h1>
 
 <%= will_paginate %>
@@ -7,4 +7,39 @@
 	<%= render @users %>
 </ul>
 
-<%= will_paginate %>
+<%= will_paginate %> -->
+
+<% provide(:title, 'All Users') %>
+<h1 class="page-header">All Users</h1>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    All Users
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">                                    
+    <table id="sort_table" class="table table-striped table-bordered table-hover" >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Num Enquiries</th>
+          <th>Joined</th>
+          <th>Thumbnail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= link_to user.name, user %> </td>
+          <td><%= user.email %></td>
+          <td><%= user.enquiries.count %></td>
+          <td><%= user.created_at.strftime("%d/%m/%Y")  %></td>
+          <td><%= gravatar_for(user, size: 52) %></td>          
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

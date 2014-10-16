@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821233044) do
+ActiveRecord::Schema.define(version: 20140902004024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,18 +50,9 @@ ActiveRecord::Schema.define(version: 20140821233044) do
     t.datetime "updated_at"
   end
 
-  create_table "customer_carriers", force: true do |t|
-    t.integer  "customer_id"
-    t.integer  "carrier_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "customer_destinations", force: true do |t|
-    t.integer  "customer_id"
-    t.integer  "destination_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "carriers_enquiries", id: false, force: true do |t|
+    t.integer "enquiry_id"
+    t.integer "carrier_id"
   end
 
   create_table "customer_enquiries", force: true do |t|
@@ -69,13 +60,6 @@ ActiveRecord::Schema.define(version: 20140821233044) do
     t.integer  "enquiry_id"
     t.string   "role",        limit: 32
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "customer_stopovers", force: true do |t|
-    t.integer  "customer_id"
-    t.integer  "stopover_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -130,6 +114,11 @@ ActiveRecord::Schema.define(version: 20140821233044) do
     t.datetime "updated_at"
   end
 
+  create_table "destinations_enquiries", id: false, force: true do |t|
+    t.integer "enquiry_id"
+    t.integer "destination_id"
+  end
+
   create_table "enquiries", force: true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
@@ -154,12 +143,14 @@ ActiveRecord::Schema.define(version: 20140821233044) do
     t.string   "standard"
     t.boolean  "insurance"
     t.date     "reminder"
-    t.text     "destinations"
-    t.text     "stopovers"
-    t.text     "carriers"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
+
+  create_table "enquiries_stopovers", id: false, force: true do |t|
+    t.integer "enquiry_id"
+    t.integer "stopover_id"
+  end
 
   create_table "stopovers", force: true do |t|
     t.string   "name"

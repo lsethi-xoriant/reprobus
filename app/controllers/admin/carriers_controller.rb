@@ -60,7 +60,8 @@ class Admin::CarriersController < ApplicationController
      @carrier = Carrier.find(params[:id])
     if @carrier.update_attributes(carrier_params)
       flash[:success] = "Carrier updated"
-      redirect_to @carrier
+      #redirect_to @carrier
+      redirect_to admin_carriers_path 
     else
       render 'edit'
     end

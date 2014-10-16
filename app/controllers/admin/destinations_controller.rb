@@ -34,6 +34,10 @@ class Admin::DestinationsController < ApplicationController
   
   def show
     @destination = Destination.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: {name: @destination.name, id: @destination.id  }}
+    end       
   end
   
   def create
@@ -56,7 +60,8 @@ class Admin::DestinationsController < ApplicationController
      @destination = Destination.find(params[:id])
     if @destination.update_attributes(destination_params)
       flash[:success] = "Destination updated"
-      redirect_to @destination
+      #redirect_to @destination
+      redirect_to admin_destinations_path 
     else
       render 'edit'
     end

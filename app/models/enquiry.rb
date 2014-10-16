@@ -42,9 +42,12 @@ class Enquiry < ActiveRecord::Base
   validates :user_id, presence: true
 #  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
 
-  serialize :destinations
-  serialize :stopovers
-  serialize :carriers
+  #serialize :destinations
+  #serialize :stopovers
+  #serialize :carriers
+  has_and_belongs_to_many  :carriers
+  has_and_belongs_to_many  :destinations
+  has_and_belongs_to_many  :stopovers
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -96,12 +99,58 @@ class Enquiry < ActiveRecord::Base
   def carrier_names
     str = ""
 
-    if self.carriers.to_s != ''
-      cars = self.carriers.split(',')
-      cars.each do |car| 
-        carrier = Carrier.find(car.to_i)
-        str = str + carrier.name + "," 
-      end
+    self.carriers.each do |car|
+        str = str + car.name + "," 
+    end
+   return str.chomp(",")
+  end
+  
+  
+  def carriers_select2
+    str = ""
+
+    self.carriers.each do |car|
+      str = str + car.id.to_s + ":" +car.name + "," 
+    end
+  
+   return str.chomp(",")
+  end  
+
+  def destinations_select2
+    str = ""
+
+    self.destinations.each do |car|
+      str = str + car.id.to_s + ":" +car.name + "," 
+    end
+  
+   return str.chomp(",")
+  end  
+  
+  def stopovers_select2
+    str = ""
+
+    self.stopovers.each do |car|
+      str = str + car.id.to_s + ":" +car.name + "," 
+    end
+  
+   return str.chomp(",")
+  end    
+  
+  
+  def stopover_names
+    str = ""
+
+    self.stopovers.each do |car|
+        str = str + car.name + "," 
+    end
+   return str.chomp(",")
+  end
+  
+  def destination_names
+    str = ""
+
+    self.destinations.each do |car|
+        str = str + car.name + "," 
     end
    return str.chomp(",")
   end

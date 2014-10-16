@@ -29,7 +29,7 @@ class CustomersController < ApplicationController
   
   def create
     @customer = Customer.new(customer_params)
-    @customer.emailID = SecureRandom.urlsafe_base64
+    #@customer.emailID = SecureRandom.urlsafe_base64
     if @customer.save
       flash[:success] = "Customer created!"
       redirect_to @customer

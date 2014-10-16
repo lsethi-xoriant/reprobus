@@ -49,11 +49,39 @@ class EnquiriesController < ApplicationController
       
       if params[:existing_customer].to_i > 0 
         @enquiry.add_customer(Customer.find(params[:existing_customer]))
-      else
+      elsif !params[:enquiry][:customer_ids].nil?
         params[:enquiry][:customer_ids].each do |cust| 
           @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
         end
       end
+      
+      if params[:enquiry][:carriers] then
+        @enquiry.carriers.clear
+        params[:enquiry][:carriers].split(",").each do |id|
+          if numericID?(id) then 
+            @enquiry.carriers << Carrier.find(id)
+          end
+        end
+      end 
+
+      if params[:enquiry][:stopovers] then
+        @enquiry.stopovers.clear
+        params[:enquiry][:stopovers].split(",").each do |id|
+          if numericID?(id) then 
+            @enquiry.stopovers << Stopover.find(id)
+          end
+        end
+      end 
+        
+      if params[:enquiry][:destinations] then
+        @enquiry.destinations.clear
+        params[:enquiry][:destinations].split(",").each do |id|
+          if numericID?(id) then 
+            @enquiry.destinations << Destination.find(id)
+          end          
+        end
+      end 
+        
       #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered. 
       @enquiry.save
 #end bad code
@@ -75,7 +103,11 @@ class EnquiriesController < ApplicationController
     redirect_to enquiries_url
   end  
 
-    def customersearch
+  def numericID?(str)
+    Float(str) != nil rescue false
+  end
+        
+  def customersearch
     @customers = Customer.select([:id, :last_name, :first_name]).
                             where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
@@ -105,12 +137,43 @@ class EnquiriesController < ApplicationController
     end
   end
 
+  def stopoversearch
+    @entities = Stopover.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
+  
+    # also add the total count to enable infinite scrolling
+    resources_count = Stopover.select([:id, :name]).
+      where("name ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+                    searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
+    end
+  end
+
+
+  def destinationsearch
+    @entities = Destination.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
+  
+    # also add the total count to enable infinite scrolling
+    resources_count = Destination.select([:id, :name]).
+           where("name ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+                    searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
+    end
+  end
+
 private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer, 
-        :fin_date, :standard, :destinations, :stopovers, :carriers, :insurance, :reminder,
+        :fin_date, :standard, :insurance, :reminder,
         customers_attributes: [:first_name, :last_name, :email, :phone, :mobile, :title] )      
     end  
 

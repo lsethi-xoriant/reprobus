@@ -24,6 +24,8 @@ Reprobus::Application.routes.draw do
     collection do
       get 'customersearch'  # /enquires/customersearch  
       get 'carriersearch'  # /enquires/carriersearch  
+      get 'destinationsearch'  # /enquires/carriersearch  
+      get 'stopoversearch'  # /enquires/carriersearch  
     end
   end 
   resources :sessions, only: [:new, :create, :destroy]

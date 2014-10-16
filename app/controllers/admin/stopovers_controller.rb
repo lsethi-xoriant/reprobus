@@ -35,6 +35,10 @@ class Admin::StopoversController < ApplicationController
   
   def show
     @stopover = Stopover.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: {name: @stopover.name, id: @stopover.id  }}
+    end     
   end
   
   def create
@@ -57,7 +61,8 @@ class Admin::StopoversController < ApplicationController
      @stopover = Stopover.find(params[:id])
     if @stopover.update_attributes(stopover_params)
       flash[:success] = "Stopover updated"
-      redirect_to @stopover
+      #redirect_to @stopover
+      redirect_to admin_stopovers_path 
     else
       render 'edit'
     end
