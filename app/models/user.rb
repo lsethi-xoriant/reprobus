@@ -32,7 +32,8 @@ class User < ActiveRecord::Base
   
   has_many    :customers
   has_many    :enquiries
-  has_many    :assigned_enquiries, :class_name => 'Enquiry', :foreign_key => 'assigned_to'
+  has_many    :assigned_enquiries, :class_name => 'Enquiry', :foreign_key => 'assigned_to', :order => "enquiries.reminder ASC"
+  
   has_many    :activities, dependent: :destroy 
   
   def User.new_remember_token
@@ -53,7 +54,28 @@ class User < ActiveRecord::Base
   def send_welcome_email
     UserMailer.welcome_email(self).deliver
   end
+  
+  def getRemindersDueCount
+    int = 0 
+    self.assigned_enquiries.open.each  do |enq|
+      if !enq.reminder.nil? && enq.reminder.past?
+        int = int + 1
+      end
+    end
     
+    self.assigned_enquiries.in_progress.each  do |enq|
+      if !enq.reminder.nil? && enq.reminder.past?
+        int = int + 1
+      end
+    end    
+    return int
+  end
+  
+  
+  def getEnquiriesOpenCount
+    return self.assigned_enquiries.in_progress.count + self.assigned_enquiries.open.count
+  end 
+  
 private
     def create_remember_token
       self.remember_token = User.hash(User.new_remember_token)

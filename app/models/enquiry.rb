@@ -8,7 +8,7 @@
 #  name             :string(64)       default(""), not null
 #  access           :string(8)        default("Public")
 #  source           :string(32)
-#  stage            :string(32)
+#  stage            :string(32)       # this is lead status
 #  probability      :string(255)
 #  amount           :decimal(12, 2)
 #  discount         :decimal(12, 2)
@@ -49,9 +49,13 @@ class Enquiry < ActiveRecord::Base
   has_and_belongs_to_many  :destinations
   has_and_belongs_to_many  :stopovers
   
+  scope :open, -> { where(stage: 'Open') }
+  scope :in_progress, -> { where(stage: 'In Progress') }
+ # scope :notClosed, -> {where('stage != "Closed"') }
+  
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_many    :customer_enquiries, :dependent => :destroy
+  has_many    :customer_enquiries, :dependent => :destroy 
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
  

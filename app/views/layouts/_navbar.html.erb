@@ -33,7 +33,7 @@
         <!-- /.dropdown-messages --> 
       </li>
       <!-- /.dropdown -->
-      
+<!--      
       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
         <ul class="dropdown-menu dropdown-tasks">
           <li> <a href="#">
@@ -73,34 +73,20 @@
             </a> </li>
           <li class="divider"></li>
           <li> <a class="text-center" href="#"> <strong>See All Tasks</strong> <i class="fa fa-angle-right"></i> </a> </li>
-        </ul>
-        <!-- /.dropdown-tasks --> 
-      </li>
+        </ul>           
+      </li>  -->
+    <!-- /.dropdown-tasks -->
       <!-- /.dropdown -->
       
-      <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+      <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <%= current_user.getRemindersDueCount.to_s %> <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
         <ul class="dropdown-menu dropdown-alerts">
-          <li> <a href="#">
-            <div> <i class="fa fa-comment fa-fw"></i> New Comment <span class="pull-right text-muted small">4 minutes ago</span> </div>
+          <li> <a href= <%= dashboard_path(:remindersOnly => "y") %> >
+            <div> <i class="fa fa-bell fa-fw"></i>  <%= current_user.getRemindersDueCount.to_s %> Enquiry Reminders Overdue</div>
             </a> </li>
           <li class="divider"></li>
-          <li> <a href="#">
-            <div> <i class="fa fa-twitter fa-fw"></i> 3 New Followers <span class="pull-right text-muted small">12 minutes ago</span> </div>
+          <li> <a href= <%= dashboard_path %> >
+            <div> <i class="fa fa-bell-o fa-fw"></i>  <%= current_user.getEnquiriesOpenCount.to_s %> Enquiries Open</div>
             </a> </li>
-          <li class="divider"></li>
-          <li> <a href="#">
-            <div> <i class="fa fa-envelope fa-fw"></i> Message Sent <span class="pull-right text-muted small">4 minutes ago</span> </div>
-            </a> </li>
-          <li class="divider"></li>
-          <li> <a href="#">
-            <div> <i class="fa fa-tasks fa-fw"></i> New Task <span class="pull-right text-muted small">4 minutes ago</span> </div>
-            </a> </li>
-          <li class="divider"></li>
-          <li> <a href="#">
-            <div> <i class="fa fa-upload fa-fw"></i> Server Rebooted <span class="pull-right text-muted small">4 minutes ago</span> </div>
-            </a> </li>
-          <li class="divider"></li>
-          <li> <a class="text-center" href="#"> <strong>See All Alerts</strong> <i class="fa fa-angle-right"></i> </a> </li>
         </ul>
         <!-- /.dropdown-alerts --> 
       </li>

@@ -18,6 +18,7 @@
           <th>Date Added</th>
           <th>Phone</th>
           <th>Assigned To</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,7 @@
           <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>
           <td><%= enquiry.customer_phone %></td>
           <td><%= enquiry.assigned_to_name %></td>
+          <td><%= enquiry.stage %></td>
         </tr>
         <% end %>
       </tbody>
