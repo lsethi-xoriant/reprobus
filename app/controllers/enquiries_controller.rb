@@ -2,6 +2,10 @@ class EnquiriesController < ApplicationController
   before_filter :signed_in_user,
                 only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch, :carriersearch]
   before_filter :admin_user, only: :destroy
+  skip_before_filter :verify_authenticity_token, only: [:webenquiry, :confirmation]
+  skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
+  layout "plain", only: [:webenquiry, :confirmation]
+  
   
   def index
     @enquiries = Enquiry.paginate(page: params[:page])
@@ -35,6 +39,31 @@ class EnquiriesController < ApplicationController
     end
   end  
 
+  def webenquiry
+    ###### SHOULD HAVE SOME VERIFICATION HERE TO CHECK SITES ACCESSING THIS ARE ALLOWED (maybe hidden field in enquiry form plug in?)
+    @enquiry = Enquiry.new()     
+    @enquiry.name = "Web Enq - " + params[:firstname] + " " + params[:surname]
+    @enquiry.source = "Web"
+    @enquiry.stage = "Open"
+    @enquiry.user_id = User.find_by_name("System").id
+    @enquiry.background_info = params[:enquiry_detail]
+    @cust = Customer.new()
+    @cust.first_name = params[:firstname] 
+    @cust.last_name = params[:surname]
+    @cust.email = params[:email] 
+    @cust.save
+    
+    if @enquiry.save   
+      @enquiry.add_customer(@cust)
+      flash[:success] = "Thank you, enquiry submitted."
+      render 'confirmation'	
+    end
+    
+  end    
+  
+  def confirmation
+  end
+  
   def update
     if params[:existing_customer].to_i > 0 
       params[:enquiry].delete(:customers_attributes)

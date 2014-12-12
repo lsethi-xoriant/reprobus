@@ -1,0 +1,14 @@
+
+<% if @enquiry.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@enquiry.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @enquiry.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<div><h4>Error submitting, please go back and try again</h4></div>

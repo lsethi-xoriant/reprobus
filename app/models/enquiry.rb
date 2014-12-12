@@ -1,4 +1,4 @@
- # == Schema Information
+# == Schema Information
 #
 # Table name: enquiries
 #
@@ -60,6 +60,11 @@ class Enquiry < ActiveRecord::Base
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
  
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
+
+  def add_customer(customer)
+    self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
+    #self.customers << customer unless customer.nil?
+  end  
   
   def created_by_name
     self.user.name
@@ -182,11 +187,6 @@ class Enquiry < ActiveRecord::Base
       return self.percent
     end  
   end
-  
-  def add_customer(customer)
-    self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
-    #self.customers << customer unless customer.nil?
-  end  
   
   def duration_in_days
     if !self.est_date.nil? && !self.fin_date.nil? 

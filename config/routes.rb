@@ -28,6 +28,9 @@ Reprobus::Application.routes.draw do
       get 'stopoversearch'  # /enquires/carriersearch  
     end
   end 
+  post "enquiries/webenquiry"
+  get "enquiries/confirmation"
+  
   resources :sessions, only: [:new, :create, :destroy]
 
   match '/about',   to: 'static_pages#about',   via: 'get' 
