@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212103245) do
+ActiveRecord::Schema.define(version: 20141214015940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20141212103245) do
     t.integer  "customer_id"
     t.integer  "user_id"
     t.string   "user_email"
+    t.integer  "enquiry_id"
   end
 
   create_table "addresses", force: true do |t|
@@ -146,6 +147,13 @@ ActiveRecord::Schema.define(version: 20141212103245) do
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
+
+  create_table "enquiries_activities", force: true do |t|
+    t.integer  "activity_id"
+    t.integer  "enquiry_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "enquiries_stopovers", id: false, force: true do |t|
     t.integer "enquiry_id"

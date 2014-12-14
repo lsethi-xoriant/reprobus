@@ -58,7 +58,8 @@ class Enquiry < ActiveRecord::Base
   has_many    :customer_enquiries, :dependent => :destroy 
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
- 
+  has_many    :activities,  dependent: :destroy
+  
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
   def add_customer(customer)

@@ -40,6 +40,7 @@ gem 'font-awesome-rails'
 gem 'roo'
 gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 
+
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
@@ -77,3 +78,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+#gem 'jquery-datatables-rails', '~> 3.1.1'

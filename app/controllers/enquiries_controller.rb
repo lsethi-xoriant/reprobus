@@ -6,6 +6,16 @@ class EnquiriesController < ApplicationController
   skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
   layout "plain", only: [:webenquiry, :confirmation]
   
+  def addnote
+    @enquiry = Enquiry.find(params[:id])
+    act = @enquiry.activities.create(type: params[:type], description: params[:note])
+    
+    if act
+      current_user.activities<<(act)
+      flash[:success] = "Note added"
+    end
+    redirect_to @enquiry
+  end
   
   def index
     @enquiries = Enquiry.paginate(page: params[:page])
@@ -19,6 +29,7 @@ class EnquiriesController < ApplicationController
 
   def show
     @enquiry = Enquiry.find(params[:id])
+    @activities = @enquiry.activities.order('created_at ASC').page(params[:page]).per_page(5)
   end
 
   def edit
@@ -47,10 +58,15 @@ class EnquiriesController < ApplicationController
     @enquiry.stage = "Open"
     @enquiry.user_id = User.find_by_name("System").id
     @enquiry.background_info = params[:enquiry_detail]
-    @cust = Customer.new()
+    @cust = Customer.find_by_email(params[:email]) unless params[:email].nil?
+    if @cust.nil? 
+      @cust = Customer.new()
+    end
     @cust.first_name = params[:firstname] 
     @cust.last_name = params[:surname]
     @cust.email = params[:email] 
+    @cust.mobile = params[:phone]
+    
     @cust.save
     
     if @enquiry.save   

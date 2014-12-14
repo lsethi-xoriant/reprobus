@@ -16,7 +16,7 @@ Reprobus::Application.routes.draw do
   
   resources :customers do 
     collection do
-      get 'addnote'  # /enquires/customersearch  
+      get 'addnote'  # /customers/addnote  
     end
   end
 
@@ -24,13 +24,14 @@ Reprobus::Application.routes.draw do
     collection do
       get 'customersearch'  # /enquires/customersearch  
       get 'carriersearch'  # /enquires/carriersearch  
-      get 'destinationsearch'  # /enquires/carriersearch  
-      get 'stopoversearch'  # /enquires/carriersearch  
+      get 'destinationsearch'  # /enquires/destinationsearch  
+      get 'stopoversearch'  # /enquires/stopoversearch  
+      get 'addnote'  # /enquires/addnote  
+      post "webenquiry"
+      get "confirmation"
     end
   end 
-  post "enquiries/webenquiry"
-  get "enquiries/confirmation"
-  
+
   resources :sessions, only: [:new, :create, :destroy]
 
   match '/about',   to: 'static_pages#about',   via: 'get' 

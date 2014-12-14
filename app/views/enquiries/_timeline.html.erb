@@ -1,0 +1,59 @@
+
+<% if activity.user_id == 0 
+    userName = "system"
+  elsif activity.user_id.nil?
+    userName = "system"
+  else
+    userName = User.find(activity.user_id).name   
+  end %>
+
+<% if activity.type == "Note" %>
+  <article class="timeline-entry">
+    <div class="timeline-entry-inner">
+      <div class="timeline-icon">
+        <i class="fa fa-edit"></i>
+      </div>
+
+      <div class="timeline-label">
+        <h6><a href="#">New Note</a> <span>added by <%= userName %> </span></h6>
+        <p><%= activity.description %></p>
+      </div>
+    </div>
+  </article>
+<% elsif activity.type == "Booking" %>
+  <article class="timeline-entry">
+    <div class="timeline-entry-inner">
+      <div class="timeline-icon">
+        <i class="fa fa-calendar "></i>
+      </div>
+      <div class="timeline-label">
+        <h6><a href="#">New Booking</a> <span>added by <%= userName %> </span></h6>
+        <p> <span class="bookingadded"><strong><%= activity.description %></strong></span></p>
+      </div>
+    </div>
+  </article>
+<% elsif activity.type == "EmailSent" %>
+  <article class="timeline-entry">
+    <div class="timeline-entry-inner">
+      <div class="timeline-icon">
+        <i class="fa fa-envelope "></i>
+      </div>
+      <div class="timeline-label">
+        <h6><a href="#">Email Sent</a> by <%= activity.user_email %> </h6>
+        <p><%= simple_format(activity.description) %></p>
+      </div>
+    </div>
+  </article>
+<% elsif activity.type == "EmailRecieved" %>
+  <article class="timeline-entry">
+    <div class="timeline-entry-inner">
+      <div class="timeline-icon">
+        <i class="fa fa-envelope-o "></i>
+      </div>
+      <div class="timeline-label">
+        <h6><a href="#">Email Recieved</a> from <%= @customer.fullname %> </h6>
+        <p><%= simple_format(activity.description) %></p>
+      </div>
+    </div>
+  </article>
+<% end %>
