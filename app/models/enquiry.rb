@@ -51,6 +51,7 @@ class Enquiry < ActiveRecord::Base
   
   scope :open, -> { where(stage: 'Open') }
   scope :in_progress, -> { where(stage: 'In Progress') }
+  scope :bookings, -> { where(stage: 'Booking') }
  # scope :notClosed, -> {where('stage != "Closed"') }
   
   belongs_to  :user
@@ -71,6 +72,14 @@ class Enquiry < ActiveRecord::Base
     self.user.name
     #User.find(self.user_id).name
   end  
+  def convert_to_booking!(user)
+    self.stage = "Booking"
+    self.save
+    act = self.activities.create(type: "Booking", description: "Enquiry converted to Booking")
+    if act
+      user.activities<<(act)
+    end
+  end
   
   def assigned_to_name
     if self.assigned_to 
@@ -136,6 +145,10 @@ class Enquiry < ActiveRecord::Base
    return str.chomp(",")
   end  
   
+  def is_booking 
+    return self.stage == "Booking"
+  end
+  
   def stopovers_select2
     str = ""
 
@@ -145,8 +158,7 @@ class Enquiry < ActiveRecord::Base
   
    return str.chomp(",")
   end    
-  
-  
+ 
   def stopover_names
     str = ""
 

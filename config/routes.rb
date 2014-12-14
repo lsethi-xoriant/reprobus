@@ -27,11 +27,14 @@ Reprobus::Application.routes.draw do
       get 'destinationsearch'  # /enquires/destinationsearch  
       get 'stopoversearch'  # /enquires/stopoversearch  
       get 'addnote'  # /enquires/addnote  
+      get 'addbooking'  # /enquires/addbooking  
+      get 'index_bookings'  # /enquires/addnote 
       post "webenquiry"
       get "confirmation"
     end
   end 
-
+  get 'bookings', to: 'enquiries#index_bookings', as: '/bookings' 
+  
   resources :sessions, only: [:new, :create, :destroy]
 
   match '/about',   to: 'static_pages#about',   via: 'get' 

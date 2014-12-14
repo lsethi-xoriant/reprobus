@@ -6,6 +6,18 @@ class EnquiriesController < ApplicationController
   skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
   layout "plain", only: [:webenquiry, :confirmation]
   
+  def addbooking
+    @enquiry = Enquiry.find(params[:id])
+    if @enquiry.amount > 0  
+      @enquiry.convert_to_booking!(current_user)
+      flash[:success] = "Converted to booking"
+      redirect_to @enquiry
+    else
+      flash[:error] = "Amount cannot be zero when converting to a booking."
+      redirect_to @enquiry
+    end
+  end
+  
   def addnote
     @enquiry = Enquiry.find(params[:id])
     act = @enquiry.activities.create(type: params[:type], description: params[:note])
@@ -18,7 +30,11 @@ class EnquiriesController < ApplicationController
   end
   
   def index
-    @enquiries = Enquiry.paginate(page: params[:page])
+    @enquiries = Enquiry.where.not(stage: "Closed").where.not(stage: "Booking").paginate(page: params[:page])
+  end
+  
+  def index_bookings
+    @bookings = Enquiry.bookings.paginate(page: params[:page])
   end
   
   def new
