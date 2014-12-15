@@ -63,6 +63,9 @@ class Enquiry < ActiveRecord::Base
   
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
+  CONSUM_KEY = "SJXI8AQKB8GYBQSG9VLHJJ3QNJ13JV"
+  OAUTH_SECRET_KEY = "T7K1GEBJZUZMUYA3PXQHIEXXMZRAJS"
+  
   def add_customer(customer)
     self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
     #self.customers << customer unless customer.nil?
@@ -72,13 +75,76 @@ class Enquiry < ActiveRecord::Base
     self.user.name
     #User.find(self.user_id).name
   end  
+  
   def convert_to_booking!(user)
     self.stage = "Booking"
     self.save
+    
     act = self.activities.create(type: "Booking", description: "Enquiry converted to Booking")
     if act
       user.activities<<(act)
     end
+    
+    errStr =  self.create_invoice_xero(user)
+    
+    return errStr
+  end
+  
+  def create_invoice_xero(user)
+    #talk to xero and create contact and invoice
+    require 'rubygems'
+    require 'xeroizer'
+
+    path = Rails.root + "config/privatekey.pem"
+    
+    # Create client (used to communicate with the API).
+    client = Xeroizer::PrivateApplication.new(CONSUM_KEY, OAUTH_SECRET_KEY, path)
+    
+    #if we have a lead customer create contact in xero if it does not already exist. 
+    #self.customers.each do |cust| # xero only allows one contact per invoice. 
+    cust = self.customers.first   
+    xcontacts = client.Contact.all(:where => {:name => cust.fullname})
+    if xcontacts.blank? && !cust.email.nil?
+      # try match on email
+      xcontacts = client.Contact.all(:where => {:email_address => cust.email})
+    end
+
+    if xcontacts.blank? 
+      puts "HAMISH - no match"
+      #add contact to xero
+      xcust = client.Contact.build(:name => cust.fullname)
+      xcust.first_name = cust.first_name
+      xcust.last_name =  cust.last_name
+      xcust.email_address = cust.email
+      #xcust.add_address(:type => 'STREET', :line1 => '12 Testing Lane', :city => 'Brisbane') # TO BE ADDED
+      #xcust.add_phone(:type => 'DEFAULT', :area_code => '07', :number => '3033 1234')  # TO BE ADDED
+      xcust.add_phone(:type => 'MOBILE', :number => cust.mobile)  # ADD nomal phone - may need to structure our phone records like xero does. 
+      xcust.save
+    else
+      xcust = xcontacts.first
+    end
+    
+    xinv = client.Invoice.build({
+      :type => "ACCREC",
+      :status => "AUTHORISED",
+      :date => Date.today,
+      :due_date => (Date.today + 30),
+      :line_items => [{
+        :description => self.name,
+        :quantity => 1,
+        :unit_amount => self.amount,
+        :account_code => 200
+        }]
+      })
+    
+    xinv.contact = xcust
+    xinv.save
+       
+    act = self.activities.create(type: "Booking", description: "Invoice created in Xero")
+    if act
+      user.activities<<(act)
+    end  
+
   end
   
   def assigned_to_name
@@ -214,4 +280,19 @@ class Enquiry < ActiveRecord::Base
   def first_customer
     return self.customers.first unless self.customers.empty?
   end    
+    
+  def validate_new_customer(email, mobile)
+    if !email.strip == ""
+      cust = Customer.find_by_email(email)
+      if !cust.nil?
+        errors.add(:CustomerExists,"Customer already exists with this email: #{cust.fullname}")
+      end
+    end
+    if mobile.strip == ""
+      cust = Customer.find_by_mobile(mobile)
+      if !cust.nil?
+        errors.add(:CustomerExists,"Customer already exists with this mobile: #{cust.fullname}")
+      end
+    end
+  end
 end

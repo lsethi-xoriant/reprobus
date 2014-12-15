@@ -8,12 +8,16 @@ class EnquiriesController < ApplicationController
   
   def addbooking
     @enquiry = Enquiry.find(params[:id])
-    if @enquiry.amount > 0  
-      @enquiry.convert_to_booking!(current_user)
-      flash[:success] = "Converted to booking"
-      redirect_to @enquiry
+    ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one. 
+    if @enquiry.amount.nil? || @enquiry.amount <= 0  
+      flash[:warning] = "Amount cannot be zero when converting to a booking."
+      redirect_to @enquiry  
+    elsif @enquiry.customers.blank? || @enquiry.customers.count == 0 
+      flash[:warning] = "Must have a customer when converting to a booking."
+      redirect_to @enquiry  
     else
-      flash[:error] = "Amount cannot be zero when converting to a booking."
+      @enquiry.convert_to_booking!(current_user)
+      flash[:success] = "Converted to booking "
       redirect_to @enquiry
     end
   end
@@ -103,7 +107,12 @@ class EnquiriesController < ApplicationController
     
     @enquiry = Enquiry.find(params[:id])
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
-
+  
+    # below not working, may have to reinvestigate. email is already unigue for customers, so dont need that validation
+  #  if params[:user_type] == "New"
+  #     @enquiry.validate_new_customer(params[:enquiry][:customers_attributes][:email], params[:enquiry][:customers_attributes][:mobile])
+  #  end
+    
     if @enquiry.update_attributes(enquiry_params)
 #tidy up one day  - find better way to do this
       @enquiry.customers.clear

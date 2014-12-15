@@ -38,6 +38,17 @@
         </div>
       </div>
 
+    <div class="form-group">
+      <%= f.label :stage, "Lead Status", class: "col-sm-3 control-label"%>
+      <div class="col-sm-2">
+        <%= f.select :stage, options_for_select(["Open", "In Progress", "Closed"], @enquiry.stage ), {}, class: 'form-control' %>	  
+      </div>      
+      <%= f.label :source, class: "col-sm-1 control-label" %>
+      <div class="col-sm-2">
+        <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], @enquiry.source ), {}, class: 'form-control'  %>	 
+      </div>
+    </div>
+
  <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->  
     <div class="form-group">
       <%= label_tag :user_type, "Add Customer", class: "col-sm-3 control-label" %>
@@ -56,17 +67,6 @@
     </div>      
     <!-- End dynamic display radio buttons --> 
 
-    <div class="form-group">
-      <%= f.label :stage, "Lead Status", class: "col-sm-3 control-label"%>
-      <div class="col-sm-2">
-        <%= f.select :stage, options_for_select(["Open", "In Progress", "Closed"], @enquiry.stage ), {}, class: 'form-control' %>	  
-      </div>      
-      <%= f.label :source, class: "col-sm-1 control-label" %>
-      <div class="col-sm-2">
-        <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], @enquiry.source ), {}, class: 'form-control'  %>	 
-      </div>
-    </div>
-
     <!-- Search fields displayed when Existing customer to be entered --> 
     <div id="existing_fields" style='<%= existCustDisplay %>'>
       <div class="form-group">
@@ -81,6 +81,11 @@
     <!-- Fields displayed when NEW CUSTOMER to be entered    --> 
     <div id="new_fields" style='<%= newCustDisplay %>' >
 	    <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
+      
+      <div class="form-group">  <%=  c.label :title, class: "col-sm-3 control-label" %>
+        <div class="col-sm-7">   <%= c.select :title, options_for_select(titles_list), {}, class: 'form-control' %>  </div>
+      </div>  
+      
       <div class="form-group">
         <%= c.label :name, "Name", class: "col-sm-3 control-label" %> 
           <div class="col-sm-4">
@@ -127,10 +132,7 @@
             <%= c.text_field :phone, class: "form-control", placeholder: "Other" %>  
           </div> 
       </div>
-      
-      <div class="form-group">  <%=  c.label :title, class: "col-sm-3 control-label" %>
-        <div class="col-sm-7">   <%= c.select :title, options_for_select(titles_list), {}, class: 'form-control' %>  </div>
-      </div>      
+          
       <% end %>	 
     </div>
     <!-- End NEW CUSTOMER --> 
