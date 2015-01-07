@@ -1,6 +1,6 @@
 module SessionsHelper
   def is_number?(mystring)
-    true if Float(self) rescue false
+    true if Float(mystring) rescue false
   end
   
   def sign_in(user)
