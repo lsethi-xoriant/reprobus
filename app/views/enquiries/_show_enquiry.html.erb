@@ -97,7 +97,7 @@
             <!-- /activity --> 
             <% if current_user.admin? %>
             <%= link_to "Delete " + @enquiry.name, @enquiry, method: :delete, data: { confirm: "You sure?" } %>
-            <%= render "versions/versions", :object => @enquiry %>
+            <%#= render "versions/versions", :object => @enquiry %>
             <% end %>
             <br> 
         </div>       
