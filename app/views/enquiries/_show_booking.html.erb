@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-lg-9 profile-name">
               <h2><%= @enquiry.name %></h2>
-              <%= link_to edit_enquiry_path(@enquiry) do %>
+              <%= link_to edit_booking_path(@enquiry) do %>
                 <i class="fa fa-pencil editicon"></i>
               <% end %>   
             </div>
@@ -45,6 +45,28 @@
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Created By</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @enquiry.created_by_name ) %></li>
           </ul> 
+          <div>
+             <h3>Xero Invoice</h3>
+            <% if !@invoice.nil? %>
+              <div class="table-responsive"><table class="table table-striped"><tbody>
+              <tr><th>Invoice</th><th>Due Date</th><th>Total</th><th>Amount Due</th><th>Status</th></tr>
+              <tr><td><%= @invoice.invoice_number %> </td><td><%= @invoice.due_date %> </td>
+                  <td><%= number_to_currency(@invoice.total) %> </td><td><%= number_to_currency(@invoice.amount_due) %> </td>
+                  <td><%= @invoice.status %> </td></tr>   
+              </tbody></table></div>         
+              <div class="well well-sm">
+                <h4>Add a Payment</h4>
+                  <%= form_tag({controller: "enquiries", action: "addpayment"}, method: "get", class: "form-inline") do %>
+                    <%= hidden_field_tag :id, '', :value => @enquiry.id %>
+                    <div class="form-group">
+                    <div class="input-group">  
+                    <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+                    </div></div>  
+                    <%= submit_tag "Add Payment", class: "btn btn-primary add-payment" %>   
+                  <% end %>
+              </div> 
+            <% end %>
+          </div>
         </div>   
 
         <div class="col-lg-6 details-activity">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141214015940) do
+ActiveRecord::Schema.define(version: 20150106093444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20141214015940) do
     t.string   "insurance"
     t.string   "gender"
     t.string   "emailID"
+    t.string   "xero_id"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -144,6 +145,8 @@ ActiveRecord::Schema.define(version: 20141214015940) do
     t.string   "standard"
     t.boolean  "insurance"
     t.date     "reminder"
+    t.string   "xero_id"
+    t.text     "xpayments"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree

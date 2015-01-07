@@ -1,5 +1,8 @@
 module SessionsHelper
-
+  def is_number?(mystring)
+    true if Float(self) rescue false
+  end
+  
   def sign_in(user)
     remember_token = User.new_remember_token
     cookies.permanent[:remember_token] = remember_token

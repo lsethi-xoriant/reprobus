@@ -21,7 +21,7 @@
       <tbody>
         <% @bookings.each do |enquiry| %>
         <tr>
-          <td><%= link_to(enquiry.name, enquiry) %></td>
+          <td><%= link_to(enquiry.name, booking_path(enquiry)) %></td>
           <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
           <td><%= enquiry.customer_email %></td>
           <td><%= number_to_currency(enquiry.amount, precision: 0) %></td>

@@ -28,12 +28,17 @@ Reprobus::Application.routes.draw do
       get 'stopoversearch'  # /enquires/stopoversearch  
       get 'addnote'  # /enquires/addnote  
       get 'addbooking'  # /enquires/addbooking  
-      get 'index_bookings'  # /enquires/addnote 
+      get 'addpayment'
       post "webenquiry"
       get "confirmation"
     end
   end 
-  get 'bookings', to: 'enquiries#index_bookings', as: '/bookings' 
+  
+  get 'bookings', to: 'enquiries#index_bookings', as: 'bookings' 
+  # redirect booking show via the enquiry controller. may need to change in future depending on what we want to show
+  # ... at present all work to show differences for booking are handled in view through partials
+  get 'bookings/:id', to: 'enquiries#show', as: 'booking' 
+  get 'bookings/:id/edit', to: 'enquiries#edit_booking', as: 'edit_booking' 
   
   resources :sessions, only: [:new, :create, :destroy]
 

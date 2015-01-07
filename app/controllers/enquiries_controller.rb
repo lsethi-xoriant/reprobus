@@ -17,7 +17,19 @@ class EnquiriesController < ApplicationController
       redirect_to @enquiry  
     else
       @enquiry.convert_to_booking!(current_user)
-      flash[:success] = "Converted to booking "
+      flash[:success] = "Converted to booking"
+      redirect_to @enquiry
+    end
+  end
+  
+  def addpayment
+    @enquiry = Enquiry.find(params[:id])
+    if params[:amount].nil? || !is_number?(params[:amount])  
+      flash[:warning] = "Payment amount must be entered. You entered #{params[:amount]}"
+      redirect_to @enquiry  
+    else
+      @enquiry.add_payment(params[:amount])
+      flash[:success] = "Payment added succesfully"
       redirect_to @enquiry
     end
   end
@@ -50,10 +62,17 @@ class EnquiriesController < ApplicationController
   def show
     @enquiry = Enquiry.find(params[:id])
     @activities = @enquiry.activities.order('created_at ASC').page(params[:page]).per_page(5)
+    if @enquiry.is_booking 
+      @invoice = @enquiry.get_invoice_xero
+    end
   end
 
   def edit
     @enquiry = Enquiry.find(params[:id])
+  end
+  
+  def edit_booking
+    @booking = Enquiry.find(params[:id])
   end
   
   def create

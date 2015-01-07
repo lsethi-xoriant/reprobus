@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   has_many    :assigned_enquiries, :class_name => 'Enquiry', :foreign_key => 'assigned_to', :order => "enquiries.reminder ASC"
   
   has_many    :activities, dependent: :destroy 
+ 
   
   def User.new_remember_token
     SecureRandom.urlsafe_base64
