@@ -108,7 +108,7 @@ class Enquiry < ActiveRecord::Base
     # TODO need some error handling in here.
     xero.create_invoice(self)
         
-    self.activities.create(type: "Booking", description: "Invoice created in Xero")
+    act = self.activities.create(type: "Booking", description: "Invoice created in Xero")
     if act
       user.activities<<(act)
     end  
