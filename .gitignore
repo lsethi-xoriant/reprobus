@@ -25,4 +25,4 @@ doc/
 .idea
 .secret
 
-#/config/privatekey.pem
+/config/privatekey.pem
