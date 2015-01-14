@@ -34,6 +34,7 @@
 #  insurance       :string(255)
 #  gender          :string(255)
 #  emailID         :string(255)
+#  xero_id         :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -54,16 +55,20 @@ class Customer < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, :dependent => :destroy
-  has_many    :customer_carriers
   has_many    :enquiries, :through => :customer_enquiries, :uniq => true,  :order => "enquiries.id DESC"  
   has_one    :address, :dependent => :destroy, :as => :addressable, :class_name => "Address" 
   accepts_nested_attributes_for :address, :allow_destroy => true; #, :reject_if => proc {|attributes| Address.reject_address(attributes)}
   has_many    :activities,  dependent: :destroy
+  has_many    :bookings
   
   has_paper_trail :ignore => [:created_at, :updated_at]
   
   def fullname 
     "#{self.first_name} #{self.last_name}"
+  end
+  
+  def dashboard_name 
+    "#{self.last_name}, #{self.first_name}"
   end
   
   def nice_id

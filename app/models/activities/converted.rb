@@ -13,8 +13,6 @@
 #  enquiry_id  :integer
 #
 
-# This class uses Single Table Inheritance (STI)
-
-class EmailRecieved < Activity
+class Converted < Activity
   # Methods, variables and constants
 end

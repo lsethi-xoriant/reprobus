@@ -14,9 +14,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id])
-    # @activities = @customer.activities.paginate(page: params[:page], :per_page => 5)
-    # reverse order (replaces above line)
-    @activities = @customer.activities.order('created_at ASC').page(params[:page]).per_page(5)
+    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per_page(5)
     respond_to do |format|
       format.html
       format.json { render json: {name: @customer.fullname, id: @customer.id  }}

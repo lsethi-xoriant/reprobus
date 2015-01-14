@@ -15,19 +15,19 @@
       </div>
 
       <div class="timeline-label">
-        <h6><a href="#">New Note</a> <span>added by <%= userName %> </span></h6>
+        <h6><strong>New Note</strong> <span>added by <%= userName %> </span> on  <%= activity.created_at.strftime("%d/%m/%Y") %>  </h6>
         <p><%= activity.description %></p>
       </div>
     </div>
   </article>
-<% elsif activity.type == "Booking" %>
+<% elsif activity.type == "Converted" %>
   <article class="timeline-entry">
     <div class="timeline-entry-inner">
       <div class="timeline-icon">
         <i class="fa fa-calendar "></i>
       </div>
       <div class="timeline-label">
-        <h6><a href="#">New Booking</a> <span>added by <%= userName %> </span></h6>
+        <h6><strong>New Booking</strong> <span>added by <%= userName %> </span> on  <%= activity.created_at.strftime("%d/%m/%Y") %>  </h6>
         <p> <span class="bookingadded"><strong><%= activity.description %></strong></span></p>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <i class="fa fa-envelope "></i>
       </div>
       <div class="timeline-label">
-        <h6><a href="#">Email Sent</a> by <%= activity.user_email %> </h6>
+        <h6><strong>Email Sent</strong> by <%= activity.user_email %>  on  <%= activity.created_at.strftime("%d/%m/%Y") %>  </h6>
         <p><%= simple_format(activity.description) %></p>
       </div>
     </div>
@@ -51,7 +51,7 @@
         <i class="fa fa-envelope-o "></i>
       </div>
       <div class="timeline-label">
-        <h6><a href="#">Email Recieved</a> from <%= @customer.fullname %> </h6>
+        <h6><strong>Email Recieved</strong> from <%= @customer.fullname %>  on  <%= activity.created_at.strftime("%d/%m/%Y") %>  </h6>
         <p><%= simple_format(activity.description) %></p>
       </div>
     </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106093444) do
+ActiveRecord::Schema.define(version: 20150114011259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,21 @@ ActiveRecord::Schema.define(version: 20150106093444) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
+
+  create_table "bookings", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "enquiry_id"
+    t.integer  "user_id"
+    t.decimal  "amount",      precision: 12, scale: 2
+    t.decimal  "deposit",     precision: 12, scale: 2
+    t.string   "name"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "xpayments"
+    t.string   "xero_id"
+    t.text     "xdeposits"
+  end
 
   create_table "carriers", force: true do |t|
     t.string   "name"
@@ -161,6 +176,27 @@ ActiveRecord::Schema.define(version: 20150106093444) do
   create_table "enquiries_stopovers", id: false, force: true do |t|
     t.integer "enquiry_id"
     t.integer "stopover_id"
+  end
+
+  create_table "invoices", force: true do |t|
+    t.integer  "booking_id"
+    t.string   "status"
+    t.datetime "invoice_date"
+    t.datetime "deposit_due"
+    t.datetime "final_payment_due"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "deposit",           precision: 12, scale: 2
+  end
+
+  create_table "line_items", force: true do |t|
+    t.integer  "invoice_id"
+    t.decimal  "item_price",  precision: 12, scale: 2
+    t.decimal  "total",       precision: 12, scale: 2
+    t.string   "description"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "stopovers", force: true do |t|

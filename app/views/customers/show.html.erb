@@ -72,9 +72,8 @@
           <h3>Activity Stream</h3>
 
           <div class="timeline-centered">        
-            <%# @customer.activities.reverse_each do |act| %>
-             <% @activities.reverse_each do |act| %>
-              <%= render partial: 'timeline', locals: { activity: act } %>
+             <% @activities.each do |act| %>
+              <%= render partial: 'shared/timeline', locals: { activity: act } %>
             <% end %>  
             
             <article class="timeline-entry begin">

@@ -26,9 +26,8 @@
 #  standard         :string(255)
 #  insurance        :boolean
 #  reminder         :date
-#  destinations     :text
-#  stopovers        :text
-#  carriers         :text
+#  xero_id          :string(255)
+#  xpayments        :text
 #
 
 require 'spec_helper'

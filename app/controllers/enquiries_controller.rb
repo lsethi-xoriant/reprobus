@@ -1,6 +1,6 @@
 class EnquiriesController < ApplicationController
   before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch, :carriersearch]
+                only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch, :carriersearch, :addBooking, :index_bookings, :edit_booking]
   before_filter :admin_user, only: :destroy
   skip_before_filter :verify_authenticity_token, only: [:webenquiry, :confirmation]
   skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
@@ -16,21 +16,12 @@ class EnquiriesController < ApplicationController
       flash[:warning] = "Must have a customer when converting to a booking."
       redirect_to @enquiry  
     else
-      @enquiry.convert_to_booking!(current_user)
-      flash[:success] = "Converted to booking"
-      redirect_to @enquiry
-    end
-  end
-  
-  def addpayment
-    @enquiry = Enquiry.find(params[:id])
-    if params[:amount].nil? || !is_number?(params[:amount])  
-      flash[:warning] = "Payment amount must be entered. You entered #{params[:amount]}"
-      redirect_to @enquiry  
-    else
-      @enquiry.add_payment(params[:amount])
-      flash[:success] = "Payment added succesfully"
-      redirect_to @enquiry
+      if @enquiry.convert_to_booking!(current_user)
+        flash[:success] = "Converted to booking"
+        redirect_to @enquiry.booking
+      else
+        render 'show'
+      end
     end
   end
   
@@ -46,7 +37,7 @@ class EnquiriesController < ApplicationController
   end
   
   def index
-    @enquiries = Enquiry.where.not(stage: "Closed").where.not(stage: "Booking").paginate(page: params[:page])
+    @enquiries = Enquiry.includes(:customers).where.not(stage: "Closed").where.not(stage: "Booking").paginate(page: params[:page])
   end
   
   def index_bookings
@@ -61,10 +52,8 @@ class EnquiriesController < ApplicationController
 
   def show
     @enquiry = Enquiry.find(params[:id])
-    @activities = @enquiry.activities.order('created_at ASC').page(params[:page]).per_page(5)
-    if @enquiry.is_booking 
-      @invoice = @enquiry.get_invoice_xero
-    end
+   # @activities = @enquiry.activities.order('created_at ASC').page(params[:page]).per_page(5)
+    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per_page(5)
   end
 
   def edit

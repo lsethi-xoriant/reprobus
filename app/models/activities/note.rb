@@ -10,6 +10,7 @@
 #  customer_id :integer
 #  user_id     :integer
 #  user_email  :string(255)
+#  enquiry_id  :integer
 #
 
 # This class uses Single Table Inheritance (STI)

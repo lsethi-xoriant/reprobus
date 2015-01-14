@@ -6,8 +6,8 @@ class Xero
   
   attr_accessor :client
   
-   CONSUM_KEY = "SJXI8AQKB8GYBQSG9VLHJJ3QNJ13JV"
-   OAUTH_SECRET_KEY = "T7K1GEBJZUZMUYA3PXQHIEXXMZRAJS"
+   CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"
+   OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA"
   
   def initialize
     path = Rails.root + "config/privatekey.pem"
@@ -15,10 +15,10 @@ class Xero
     self.client = Xeroizer::PrivateApplication.new(CONSUM_KEY, OAUTH_SECRET_KEY, path)
   end
   
-  def create_invoice(enquiry)
+  def create_invoice(booking)
     #if we have a lead customer create contact in xero if it does not already exist. 
     #self.customers.each do |cust| # xero only allows one contact per invoice. 
-    cust = enquiry.customers.first   
+    cust = booking.customer  
     xcontacts = self.client.Contact.all(:where => {:name => cust.fullname})
     if xcontacts.blank? && !cust.email.nil?
       # try match on email
@@ -42,30 +42,31 @@ class Xero
     
     xinv = self.client.Invoice.build({
       :type => "ACCREC",
-      :status => "SUBMITTED",
+     # :status => "SUBMITTED",
+      :status => "AUTHORISED",
       :date => Date.today,
       :due_date => (Date.today + 30),
       :line_items => [{
-        :description => enquiry.name,
+        :description => booking.name,
         :quantity => 1,
-        :unit_amount => enquiry.amount,
+        :unit_amount => booking.amount,
         :account_code => 200,
         :tax_type => 'NONE'
         }]
       })
     
     xinv.contact = xcust
-    xinv.save
+    success = xinv.save
     
     cust.update_attribute(:xero_id, xcust.contact_id)
-    enquiry.update_attribute(:xero_id, xinv.invoice_id)
+    booking.update_attribute(:xero_id, xinv.invoice_id)
+    
+    return success;
   end
   
-  def create_payment(enquiry, amount)
-    puts enquiry.name
-    puts self.client
+  def create_payment(booking, amount)
     
-    xInv = self.client.Invoice.find(enquiry.xero_id)
+    xInv = self.client.Invoice.find(booking.xero_id)
     xAcc = self.client.Account.find('855')
     #xPay = xInv.add_payment(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
     xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
@@ -75,9 +76,9 @@ class Xero
     xPay.save
     #xInv.save
     
-    arr = enquiry.xpayments || []
+    arr = booking.xpayments || []
     arr <<   xPay.payment_id
-    enquiry.update_attribute(:xpayments, arr)
+    booking.update_attribute(:xpayments, arr)
   end
   
   def get_invoice(xero_id)

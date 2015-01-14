@@ -1,5 +1,0 @@
-<% provide(:title, 'Edit Booking') %>
-<h1 class="page-header">Edit Booking</h1>
-<%  params[:user_type] = "Existing" %>
-<%  params[:existing_customer] = @enquiry.customers.first.id.to_s unless @enquiry.customers.empty? %>
-<%= render  partial: 'booking_form', locals: { buttontxt: "Update Booking" } %>

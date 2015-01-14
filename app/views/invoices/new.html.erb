@@ -1,0 +1,79 @@
+<% provide(:title, 'Create Invoice') %>
+<h1 class="page-header">Create Invoice</h1>
+<div class="row">
+  
+<div class="container">
+
+   <%= render 'shared/error_messages', object: @invoice %>  
+   <%= form_tag({controller: "invoices", action: "create"}, method: "post") do %>
+    <div class="form-group">
+      <label for="deposit">Deposit Amount</label>
+      <input type="number" name='deposit' placeholder="$0.00" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="depositdue">Deposit Due</label>
+      <input type="date" name='deposit_due' class="form-control"/>
+    </div>
+    <div class="form-group">
+      <label for="finalpaydue">Final Payment Due</label>
+      <input type="date" name='final_payment_due' class="form-control"/>
+    </div>
+
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+      <h3 class="page-header">Add Line Items</h3>
+      
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+            <th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							Description
+						</th>
+						<th class="text-center">
+							Quantity
+						</th>
+						<th class="text-center">
+							Price
+						</th>
+						<th class="text-center">
+							Total
+						</th>
+					</tr>
+				</thead>
+       
+				<tbody>
+					<tr id='addr0'>
+						<td>
+						1
+						</td>
+						<td>
+						<input type="text" name='desc0'  placeholder='Description' class="form-control"/>
+						</td>
+						<td>
+						<input type="number" name='qty0' placeholder='0' class="form-control qty_field"/>
+						</td>
+						<td>
+						<input type="number" name='price0' placeholder='$0.00' class="form-control price_field"/>
+						</td>
+ 						<td>
+						<input type="number" name='total0' placeholder='$0.00' class="form-control" disabled="disabled"/>
+						</td>           
+					</tr>
+          <tr id='addr1'></tr>
+        </tbody>
+			</table>
+		</div>
+	</div>
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+  <div class="clearfix"></div>
+  <br><br>
+  <%= submit_tag "Save Invoice", class: "btn btn-primary" %>    
+  <br>
+<% end %>  
+</div>
+
+  
+</div>

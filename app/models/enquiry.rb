@@ -8,7 +8,7 @@
 #  name             :string(64)       default(""), not null
 #  access           :string(8)        default("Public")
 #  source           :string(32)
-#  stage            :string(32)       # this is lead status
+#  stage            :string(32)
 #  probability      :string(255)
 #  amount           :decimal(12, 2)
 #  discount         :decimal(12, 2)
@@ -26,9 +26,8 @@
 #  standard         :string(255)
 #  insurance        :boolean
 #  reminder         :date
-#  destinations     :text
-#  stopovers        :text
-#  carriers         :text
+#  xero_id          :string(255)
+#  xpayments        :text
 #
 
 class Enquiry < ActiveRecord::Base
@@ -42,9 +41,6 @@ class Enquiry < ActiveRecord::Base
   validates :user_id, presence: true
 #  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
 
-  #serialize :destinations
-  #serialize :stopovers
-  #serialize :carriers
   has_and_belongs_to_many  :carriers
   has_and_belongs_to_many  :destinations
   has_and_belongs_to_many  :stopovers
@@ -62,6 +58,7 @@ class Enquiry < ActiveRecord::Base
   has_many    :customers, :through => :customer_enquiries, :uniq => true, :order => "customers.id DESC"
   accepts_nested_attributes_for :customers, :allow_destroy => false; 
   has_many    :activities,  dependent: :destroy
+  has_one     :booking
   
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
@@ -73,52 +70,31 @@ class Enquiry < ActiveRecord::Base
     #self.customers << customer unless customer.nil?
   end  
   
-  def add_payment(amount)
-    xero = Xero.new()
-    # TODO need some error handling in here.
-    xero.create_payment(self, amount)
-        
-    act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
-    if act
-      user.activities<<(act)
-    end     
-  end
-  
   def created_by_name
     self.user.name
     #User.find(self.user_id).name
   end  
   
   def convert_to_booking!(user)
-    self.stage = "Booking"
-    self.save
-    
-    act = self.activities.create(type: "Booking", description: "Enquiry converted to Booking")
-    if act
-      user.activities<<(act)
+    book = self.build_booking(name: self.name, amount: self.amount, status: "New Booking")
+    book.user = self.user
+    book.customer = self.customers.first
+    book.enquiry = self
+    if book.save
+      act = self.activities.create(type: "Converted", description: "Enquiry converted to Booking")
+      if act
+        self.user.activities<<(act)
+      end
+      return true
+       #errStr =  self.create_invoice_xero(user)
+    else
+      return false
     end
+   # self.stage = "Booking"
+   # self.save
     
-    errStr =  self.create_invoice_xero(user)
-    
-    return errStr
   end
-  
-  def create_invoice_xero(user)
-    xero = Xero.new()
-    # TODO need some error handling in here.
-    xero.create_invoice(self)
-        
-    act = self.activities.create(type: "Booking", description: "Invoice created in Xero")
-    if act
-      user.activities<<(act)
-    end  
-  end
-  
-  def get_invoice_xero
-    xero = Xero.new()
-    inv = xero.get_invoice(self.xero_id)
-    return inv
-  end
+
   
   def assigned_to_name
     if self.assigned_to 

@@ -1,6 +1,3 @@
-<!-- ###OLD CODE NOT USED NOW### -->
-
-
 <% provide(:title, 'All Bookings') %>
 <h1 class="page-header">All Bookings</h1>
 
@@ -17,21 +14,21 @@
           <th>Customer Name</th>
           <th>Email</th>
           <th>Amount</th>
-          <th>Phone</th>
+          <th>deposit</th>
           <th>Assigned To</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <% @bookings.each do |enquiry| %>
+        <% @bookings.each do |booking| %>
         <tr>
-          <td><%= link_to(enquiry.name, booking_path(enquiry)) %></td>
-          <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
-          <td><%= enquiry.customer_email %></td>
-          <td><%= number_to_currency(enquiry.amount, precision: 0) %></td>
-          <td><%= enquiry.customer_phone %></td>
-          <td><%= enquiry.assigned_to_name %></td>
-          <td><%= enquiry.stage %></td>
+          <td><%= link_to(booking.name, booking_path(booking)) %></td>
+          <td><%= link_to(booking.dasboard_customer_name, booking.customer) %></td>
+          <td><%= booking.customer.email %></td>
+          <td><%= number_to_currency(booking.amount, precision: 0) %></td>
+          <td><%= number_to_currency(booking.deposit, precision: 0) %></td>
+          <td><%= booking.assigned_to_name %></td>
+          <td><%= booking.status %></td>
         </tr>
         <% end %>
       </tbody>

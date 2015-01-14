@@ -1,0 +1,19 @@
+<% if !@invoice.nil? %>
+<div class="table-responsive"><table class="table table-striped"><tbody>
+  <tr><th>Invoice</th><th>Due Date</th><th>Total</th><th>Amount Due</th><th>Status</th></tr>
+  <tr><td><%= @invoice.invoice_number %> </td><td><%= @invoice.due_date %> </td>
+    <td><%= number_to_currency(@invoice.total) %> </td><td><%= number_to_currency(@invoice.amount_due) %> </td>
+    <td><%= @invoice.status %> </td></tr>   
+  </tbody></table></div>         
+<div class="well well-sm">
+  <h4>Add a Payment</h4>
+  <%= form_tag({controller: "bookings", action: "addxeropayment"}, method: "get", class: "form-inline") do %>
+  <%= hidden_field_tag :id, '', :value => @booking.id %>
+  <div class="form-group">
+    <div class="input-group">  
+      <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+    </div></div>  
+  <%= submit_tag "Add Payment", class: "btn btn-primary add-payment" %>   
+  <% end %>
+</div> 
+<% end %>

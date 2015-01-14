@@ -34,6 +34,7 @@
 #  insurance       :string(255)
 #  gender          :string(255)
 #  emailID         :string(255)
+#  xero_id         :string(255)
 #
 
 require 'spec_helper'

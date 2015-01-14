@@ -199,7 +199,10 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     websocket (1.0.7)
+    wicked_pdf (0.11.0)
+      rails
     will_paginate (3.0.4)
+    wkhtmltopdf-binary (0.9.9.3)
     xeroizer (2.15.6)
       activesupport
       builder (>= 2.1.2)
@@ -246,5 +249,7 @@ DEPENDENCIES
   sprockets (= 2.11.0)
   turbolinks
   uglifier (= 2.1.1)
+  wicked_pdf
   will_paginate (= 3.0.4)
+  wkhtmltopdf-binary
   xeroizer (~> 2.15.6)
