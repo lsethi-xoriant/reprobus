@@ -42,6 +42,7 @@ gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'pxpay'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

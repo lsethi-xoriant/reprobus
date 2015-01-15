@@ -27,6 +27,8 @@
   To pay your deposit, please click on the following link **Please note credit card fees apply (2% for Visa and Mastercard, 3% for AMEX)**<br><br>
 
   <a href="http://www.paymentexpress.com">Pay your Balance with credit card</a><br><br>
+  <a href=<%= @invoice.getPayExpressUrl %> >Pay your Balance with credit card</a><br><br>
+  
 
   To avoid this credit card fee please deposit directly into the following account with the following booking number: <%= @booking.id.to_s.rjust(8, '0')  %>:  <br><br>
 

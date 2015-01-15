@@ -41,4 +41,16 @@ class Invoice < ActiveRecord::Base
     end
     return total
   end
+  
+  def getPayExpressUrl
+    require 'nokogiri' 
+    require 'pxpay'
+    
+    Pxpay::Base.pxpay_user_id = 'Samplepxpayuser'
+    Pxpay::Base.pxpay_key = 'cff9bd6b6c7614bec6872182e5f1f5bcc531f1afb744f0bcaa00e82ad3b37f6d'
+    
+    request = Pxpay::Request.new( self.id, 1000, {:url_success => 'https://www.dpsdemo.com/SandboxSuccess.aspx', :url_failure => 'https://www.dpsdemo.com/SandboxSuccess.aspx'})
+    request.url
+  end
 end
+
