@@ -1,6 +1,6 @@
 class CreateConfigurations < ActiveRecord::Migration
   def change
-    create_table :configurations do |t|
+    create_table :settings do |t|
       t.string    :company_name
       t.string    :pxpay_user_id
       t.string    :pxpay_key
