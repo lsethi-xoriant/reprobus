@@ -62,9 +62,6 @@ class Enquiry < ActiveRecord::Base
   
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
-  CONSUM_KEY = "SJXI8AQKB8GYBQSG9VLHJJ3QNJ13JV"
-  OAUTH_SECRET_KEY = "T7K1GEBJZUZMUYA3PXQHIEXXMZRAJS"
-  
   def add_customer(customer)
     self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
     #self.customers << customer unless customer.nil?
@@ -90,11 +87,9 @@ class Enquiry < ActiveRecord::Base
     else
       return false
     end
-   # self.stage = "Booking"
-   # self.save
-    
+    self.update_attribute(:stage, "Booking")
+   # self.save 
   end
-
   
   def assigned_to_name
     if self.assigned_to 

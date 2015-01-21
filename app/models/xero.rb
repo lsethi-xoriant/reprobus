@@ -8,6 +8,7 @@ class Xero
   
   #CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"  // dev testing key
   #OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA" // dev testing
+  
   CONSUM_KEY = Setting.find(1).xero_consumer_key  
   OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret 
  
