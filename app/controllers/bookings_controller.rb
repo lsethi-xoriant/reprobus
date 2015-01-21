@@ -34,8 +34,8 @@ class BookingsController < ApplicationController
 
   def changexeroinvoice
     @booking = Booking.find(params[:id])
-    if params[:amount].to_f < params[:amount_due].to_f 
-      flash[:danger] = "Payment amount cannot be less than amount owing.You entered #{params[:amount]}"
+    if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
+      flash[:danger] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
       redirect_to @booking  
     else
       @booking.change_xero_invoice(params[:amount])

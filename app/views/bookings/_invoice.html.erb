@@ -41,6 +41,7 @@
     <%= form_tag({controller: "bookings", action: "changexeroinvoice"}, method: "get", class: "form-inline") do %>
     <%= hidden_field_tag :id, '', :value => @booking.id %>
     <%= hidden_field_tag :amount_due, '', :value => @invoice.amount_due %>
+    <%= hidden_field_tag :amount_total, '', :value => @invoice.total %>
     <div class="form-group">
       <div class="input-group">  
         <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
