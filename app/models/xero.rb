@@ -3,6 +3,7 @@ class Xero
   
    #require 'rubygems'
    #require 'xeroizer'
+  ##remove
   
   attr_accessor :client
   
