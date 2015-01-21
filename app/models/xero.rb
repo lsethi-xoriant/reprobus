@@ -1,8 +1,8 @@
 class Xero
 # using PrivateApplication which expires every 30 days!!!
   
-   require 'rubygems'
-   require 'xeroizer'
+   #require 'rubygems'
+   #require 'xeroizer'
   
   attr_accessor :client
   
