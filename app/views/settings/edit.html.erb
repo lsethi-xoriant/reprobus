@@ -1,0 +1,26 @@
+<% provide(:title, 'Edit Settings') %>
+<h1 class="page-header">Edit Settings</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @setting, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+     <%= render 'shared/error_messages', object: f.object %>
+    
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "company_name", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_user_id", f: f } %>  
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_key", f: f } %>
+
+      <div class="form-group">
+        <%= f.label :use_xero, "Xero Integration", class: "col-sm-3 control-label"  %>
+        <div class="col-sm-2">
+          <%= f.check_box :use_xero, class: "form-control" %> 
+        </div>
+      </div>
+
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_key", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_secret", f: f } %>
+    
+ 
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

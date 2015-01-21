@@ -1,0 +1,18 @@
+
+<tr id='addr<%=i%>'>
+  <td>
+    <%=(i+1).to_s%>
+  </td>
+  <td>
+    <input type="text" name='desc<%=i%>'  placeholder='Description' class="form-control"/ value="<%= li.description %>">
+  </td>
+  <td>
+    <input type="number" name='qty<%=i%>' placeholder='0' class="form-control qty_field" value="<%= li.quantity %>"/>
+  </td>
+  <td>
+    <input type="number" name='price<%=i%>' placeholder='$0.00' class="form-control price_field" value="<%= li.item_price %>"/>
+  </td>
+  <td>
+    <input type="number" name='total<%=i%>' placeholder='$0.00' class="form-control" disabled="disabled" value="<%= li.total %>"/>
+  </td>           
+</tr>

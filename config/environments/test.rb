@@ -33,4 +33,5 @@ Reprobus::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+  Rails.application.routes.default_url_options[:host] = 'http://firstapp-rails-86540.apse2.nitrousbox.com' # used for payment express success and failure link generation
 end

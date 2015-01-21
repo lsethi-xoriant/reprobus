@@ -1,5 +1,7 @@
 $(document).ready(function(){
-      var i=1;
+      //var i=1;
+     var i = $("#tab_logic > tbody > tr").length-1;
+  
      $("#add_row").click(function(){
       $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='desc"+i+"' type='text' placeholder='Description' class='form-control input-md'  /> </td><td><input  name='qty"+i+"' type='text' placeholder='0'  class='form-control input-md qty_field'></td><td><input  name='price"+i+"' type='text' placeholder='$0.00' class='form-control input-md price_field'></td> <td><input  name='total"+i+"' type='text' placeholder='$0.00'  class='form-control input-md' disabled='disabled'></td>");
 

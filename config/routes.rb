@@ -11,9 +11,11 @@ Reprobus::Application.routes.draw do
     end
   end
   
+  resources :settings, only: [:edit, :update, :show]
+  
   resources :tours
   resources :password_resets
-  
+
   resources :customers do 
     collection do
       get 'addnote'  # /customers/addnote  
@@ -32,15 +34,21 @@ Reprobus::Application.routes.draw do
       get "confirmation"
     end
   end 
+  
   resources :bookings do
     resources :invoices 
     collection do
       get 'addxeroinvoice'  # /bookings/addxeroinvoice  
       get 'getxeroinvoice'      
       get 'addxeropayment'
+      get 'changexeroinvoice'    
     end
   end
+  
+  match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get' 
+  match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get' 
 
+  
   #get 'bookings', to: 'enquiries#index_bookings', as: 'bookings' 
   # redirect booking show via the enquiry controller. may need to change in future depending on what we want to show
   # ... at present all work to show differences for booking are handled in view through partials

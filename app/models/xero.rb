@@ -6,9 +6,11 @@ class Xero
   
   attr_accessor :client
   
-   CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"
-   OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA"
-  
+   #CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"
+   #OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA"
+   CONSUM_KEY = Setting.find(1).xero_consumer_key  
+   OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret 
+ 
   def initialize
     path = Rails.root + "config/privatekey.pem"
     # Create client (used to communicate with the API).
@@ -67,8 +69,7 @@ class Xero
   def create_payment(booking, amount)
     
     xInv = self.client.Invoice.find(booking.xero_id)
-    xAcc = self.client.Account.find('855')
-    #xPay = xInv.add_payment(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
+    xAcc = self.client.Account.find('200')
     xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
     xPay.invoice = xInv
     xPay.account = xAcc
@@ -79,6 +80,39 @@ class Xero
     arr = booking.xpayments || []
     arr <<   xPay.payment_id
     booking.update_attribute(:xpayments, arr)
+  end
+  
+  def change_invoice(booking, amount)
+    
+    xInv = self.client.Invoice.find(booking.xero_id)
+    
+    payArray = []
+    xInv.payments.each do |pay|
+    #booking.xpayments.each do |pay|
+      deletePay =  self.client.Payment.build
+      deletePay.payment_id = pay.payment_id
+      deletePay.status = "DELETED"    
+      deletePay.save
+      payArray << pay
+    end
+    
+    li = xInv.line_items.first
+    li.unit_amount = amount.to_f
+    xInv.save  
+    
+    xAcc = self.client.Account.find('200')
+    arr = []
+    
+    payArray.each do |pay|  
+      xPay = self.client.Payment.build(:amount => pay.amount, :date => pay.date, :reference => pay.reference)
+      xPay.invoice = xInv
+      xPay.account = xAcc
+
+      xPay.save
+
+      arr <<   xPay.payment_id
+    end 
+    booking.update_attribute(:xpayments, arr)   
   end
   
   def get_invoice(xero_id)

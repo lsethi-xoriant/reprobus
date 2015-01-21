@@ -1,24 +1,40 @@
+<% depositDay, finalDay =  @booking.initInvoiceDates %>
+<% if !@invoice.final_payment_due.blank? %>
+  <% finalDay =  @invoice.final_payment_due %>
+<% end %>
+<% if !@invoice.deposit_due.blank? %>
+  <% depositDay =  @invoice.deposit_due %>
+<% end %>
+
 <% provide(:title, 'Create Invoice') %>
 <h1 class="page-header">Create Invoice</h1>
 <div class="row">
   
 <div class="container">
-
    <%= render 'shared/error_messages', object: @invoice %>  
-   <%= form_tag({controller: "invoices", action: "create"}, method: "post") do %>
+  
+   <%= form_tag({controller: "invoices", action: "create"}, method: "post", class: "form-horizontal") do %>
     <div class="form-group">
-      <label for="deposit">Deposit Amount</label>
-      <input type="number" name='deposit' placeholder="$0.00" class="form-control"/>
+      <label for="deposit" class="col-sm-3 control-label">Deposit Amount</label>
+      <div class="col-sm-4">
+        <input type="number" name='deposit' placeholder="$0.00" class="form-control" value="<%= number_with_precision(@invoice.deposit, :precision => 2) %>"/>
+      </div> 
     </div>
     <div class="form-group">
-      <label for="depositdue">Deposit Due</label>
-      <input type="date" name='deposit_due' class="form-control"/>
-    </div>
+      <label for="depositdue"  class="col-sm-3 control-label">Deposit Due</label>
+      <div class='input-group date col-sm-4' id='payday' >
+        <input type="text" name='deposit_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= depositDay.strftime("%d/%m/%Y") %> />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+      </div>    
+    </div> 
     <div class="form-group">
-      <label for="finalpaydue">Final Payment Due</label>
-      <input type="date" name='final_payment_due' class="form-control"/>
+      <label for="finalpaydue" class="col-sm-3 control-label">Final Payment Due</label>
+      <div class='input-group date col-sm-4' id='payday' >
+        <input type="text" name='final_payment_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= finalDay.strftime("%d/%m/%Y") %> />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+      </div>
     </div>
-
+  
     <div class="row clearfix">
 		<div class="col-md-12 column">
       <h3 class="page-header">Add Line Items</h3>
@@ -45,6 +61,7 @@
 				</thead>
        
 				<tbody>
+          <% if @invoice.line_items.empty? %>
 					<tr id='addr0'>
 						<td>
 						1
@@ -63,11 +80,19 @@
 						</td>           
 					</tr>
           <tr id='addr1'></tr>
+          <% else %>
+            <% i=0 %>
+            <% @invoice.line_items.each do |item| %>            
+              <%= render partial: 'invoices/line_item_row', locals: { li: item, i: i } %>
+              <% i+=1 %>
+            <% end %> 
+          <tr id='addr<%= i.to_s %>'></tr>
+          <% end %>
         </tbody>
 			</table>
 		</div>
 	</div>
-	<a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+	<a id='delete_row' class="pull-left btn btn-default">Delete Row</a><a id="add_row" class="btn btn-default pull-right">Add Row</a>
   <div class="clearfix"></div>
   <br><br>
   <%= submit_tag "Save Invoice", class: "btn btn-primary" %>    

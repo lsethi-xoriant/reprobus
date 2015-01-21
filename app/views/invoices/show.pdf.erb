@@ -26,7 +26,9 @@
   <br>
   To pay your deposit, please click on the following link **Please note credit card fees apply (2% for Visa and Mastercard, 3% for AMEX)**<br><br>
 
-  <a href=<%= @invoice.getPayExpressUrl %> >Pay your Balance with credit card</a><br><br>
+  
+  <% url = @invoice.getPayExpressUrl %>
+  <a href="<%= url %>" target="_blank" >Pay deposit with credit card</a><br><br>
    
   To avoid this credit card fee please deposit directly into the following account with the following booking number: <%= @booking.id.to_s.rjust(8, '0')  %>:  <br><br>
 
@@ -37,7 +39,7 @@
 <strong>Account Number:</strong> 10683722<br><br>
 
 
-
+Deposit	<strong><%= @invoice.deposit.to_s %></strong><br>
 Amount previously paid	<strong>TO DO</strong><br>
 Balance <strong>TO DO</strong><br>
 Total <strong><%=  @invoice.getTotalAmount.to_s %> </strong><br>

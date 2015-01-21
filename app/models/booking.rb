@@ -54,6 +54,32 @@ class Booking < ActiveRecord::Base
     #end     
   end
   
+  def change_xero_invoice(amount)
+    xero = Xero.new()
+    # TODO need some error handling in here.
+    xero.change_invoice(self, amount)
+        
+    #act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
+    #if act
+    #  user.activities<<(act)
+    #end     
+  end
+  
+  
+  def initInvoiceDates
+    if !self.enquiry.est_date.blank? 
+      if (self.enquiry.est_date - 90) > Date.today && self.enquiry.est_date > Date.today 
+        return (self.enquiry.est_date - 30), (self.enquiry.est_date - 90)
+      elsif (self.enquiry.est_date - 30) > Date.today 
+        return (self.enquiry.est_date - 30), (self.enquiry.est_date - 30)
+      else
+        return (Date.today), (Date.today)  
+      end
+    else
+      return (Date.today + 30), (Date.today + 60)
+    end
+  end
+
   def dasboard_customer_name
     if !self.customer.nil? 
       self.customer.dashboard_name

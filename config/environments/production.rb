@@ -93,4 +93,6 @@ Reprobus::Application.configure do
     :domain         => 'reprobus.herokuapp.com',
     :authentication => :plain,
   }
+  
+  Rails.application.routes.default_url_options[:host] = 'https://reprobus.herokuapp.com' # used for payment express success and failure link generation
 end

@@ -76,7 +76,11 @@ class Customer < ActiveRecord::Base
   end
   
   def create_email_link
-    return self.emailID  + "@app24117064.mailgun.org"
+    if Rails.env.development? || Rails.env.test?  
+      return self.emailID  + "@sandbox1a01ac497f324e96a84c07bc4d5bb5dd.mailgun.org"
+    elsif Rails.env.production?  
+      return self.emailID  + "@app24117064.mailgun.org"
+    end
   end
   
   def assigned_to_name

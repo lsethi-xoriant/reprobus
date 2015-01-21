@@ -77,13 +77,13 @@ class Enquiry < ActiveRecord::Base
   
   def convert_to_booking!(user)
     book = self.build_booking(name: self.name, amount: self.amount, status: "New Booking")
-    book.user = self.user
+    book.user = user
     book.customer = self.customers.first
     book.enquiry = self
     if book.save
       act = self.activities.create(type: "Converted", description: "Enquiry converted to Booking")
       if act
-        self.user.activities<<(act)
+       user.activities<<(act)
       end
       return true
        #errStr =  self.create_invoice_xero(user)

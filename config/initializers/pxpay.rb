@@ -1,8 +1,9 @@
 ## Configuration for the PxPay gem for Payment Express
 
 # Your Pxpay UserID and Key
-Pxpay::Base.pxpay_user_id = 'EclipseTravel'
-Pxpay::Base.pxpay_key = '694b31b87d1f50f6ef1ecd9ec6953e6a981af5ab999c2a0316d9a7c60f13307b'
+#Pxpay::Base.pxpay_user_id = 'Samplepxpayuser'
+#Pxpay::Base.pxpay_key = 'cff9bd6b6c7614bec6872182e5f1f5bcc531f1afb744f0bcaa00e82ad3b37f6d'
+Pxpay::Base.pxpay_request_url = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx'
 
 # Return Endpoints for payment confirmation
 # Uncomment for global success & failure URLs

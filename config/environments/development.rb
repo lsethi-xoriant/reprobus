@@ -33,4 +33,6 @@ config.action_mailer.default :charset => "utf-8"
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  Rails.application.routes.default_url_options[:host] = 'http://firstapp-rails-86540.apse2.nitrousbox.com' # used for payment express success and failure link generation
+  
 end

@@ -10,11 +10,17 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.find(params[:id])
     ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one. 
     if @enquiry.amount.nil? || @enquiry.amount <= 0  
-      flash[:warning] = "Amount cannot be zero when converting to a booking."
+      flash[:warning] = "Amount cannot be zero when converting to a Booking."
       redirect_to @enquiry  
     elsif @enquiry.customers.blank? || @enquiry.customers.count == 0 
-      flash[:warning] = "Must have a customer when converting to a booking."
+      flash[:warning] = "Must have a customer when converting to a Booking."
       redirect_to @enquiry  
+    elsif @enquiry.est_date.blank? || @enquiry.fin_date.blank? 
+      flash[:warning] = "Start and finish date must be set before converting to booking."
+      redirect_to @enquiry       
+    elsif !@enquiry.booking.nil?  
+      flash[:warning] = "Enquiry previously converted to Booking. <a href='" + booking_path(@enquiry.booking) +"'>Show Booking</a>"
+      redirect_to @enquiry       
     else
       if @enquiry.convert_to_booking!(current_user)
         flash[:success] = "Converted to booking"

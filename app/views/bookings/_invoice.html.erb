@@ -1,19 +1,52 @@
 <% if !@invoice.nil? %>
-<div class="table-responsive"><table class="table table-striped"><tbody>
-  <tr><th>Invoice</th><th>Due Date</th><th>Total</th><th>Amount Due</th><th>Status</th></tr>
-  <tr><td><%= @invoice.invoice_number %> </td><td><%= @invoice.due_date %> </td>
-    <td><%= number_to_currency(@invoice.total) %> </td><td><%= number_to_currency(@invoice.amount_due) %> </td>
-    <td><%= @invoice.status %> </td></tr>   
-  </tbody></table></div>         
-<div class="well well-sm">
-  <h4>Add a Payment</h4>
-  <%= form_tag({controller: "bookings", action: "addxeropayment"}, method: "get", class: "form-inline") do %>
-  <%= hidden_field_tag :id, '', :value => @booking.id %>
-  <div class="form-group">
-    <div class="input-group">  
-      <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
-    </div></div>  
-  <%= submit_tag "Add Payment", class: "btn btn-primary add-payment" %>   
-  <% end %>
-</div> 
+  <div class="table-responsive"><table class="table table-striped">
+    <tr><th>Invoice</th><th>Due Date</th><th>Total</th><th>Amount Due</th><th>Status</th></tr>
+    <tbody>
+    <tr><td><%= @invoice.invoice_number %> </td><td><%= @invoice.due_date %> </td>
+      <td><%= number_to_currency(@invoice.total) %> </td><td><%= number_to_currency(@invoice.amount_due) %> </td>
+      <td><%= @invoice.status %> </td></tr>   
+    </tbody></table></div>         
+  <div class="well well-sm">
+    <h4>Add a Payment</h4>
+    <%= form_tag({controller: "bookings", action: "addxeropayment"}, method: "get", class: "form-inline") do %>
+    <%= hidden_field_tag :id, '', :value => @booking.id %>
+    <div class="form-group">
+      <div class="input-group">  
+        <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+      </div></div>  
+    <%= submit_tag "Add Payment", class: "btn btn-primary add-payment" %>   
+    <% end %>
+  </div> 
+  <% if !@invoice.payments.empty? %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr><th>Reference</th><th>Date</th><th>Amount</th><th>Status</th><th>ID</th></tr>
+        <tbody>
+        <% @invoice.payments.each do |pay| %>
+          <tr>
+            <td><%= pay.reference %> </td>
+            <td><%=  pay.date  %> </td>
+            <td><%= number_to_currency(pay.amount) %> </td>
+            <td><%= pay.status %> </td>
+            <td><%= pay.payment_id %> </td>
+          </tr>   
+        <% end %>  
+        </tbody>
+      </table>
+    </div>         
+  <% end%>
+
+  <div class="well well-sm">
+    <h4>Change Xero Invoice Amount (this will delete and re-apply any existing payments)</h4>
+    <%= form_tag({controller: "bookings", action: "changexeroinvoice"}, method: "get", class: "form-inline") do %>
+    <%= hidden_field_tag :id, '', :value => @booking.id %>
+    <%= hidden_field_tag :amount_due, '', :value => @invoice.amount_due %>
+    <div class="form-group">
+      <div class="input-group">  
+        <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+      </div></div>  
+    <%= submit_tag "Change Amount", class: "btn btn-warning change-amount" %>   
+    <% end %>
+  </div> 
+
 <% end %>

@@ -23,7 +23,7 @@ class BookingsController < ApplicationController
   def addxeropayment
     @booking = Booking.find(params[:id])
     if params[:amount].nil? || !is_number?(params[:amount])  
-      flash[:warning] = "Payment amount must be entered. You entered #{params[:amount]}"
+      flash[:danger] = "Payment amount must be entered. You entered #{params[:amount]}"
       redirect_to @booking  
     else
     @booking.add_xero_payment(params[:amount])
@@ -32,8 +32,21 @@ class BookingsController < ApplicationController
     end
   end
 
+  def changexeroinvoice
+    @booking = Booking.find(params[:id])
+    if params[:amount].to_f < params[:amount_due].to_f 
+      flash[:danger] = "Payment amount cannot be less than amount owing.You entered #{params[:amount]}"
+      redirect_to @booking  
+    else
+      @booking.change_xero_invoice(params[:amount])
+    flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
+      redirect_to @booking
+    end
+  end
+
+
   def index
-    @bookings = Booking.paginate(page: params[:page])
+    @bookings = Booking.includes(:invoice).includes(:customer).paginate(page: params[:page])
   end
   
   def new

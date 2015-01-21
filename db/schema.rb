@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114011259) do
+ActiveRecord::Schema.define(version: 20150121000651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,9 @@ ActiveRecord::Schema.define(version: 20150114011259) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "deposit",           precision: 12, scale: 2
+    t.string   "depositPayUrl"
+    t.text     "ccPaymentsAmount"
+    t.text     "ccPaymentsDate"
   end
 
   create_table "line_items", force: true do |t|
@@ -195,6 +198,17 @@ ActiveRecord::Schema.define(version: 20150114011259) do
     t.decimal  "total",       precision: 12, scale: 2
     t.string   "description"
     t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "settings", force: true do |t|
+    t.string   "company_name"
+    t.string   "pxpay_user_id"
+    t.string   "pxpay_key"
+    t.boolean  "use_xero"
+    t.string   "xero_consumer_key"
+    t.string   "xero_consumer_secret"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

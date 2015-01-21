@@ -1,6 +1,22 @@
 class InvoicesController < ApplicationController
-  before_filter :signed_in_user
+  before_filter :signed_in_user, :except => [:pxpaymentsuccess, :pxpaymentfailure]
   before_filter :admin_user, only: :destroy
+  layout 'plain', :only => [:pxpaymentsuccess, :pxpaymentfailure]
+  
+  
+  def pxpaymentsuccess
+    response = Pxpay::Response.new(params).response
+    @hash = response.to_hash
+    @invoice = Invoice.find(@hash[:txn_id])
+    @booking = @invoice.booking
+    @booking.update_attribute(:status, "Deposit Paid") 
+    @invoice.addCCPayment!(@hash[:amount_settlement])
+  end
+  
+  def pxpaymentfailure
+      response = Pxpay::Response.new(params).response
+      @hash = response.to_hash
+  end
   
  def index
    @invoices = Invoice.paginate(page: params[:page])
@@ -8,6 +24,7 @@ class InvoicesController < ApplicationController
   
   def new
     @invoice = Invoice.new
+    @booking = Booking.find(params[:booking_id])
   end
 
   def show
@@ -31,42 +48,30 @@ class InvoicesController < ApplicationController
     inv = @booking.build_invoice(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], deposit_due: params[:deposit_due], deposit: params[:deposit])
     
     i = 0;
-    while i < 10 
-puts "HAMISH " +  "desc"+i.to_s 
-      item = params["desc"+i.to_s]
-      
-      if item.blank? 
-        puts "HAMISH " +  "breaking as item is blank  " +  "desc"+i.to_s 
+    while i < 9999 
+      if !params.has_key?("desc"+i.to_s)
         break
       end
-puts "HAMISH " +  "creating line item = " + item
       
-     # if params["price"+i.to_s].blank? || params["qty"+i.to_s].blank? 
-     #   err = "Line item " + (i+1).to_s + " not complete. All fields must be completed" 
-     #   puts "HAMISH " +  "breaking as one of the values in item is blank "  +  "desc"+i.to_s + " price =  " + params["price"+i.to_s] +  " qty =  " + params["qty"+i.to_s] 
-     #   break
-     # end
       total = (params["price"+i.to_s].to_i *  params["qty"+i.to_s].to_i)
       inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)    
       i+=1
-      
-      puts "HAMISH " +  " line item created "+i.to_s 
-      
-      if 1 > 9999
-        puts "HAMISH WE HAVE A PROBLEM INVOICES CONTROLLER LINE 37ISH"
-        break   #failsafe...
-      end
     end
 
     @invoice = inv
-    #@invoice.emailID = SecureRandom.urlsafe_base64
-    if @invoice.save #&& err.blank?
+    
+    if @invoice.save #&& err.blank? 
+      if Setting.find(1).use_xero 
+        err = @booking.create_invoice_xero(current_user)
+        if !err
+          flash[:warning] = "Warning: Xero Invoice could not be created"
+        end
+      end     
+      @booking.update_attribute(:status, "Invoice created")
+      @booking.update_attribute(:amount, @invoice.getTotalAmount)
       flash[:success] = "Invoice created!"
       redirect_to booking_invoice_path( @booking, @invoice)
     else
-      #if !err.blank?
-      #  flash[:warning] = err
-      #end
       render 'new'
     end
   end  
