@@ -29,7 +29,6 @@ class Xero
     end
 
     if xcontacts.blank? 
-    puts "HAMISH - no match"
       #add contact to xero
       xcust = self.client.Contact.build(:name => cust.fullname)
       xcust.first_name = cust.first_name
@@ -70,7 +69,7 @@ class Xero
   def create_payment(booking, amount)
     
     xInv = self.client.Invoice.find(booking.xero_id)
-    xAcc = self.client.Account.find('200')
+    xAcc = self.client.Account.find('855')
     xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
     xPay.invoice = xInv
     xPay.account = xAcc
@@ -101,7 +100,7 @@ class Xero
     li.unit_amount = amount.to_f
     xInv.save  
     
-    xAcc = self.client.Account.find('200')
+    xAcc = self.client.Account.find('855')
     arr = []
     
     payArray.each do |pay|  
