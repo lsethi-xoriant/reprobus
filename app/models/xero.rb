@@ -1,16 +1,15 @@
 class Xero
 # using PrivateApplication which expires every 30 days!!!
   
-   #require 'rubygems'
-   #require 'xeroizer'
-  ##remove
+  require 'rubygems'
+  require 'xeroizer'
   
   attr_accessor :client
   
-   #CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"
-   #OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA"
-   #CONSUM_KEY = Setting.find(1).xero_consumer_key  
-   #OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret 
+  #CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"
+  #OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA"
+  CONSUM_KEY = Setting.find(1).xero_consumer_key  
+  OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret 
  
   def initialize
     path = Rails.root + "config/privatekey.pem"
