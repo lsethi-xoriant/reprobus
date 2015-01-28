@@ -135,6 +135,13 @@ class InvoicesController < ApplicationController
     inv = @booking.supplier_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], 
        currency: params[:currency], supplier_id: params[:supplier_id])
     inv.booking = @booking
+    @invoice = inv
+
+    if params[:supplier_id].blank?
+      flash[:danger] = "Supplier must be selected"
+      render 'newSupplier'
+      return
+    end
     
     i = 0;
     while i < 9999 
@@ -146,7 +153,6 @@ class InvoicesController < ApplicationController
       i+=1
     end
 
-    @invoice = inv
     
     if @invoice.save #&& err.blank? 
       @booking.update_attribute(:amount, @invoice.getTotalAmount)
