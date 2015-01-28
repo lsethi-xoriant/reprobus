@@ -1,0 +1,110 @@
+<% depositDay, finalDay =  @booking.initInvoiceDates %>
+<% if !@invoice.final_payment_due.blank? %>
+  <% finalDay =  @invoice.final_payment_due %>
+<% end %>
+<% if !@invoice.deposit_due.blank? %>
+  <% depositDay =  @invoice.deposit_due %>
+<% end %>
+
+<% provide(:title, 'Create Supplier Invoice') %>
+<h1 class="page-header">Create Supplier Invoice</h1>
+<div class="row">
+  
+<div class="container">
+   <%= render 'shared/error_messages', object: @invoice %>  
+  
+  <%= form_tag({controller: "invoices", action: "createSupplier"}, method: "post", class: "form-horizontal") do %>
+    <div class="form-group">
+      
+    <div id="existing_fields">
+      <div class="form-group">
+        <label for="supplier_id" class="col-sm-3 control-label">Supplier</label>
+        <div class="col-sm-4">
+          <%= hidden_field_tag(:supplier_id, @invoice.supplier_id, id: 'sup_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: customersearch_suppliers_path, placeholder: 'Search for a name' } ) %>
+        </div>
+      </div>
+    </div>
+      
+      <label for="finalpaydue" class="col-sm-3 control-label">Payment Due</label>
+      <div class='input-group date col-sm-4' id='payday' >
+        <input type="text" name='final_payment_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= finalDay.strftime("%d/%m/%Y") %> />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="currency" class="col-sm-3 control-label">Currency</label>
+      <div class='col-sm-4' id='currency' >
+        <select class="form-control" name="currency">
+          <option>AUD</option>
+          <option>EUR</option>
+          <option>USD</option>
+        </select>
+      </div>
+    </div>  
+  
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+      <h3 class="page-header">Add Line Items</h3>
+      
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+            <th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							Description
+						</th>
+						<th class="text-center">
+							Quantity
+						</th>
+						<th class="text-center">
+							Price
+						</th>
+						<th class="text-center">
+							Total
+						</th>
+					</tr>
+				</thead>
+       
+				<tbody>
+          <% if @invoice.line_items.empty? %>
+					<tr id='addr0'>
+						<td>
+						1
+						</td>
+						<td>
+						<input type="text" name='desc0'  placeholder='Description' class="form-control"/>
+						</td>
+						<td>
+						<input type="number" name='qty0' placeholder='0' class="form-control qty_field"/>
+						</td>
+						<td>
+						<input type="number" name='price0' placeholder='$0.00' class="form-control price_field"/>
+						</td>
+ 						<td>
+						<input type="number" name='total0' placeholder='$0.00' class="form-control" disabled="disabled"/>
+						</td>           
+					</tr>
+          <tr id='addr1'></tr>
+          <% else %>
+            <% i=0 %>
+            <% @invoice.line_items.each do |item| %>            
+              <%= render partial: 'invoices/line_item_row', locals: { li: item, i: i } %>
+              <% i+=1 %>
+            <% end %> 
+          <tr id='addr<%= i.to_s %>'></tr>
+          <% end %>
+        </tbody>
+			</table>
+		</div>
+	</div>
+	<a id='delete_row' class="pull-left btn btn-default">Delete Row</a><a id="add_row" class="btn btn-default pull-right">Add Row</a>
+  <div class="clearfix"></div>
+  <br><br>
+  <%= submit_tag "Save Invoice", class: "btn btn-primary" %>    
+  <br>
+<% end %>  
+</div>
+</div>

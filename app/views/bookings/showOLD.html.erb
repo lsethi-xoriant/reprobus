@@ -1,12 +1,12 @@
 <!-- ###OLD CODE NOT USED NOW### -->
 
 <% provide(:title, @booking.name ) %>
-<% if !@booking.customer_invoices 
+<% if !@booking.invoice 
      amountLableStr = "Est. Booking Value"
      amount = @booking.amount
    else
-     amountLableStr = "Invoice Total Value"
-       amount = @booking.getCustomerInvoicesAmount
+     amountLableStr = "Invoice  Value"
+     amount = @booking.invoice.getTotalAmount
    end 
 %>
 
@@ -35,7 +35,8 @@
               <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
               <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= customer_path @booking.customer %>><%= @booking.customer.fullname %></a></li>
       
-            <% end %>            
+            <% end %> 
+            
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned To</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.assigned_to_name )%></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field"><%=amountLableStr%></li>
@@ -55,16 +56,35 @@
           </ul> 
         </div>   
         <div class="col-lg-6">  
-          <h4>Invoices</h4>   
+          <h4>Invoices</h4>
+          
+         <div>
+           <% if Setting.find(1).use_xero  %>
+             <% if @booking.xero_id.blank? %>
+<!--  THIS CODE HIDDEN AS XERO INVOICE CREATED ON INVOCE GENERATION
+               <%=  form_tag({controller: "bookings", action: "addxeroinvoice"}, method: "get", class: "form-horizontal") do %>
+                 <%= hidden_field_tag :id, '', :value => @booking.id %>
+                 <%= submit_tag "Create Xero Invoice", class: "btn btn-primary" %>     
+               <% end %>  
+!-->
+             <% else %>
+               <%=  form_tag({controller: "bookings", action: "getxeroinvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+                 <%= hidden_field_tag :id, '', :value => @booking.id %>
+                 <%= submit_tag "Get Xero Invoice Details", id: "invoiceBtn", class: "btn btn-primary" %>     
+               <% end %>
+             <% end %>
+           <% end %>
+          </div> 
+          <br>
+            <div id="invoices" >
+            <%= render partial: 'invoice', locals: {items: @invoice}  %>
+            </div>
           <div>
-            
-            <a href=<%= new_booking_invoice_path @booking %> ><button type="button" class="btn btn-primary">Create Customer Invoice</button></a>
-            <br><br>
-            <a href=<%= newSupplier_booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">Create Supplier Invoice</button></a>
-            <br><br>
-            <% if @booking.customer_invoices || @booking.supplier_invoices  %>
-              <br>
-              <a href=<%= booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">View Invoices</button></a>
+            <% if @booking.invoice.blank? %>
+              <a href=<%= new_booking_invoice_path @booking %> ><button type="button" class="btn btn-primary">Create Invoice</button></a>
+            <% else %>
+            <a href=<%= booking_invoice_path @booking, @booking.invoice %> ><button type="button" class="btn btn-primary">View Invoice</button></a>
+
             <% end %>
           </div>
         </div>        <!-- end col 6 --> 

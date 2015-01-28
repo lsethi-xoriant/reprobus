@@ -1,18 +1,17 @@
-<% provide(:title, "Invoice for " +  @booking.name ) %>
+<% provide(:title, "Supplier Invoice for " +  @booking.name ) %>
 <div class="row">
   <aside class="col-lg-12">
     <section>
-      <h1 class="page-header" ><%= "Invoice for " +  @booking.name%></h1>
+      <h1 class="page-header" ><%= "Supplier Invoice for " +  @booking.name%></h1>
 
       <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
       <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
-      <strong>Deposit due</strong>	<%= @invoice.deposit_due.strftime("%d/%m/%Y")  %><br>
-      <strong>Final payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
-      <strong>Customer/s:</strong>		<%= @booking.customer.fullname %><br>
+      <strong>Payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
+      <strong>Currency</strong>	<%= @invoice.currency %><br>
 
+      <strong>Customer/s:</strong>		<%= @booking.customer.fullname %><br>
       <div>
         <br>
-
         <table width="100%">
           <tr>
             <th width="40%" align="left">Description</th><th width="20%" align="left">Quantity</th><th width="20%" align="left">Price</th><th width="20%" align="left">Total</th>
@@ -24,9 +23,6 @@
         </table>
       </div>
       <br>
-      Deposit	<strong><%= @invoice.deposit %></strong><br>
-      CC Amount previously paid	<strong><%= @invoice.getCCPaidTotal %></strong><br>
-      Balance <strong>TO DO</strong><br>
       Total <strong><%=  @invoice.getTotalAmount.to_s %> </strong><br>
       <br><br>
       </section>
@@ -34,8 +30,7 @@
 </div>
 
 <div>
-  <a href=<%= booking_invoice_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Pdf</button></a>
-  <br><br>
+<br><br>
   <% if Setting.find(1).use_xero  %>
     <% if @booking.xero_id.blank? %>
 

@@ -22,49 +22,23 @@ class Booking < ActiveRecord::Base
   belongs_to  :enquiry
   belongs_to  :customer
   serialize   :xpayments
-  has_one     :invoice
+  has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_invoice_id
+  has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_invoice_id
   
-  def create_invoice_xero(user)
-    xero = Xero.new()
-    # TODO need some error handling in here.
-    success = xero.create_invoice(self)
-        
-    #act = self.activities.create(type: "Converted", description: "Invoice created in Xero")
-    #if act
-    #  user.activities<<(act)
-    #end  
-    
-    return success
+  def getCustomerInvoicesAmount
+    tot = 0
+    self.customer_invoices.each do |i|
+      tot = tot  + i.getTotalAmount
+    end 
+    return tot
   end
-  
-  def get_invoice_xero
-    xero = Xero.new()
-    inv = xero.get_invoice(self.xero_id)
-    return inv
+  def getSupplierInvoicesAmount
+    tot = 0
+    self.customer_invoices.each do |i|
+      tot = tot  + i.getTotalAmount
+    end 
+    return tot
   end
-  
-  def add_xero_payment(amount)
-    xero = Xero.new()
-    # TODO need some error handling in here.
-    xero.create_payment(self, amount)
-        
-    #act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
-    #if act
-    #  user.activities<<(act)
-    #end     
-  end
-  
-  def change_xero_invoice(amount)
-    xero = Xero.new()
-    # TODO need some error handling in here.
-    xero.change_invoice(self, amount)
-        
-    #act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
-    #if act
-    #  user.activities<<(act)
-    #end     
-  end
-  
   
   def initInvoiceDates
     if !self.enquiry.est_date.blank? 
@@ -98,4 +72,8 @@ class Booking < ActiveRecord::Base
     self.user.name
     #User.find(self.user_id).name
   end  
+  
+  def nice_id
+    self.id.to_s.rjust(6, '0')  
+  end
 end

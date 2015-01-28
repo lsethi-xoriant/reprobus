@@ -18,7 +18,8 @@ class Xero
     self.client = Xeroizer::PrivateApplication.new(CONSUM_KEY, OAUTH_SECRET_KEY, path)
   end
   
-  def create_invoice(booking)
+  def create_invoice(invoice)
+    booking = invoice.booking
     #if we have a lead customer create contact in xero if it does not already exist. 
     #self.customers.each do |cust| # xero only allows one contact per invoice. 
     cust = booking.customer  
@@ -42,33 +43,47 @@ class Xero
       xcust = xcontacts.first
     end
     
+    if invoice.isSupplierInvoice? 
+      type = "ACCPAY";
+      currency = invoice.currency
+    else
+      type = "ACCREC";
+      currency = "AUS"
+    end
+ 
     xinv = self.client.Invoice.build({
-      :type => "ACCREC",
+      :type => type,
      # :status => "SUBMITTED",
       :status => "AUTHORISED",
       :date => Date.today,
       :due_date => (Date.today + 30),
+      :currency_code => currency,
       :line_items => [{
         :description => booking.name,
         :quantity => 1,
-        :unit_amount => booking.amount,
+        :unit_amount => invoice.getTotalAmount,
         :account_code => 200,
         :tax_type => 'NONE'
         }]
       })
     
+    if invoice.isSupplierInvoice? 
+      xinv.invoice_number = booking.nice_id + " " + booking.name
+    end
+    
     xinv.contact = xcust
     success = xinv.save
     
     cust.update_attribute(:xero_id, xcust.contact_id)
-    booking.update_attribute(:xero_id, xinv.invoice_id)
+    #booking.update_attribute(:xero_id, xinv.invoice_id)
+    invoice.update_attribute(:xero_id, xinv.invoice_id)
     
     return success;
   end
   
-  def create_payment(booking, amount)
+  def create_payment(invoice, amount)
     
-    xInv = self.client.Invoice.find(booking.xero_id)
+    xInv = self.client.Invoice.find(invoice.xero_id)
     xAcc = self.client.Account.find('855')
     xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
     xPay.invoice = xInv
@@ -77,18 +92,18 @@ class Xero
     xPay.save
     #xInv.save
     
-    arr = booking.xpayments || []
+    arr = invoice.xpayments || []
     arr <<   xPay.payment_id
-    booking.update_attribute(:xpayments, arr)
+    invoice.update_attribute(:xpayments, arr)
   end
   
-  def change_invoice(booking, amount)
+  def change_invoice(invoice, amount)
     
-    xInv = self.client.Invoice.find(booking.xero_id)
+    xInv = self.client.Invoice.find(invoice.xero_id)
     
     payArray = []
     xInv.payments.each do |pay|
-    #booking.xpayments.each do |pay|
+    #invoice.xpayments.each do |pay|
       deletePay =  self.client.Payment.build
       deletePay.payment_id = pay.payment_id
       deletePay.status = "DELETED"    
@@ -112,7 +127,7 @@ class Xero
 
       arr <<   xPay.payment_id
     end 
-    booking.update_attribute(:xpayments, arr)   
+    invoice.update_attribute(:xpayments, arr)   
   end
   
   def get_invoice(xero_id)

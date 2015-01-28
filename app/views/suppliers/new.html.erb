@@ -1,11 +1,18 @@
-<% provide(:title, 'Create Customer') %>
-<h1 class="page-header">Create a Customer</h1>
+<% provide(:title, 'Create Supplier') %>
+<h1 class="page-header">Create a Supplier</h1>
 <div class="row">
   <div class="span6 offset2">
-    <%= form_for @customer, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+    <%= form_for @customer, :url => {:controller => "suppliers", :action => "create"}, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+      <%= f.hidden_field :cust_sup, :value => "Supplier" %>
 	    <%= render 'shared/error_messages', object: f.object %>
-      <%= f.hidden_field :cust_sup, :value => "Customer" %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "supplier_name", f: f } %> 
 
+       <div class="form-group"> 
+        <%= f.label "Contact details" %>
+         <div class="col-sm-6"> &nbsp; </div> 
+       </div>
+  
+  
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "first_name", f: f } %> 
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "last_name", f: f } %>
 
@@ -13,19 +20,11 @@
         <div class="col-sm-6">   <%= f.select :title, options_for_select(titles_list, @customer.title ), {}, class: 'form-control' %>  </div>
       </div>
     
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "gender", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "alt_email", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "phone", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "mobile", f: f } %>      
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "fax", f: f } %>      
-      <%= render partial: 'shared/std_grp_datefield', locals: { name: :born_on, id: :born_on, f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "insurance", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "passport_num", f: f } %>    
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "place_of_issue", f: f } %>
-      <%= render partial: 'shared/std_grp_datefield', locals: { name: :issue_date, id: :issue_date, f: f } %>
-      <%= render partial: 'shared/std_grp_datefield', locals: { name: :expiry_date, id: :expiry_date, f: f } %>
-
 
       <% f.fields_for :address do |builder| %>
       <p>
@@ -46,7 +45,7 @@
     
       <div class="row">
       <div class="col-sm-6 col-md-offset-3">    
-      <%= f.submit "Create a Customer", class: "btn btn-large btn-primary" %>
+        <%= f.submit "Create a Supplier", class: "btn btn-large btn-primary" %>
       </div>
       </div>
     <% end %>

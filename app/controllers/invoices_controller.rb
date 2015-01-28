@@ -2,8 +2,49 @@ class InvoicesController < ApplicationController
   before_filter :signed_in_user, :except => [:pxpaymentsuccess, :pxpaymentfailure]
   before_filter :admin_user, only: :destroy
   layout 'plain', :only => [:pxpaymentsuccess, :pxpaymentfailure]
+
   
+  def addxeroinvoice
+    @invoice = Invoice.find(params[:id])
+    if @invoice.create_invoice_xero(current_user) 
+      redirect_to @invoice
+    else
+      render "show"
+    end
+  end
   
+  def addxeropayment
+    @invoice = Invoice.find(params[:id])
+    if params[:amount].nil? || !is_number?(params[:amount])  
+      flash[:danger] = "Payment amount must be entered. You entered #{params[:amount]}"
+      redirect_to @invoice  
+    else
+    @invoice.add_xero_payment(params[:amount])
+      flash[:success] = "Payment added succesfully ($#{params[:amount]})"
+      redirect_to @invoice
+    end
+  end
+
+  def changexeroinvoice
+    @invoice = Invoice.find(params[:id])
+    if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
+      flash[:danger] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
+      redirect_to @invoice  
+    else
+      @invoice.change_xero_invoice(params[:amount])
+    flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
+      redirect_to @invoice
+    end
+  end  
+
+  def getxeroinvoice
+    @invoice = Invoice.find(params[:id])
+    @xinvoice = @invoice.get_invoice_xero()
+    respond_to do |format|
+        format.js
+    end
+  end
+
   def pxpaymentsuccess
     response = Pxpay::Response.new(params).response
     @hash = response.to_hash
@@ -19,7 +60,9 @@ class InvoicesController < ApplicationController
   end
   
  def index
-   @invoices = Invoice.paginate(page: params[:page])
+   @booking = Booking.find(params[:booking_id])
+   @customer_invoices = @booking.customer_invoices.paginate(page: params[:page])
+   @supplier_invoices = @booking.supplier_invoices.paginate(page: params[:page])
   end
   
   def new
@@ -27,9 +70,14 @@ class InvoicesController < ApplicationController
     @booking = Booking.find(params[:booking_id])
   end
 
+  def newSupplier
+    @invoice = Invoice.new
+    @booking = Booking.find(params[:booking_id])
+  end
+
   def show
     @invoice = Invoice.find(params[:id])
-    @booking = @invoice.booking
+    @booking = Booking.find(params[:booking_id])
     respond_to do |format|
       format.html
       #format.json { render json: {name: @invoice.fullname, id: @invoice.id  }}
@@ -38,14 +86,20 @@ class InvoicesController < ApplicationController
       end
     end    
   end
-  
+ 
+  def showSupplier
+    @invoice = Invoice.find(params[:id])
+    @booking = Booking.find(params[:booking_id])
+  end
+
   def edit
     @invoice = Invoice.find(params[:id])
   end
   
   def create
     @booking = Booking.find(params[:booking_id])
-    inv = @booking.build_invoice(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], deposit_due: params[:deposit_due], deposit: params[:deposit])
+    inv = @booking.customer_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], deposit_due: params[:deposit_due], deposit: params[:deposit])
+    inv.booking = @booking
     
     i = 0;
     while i < 9999 
@@ -61,18 +115,52 @@ class InvoicesController < ApplicationController
     @invoice = inv
     
     if @invoice.save #&& err.blank? 
+      @booking.update_attribute(:amount, @invoice.getTotalAmount)
       if Setting.find(1).use_xero 
-        err = @booking.create_invoice_xero(current_user)
+        err = @invoice.create_invoice_xero(current_user)
         if !err
           flash[:warning] = "Warning: Xero Invoice could not be created"
         end
       end     
       @booking.update_attribute(:status, "Invoice created")
-      @booking.update_attribute(:amount, @invoice.getTotalAmount)
       flash[:success] = "Invoice created!"
       redirect_to booking_invoice_path( @booking, @invoice)
     else
       render 'new'
+    end
+  end  
+
+  def createSupplier
+    @booking = Booking.find(params[:booking_id])
+    inv = @booking.supplier_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], 
+       currency: params[:currency], supplier_id: params[:supplier_id])
+    inv.booking = @booking
+    
+    i = 0;
+    while i < 9999 
+      if !params.has_key?("desc"+i.to_s)
+        break
+      end   
+      total = (params["price"+i.to_s].to_i *  params["qty"+i.to_s].to_i)
+      inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)    
+      i+=1
+    end
+
+    @invoice = inv
+    
+    if @invoice.save #&& err.blank? 
+      @booking.update_attribute(:amount, @invoice.getTotalAmount)
+      if Setting.find(1).use_xero 
+        err = @invoice.create_invoice_xero(current_user)
+        if !err
+          flash[:warning] = "Warning: Xero Invoice could not be created"
+        end
+      end     
+      @booking.update_attribute(:status, "Invoice created")
+      flash[:success] = "Invoice created!"
+      redirect_to showSupplier_booking_invoices_path( @booking, @invoice)
+    else
+      render 'newSupplier'
     end
   end  
 
@@ -94,7 +182,7 @@ class InvoicesController < ApplicationController
   
 private
   def invoice_params
-    params.permit(:invoice_date, :deposit_due, :final_payment_due, :deposit,
+    params.permit(:invoice_date, :deposit_due, :final_payment_due, :deposit, :currency, :supplier_id,
         line_item_attributes: [:item_price, :total, :description, :quantity] )      
     end  
 end

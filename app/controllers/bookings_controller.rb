@@ -1,52 +1,10 @@
 class BookingsController < ApplicationController
    before_filter :signed_in_user
    before_filter :admin_user, only: :destroy
-  
-  
-  def addxeroinvoice
-    @booking = Booking.find(params[:id])
-    if @booking.create_invoice_xero(current_user) 
-      redirect_to @booking
-    else
-      render "show"
-    end
-  end
-  
-  def getxeroinvoice
-    @booking = Booking.find(params[:id])
-    @invoice = @booking.get_invoice_xero()
-    respond_to do |format|
-        format.js
-    end
-  end
-  
-  def addxeropayment
-    @booking = Booking.find(params[:id])
-    if params[:amount].nil? || !is_number?(params[:amount])  
-      flash[:danger] = "Payment amount must be entered. You entered #{params[:amount]}"
-      redirect_to @booking  
-    else
-    @booking.add_xero_payment(params[:amount])
-      flash[:success] = "Payment added succesfully ($#{params[:amount]})"
-      redirect_to @booking
-    end
-  end
-
-  def changexeroinvoice
-    @booking = Booking.find(params[:id])
-    if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
-      flash[:danger] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
-      redirect_to @booking  
-    else
-      @booking.change_xero_invoice(params[:amount])
-    flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
-      redirect_to @booking
-    end
-  end
 
 
   def index
-    @bookings = Booking.includes(:invoice).includes(:customer).paginate(page: params[:page])
+    @bookings = Booking.includes(:customer).paginate(page: params[:page])
   end
   
   def new

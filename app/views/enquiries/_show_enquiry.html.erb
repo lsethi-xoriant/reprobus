@@ -28,7 +28,7 @@
             
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned To</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @enquiry.assigned_to_name )%></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Booking Value</li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Est Booking Value</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( number_to_currency(@enquiry.amount, precision: 0) ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Est Start Date</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( (@enquiry.est_date.strftime("%d/%m/%Y") unless @enquiry.est_date.nil?) ) %></li>

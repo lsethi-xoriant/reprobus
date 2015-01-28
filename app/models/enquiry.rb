@@ -83,12 +83,10 @@ class Enquiry < ActiveRecord::Base
        user.activities<<(act)
       end
       return true
-       #errStr =  self.create_invoice_xero(user)
     else
       return false
     end
     self.update_attribute(:stage, "Booking")
-   # self.save 
   end
   
   def assigned_to_name

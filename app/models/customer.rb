@@ -35,6 +35,8 @@
 #  gender          :string(255)
 #  emailID         :string(255)
 #  xero_id         :string(255)
+#  cust_sup        :string(255)
+#  supplier_name   :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -94,4 +96,19 @@ class Customer < ActiveRecord::Base
      self.emailID = SecureRandom.urlsafe_base64
   end
   
+  def getCustomerShowPath
+    if self.cust_sup == "Supplier"
+      return supplier_path self
+    else
+      return customer_path self
+    end
+  end
+  
+  def isSupplier?
+    if self.cust_sup == "Supplier"
+      return true
+    else
+      return false
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121000651) do
+ActiveRecord::Schema.define(version: 20150128112253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(version: 20150121000651) do
     t.string   "gender"
     t.string   "emailID"
     t.string   "xero_id"
+    t.string   "cust_sup"
+    t.string   "supplier_name"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -186,10 +188,17 @@ ActiveRecord::Schema.define(version: 20150121000651) do
     t.datetime "final_payment_due"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "deposit",           precision: 12, scale: 2
+    t.decimal  "deposit",             precision: 12, scale: 2
     t.string   "depositPayUrl"
     t.text     "ccPaymentsAmount"
     t.text     "ccPaymentsDate"
+    t.integer  "supplier_invoice_id"
+    t.integer  "customer_invoice_id"
+    t.string   "currency"
+    t.string   "xero_id"
+    t.text     "xdeposits"
+    t.text     "xpayments"
+    t.integer  "supplier_id"
   end
 
   create_table "line_items", force: true do |t|

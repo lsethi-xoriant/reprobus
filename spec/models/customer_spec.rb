@@ -35,6 +35,8 @@
 #  gender          :string(255)
 #  emailID         :string(255)
 #  xero_id         :string(255)
+#  cust_sup        :string(255)
+#  supplier_name   :string(255)
 #
 
 require 'spec_helper'

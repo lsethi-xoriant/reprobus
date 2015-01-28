@@ -2,4 +2,7 @@
 jQuery ->
         $('#sort_table').dataTable
           "sPaginationType": "bootstrap"
+jQuery ->
+        $('#sort_table2').dataTable
+          "sPaginationType": "bootstrap"      
 

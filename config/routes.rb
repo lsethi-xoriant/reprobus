@@ -15,6 +15,11 @@ Reprobus::Application.routes.draw do
   
   resources :tours
   resources :password_resets
+  resources :suppliers do 
+    collection do 
+      get 'customersearch'  # /enquires/customersearch  
+    end
+  end
 
   resources :customers do 
     collection do
@@ -36,18 +41,21 @@ Reprobus::Application.routes.draw do
   end 
   
   resources :bookings do
-    resources :invoices 
-    collection do
-      get 'addxeroinvoice'  # /bookings/addxeroinvoice  
-      get 'getxeroinvoice'      
-      get 'addxeropayment'
-      get 'changexeroinvoice'    
+    resources :invoices do
+      collection do
+        get 'addxeroinvoice'  # /bookings/addxeroinvoice  
+        get 'getxeroinvoice'      
+        get 'addxeropayment'
+        get 'changexeroinvoice'    
+        get 'newSupplier'
+        post 'createSupplier'
+        match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get' 
+      end
     end
   end
   
   match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get' 
   match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get' 
-
   
   #get 'bookings', to: 'enquiries#index_bookings', as: 'bookings' 
   # redirect booking show via the enquiry controller. may need to change in future depending on what we want to show

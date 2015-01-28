@@ -9,10 +9,8 @@ class EnquiriesController < ApplicationController
   def addbooking
     @enquiry = Enquiry.find(params[:id])
     ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one. 
-    if @enquiry.amount.nil? || @enquiry.amount <= 0  
-      flash[:warning] = "Amount cannot be zero when converting to a Booking."
-      redirect_to @enquiry  
-    elsif @enquiry.customers.blank? || @enquiry.customers.count == 0 
+
+    if @enquiry.customers.blank? || @enquiry.customers.count == 0 
       flash[:warning] = "Must have a customer when converting to a Booking."
       redirect_to @enquiry  
     elsif @enquiry.est_date.blank? || @enquiry.fin_date.blank? 
@@ -112,6 +110,7 @@ class EnquiriesController < ApplicationController
   end    
   
   def confirmation
+    #stub... i think we need this here blank
   end
   
   def update
@@ -192,12 +191,12 @@ class EnquiriesController < ApplicationController
   end
         
   def customersearch
-    @customers = Customer.select([:id, :last_name, :first_name]).
+    @customers = Customer.select([:id, :last_name, :first_name]).where("cust_sup ILIKE :p", p: "Customer" ).
                             where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
   
     # also add the total count to enable infinite scrolling
-    resources_count = Customer.select([:id, :last_name, :first_name]).
+    resources_count = Customer.select([:id, :last_name, :first_name]).where("cust_sup ILIKE :p", p: "Customer" ).
       where("last_name ILIKE :q  OR first_name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
