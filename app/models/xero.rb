@@ -18,11 +18,7 @@ class Xero
     self.client = Xeroizer::PrivateApplication.new(CONSUM_KEY, OAUTH_SECRET_KEY, path)
   end
   
-  def create_invoice(invoice)
-    booking = invoice.booking
-    #if we have a lead customer create contact in xero if it does not already exist. 
-    #self.customers.each do |cust| # xero only allows one contact per invoice. 
-    cust = booking.customer  
+  def getContact(cust)
     xcontacts = self.client.Contact.all(:where => {:name => cust.fullname})
     if xcontacts.blank? && !cust.email.nil?
       # try match on email
@@ -42,6 +38,20 @@ class Xero
     else
       xcust = xcontacts.first
     end
+    return xcust
+  end
+  
+  def create_invoice(invoice)
+    booking = invoice.booking
+    #if we have a lead customer create contact in xero if it does not already exist. 
+    #self.customers.each do |cust| # xero only allows one contact per invoice. 
+    if invoice.isSupplierInvoice?
+      cust = invoice.supplier
+    else
+      cust = invoice.booking.customer
+    end
+    
+    xcust = self.getContact(cust)    
     
     if invoice.isSupplierInvoice? 
       type = "ACCPAY";

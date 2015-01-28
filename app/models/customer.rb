@@ -66,7 +66,11 @@ class Customer < ActiveRecord::Base
   has_paper_trail :ignore => [:created_at, :updated_at]
   
   def fullname 
-    "#{self.first_name} #{self.last_name}"
+    if self.isSupplier? 
+      return self.supplier_name
+    else
+      return "#{self.first_name} #{self.last_name}"
+    end
   end
   
   def dashboard_name 

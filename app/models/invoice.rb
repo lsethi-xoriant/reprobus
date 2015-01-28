@@ -157,5 +157,9 @@ class Invoice < ActiveRecord::Base
     self.update_attribute(:depositPayUrl, url) #saving this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
     return url
   end
+  
+  def nice_id
+    self.id.to_s.rjust(6, '0')  
+  end  
 end
 

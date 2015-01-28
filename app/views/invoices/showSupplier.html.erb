@@ -3,7 +3,9 @@
   <aside class="col-lg-12">
     <section>
       <h1 class="page-header" ><%= "Supplier Invoice for " +  @booking.name%></h1>
-
+      <strong>Invoice #</strong>	<%= @invoice.nice_id %><br>
+      <strong>Supplier</strong>	<%= @invoice.supplier.fullname %><br>
+      <strong>Booking #</strong>	<%= @booking.nice_id %><br>
       <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
       <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
       <strong>Payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
