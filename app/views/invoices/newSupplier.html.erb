@@ -1,9 +1,6 @@
-<% depositDay, finalDay =  @booking.initInvoiceDates %>
+<% finalDay =  @booking.initSupInvoiceDate %>
 <% if !@invoice.final_payment_due.blank? %>
   <% finalDay =  @invoice.final_payment_due %>
-<% end %>
-<% if !@invoice.deposit_due.blank? %>
-  <% depositDay =  @invoice.deposit_due %>
 <% end %>
 
 <% provide(:title, 'Create Supplier Invoice') %>

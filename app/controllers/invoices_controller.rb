@@ -98,7 +98,8 @@ class InvoicesController < ApplicationController
   
   def create
     @booking = Booking.find(params[:booking_id])
-    inv = @booking.customer_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], deposit_due: params[:deposit_due], deposit: params[:deposit])
+    inv = @booking.customer_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], 
+      deposit_due: params[:deposit_due], deposit: params[:deposit])
     inv.booking = @booking
     
     i = 0;
@@ -155,7 +156,6 @@ class InvoicesController < ApplicationController
 
     
     if @invoice.save #&& err.blank? 
-      @booking.update_attribute(:amount, @invoice.getTotalAmount)
       if Setting.find(1).use_xero 
         err = @invoice.create_invoice_xero(current_user)
         if !err

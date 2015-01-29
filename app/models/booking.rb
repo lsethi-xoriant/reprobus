@@ -54,6 +54,15 @@ class Booking < ActiveRecord::Base
     end
   end
 
+  def initSupInvoiceDate
+     if !self.enquiry.est_date.blank? 
+       return self.enquiry.est_date - 30
+     else
+       return (Date.today + 30)
+     end
+       
+  end
+  
   def dasboard_customer_name
     if !self.customer.nil? 
       self.customer.dashboard_name
