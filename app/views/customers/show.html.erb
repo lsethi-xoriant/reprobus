@@ -24,11 +24,11 @@
             </div>
           </div>
           <ul class="row profile-details">
-            <% if @customer.enquiries.empty? %>
+            <% if @customer.enquiries.active.empty? %>
               <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
               <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
             <% else %>
-              <% @customer.enquiries.each do |e| %>
+              <% @customer.enquiries.active.each do |e| %>
               <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
               <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= enquiry_path e %>><%= e.name %></a></li>
               <% end %>

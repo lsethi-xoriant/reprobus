@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @assigned_enquiries = @user.assigned_enquiries.paginate(page: params[:page])
+    @assigned_enquiries = @user.assigned_enquiries.active.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.json { render json: {name: @user.name, id: @user.id  }}

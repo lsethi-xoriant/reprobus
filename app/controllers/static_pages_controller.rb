@@ -11,9 +11,9 @@ class StaticPagesController < ApplicationController
     @user = current_user
     
     if params[:remindersOnly] == "y"
-      @assigned_enquiries = @user.assigned_enquiries.where.not(stage: "Closed").where("enquiries.reminder <= ?", Time.now).paginate(page: params[:page]).per_page(8)  
+      @assigned_enquiries = @user.assigned_enquiries.active.where("enquiries.reminder <= ?", Time.now).paginate(page: params[:page]).per_page(8)  
     else
-      @assigned_enquiries = @user.assigned_enquiries.where.not(stage: "Closed").paginate(page: params[:page]).per_page(8) 
+      @assigned_enquiries = @user.assigned_enquiries.active.paginate(page: params[:page]).per_page(8) 
     end
     
     render :layout => "application"
@@ -21,7 +21,7 @@ class StaticPagesController < ApplicationController
   
   def dashboard_list
     @user = current_user
-    @assigned_enquiries = @user.assigned_enquiries.where.not(stage: "Closed").paginate(page: params[:page]).per_page(20)  
+    @assigned_enquiries = @user.assigned_enquiries.active.paginate(page: params[:page]).per_page(20)  
     render :layout => "application"
   end  
 

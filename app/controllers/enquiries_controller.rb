@@ -41,7 +41,7 @@ class EnquiriesController < ApplicationController
   end
   
   def index
-    @enquiries = Enquiry.includes(:customers).where.not(stage: "Closed").where.not(stage: "Booking").paginate(page: params[:page])
+    @enquiries = Enquiry.includes(:customers).active.paginate(page: params[:page])
   end
   
   def index_bookings

@@ -50,6 +50,7 @@ class Enquiry < ActiveRecord::Base
   scope :open, -> { where(stage: 'Open') }
   scope :in_progress, -> { where(stage: 'In Progress') }
   scope :bookings, -> { where(stage: 'Booking') }
+  scope :active, -> {where(:stage => ['In Progress', 'Open'])}
  # scope :notClosed, -> {where('stage != "Closed"') }
   
   belongs_to  :user
@@ -62,6 +63,10 @@ class Enquiry < ActiveRecord::Base
   
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
+  def isActive 
+    return stage == "Open" || stage == "In Progress"
+  end
+  
   def add_customer(customer)
     self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
     #self.customers << customer unless customer.nil?
