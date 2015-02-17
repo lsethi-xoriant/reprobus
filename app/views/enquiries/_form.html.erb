@@ -27,7 +27,7 @@
      existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name 
   end   
 %>
-
+<%#= render  partial: 'new_customer', locals: { buttontxt: "Create an Enquiry" } #maybe try this again some time - could be used for adding addresses and stuff elsewhere %>
 
     <%= form_for @enquiry, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
 	    <%= render 'shared/error_messages', object: f.object %>

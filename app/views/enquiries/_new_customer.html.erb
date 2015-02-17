@@ -1,0 +1,61 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="custIDMaybeIfWeAddEditing">Add Customer</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Customer</h4>
+      </div>
+      <div class="modal-body">
+      <%= form_for @customer, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+	    <%= render 'shared/error_messages', object: f.object %>
+      <%= f.hidden_field :cust_sup, :value => "Customer" %>
+
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "first_name", f: f } %> 
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "last_name", f: f } %>
+
+      <div class="form-group">  <%= f.label :title %>
+        <div class="col-sm-6">   <%= f.select :title, options_for_select(titles_list, @customer.title ), {}, class: 'form-control' %>  </div>
+      </div>
+    
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "gender", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "alt_email", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "phone", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "mobile", f: f } %>      
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "fax", f: f } %>      
+      <%= render partial: 'shared/std_grp_datefield', locals: { name: :born_on, id: :born_on, f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "insurance", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "passport_num", f: f } %>    
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "place_of_issue", f: f } %>
+      <%= render partial: 'shared/std_grp_datefield', locals: { name: :issue_date, id: :issue_date, f: f } %>
+      <%= render partial: 'shared/std_grp_datefield', locals: { name: :expiry_date, id: :expiry_date, f: f } %>
+
+      <% f.fields_for :address do |builder| %>
+      <p>
+        <%= builder.label :street1 %> <br>
+        <%= builder.text_field :street1 %>
+        <%= builder.label :street2 %> <br>
+        <%= builder.text_field :street2 %>        
+        <%= builder.label :city %> <br>
+        <%= builder.text_field :city %>  
+        <%= builder.label :state %> <br>
+        <%= builder.text_field :state %>  
+        <%= builder.label :zipcode %> <br>
+        <%= builder.text_field :zipcode %>  
+        <%= builder.label :country %> <br>
+        <%= builder.text_field :country %>          
+      </p>
+      <% end %>
+      <div class="pull-right">
+      <%= f.submit "Create a Customer", class: "btn btn-large btn-primary" %>
+      </div>
+    <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -58,7 +58,7 @@ class Xero
       currency = invoice.currency
     else
       type = "ACCREC";
-      currency = "AUS"
+      currency = "AUD"
     end
  
     xinv = self.client.Invoice.build({

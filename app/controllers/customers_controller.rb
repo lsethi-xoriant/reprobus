@@ -39,6 +39,7 @@ class CustomersController < ApplicationController
 
   def update
      @customer = Customer.find(params[:id])
+
     if @customer.update_attributes(customer_params)
       flash[:success] = "Customer updated"
       #redirect_to @customer
@@ -68,7 +69,7 @@ class CustomersController < ApplicationController
 private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup,
-        :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, 
+        :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name,
         address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
     end  

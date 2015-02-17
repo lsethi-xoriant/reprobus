@@ -37,6 +37,7 @@
 #  xero_id         :string(255)
 #  cust_sup        :string(255)
 #  supplier_name   :string(255)
+#  currency_id     :integer
 #
 
 require 'spec_helper'

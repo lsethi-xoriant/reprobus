@@ -37,6 +37,7 @@
 #  xero_id         :string(255)
 #  cust_sup        :string(255)
 #  supplier_name   :string(255)
+#  currency_id     :integer
 #
 
 class Customer < ActiveRecord::Base
@@ -62,6 +63,7 @@ class Customer < ActiveRecord::Base
   accepts_nested_attributes_for :address, :allow_destroy => true; #, :reject_if => proc {|attributes| Address.reject_address(attributes)}
   has_many    :activities,  dependent: :destroy
   has_many    :bookings
+  belongs_to     :currency
   
   has_paper_trail :ignore => [:created_at, :updated_at]
   
@@ -115,4 +117,28 @@ class Customer < ActiveRecord::Base
       return false
     end
   end
+  def getSupplierCurrencySelect2
+    if !self.cust_sup == "Supplier"
+      return "";
+    else
+      if self.currency.blank?
+        return "";
+      else
+        return self.currency.id.to_s + ":" + self.currency.code + " - " + self.currency.currency
+      end
+    end
+  end
+  
+  def getSupplierCurrencyDisplay
+    if !self.cust_sup == "Supplier"
+      return "";
+    else
+      if self.currency.blank?
+        return "No default currency set";
+      else
+        return self.currency.code + " - " + self.currency.currency
+      end
+    end
+  end 
+  
 end

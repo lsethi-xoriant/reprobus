@@ -21,6 +21,7 @@
 #  xdeposits           :text
 #  xpayments           :text
 #  supplier_id         :integer
+#  currency_id         :integer
 #
 
 class Invoice < ActiveRecord::Base
@@ -37,6 +38,7 @@ class Invoice < ActiveRecord::Base
   serialize  :xpayments
   serialize  :xdeposits
   validate   :validate_customer_invoice
+  belongs_to     :currency
 
   validate do |invoice|
     int = 0;

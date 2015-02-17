@@ -13,10 +13,9 @@
               <h2><%= @customer.first_name + " " + @customer.last_name %></h2>
               <%= link_to edit_customer_path(@customer) do %>
                 <i class="fa fa-pencil editicon"></i>
+                Edit
               <% end %>   
-
-              <ul>          
-                
+              <ul>              
                 <li><i class="fa fa-envelope"></i> <%= mail_to(@customer.email, @customer.email, bcc: @customer.create_email_link)%></li>
                 <li><i class="fa fa-phone"></i> <%= @customer.phone %> (Landline) </li>
                 <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>

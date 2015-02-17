@@ -25,4 +25,18 @@ class StaticPagesController < ApplicationController
     render :layout => "application"
   end  
 
+  def currencysearch
+    @entities = Currency.select([:id, :code,  :currency]).
+                            where("code ILIKE :q OR currency ILIKE :q", q: "%#{params[:q]}%").
+                            order('code')
+  
+    # also add the total count to enable infinite scrolling
+  resources_count = Currency.select([:id, :code, :currency]).
+      where("code ILIKE :q OR currency ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+                    searchSet: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}"} }} }
+    end
+  end
 end

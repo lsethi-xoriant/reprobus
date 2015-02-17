@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128112253) do
+ActiveRecord::Schema.define(version: 20150217001808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(version: 20150128112253) do
     t.integer "carrier_id"
   end
 
+  create_table "currencies", force: true do |t|
+    t.string   "code"
+    t.string   "currency"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "customer_enquiries", force: true do |t|
     t.integer  "customer_id"
     t.integer  "enquiry_id"
@@ -115,6 +122,7 @@ ActiveRecord::Schema.define(version: 20150128112253) do
     t.string   "xero_id"
     t.string   "cust_sup"
     t.string   "supplier_name"
+    t.integer  "currency_id"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -199,6 +207,7 @@ ActiveRecord::Schema.define(version: 20150128112253) do
     t.text     "xdeposits"
     t.text     "xpayments"
     t.integer  "supplier_id"
+    t.integer  "currency_id"
   end
 
   create_table "line_items", force: true do |t|
@@ -220,6 +229,7 @@ ActiveRecord::Schema.define(version: 20150128112253) do
     t.string   "xero_consumer_secret"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "currency_id"
   end
 
   create_table "stopovers", force: true do |t|

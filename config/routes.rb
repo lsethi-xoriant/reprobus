@@ -17,7 +17,8 @@ Reprobus::Application.routes.draw do
   resources :password_resets
   resources :suppliers do 
     collection do 
-      get 'customersearch'  # /enquires/customersearch  
+#      get 'customersearch'  # /enquires/customersearch  
+      get 'suppliersearch'  # /enquires/suppliersearch  
     end
   end
 
@@ -47,9 +48,10 @@ Reprobus::Application.routes.draw do
         get 'getxeroinvoice'      
         get 'addxeropayment'
         get 'changexeroinvoice'    
-        get 'newSupplier'
+        get 'supplierInvoice'
         post 'createSupplier'
         match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get' 
+       # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get' 
       end
     end
   end
@@ -71,7 +73,8 @@ Reprobus::Application.routes.draw do
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
-
+  
+  get 'static_pages/currencysearch'    
   get "admin/carriers/export"
   get "admin/destinations/export"
   get "admin/stopovers/export"

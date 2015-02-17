@@ -11,34 +11,36 @@
    <%= render 'shared/error_messages', object: @invoice %>  
   
   <%= form_tag({controller: "invoices", action: "createSupplier"}, method: "post", class: "form-horizontal") do %>
-    <div class="form-group">
-      
-    <div id="existing_fields">
-      <div class="form-group">
-        <label for="supplier_id" class="col-sm-3 control-label">Supplier</label>
-        <div class="col-sm-4">
-          <%= hidden_field_tag(:supplier_id, @invoice.supplier_id, id: 'sup_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: customersearch_suppliers_path, placeholder: 'Search for a name' } ) %>
-        </div>
-      </div>
+    
+
+  <div class="form-group">
+    <label for="supplier_id" class="col-sm-3 control-label">Supplier</label>
+    <div class="col-sm-4">
+      <%= hidden_field_tag(:supplier_id, @invoice.supplier_id, id: 'sup_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: suppliersearch_suppliers_path, placeholder: 'Search for a name' } ) %>
     </div>
-      
-      <label for="finalpaydue" class="col-sm-3 control-label">Payment Due</label>
-      <div class='input-group date col-sm-4' id='payday' >
-        <input type="text" name='final_payment_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= finalDay.strftime("%d/%m/%Y") %> />
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-      </div>
-    </div>
+  </div>
   
-    <div class="form-group">
-      <label for="currency" class="col-sm-3 control-label">Currency</label>
-      <div class='col-sm-4' id='currency' >
-        <select class="form-control" name="currency">
-          <option>AUD</option>
-          <option>EUR</option>
-          <option>USD</option>
-        </select>
+  <div class="form-group">
+    <label for="finalpaydue" class="col-sm-3 control-label">Payment Due</label>
+    <div class='input-group date col-sm-4' id='payday' >
+      <input type="text" name='final_payment_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= finalDay.strftime("%d/%m/%Y") %> />
+      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="supplierDefaultCurrency" class="col-sm-3 control-label">Defaul Supplier Currency</label>
+    <div class='col-sm-4' id='currency' >
+      <input class="form-control" type="text" placeholder="No Supplier Default" id="supplierDefaultCurrency" readonly>
+    </div>
+  </div>   
+  
+     <div class="form-group">
+      <label for="currency_id" class="col-sm-3 control-label">Override Currency</label>
+      <div class="col-sm-4">
+        <%= hidden_field_tag(:currency_id, '', id: 'currencysearch', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Override Supplier Currency" ) %>        
       </div>
-    </div>  
+    </div>
   
     <div class="row clearfix">
 		<div class="col-md-12 column">

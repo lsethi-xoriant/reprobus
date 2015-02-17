@@ -49,9 +49,10 @@ class EnquiriesController < ApplicationController
   end
   
   def new
-      @enquiry = Enquiry.new
-	    @enquiry.customers.build
-      @enquiry.customers.first.build_address
+    @enquiry = Enquiry.new
+	  @enquiry.customers.build
+    @enquiry.customers.first.build_address
+    @customer = @enquiry.customers.first
   end
 
   def show

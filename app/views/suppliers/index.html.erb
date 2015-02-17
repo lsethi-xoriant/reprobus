@@ -22,7 +22,7 @@
       <tbody>
         <% @customers.each do |cust| %>
         <tr>
-          <td><%= link_to(cust.fullname, cust) %></td>
+          <td><a href=<%= supplier_path cust %> </a> <%= cust.fullname  %></td>
           <td><%= cust.title %></td>
           <td><%= cust.email %></td>
           <td><%= cust.phone %></td>

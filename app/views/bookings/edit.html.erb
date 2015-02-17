@@ -8,21 +8,16 @@
    end 
 %>
 
-
 <div class="row">
   <aside class="col-lg-12">
     <section>
-      <h1 class="page-header" >Booking Details</h1>
+      <h1 class="page-header" >Edit Booking</h1>
 
        <div class="row">
         <div class="col-lg-6">     
           <div class="row">
             <div class="col-lg-9 profile-name">
-              <h2><%= @booking.name %></h2>
-              <%= link_to edit_booking_path(@booking) do %>
-                <i class="fa fa-pencil editicon"></i>
-                Edit
-              <% end %>   
+              <h2><%= @booking.name %></h2> 
             </div>
           </div>
           <ul class="row profile-details">
@@ -47,26 +42,8 @@
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.duration ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Number of People</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.num_people )  %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Created</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.created_at.to_formatted_s(:rfc822) ) %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Created By</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.created_by_name ) %></li>
           </ul> 
         </div>   
-        <div class="col-lg-6">  
-          <h4>Invoices</h4>   
-          <div>
-            
-            <a href=<%= new_booking_invoice_path @booking %> ><button type="button" class="btn btn-primary">Create Customer Invoice</button></a>
-            <br><br>
-            <a href=<%= supplierInvoice_booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">Create Supplier Invoice</button></a>
-            <br><br>
-            <% if @booking.customer_invoices || @booking.supplier_invoices  %>
-              <br>
-              <a href=<%= booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">View Invoices</button></a>
-            <% end %>
-          </div>
-        </div>        <!-- end col 6 --> 
       </div>   <!-- row --> 
     </section>
   </aside> 

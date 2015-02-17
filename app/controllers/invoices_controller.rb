@@ -3,11 +3,10 @@ class InvoicesController < ApplicationController
   before_filter :admin_user, only: :destroy
   layout 'plain', :only => [:pxpaymentsuccess, :pxpaymentfailure]
 
-  
   def addxeroinvoice
     @invoice = Invoice.find(params[:id])
     if @invoice.create_invoice_xero(current_user) 
-      redirect_to @invoice
+      redirect_to booking_invoice_path( @invoice.booking, @invoice)
     else
       render "show"
     end
@@ -17,11 +16,11 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if params[:amount].nil? || !is_number?(params[:amount])  
       flash[:danger] = "Payment amount must be entered. You entered #{params[:amount]}"
-      redirect_to @invoice  
+      redirect_to booking_invoice_path( @invoice.booking, @invoice)
     else
-    @invoice.add_xero_payment(params[:amount])
+      @invoice.add_xero_payment(params[:amount])
       flash[:success] = "Payment added succesfully ($#{params[:amount]})"
-      redirect_to @invoice
+      redirect_to booking_invoice_path( @invoice.booking, @invoice)
     end
   end
 
@@ -29,11 +28,11 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
       flash[:danger] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
-      redirect_to @invoice  
+      redirect_to booking_invoice_path( @invoice.booking, @invoice)
     else
       @invoice.change_xero_invoice(params[:amount])
-    flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
-      redirect_to @invoice
+      flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
+      redirect_to booking_invoice_path( @invoice.booking, @invoice)
     end
   end  
 
@@ -70,7 +69,7 @@ class InvoicesController < ApplicationController
     @booking = Booking.find(params[:booking_id])
   end
 
-  def newSupplier
+  def supplierInvoice
     @invoice = Invoice.new
     @booking = Booking.find(params[:booking_id])
   end
@@ -133,8 +132,25 @@ class InvoicesController < ApplicationController
 
   def createSupplier
     @booking = Booking.find(params[:booking_id])
+    
+    #find appropriate currency
+    sup = Customer.find(params[:supplier_id])
+    if params[:currency_id].blank? # if overide not set then use suppier currency
+      if !sup.currency.nil? 
+        currID = sup.currency_id
+      else # use system settings
+        if Setting.find(1).currency
+          currID = Setting.find(1).currency.id
+        else
+          currID
+        end
+      end
+    else # use override
+      currID = params[:currency_id]
+    end
+    
     inv = @booking.supplier_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], 
-       currency: params[:currency], supplier_id: params[:supplier_id])
+      currency_id: currID, supplier_id: params[:supplier_id])
     inv.booking = @booking
     @invoice = inv
 

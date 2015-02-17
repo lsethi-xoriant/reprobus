@@ -13,7 +13,7 @@ class SuppliersController < CustomersController
     #@activities = @customer.activities.order('created_at DESC').page(params[:page]).per_page(5)
     respond_to do |format|
       format.html
-      format.json { render json: {name: @customer.fullname, id: @customer.id  }}
+      format.json { render json: {name: @customer.fullname, id: @customer.id, currency: @customer.getSupplierCurrencyDisplay  }}
     end    
   end 
   
@@ -36,7 +36,22 @@ class SuppliersController < CustomersController
 
     respond_to do |format|
       format.json { render json: {total: resources_count, 
-                    searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}"} }} }
+        searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}"}}} }
+    end
+  end
+
+  def suppliersearch
+    @customers = Customer.select([:id, :supplier_name, :cust_sup, :currency_id]).where("cust_sup ILIKE :p", p: "Supplier" ).
+                            where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
+                            order('last_name')
+  
+    # also add the total count to enable infinite scrolling
+    resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Supplier" ).
+      where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count, 
+        searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay }}} }
     end
   end
 end
