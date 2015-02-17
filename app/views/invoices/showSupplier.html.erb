@@ -9,7 +9,7 @@
       <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
       <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
       <strong>Payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
-      <strong>Currency</strong>	<%= @invoice.currency %><br>
+      <strong>Currency</strong>	<%= @invoice.getCurrencyDisplay %><br>
 
       <strong>Customer/s:</strong>		<%= @booking.customer.fullname %><br>
       <div>

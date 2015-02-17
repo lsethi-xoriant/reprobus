@@ -163,5 +163,20 @@ class Invoice < ActiveRecord::Base
   def nice_id
     self.id.to_s.rjust(6, '0')  
   end  
+  
+  def getCurrencyCode
+    if self.currency.blank? 
+      return ""
+    else
+      return self.currency.code
+    end
+  end  
+  def getCurrencyDisplay
+    if self.currency.blank? 
+      return "No Currency Set"
+    else
+      return self.currency.displayName
+    end
+  end  
 end
 

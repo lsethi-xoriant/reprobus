@@ -22,10 +22,17 @@ class Setting < ActiveRecord::Base
     if self.currency
       return self.currency.id
     else
-      return "8"  # this is default aus dollars
+      return Currency.find_by_code("USD").id  # this is default aus dollars
     end
   end
   
+  def currencyCode
+    if self.currency
+      return self.currency.code
+    else
+      return "USD"  # this is default aus dollars
+    end
+  end 
   def currencyDisplay
     if self.currency
       return self.currency.displayName

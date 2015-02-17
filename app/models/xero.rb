@@ -55,7 +55,10 @@ class Xero
     
     if invoice.isSupplierInvoice? 
       type = "ACCPAY";
-      currency = invoice.currency
+      currency = invoice.getCurrencyCode
+      if currency.blank? 
+        currency = Setting.find(1).currencyCode
+      end
     else
       type = "ACCREC";
       currency = "AUD"

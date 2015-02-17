@@ -138,12 +138,8 @@ class InvoicesController < ApplicationController
     if params[:currency_id].blank? # if overide not set then use suppier currency
       if !sup.currency.nil? 
         currID = sup.currency_id
-      else # use system settings
-        if Setting.find(1).currency
-          currID = Setting.find(1).currency.id
-        else
-          currID
-        end
+      else # use system settings which defaults to AUD if nothing set
+        currID = Setting.find(1).currencyID
       end
     else # use override
       currID = params[:currency_id]
