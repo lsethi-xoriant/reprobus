@@ -98,7 +98,7 @@ class InvoicesController < ApplicationController
   def create
     @booking = Booking.find(params[:booking_id])
     inv = @booking.customer_invoices.build(status: "New", invoice_date: Date.today, final_payment_due: params[:final_payment_due], 
-      deposit_due: params[:deposit_due], deposit: params[:deposit])
+      deposit_due: params[:deposit_due], deposit: params[:deposit], currency_id: params[:currency_id])
     inv.booking = @booking
     
     i = 0;
@@ -111,7 +111,8 @@ class InvoicesController < ApplicationController
       inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)    
       i+=1
     end
-
+    
+    inv.set_exchange_currency_amount
     @invoice = inv
     
     if @invoice.save #&& err.blank? 
@@ -166,6 +167,7 @@ class InvoicesController < ApplicationController
       i+=1
     end
 
+    inv.set_exchange_currency_amount
     
     if @invoice.save #&& err.blank? 
       if Setting.find(1).use_xero 
@@ -185,7 +187,7 @@ class InvoicesController < ApplicationController
   def update
      @invoice = Customer.find(params[:id])
     if @invoice.update_attributes(invoice_params)
-      flash[:success] = "Customer updated"
+      flash[:success] = "Invoice updated"
       redirect_to @invoice
     else
       render 'edit'
@@ -200,7 +202,7 @@ class InvoicesController < ApplicationController
   
 private
   def invoice_params
-    params.permit(:invoice_date, :deposit_due, :final_payment_due, :deposit, :currency, :supplier_id,
+    params.permit(:invoice_date, :deposit_due, :final_payment_due, :deposit, :currency, :supplier_id, :currency_id,
         line_item_attributes: [:item_price, :total, :description, :quantity] )      
     end  
 end

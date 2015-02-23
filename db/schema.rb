@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217001808) do
+ActiveRecord::Schema.define(version: 20150219032826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,8 @@ ActiveRecord::Schema.define(version: 20150217001808) do
     t.text     "xpayments"
     t.integer  "supplier_id"
     t.integer  "currency_id"
+    t.decimal  "exchange_amount",     precision: 12, scale: 2
+    t.decimal  "exchange_rate",       precision: 12, scale: 2
   end
 
   create_table "line_items", force: true do |t|

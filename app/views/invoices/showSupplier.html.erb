@@ -3,6 +3,7 @@
   <aside class="col-lg-12">
     <section>
       <h1 class="page-header" ><%= "Supplier Invoice for " +  @booking.name%></h1>
+
       <strong>Invoice #</strong>	<%= @invoice.nice_id %><br>
       <strong>Supplier</strong>	<%= @invoice.supplier.fullname %><br>
       <strong>Booking #</strong>	<%= @booking.nice_id %><br>
@@ -26,7 +27,10 @@
       </div>
       <br>
       Total <strong><%=  @invoice.getTotalAmount.to_s %> </strong><br>
-      <br><br>
+      <br>
+      Exch Rate when created <strong><%=  number_to_currency(@invoice.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
+      Current Exch Rate <strong><%=   number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
+
       </section>
   </aside> 
 </div>

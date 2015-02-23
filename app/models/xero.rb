@@ -55,15 +55,15 @@ class Xero
     
     if invoice.isSupplierInvoice? 
       type = "ACCPAY";
-      currency = invoice.getCurrencyCode
-      if currency.blank? 
-        currency = Setting.find(1).currencyCode
-      end
     else
       type = "ACCREC";
-      currency = "AUD"
     end
- 
+    
+    currency = invoice.getCurrencyCode
+    if currency.blank? 
+      currency = Setting.find(1).getDefaultCurrency.code
+    end
+    
     xinv = self.client.Invoice.build({
       :type => type,
      # :status => "SUBMITTED",

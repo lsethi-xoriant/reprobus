@@ -18,34 +18,19 @@ class Setting < ActiveRecord::Base
   validates_presence_of :xero_consumer_secret, :if => lambda { self.use_xero }
   belongs_to :currency
   
+  def getDefaultCurrency
+    self.currency ? self.currency : Currency.find_by_code("USD") 
+  end   
   def currencyID
-    if self.currency
-      return self.currency.id
-    else
-      return Currency.find_by_code("USD").id  # this is default aus dollars
-    end
+    return self.getDefaultCurrency.id
   end
-  
   def currencyCode
-    if self.currency
-      return self.currency.code
-    else
-      return "USD"  # this is default aus dollars
-    end
+    return self.getDefaultCurrency.code
   end 
   def currencyDisplay
-    if self.currency
-      return self.currency.displayName
-    else
-      return "No System Default Set"
-    end
+    return self.getDefaultCurrency.displayName
   end    
-  
   def getCurrencySelect2
-    if self.currency.blank?
-      return "";
-    else
-      return self.currency.id.to_s + ":" + self.currency.code + " - " + self.currency.currency
-    end
+    return self.getDefaultCurrency.id.to_s + ":" + self.getDefaultCurrency.code + " - " + self.getDefaultCurrency.currency
   end
 end

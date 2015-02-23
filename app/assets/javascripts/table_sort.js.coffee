@@ -1,8 +1,8 @@
 # https://github.com/rweng/jquery-datatables-rails
 jQuery ->
-        $('#sort_table').dataTable
-          "sPaginationType": "bootstrap"
+        $('#sort_table').DataTable
+          "pagingType": "full_numbers"
 jQuery ->
-        $('#sort_table2').dataTable
-          "sPaginationType": "bootstrap"      
+        $('#sort_table2').DataTable
+          "pagingType": "full_numbers"      
 

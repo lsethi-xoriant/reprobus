@@ -38,7 +38,7 @@ class Invoice < ActiveRecord::Base
   serialize  :xpayments
   serialize  :xdeposits
   validate   :validate_customer_invoice
-  belongs_to     :currency
+  belongs_to  :currency
 
   validate do |invoice|
     int = 0;
@@ -164,19 +164,47 @@ class Invoice < ActiveRecord::Base
     self.id.to_s.rjust(6, '0')  
   end  
   
+  def getSupplierName
+    self.supplier ? self.supplier.supplier_name : "" 
+  end 
+  
   def getCurrencyCode
-    if self.currency.blank? 
-      return ""
-    else
-      return self.currency.code
-    end
+    self.currency ? self.currency.code : "" 
   end  
+ 
   def getCurrencyDisplay
-    if self.currency.blank? 
-      return "No Currency Set"
-    else
-      return self.currency.displayName
-    end
+    self.currency ? self.currency.displayName : "No Currency Set" 
   end  
+  
+  def getCurrencySelect2
+    if self.currency 
+      return self.currency.id.to_s + ":" + self.currency.code + " - " + self.currency.currency
+    else
+      return ""
+    end
+  end 
+  
+  def get_current_exchange_amount
+    code = self.getCurrencyCode
+    syscode = Setting.find(1).currencyCode 
+    code = syscode if code == ""
+    
+    # get the total amount and times by 100 as Money uses cents.     
+    mon = Money.new((self.getTotalAmount * 100).to_i, code)
+    exch = mon.exchange_to(syscode)
+    return exch.dollars
+  end
+  
+  def set_exchange_currency_amount
+    code = self.getCurrencyCode
+    syscode = Setting.find(1).currencyCode 
+    code = syscode if code == ""
+    
+    # get the total amount and times by 100 as Money uses cents.     
+    mon = Money.new((self.getTotalAmount * 100).to_i, code)
+    exch = mon.exchange_to(syscode)
+    self.exchange_amount = exch.dollars
+    self.exchange_rate = Money.default_bank.get_rate(code, syscode)
+  end
 end
 
