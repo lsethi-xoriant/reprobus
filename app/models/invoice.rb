@@ -153,8 +153,9 @@ class Invoice < ActiveRecord::Base
     strRef = "Booking payment for " + self.booking.name
     succpath = Rails.application.routes.url_helpers.pxpaymentsuccess_url()
     failpath = Rails.application.routes.url_helpers.pxpaymentfailure_url()
+    curCode = self.getCurrencyCode
     
-    request = Pxpay::Request.new(self.id, self.deposit.to_s, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => "AUD"})    
+    request = Pxpay::Request.new(self.id, self.deposit.to_s, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => curCode})    
     url = request.url
     self.update_attribute(:depositPayUrl, url) #saving this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
     return url
@@ -169,11 +170,11 @@ class Invoice < ActiveRecord::Base
   end 
   
   def getCurrencyCode
-    self.currency ? self.currency.code : "" 
+    self.currency ? self.currency.code : Setting.find(1).currencyCode 
   end  
  
   def getCurrencyDisplay
-    self.currency ? self.currency.displayName : "No Currency Set" 
+    self.currency ? self.currency.displayName : Setting.find(1).currencyDisplay 
   end  
   
   def getCurrencySelect2
@@ -187,7 +188,6 @@ class Invoice < ActiveRecord::Base
   def get_current_exchange_amount
     code = self.getCurrencyCode
     syscode = Setting.find(1).currencyCode 
-    code = syscode if code == ""
     
     # get the total amount and times by 100 as Money uses cents.     
     mon = Money.new((self.getTotalAmount * 100).to_i, code)
@@ -198,7 +198,6 @@ class Invoice < ActiveRecord::Base
   def set_exchange_currency_amount
     code = self.getCurrencyCode
     syscode = Setting.find(1).currencyCode 
-    code = syscode if code == ""
     
     # get the total amount and times by 100 as Money uses cents.     
     mon = Money.new((self.getTotalAmount * 100).to_i, code)
