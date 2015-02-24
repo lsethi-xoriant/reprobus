@@ -87,11 +87,12 @@ class Enquiry < ActiveRecord::Base
       if act
        user.activities<<(act)
       end
+      self.update_attribute(:stage, "Booking")
       return true
     else
       return false
     end
-    self.update_attribute(:stage, "Booking")
+
   end
   
   def assigned_to_name

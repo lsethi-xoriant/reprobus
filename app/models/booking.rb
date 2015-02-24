@@ -43,7 +43,7 @@ class Booking < ActiveRecord::Base
   def initInvoiceDates
     if !self.enquiry.est_date.blank? 
       if (self.enquiry.est_date - 90) > Date.today && self.enquiry.est_date > Date.today 
-        return (self.enquiry.est_date - 30), (self.enquiry.est_date - 90)
+        return (self.enquiry.est_date - 90), (self.enquiry.est_date - 30)
       elsif (self.enquiry.est_date - 30) > Date.today 
         return (self.enquiry.est_date - 30), (self.enquiry.est_date - 30)
       else

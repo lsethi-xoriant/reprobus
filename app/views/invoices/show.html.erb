@@ -25,11 +25,16 @@
         </table>
       </div>
       <br>
-      Deposit	<strong><%= @invoice.deposit %></strong><br>
-      CC Amount previously paid	<strong><%= @invoice.getCCPaidTotal %></strong><br>
+      Total <strong><%=  number_to_currency(@invoice.getTotalAmount, precision: 2) %> </strong><br>
+      <br>
+      Exch Rate when created <strong><%= number_to_currency(@invoice.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
+      Current Exch Rate <strong><%= number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
+      <br>
+      Deposit	<strong><%= number_to_currency(@invoice.deposit, precision: 2) %></strong><br>
+      Amount paid throuh payment gateway <strong><%= number_to_currency(@invoice.getCCPaidTotal, precision: 2) %></strong><br>
       Balance <strong>TO DO</strong><br>
-      Total <strong><%=  @invoice.getTotalAmount.to_s %> </strong><br>
-      <br><br>
+     
+      <br>
       </section>
   </aside> 
 </div>
@@ -38,7 +43,7 @@
   <a href=<%= booking_invoice_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Pdf</button></a>
   <br><br>
   <% if Setting.find(1).use_xero  %>
-    <% if @booking.xero_id.blank? %>
+    <% if @invoice.xero_id.blank? %>
 
     <% else %>
     <%=  form_tag({controller: "invoices", action: "getxeroinvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
