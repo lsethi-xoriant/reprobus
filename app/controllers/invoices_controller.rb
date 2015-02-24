@@ -102,12 +102,17 @@ class InvoicesController < ApplicationController
     inv.booking = @booking
     
     i = 0;
-    while i < 9999 
+    while i < 999 
       if !params.has_key?("desc"+i.to_s)
         break
       end
       
-      total = (params["price"+i.to_s].to_i *  params["qty"+i.to_s].to_i)
+      if params["desc"+i.to_s].blank? && params["price"+i.to_s].blank? && params["qty"+i.to_s].blank?
+        i+=1
+        next
+      end
+      
+      total = (params["price"+i.to_s].to_i * params["qty"+i.to_s].to_i)
       inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)    
       i+=1
     end
@@ -133,11 +138,11 @@ class InvoicesController < ApplicationController
 
   def createSupplier
     @booking = Booking.find(params[:booking_id])
-    
+ 
     #find appropriate currency
-    sup = Customer.find(params[:supplier_id])
     if params[:currency_id].blank? # if overide not set then use suppier currency
-      if !sup.currency.nil? 
+      sup = Customer.find(params[:supplier_id]) if !params[:supplier_id].blank?
+      if sup && !sup.currency.nil? 
         currID = sup.currency_id
       else # use system settings which defaults to AUD if nothing set
         currID = Setting.find(1).currencyID
@@ -150,12 +155,6 @@ class InvoicesController < ApplicationController
       currency_id: currID, supplier_id: params[:supplier_id])
     inv.booking = @booking
     @invoice = inv
-
-    if params[:supplier_id].blank?
-      flash[:danger] = "Supplier must be selected"
-      render 'newSupplier'
-      return
-    end
     
     i = 0;
     while i < 9999 
@@ -180,7 +179,7 @@ class InvoicesController < ApplicationController
       flash[:success] = "Invoice created!"
       redirect_to showSupplier_booking_invoices_path( @booking, @invoice)
     else
-      render 'newSupplier'
+      render 'supplierInvoice'
     end
   end  
 

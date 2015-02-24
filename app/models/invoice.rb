@@ -29,15 +29,14 @@ class Invoice < ActiveRecord::Base
   belongs_to :booking
   has_many   :line_items, dependent: :destroy
   validates  :invoice_date, presence: true
-  #validates  :deposit_due, presence: true
   validates  :final_payment_due, presence: true
-  #validates  :deposit, presence: true
   validates_presence_of :line_items
   serialize  :ccPaymentsAmount
   serialize  :ccPaymentsDate
   serialize  :xpayments
   serialize  :xdeposits
-  validate   :validate_customer_invoice
+  validate   :validate_customer_invoice # validate deposit is set, and deposit due date. 
+  validate   :validate_supplier_invoice # validate it has a supplier set.
   belongs_to  :currency
 
   validate do |invoice|
@@ -58,6 +57,14 @@ class Invoice < ActiveRecord::Base
       end
       if self.deposit_due.blank?
         errors.add(:deposit_due, "can't be blank")
+      end
+    end
+  end
+  
+  def validate_supplier_invoice
+    if self.isSupplierInvoice? 
+      if self.supplier.nil?
+        errors.add(:Supplier, "must be selected")
       end
     end
   end
