@@ -37,7 +37,9 @@
     </table>
   </div>
 </div>
-<a href=<%= new_booking_invoice_path @booking %> ><button type="button" class="btn btn-primary">Create Customer Invoice</button></a>
+
+<div class="pull-left"><a href=<%= new_booking_invoice_path @booking %> ><button type="button" class="btn btn-primary">Create Customer Invoice</button></a></div>
+<div class="pull-right"><h4>Grand Total Invoices: <%= number_to_currency(@booking.getCustomerInvoicesAmount, precision: 0) %></h4></div>
 <br><br><br>
 
 <div class="panel panel-default">
@@ -63,7 +65,7 @@
         <% @supplier_invoices.each do |inv| %>
         <tr>
           <td><%= link_to(inv.id, showSupplier_booking_invoices_path(@booking,inv)) %></td>
-          <td><%= link_to(inv.getSupplierName, supplier_path(inv.supplier)) %></td>
+          <td><%= link_to(inv.getSupplierName, supplier_path(inv.supplier)) if inv.supplier %></td>
           <td><%= @booking.customer.email %></td>
           <td><%= number_to_currency(inv.getTotalAmount, precision: 2) + " " + inv.getCurrencyCode %></td>
           <td><%= number_to_currency(inv.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %></td>
@@ -75,4 +77,9 @@
     </table>
   </div>
 </div>
-<a href=<%= supplierInvoice_booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">Create Supplier Invoice</button></a>  
+<div class="pull-left"><a href=<%= supplierInvoice_booking_invoices_path @booking %> ><button type="button" class="btn btn-primary">Create Supplier Invoice</button></a></div>
+<div class="pull-right"><h4>Grand Total Supplier Invoices: <%= number_to_currency(@booking.getSupplierInvoicesAmount, precision: 0) %></h4></div>
+<br>
+<br>
+
+  

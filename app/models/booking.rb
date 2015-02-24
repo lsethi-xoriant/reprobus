@@ -34,7 +34,7 @@ class Booking < ActiveRecord::Base
   end
   def getSupplierInvoicesAmount
     tot = 0
-    self.customer_invoices.each do |i|
+    self.supplier_invoices.each do |i|
       tot = tot  + i.getTotalAmount
     end 
     return tot
