@@ -15,19 +15,12 @@
    <%= render 'shared/error_messages', object: @invoice %>  
   
    <%= form_tag({controller: "invoices", action: "create"}, method: "post", class: "form-horizontal") do %>
-    <div class="form-group">
-      <label for="deposit" class="col-sm-3 control-label">Deposit Amount</label>
+     <div class="form-group">
+      <label for="currency_id" class="col-sm-3 control-label">Currency</label>
       <div class="col-sm-4">
-        <input type="number" name='deposit' placeholder="$0.00" class="form-control" value="<%= number_with_precision(@invoice.deposit, :precision => 2) %>"/>
-      </div> 
-    </div>
-    <div class="form-group">
-      <label for="depositdue"  class="col-sm-3 control-label">Deposit Due</label>
-      <div class='input-group date col-sm-4' id='payday' >
-        <input type="text" name='deposit_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= depositDay.strftime("%d/%m/%Y") %> />
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-      </div>    
-    </div> 
+        <%= hidden_field_tag(:currency_id, currency, id: 'currencysearch', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>        
+      </div>
+      </div>
     <div class="form-group">
       <label for="finalpaydue" class="col-sm-3 control-label">Final Payment Due</label>
       <div class='input-group date col-sm-4' id='payday' >
@@ -36,13 +29,24 @@
       </div>
     </div>
   
-     <div class="form-group">
-      <label for="currency_id" class="col-sm-3 control-label">Currency</label>
+    <div class="form-group">
+      <label for="deposit" class="col-sm-3 control-label">Deposit Amount</label>
       <div class="col-sm-4">
-        <%= hidden_field_tag(:currency_id, currency, id: 'currencysearch', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>        
-      </div>
+        <div class="checkbox"><label><input name='calcDeposit' id = "depositCheck" type="checkbox" checked> Calculate Deposit from line items</label>        
+        <input type="number" name='deposit' id="depositinput" placeholder="$0.00" class="form-control" value="<%= number_with_precision(@invoice.deposit, :precision => 2) %>" readonly>
+  </div>
+      
+      </div> 
     </div>
   
+    <div class="form-group">
+      <label for="depositdue"  class="col-sm-3 control-label">Deposit Due</label>
+      <div class='input-group date col-sm-4' id='payday' >
+        <input type="text" name='deposit_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= depositDay.strftime("%d/%m/%Y") %> />
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+      </div>    
+    </div> 
+
     <div class="row clearfix">
 		<div class="col-md-12 column">
       <h3 class="page-header">Add Line Items</h3>
@@ -57,8 +61,11 @@
 							Description
 						</th>
 						<th class="text-center">
+							% Deposit
+						</th>              
+						<th class="text-center">
 							Quantity
-						</th>
+						</th>          
 						<th class="text-center">
 							Price
 						</th>
@@ -78,8 +85,11 @@
 						<input type="text" name='desc0'  placeholder='Description' class="form-control"/>
 						</td>
 						<td>
+						<input type="number" name='dep0' placeholder='0' class="form-control dep_field"/>
+						</td>             
+						<td>
 						<input type="number" name='qty0' placeholder='0' class="form-control qty_field"/>
-						</td>
+						</td>           
 						<td>
 						<input type="number" name='price0' placeholder='$0.00' class="form-control price_field"/>
 						</td>

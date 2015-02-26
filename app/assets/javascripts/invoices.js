@@ -1,11 +1,12 @@
 $(document).ready(function(){
-      //var i=1;
+ 
   var i = $("#tab_logic > tbody > tr").length-1;
 
   $("#add_row").click(function(){
     $('#addr'+i).html(addLineItemRow(i));
     $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
     i++; 
+    showHideDepositCols();
   });
 
   $("#delete_row").click(function(){
@@ -20,11 +21,46 @@ $(document).ready(function(){
     $('#addr'+i).find('input:first').focus();
     $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
     i++; 
+    showHideDepositCols();
   });
   
   function addLineItemRow(i) {
-    return "<td>"+ (i+1) +"</td><td><input name='desc"+i+"' type='text' placeholder='Description' class='form-control input-md'  /> </td><td><input name='qty"+i+"' type='text' placeholder='0'  class='form-control input-md qty_field'></td><td><input name='price"+i+"' type='text' placeholder='$0.00' step='0.01' class='form-control input-md price_field'></td> <td><input name='total"+i+"' type='text' placeholder='$0.00' class='form-control input-md' disabled='disabled'></td>";    
+    var str =  "<td>"+ (i+1) +"</td><td><input name='desc"+i+"' type='text' placeholder='Description' class='form-control input-md' /> </td><td><input name='dep"+i+"' type='text' placeholder='0' class='form-control input-md dep_field'></td><td><input name='qty"+i+"' type='text' placeholder='0' class='form-control input-md qty_field'></td><td><input name='price"+i+"' type='text' placeholder='$0.00' step='0.01' class='form-control input-md price_field'></td> <td><input name='total"+i+"' type='text' placeholder='$0.00' class='form-control input-md' disabled='disabled'></td>";    
+    
+    return str;
   }
+  
+  $('#depositCheck').change(function(e){
+    showHideDepositCols();
+    recalcDep();
+  });
+  
+  function showHideDepositCols(){
+    if ( $('#depositCheck').is(":checked") ) { 
+     // alert("checked");
+      $('td:nth-child(3),th:nth-child(3)').show();
+      $("#depositinput").prop('readonly', true);
+     } else {
+     //  alert("not checked");
+      $('td:nth-child(3),th:nth-child(3)').hide();
+      $("#depositinput").prop('readonly', false);
+     }   
+  }
+  
+  function recalcDep() {
+    var depTot = 0;
+    $("input.dep_field").each(function(){
+     // alert("hi ham");
+      var rowTotal = $(this).closest('td').next('td').next('td').next('td').find('input').val();
+      if (rowTotal !== 0 && rowTotal !== "")  {
+      depTot = depTot + (($(this).val()/100) * rowTotal);
+      console.log("HAMIHS rowtot  " + rowTotal);
+      console.log("HAMIHS deptot " + depTot);
+      return depTot;
+      }
+    });
+    $("#depositinput").val(depTot);
+  }  
 });
 
 $(document).on('change', '.price_field', function() {
@@ -34,6 +70,13 @@ $(document).on('change', '.price_field', function() {
   //$(this).closest('td').next('td').find('input').hide();
   var total = ($(this).val() * qtyfield.val());
   totalfield.val(total);
+  
+  var depositPercent = $(this).closest('td').prev('td').prev('td').find('input').val();
+  var depTot = 0; 
+  depTot = $("#depositinput").val();
+  depTot = (+depTot) + ((depositPercent/100) * total);
+  $("#depositinput").val(depTot);
+  
 });
 
 $(document).on('change', '.qty_field', function() {
@@ -45,9 +88,5 @@ $(document).on('change', '.qty_field', function() {
   totalfield.val(total);
 });
 
-$(document).ready(function(){
-  $('#settingsTabs a').click(function (e) {
-    e.preventDefault();
-    $(this).tab('show');
-  })
- }); 
+
+
