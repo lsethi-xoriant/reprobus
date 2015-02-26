@@ -51,6 +51,8 @@
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.created_at.to_formatted_s(:rfc822) ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Created By</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.created_by_name ) %></li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Orig. Enq. Details</li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= enquiry_path @booking.enquiry %> ><button type="button" class="btn btn-primary btn-xs">View Enquiry</button></a></li>
           </ul> 
         </div>   
         <div class="col-lg-6">  

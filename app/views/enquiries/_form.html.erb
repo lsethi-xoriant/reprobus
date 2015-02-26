@@ -17,16 +17,13 @@
      newCustDisplay = "display:block;" 
      existCustDisplay = "display:none;"
   end 
-  if params[:assigned_to] && params[:assigned_to] > '0' then 
-    #existUser = User.find(params[:assigned_to]).name
-  else
-    existUser = current_user.name
-  end
-    
-   if params[:existing_customer] && params[:existing_customer] > '0' then 
+  @enquiry.assigned_to ? ass_user = @enquiry.assigned_to : ass_user = current_user.id
+
+  if params[:existing_customer] && params[:existing_customer] > '0' then 
      existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name 
   end   
 %>
+
 <%#= render  partial: 'new_customer', locals: { buttontxt: "Create an Enquiry" } #maybe try this again some time - could be used for adding addresses and stuff elsewhere %>
 
     <%= form_for @enquiry, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
@@ -210,7 +207,7 @@
     <div class="form-group">
       <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"  %>
         <div class="col-sm-2"> 
-          <%= hidden_field_tag(:assigned_to, @enquiry.assigned_to, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;') %>
+          <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;') %>
       </div>   
     </div>
 

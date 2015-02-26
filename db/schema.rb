@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150219032826) do
+ActiveRecord::Schema.define(version: 20150225050111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,14 @@ ActiveRecord::Schema.define(version: 20150219032826) do
   create_table "enquiries_stopovers", id: false, force: true do |t|
     t.integer "enquiry_id"
     t.integer "stopover_id"
+  end
+
+  create_table "exchange_rates", force: true do |t|
+    t.decimal  "exchange_rate", precision: 12, scale: 5
+    t.string   "currency_code"
+    t.integer  "setting_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invoices", force: true do |t|

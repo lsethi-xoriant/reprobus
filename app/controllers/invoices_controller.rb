@@ -161,6 +161,12 @@ class InvoicesController < ApplicationController
       if !params.has_key?("desc"+i.to_s)
         break
       end   
+       
+      if params["desc"+i.to_s].blank? && params["price"+i.to_s].blank? && params["qty"+i.to_s].blank?
+        i+=1
+        next
+      end
+      
       total = (params["price"+i.to_s].to_i *  params["qty"+i.to_s].to_i)
       inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)    
       i+=1

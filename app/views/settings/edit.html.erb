@@ -1,32 +1,89 @@
 <% provide(:title, 'Edit Settings') %>
+<% if @currTabActive == true %>
+  <% varCXTabActive = 'active' %>
+  <% varAccTabActive = '' %>
+<% else %>
+  <% varAccTabActive = 'active' %>
+  <% varCXTabActive = '' %>
+<% end %>
+
 <h1 class="page-header">Edit Settings</h1>
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for @setting, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
-     <%= render 'shared/error_messages', object: f.object %>
-    
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "company_name", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_user_id", f: f } %>  
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_key", f: f } %>
+  <ul class="nav nav-tabs" id="settingsTabs">
+    <li class="<%=varAccTabActive%>"><a href="#accountTab">Accounts</a></li>
+    <li class="<%=varCXTabActive%>"><a href="#currencyTab">Currency Exchange</a></li>
+  </ul>
+  
+  <div id='content' class="tab-content">
+    <div class="tab-pane <%=varAccTabActive%>" id="accountTab">  <!-- begin tab accounts -->
+   
+        <br>
+        <%= form_for @setting, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+         <%= render 'shared/error_messages', object: f.object %>
 
-      <div class="form-group">
-        <%= f.label :use_xero, "Xero Integration", class: "col-sm-3 control-label"  %>
-        <div class="col-sm-2">
-          <%= f.check_box :use_xero, class: "form-control" %> 
-        </div>
-      </div>
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "company_name", f: f } %>
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_user_id", f: f } %>  
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_key", f: f } %>
 
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_key", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_secret", f: f } %>
+          <div class="form-group">
+            <%= f.label :use_xero, "Xero Integration", class: "col-sm-3 control-label"  %>
+            <div class="col-sm-2">
+              <%= f.check_box :use_xero, class: "form-control" %> 
+            </div>
+          </div>
+
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_key", f: f } %>
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "xero_consumer_secret", f: f } %>
+
+         <div class="form-group">
+           <%= f.label :currency_id, "System Default Currency", class: "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field( :currency_id, value: @setting.getCurrencySelect2,  class: "ajax form-control", placeholder: "Add Currency", id: "currencysearch") %>       
+            </div>
+          </div>
+      <div class="form-group"><div class="col-sm-6">
+          <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        </div></div>
+        <% end %>
     
-     <div class="form-group">
-       <%= f.label :currency_id, "System Default Currency", class: "col-sm-3 control-label"  %>
-      <div class="col-sm-6">
-        <%= f.text_field( :currency_id, value: @setting.getCurrencySelect2,  class: "ajax form-control", placeholder: "Add Currency", id: "currencysearch") %>       
-      </div>
-    </div>
+    </div> <!-- end tab accounts -->
     
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
+    <div class="tab-pane <%=varCXTabActive%>" id="currencyTab">  <!-- begin tab stock -->
+      <br>
+      <% if @setting.currency %>
+        <%= render  partial: 'currency_table' %>
+        <div class="well well-sm">
+          <h4>Exchange Rates</h4>
+          <%=  form_tag({controller: "settings", action: "addcurrency"}, method: "get", class: "form-horizontal") do %>
+
+          <div class="form-group">
+            <label for="currency_id" class="col-sm-3 control-label">Currency</label>
+            <div class="col-sm-3">
+              <%= hidden_field_tag(:currency_id, "", id: 'currencysearch2', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>        
+            </div>
+          </div>
+          
+           <div class="form-group">
+            <label for="exchange_rate" class="col-sm-3 control-label">Exchange Rate</label>
+            <div class="col-sm-3">
+              <%= number_field_tag :exchange_rate, nil, class: "form-control", :step => 'any' %>
+            </div> 
+          </div>
+          
+          <div class="col-sm-3">
+          <%= hidden_field_tag :setting_id, '', :value => @setting.id %>
+          </div>
+          
+          <%= submit_tag "Save Exchange Rate", class: "btn btn-primary" %> 
+          
+          <% end %>
+        </div><!-- /well -->
+      <% else %>
+        <h4>System Currency needs to be set before setting up currencies</h4> 
+      <% end %>
+      
+    </div> <!-- end tab accounts -->
+  </div><!-- end all tabs -->
+  
 </div>
+

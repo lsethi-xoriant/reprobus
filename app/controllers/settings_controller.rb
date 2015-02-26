@@ -11,6 +11,29 @@ class SettingsController < ApplicationController
     @setting = Setting.find(params[:id])
   end
   
+  def addcurrency 
+    @setting = Setting.find(params[:setting_id])
+    curr = Currency.find(params[:currency_id])
+    er = @setting.exchange_rates.find_by_currency_code(curr.code)
+    
+    if er
+      # we are updating
+      pass = er.update_attributes(currency_code: curr.code, exchange_rate: params[:exchange_rate]) 
+      
+    else # we are creating
+      pass = @setting.exchange_rates.create(currency_code: curr.code, exchange_rate: params[:exchange_rate])
+    end
+    
+    if pass 
+      flash[:success] = "New currency override added"
+      @currTabActive = true
+      render 'edit'
+    else
+      flash[:danger] = "Error adding currency override. Please check all fields completed"
+      @currTabActive = true
+      render 'edit'     
+    end
+  end
 
   def update
      @setting = Setting.find(params[:id])

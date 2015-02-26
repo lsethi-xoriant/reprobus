@@ -11,7 +11,11 @@ Reprobus::Application.routes.draw do
     end
   end
   
-  resources :settings, only: [:edit, :update, :show]
+  resources :settings, only: [:edit, :update, :show] do
+    collection do 
+      get 'addcurrency' # /settings/addcurrency  
+    end
+  end
   
   resources :tours
   resources :password_resets

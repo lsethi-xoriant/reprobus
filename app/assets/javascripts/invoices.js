@@ -44,3 +44,10 @@ $(document).on('change', '.qty_field', function() {
   var total = ($(this).val() * pricefield.val());
   totalfield.val(total);
 });
+
+$(document).ready(function(){
+  $('#settingsTabs a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  })
+ }); 

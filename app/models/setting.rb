@@ -11,12 +11,14 @@
 #  xero_consumer_secret :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
+#  currency_id          :integer
 #
 
 class Setting < ActiveRecord::Base
   validates_presence_of :xero_consumer_key, :if => lambda { self.use_xero }
   validates_presence_of :xero_consumer_secret, :if => lambda { self.use_xero }
   belongs_to :currency
+  has_many :exchange_rates
   
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD") 

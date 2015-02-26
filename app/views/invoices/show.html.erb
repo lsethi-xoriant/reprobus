@@ -28,7 +28,7 @@
       Total <strong><%=  number_to_currency(@invoice.getTotalAmount, precision: 2) %> </strong><br>
       <br>
       Exch Rate when created <strong><%= number_to_currency(@invoice.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
-      Current Exch Rate <strong><%= number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
+      Today Exch Rate <strong><%= number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
       <br>
       Deposit	<strong><%= number_to_currency(@invoice.deposit, precision: 2) %></strong><br>
       Amount paid throuh payment gateway <strong><%= number_to_currency(@invoice.getCCPaidTotal, precision: 2) %></strong><br>

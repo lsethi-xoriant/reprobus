@@ -205,12 +205,29 @@ class Invoice < ActiveRecord::Base
   def set_exchange_currency_amount
     code = self.getCurrencyCode
     syscode = Setting.find(1).currencyCode 
+    overRideExRate = Setting.find(1).exchange_rates.find_by_currency_code(code)
     
-    # get the total amount and times by 100 as Money uses cents.     
-    mon = Money.new((self.getTotalAmount * 100).to_i, code)
-    exch = mon.exchange_to(syscode)
-    self.exchange_amount = exch.dollars
-    #self.exchange_rate = Money.default_bank.get_rate(code, syscode)
+    if overRideExRate 
+      googleBank = Money.default_bank # save google currency ex, so we can set it back later. 
+      
+      # set up a new default bank so we can override the currency ex rate. 
+      Money.default_bank = Money::Bank::VariableExchange.instance
+      Money.add_rate(code, syscode, overRideExRate.exchange_rate)
+      
+      mon = Money.new((self.getTotalAmount * 100).to_i, code)
+      exch = mon.exchange_to(syscode)
+      self.exchange_amount = exch.dollars
+      self.exchange_rate = overRideExRate.exchange_rate
+      
+      # now set back to default google rates 
+      Money.default_bank = googleBank
+    else
+      # get the total amount and times by 100 as Money uses cents.     
+      mon = Money.new((self.getTotalAmount * 100).to_i, code)
+      exch = mon.exchange_to(syscode)
+      self.exchange_amount = exch.dollars
+      #self.exchange_rate = Money.default_bank.get_rate(code, syscode)
+    end
   end
 end
 

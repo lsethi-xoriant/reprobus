@@ -14,35 +14,47 @@
       <h1 class="page-header" >Edit Booking</h1>
 
        <div class="row">
-        <div class="col-lg-6">     
+        <div class="col-lg-9">     
           <div class="row">
             <div class="col-lg-9 profile-name">
               <h2><%= @booking.name %></h2> 
             </div>
           </div>
+          <%= form_for(@booking,:html => {:multipart => true, :class => "form-horizontal"}) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+           
           <ul class="row profile-details">
-            <% if @booking.customer.nil? %>
-              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
-              <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
-            <% else %>
-          
-              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
-              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= customer_path @booking.customer %>><%= @booking.customer.fullname %></a></li>
-      
-            <% end %>            
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned To</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.assigned_to_name )%></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field"><%=amountLableStr%></li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( number_to_currency(amount, precision: 0) ) %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Start Date</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( (@booking.enquiry.est_date.strftime("%d/%m/%Y") unless @booking.enquiry.est_date.nil?) ) %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">End Date</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( (@booking.enquiry.fin_date.strftime("%d/%m/%Y") unless @booking.enquiry.fin_date.nil?) ) %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Est Duration</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.duration ) %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Number of People</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.num_people )  %></li>
-          </ul> 
+              
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field"><%= f.label :name, 'Username', :class => "control-label" %></li>
+              <li class="col-lg-9 col-md-9 col-sm-4"><%= f.text_field :name, :style => "border-radius:0px", :autofocus => true %></li>
+           
+
+            
+              <% if @booking.customer.nil? %>
+                <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
+                <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
+              <% else %>
+
+                <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
+                <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= customer_path @booking.customer %>><%= @booking.customer.fullname %></a></li>
+
+              <% end %>            
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned To</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.assigned_to_name )%></li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field"><%=amountLableStr%></li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( number_to_currency(amount, precision: 0) ) %></li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Start Date</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( (@booking.enquiry.est_date.strftime("%d/%m/%Y") unless @booking.enquiry.est_date.nil?) ) %></li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">End Date</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( (@booking.enquiry.fin_date.strftime("%d/%m/%Y") unless @booking.enquiry.fin_date.nil?) ) %></li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Est Duration</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.duration ) %></li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Number of People</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @booking.enquiry.num_people )  %></li>
+            </ul> 
+            <br>
+            <%= render partial: 'shared/std_grp_btn_pos', locals: { name: "Save changes", f: f } %>
+          <% end %>          
         </div>   
       </div>   <!-- row --> 
     </section>
