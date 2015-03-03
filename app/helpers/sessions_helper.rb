@@ -29,7 +29,7 @@ module SessionsHelper
  
   def current_user
     remember_token = User.hash(cookies[:remember_token])
-    @current_user ||= User.find_by(remember_token: remember_token)   
+    @current_user ||= User.find_by(remember_token: remember_token)
     
 #    tempUser ||= session[:user_id] && User.find(session[:user_id])
     #if tempUser.nil?
@@ -37,9 +37,9 @@ module SessionsHelper
  #     tempUser ||= User.find_by(remember_token: remember_token)
  #     if !tempUser.nil? && ! tempUser.remember_me then
   #      tempUser = nil
-   #   end  
+   #   end
    # end
-#    @current_user = tempUser;  
+#    @current_user = tempUser;
   end
   
   def current_user?(user)
@@ -49,7 +49,7 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_url, notice: "Please sign in."
+      redirect_to signin_url, notice: "<strong>Please sign in.</strong>"
     end
   end
 	
@@ -62,8 +62,8 @@ module SessionsHelper
     session[:return_to] = request.url if request.get?
   end
   
-private 
+private
 	  def admin_user
       redirect_to(root_url) unless current_user.admin?
-    end    
+    end
 end

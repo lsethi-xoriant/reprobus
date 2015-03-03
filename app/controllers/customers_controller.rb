@@ -1,6 +1,5 @@
 class CustomersController < ApplicationController
-  before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :new, :show, :create]
+  before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   
   def index
@@ -18,7 +17,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: {name: @customer.fullname, id: @customer.id  }}
-    end    
+    end
   end
   
   def edit
@@ -35,7 +34,7 @@ class CustomersController < ApplicationController
     else
       render 'new'
     end
-  end  
+  end
 
   def update
      @customer = Customer.find(params[:id])
@@ -43,7 +42,7 @@ class CustomersController < ApplicationController
     if @customer.update_attributes(customer_params)
       flash[:success] = "Customer updated"
       #redirect_to @customer
-      @customer.isSupplier? ? (redirect_to supplier_path @customer) : (redirect_to @customer)      
+      @customer.isSupplier? ? (redirect_to supplier_path @customer) : (redirect_to @customer)
     else
       render 'edit'
     end
@@ -64,13 +63,13 @@ class CustomersController < ApplicationController
     Customer.find(params[:id]).destroy
     flash[:success] = "Customer deleted."
     redirect_to customers_url
-  end  
+  end
   
 private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name,
-        address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])      
-    end  
+        address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])
+    end
 end

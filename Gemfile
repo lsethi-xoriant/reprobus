@@ -3,15 +3,20 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
-gem 'pg'
+# Use sqlite3 as the database for Active Record on hamish's chromebook
+group :chromebookdev, :chromebooktest do
+  gem 'sqlite3'
+end
+
+group :development, :test, :production do
+  gem 'pg'
+end
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'annotate', ">=2.6.0"
   gem 'meta_request'
-  gem "better_errors"  
+  gem "better_errors"
 end
 
 group :production do
@@ -33,7 +38,8 @@ gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'carrierwave'
-gem 'rmagick'
+gem 'mini_magick'   # changed from rmagick
+#gem 'rmagick'   # changed as causing issues installing gems
 gem 'select2-rails'
 gem 'paper_trail'
 gem 'font-awesome-rails'
@@ -50,7 +56,9 @@ gem 'google_currency'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+group :chromebookdev, :chromebooktest do
+  gem 'therubyracer', platforms: :ruby   # uncommented for  chromebook dev
+end
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

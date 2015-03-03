@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20150225050111) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "plpgsql"  # commented out for chromebook dev
 
   create_table "activities", force: true do |t|
     t.string   "type"

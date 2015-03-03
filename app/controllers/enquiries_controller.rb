@@ -1,6 +1,5 @@
 class EnquiriesController < ApplicationController
-  before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :new, :show, :create, :customersearch, :carriersearch, :addBooking, :index_bookings, :edit_booking]
+  before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   skip_before_filter :verify_authenticity_token, only: [:webenquiry, :confirmation]
   skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
@@ -8,17 +7,17 @@ class EnquiriesController < ApplicationController
   
   def addbooking
     @enquiry = Enquiry.find(params[:id])
-    ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one. 
+    ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one.
 
-    if @enquiry.customers.blank? || @enquiry.customers.count == 0 
+    if @enquiry.customers.blank? || @enquiry.customers.count == 0
       flash[:warning] = "Must have a customer when converting to a Booking."
-      redirect_to @enquiry  
-    elsif @enquiry.est_date.blank? || @enquiry.fin_date.blank? 
+      redirect_to @enquiry
+    elsif @enquiry.est_date.blank? || @enquiry.fin_date.blank?
       flash[:warning] = "Start and finish date must be set before converting to booking."
-      redirect_to @enquiry       
-    elsif !@enquiry.booking.nil?  
+      redirect_to @enquiry
+    elsif !@enquiry.booking.nil?
       flash[:warning] = "Enquiry previously converted to Booking. <a href='" + booking_path(@enquiry.booking) +"'>Show Booking</a>"
-      redirect_to @enquiry       
+      redirect_to @enquiry
     else
       if @enquiry.convert_to_booking!(current_user)
         flash[:success] = "Converted to booking"
@@ -70,52 +69,52 @@ class EnquiriesController < ApplicationController
   end
   
   def create
-    @enquiry = Enquiry.new(enquiry_params)     
+    @enquiry = Enquiry.new(enquiry_params)
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
     
-    @enquiry.customers.clear if params[:existing_customer].to_i > 0 
-    if @enquiry.save    
-      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0 
+    @enquiry.customers.clear if params[:existing_customer].to_i > 0
+    if @enquiry.save
+      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
-    else     
-      render 'new'	
+    else
+      render 'new'
     end
-  end  
+  end
 
   def webenquiry
     ###### SHOULD HAVE SOME VERIFICATION HERE TO CHECK SITES ACCESSING THIS ARE ALLOWED (maybe hidden field in enquiry form plug in?)
-    @enquiry = Enquiry.new()     
+    @enquiry = Enquiry.new()
     @enquiry.name = "Web Enq - " + params[:firstname] + " " + params[:surname]
     @enquiry.source = "Web"
     @enquiry.stage = "Open"
     @enquiry.user_id = User.find_by_name("System").id
     @enquiry.background_info = params[:enquiry_detail]
     @cust = Customer.find_by_email(params[:email]) unless params[:email].nil?
-    if @cust.nil? 
+    if @cust.nil?
       @cust = Customer.new()
     end
-    @cust.first_name = params[:firstname] 
+    @cust.first_name = params[:firstname]
     @cust.last_name = params[:surname]
-    @cust.email = params[:email] 
+    @cust.email = params[:email]
     @cust.mobile = params[:phone]
     
     @cust.save
     
-    if @enquiry.save   
+    if @enquiry.save
       @enquiry.add_customer(@cust)
       flash[:success] = "Thank you, enquiry submitted."
-      render 'confirmation'	
+      render 'confirmation'
     end
     
-  end    
+  end
   
   def confirmation
     #stub... i think we need this here blank
   end
   
   def update
-    if params[:existing_customer].to_i > 0 
+    if params[:existing_customer].to_i > 0
       params[:enquiry].delete(:customers_attributes)
     end
     
@@ -131,10 +130,10 @@ class EnquiriesController < ApplicationController
 #tidy up one day  - find better way to do this
       @enquiry.customers.clear
       
-      if params[:existing_customer].to_i > 0 
+      if params[:existing_customer].to_i > 0
         @enquiry.add_customer(Customer.find(params[:existing_customer]))
       elsif !params[:enquiry][:customer_ids].nil?
-        params[:enquiry][:customer_ids].each do |cust| 
+        params[:enquiry][:customer_ids].each do |cust|
           @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
         end
       end
@@ -142,50 +141,50 @@ class EnquiriesController < ApplicationController
       if params[:enquiry][:carriers] then
         @enquiry.carriers.clear
         params[:enquiry][:carriers].split(",").each do |id|
-          if numericID?(id) then 
+          if numericID?(id) then
             @enquiry.carriers << Carrier.find(id)
           end
         end
-      end 
+      end
 
       if params[:enquiry][:stopovers] then
         @enquiry.stopovers.clear
         params[:enquiry][:stopovers].split(",").each do |id|
-          if numericID?(id) then 
+          if numericID?(id) then
             @enquiry.stopovers << Stopover.find(id)
           end
         end
-      end 
+      end
         
       if params[:enquiry][:destinations] then
         @enquiry.destinations.clear
         params[:enquiry][:destinations].split(",").each do |id|
-          if numericID?(id) then 
+          if numericID?(id) then
             @enquiry.destinations << Destination.find(id)
-          end          
+          end
         end
-      end 
+      end
         
-      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered. 
+      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered.
       @enquiry.save
 #end bad code
       
-      undo_link = view_context.link_to("(Undo)", 
+      undo_link = view_context.link_to("(Undo)",
       revert_version_path(@enquiry.versions.last), :method => :post)
       
-      flash[:success] = "Enquiry updated.  #{undo_link}" 
+      flash[:success] = "Enquiry updated.  #{undo_link}"
       redirect_to @enquiry
     else
       render 'edit'
     end
   end
 
-  def destroy 
+  def destroy
     @enquiry = Enquiry.find(params[:id])
     @enquiry.destroy
     flash[:success] = "Enquiry deleted.  #{undo_link}"
     redirect_to enquiries_url
-  end  
+  end
 
   def numericID?(str)
     Float(str) != nil rescue false
@@ -201,7 +200,7 @@ class EnquiriesController < ApplicationController
       where("last_name ILIKE :q  OR first_name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
                     searchSet: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
     end
   end
@@ -216,7 +215,7 @@ class EnquiriesController < ApplicationController
       where("name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
   end
@@ -231,7 +230,7 @@ class EnquiriesController < ApplicationController
       where("name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
   end
@@ -247,7 +246,7 @@ class EnquiriesController < ApplicationController
            where("name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
   end
@@ -255,14 +254,14 @@ class EnquiriesController < ApplicationController
 private
     def enquiry_params
       params.require(:enquiry).permit(:name, :source, :stage,
-        :probability, :amount, :discount, :closes_on, :background_info, :user_id, 
-        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer, 
+        :probability, :amount, :discount, :closes_on, :background_info, :user_id,
+        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         :fin_date, :standard, :insurance, :reminder,
-        customers_attributes: [:first_name, :last_name, :email, :phone, :mobile, :title] )      
-    end  
+        customers_attributes: [:first_name, :last_name, :email, :phone, :mobile, :title] )
+    end
 
     def undo_link
-      view_context.link_to("(Undo)",  
+      view_context.link_to("(Undo)",
         revert_version_path(@enquiry.versions.scoped.last), :method => :post)
     end
 end

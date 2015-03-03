@@ -1,6 +1,5 @@
 class ToursController < ApplicationController
-  before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy]
+  before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   
   def index
@@ -27,7 +26,7 @@ class ToursController < ApplicationController
     else
       render 'new'
     end
-  end  
+  end
 
   def update
      @tour = Tour.find(params[:id])
@@ -43,5 +42,5 @@ private
     def tour_params
       params.require(:tour).permit(:tourName, :tourPrice, :destination,
                                    :country, :image, :remote_image_url)
-    end  
+    end
 end

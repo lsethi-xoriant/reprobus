@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :show, :usersearch]
+  before_filter :signed_in_user
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
   
@@ -14,7 +13,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: {name: @user.name, id: @user.id  }}
-    end 
+    end
   end
   
   def new
@@ -50,7 +49,7 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted."
     redirect_to users_url
-  end  
+  end
 
   def usersearch
     @users = User.select([:id, :name]).
@@ -61,7 +60,7 @@ class UsersController < ApplicationController
       resources_count = @users.count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
                   searchSet: @users.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
   end
@@ -79,5 +78,5 @@ private
 	
 #	  def admin_user
 #      redirect_to(root_url) unless current_user.admin?
-#   end  
+#   end
 end
