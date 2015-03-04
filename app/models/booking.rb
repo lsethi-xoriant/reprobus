@@ -41,7 +41,7 @@ class Booking < ActiveRecord::Base
   end
   def getCustomerInvoicesDepositAmount
     tot = 0
-    self.supplier_invoices.each do |i|
+    self.customer_invoices.each do |i|
       tot = tot  + i.deposit unless i.deposit.nil?
     end
     return tot
