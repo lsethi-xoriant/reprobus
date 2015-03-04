@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, except: [:new, :create]
-  before_filter :correct_user, only: [:edit, :update]
+  before_filter :correct_user, only: [:edit, :update, :delete]
   before_filter :admin_user, only: :destroy
   
   def index
@@ -68,15 +68,14 @@ class UsersController < ApplicationController
 private
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, (:admin if @current_user && @current_user.admin?))
     end
 	
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user) || current_user.admin?
+      if @user.isSystemUser then
+       # redirect_to(noaccess_url)
+      end
+      redirect_to(noaccess_url) unless current_user?(@user) || current_user.admin?
     end
-	
-#	  def admin_user
-#      redirect_to(root_url) unless current_user.admin?
-#   end
 end

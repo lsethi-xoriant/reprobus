@@ -41,4 +41,7 @@ class StaticPagesController < ApplicationController
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}"} }} }
     end
   end
+  
+  def noaccess
+  end
 end

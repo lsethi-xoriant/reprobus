@@ -1,84 +1,85 @@
 Reprobus::Application.routes.draw do
-  root  'static_pages#home' 
+  root  'static_pages#home'
   
   get "password_resets/new"
-  post "versions/:id/revert" => "versions#revert", as:   
+  post "versions/:id/revert" => "versions#revert", as:
        "revert_version"
 
   resources :users do
     collection do
-      get 'usersearch'  # /users/usersearch  
+      get 'usersearch'  # /users/usersearch
     end
   end
   
   resources :settings, only: [:edit, :update, :show] do
-    collection do 
-      get 'addcurrency' # /settings/addcurrency  
+    collection do
+      get 'addcurrency' # /settings/addcurrency
     end
   end
   
   resources :tours
   resources :password_resets
-  resources :suppliers do 
-    collection do 
-#      get 'customersearch'  # /enquires/customersearch  
-      get 'suppliersearch'  # /enquires/suppliersearch  
+  resources :suppliers do
+    collection do
+#      get 'customersearch'  # /enquires/customersearch
+      get 'suppliersearch'  # /enquires/suppliersearch
     end
   end
 
-  resources :customers do 
+  resources :customers do
     collection do
-      get 'addnote'  # /customers/addnote  
+      get 'addnote'  # /customers/addnote
     end
   end
 
-  resources :enquiries do 
+  resources :enquiries do
     collection do
-      get 'customersearch'  # /enquires/customersearch  
-      get 'carriersearch'  # /enquires/carriersearch  
-      get 'destinationsearch'  # /enquires/destinationsearch  
-      get 'stopoversearch'  # /enquires/stopoversearch  
-      get 'addnote'  # /enquires/addnote  
-      get 'addbooking'  # /enquires/addbooking  
+      get 'customersearch'  # /enquires/customersearch
+      get 'carriersearch'  # /enquires/carriersearch
+      get 'destinationsearch'  # /enquires/destinationsearch
+      get 'stopoversearch'  # /enquires/stopoversearch
+      get 'addnote'  # /enquires/addnote
+      get 'addbooking'  # /enquires/addbooking
       post "webenquiry"
       get "confirmation"
     end
-  end 
+  end
   
   resources :bookings do
     resources :invoices do
       collection do
-        get 'addxeroinvoice'  # /bookings/addxeroinvoice  
-        get 'getxeroinvoice'      
+        get 'addxeroinvoice'  # /bookings/addxeroinvoice
+        get 'getxeroinvoice'
         get 'addxeropayment'
-        get 'changexeroinvoice'    
+        get 'changexeroinvoice'
         get 'supplierInvoice'
         post 'createSupplier'
-        match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get' 
-       # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get' 
+        match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get'
+       # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get'
       end
     end
   end
   
-  match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get' 
-  match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get' 
+  match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get'
+  match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get'
   
-  #get 'bookings', to: 'enquiries#index_bookings', as: 'bookings' 
+  #get 'bookings', to: 'enquiries#index_bookings', as: 'bookings'
   # redirect booking show via the enquiry controller. may need to change in future depending on what we want to show
   # ... at present all work to show differences for booking are handled in view through partials
-  #get 'bookings/:id', to: 'enquiries#show', as: 'booking' 
-  #get 'bookings/:id/edit', to: 'enquiries#edit_booking', as: 'edit_booking' 
+  #get 'bookings/:id', to: 'enquiries#show', as: 'booking'
+  #get 'bookings/:id/edit', to: 'enquiries#edit_booking', as: 'edit_booking'
   
   resources :sessions, only: [:new, :create, :destroy]
 
-  match '/about',   to: 'static_pages#about',   via: 'get' 
-  match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'   
-  match '/dashboard_list',   to: 'static_pages#dashboard_list' ,   via: 'get'   
+  match '/about',   to: 'static_pages#about',   via: 'get'
+  match '/noaccess',   to: 'static_pages#noaccess',   via: 'get'
+  match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'
+  match '/dashboard_list',   to: 'static_pages#dashboard_list' ,   via: 'get'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   
-  get 'static_pages/currencysearch'    
+  get 'static_pages/currencysearch'
   get "admin/carriers/export"
   get "admin/destinations/export"
   get "admin/stopovers/export"
@@ -89,12 +90,12 @@ Reprobus::Application.routes.draw do
   post "admin/destinations/importfile"
   post "admin/stopovers/importfile"
   
-  namespace :admin do 
-    get '', to: 'dashboard#index', as: '/' 
-    resources :carriers 
-    resources :destinations 
-    resources :stopovers 
-  end 
+  namespace :admin do
+    get '', to: 'dashboard#index', as: '/'
+    resources :carriers
+    resources :destinations
+    resources :stopovers
+  end
   
   post "emails/post"
 

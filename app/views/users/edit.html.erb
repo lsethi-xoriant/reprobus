@@ -1,5 +1,8 @@
 <% provide(:title, "Edit user") %>
 <h1 class="page-header">Update profile</h1>
+<%= @user.email  %>
+<%= @user.name  %>
+<%= @user.id  %>
 
 <div class="row">
   <div class="span6 offset3">
@@ -17,12 +20,12 @@
     </div></div>
     
       <% if @user.admin? || current_user.admin? %>
-        <div class="form-group"> 
-          <%= f.check_box :admin %>  
-          <div class="col-sm-6"> 
+        <div class="form-group">
+          <%= f.check_box :admin %>
+          <div class="col-sm-6">
           <%= f.label :admin, :class => "checkbox inline" %>
           </div></div>
-      <% end %> 
+      <% end %>
 
     <%= render partial: 'shared/std_grp_btn_pos', locals: { name: "Save changes", f: f } %>
     <% end %>
