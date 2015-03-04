@@ -39,7 +39,13 @@ class Booking < ActiveRecord::Base
     end
     return tot
   end
-  
+  def getCustomerInvoicesDepositAmount
+    tot = 0
+    self.supplier_invoices.each do |i|
+      tot = tot  + i.deposit
+    end
+    return tot
+  end
   def initInvoiceDates
     if !self.enquiry.est_date.blank?
       if (self.enquiry.est_date - 90) > Date.today && self.enquiry.est_date > Date.today

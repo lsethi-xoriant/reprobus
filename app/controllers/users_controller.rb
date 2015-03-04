@@ -74,7 +74,7 @@ private
     def correct_user
       @user = User.find(params[:id])
       if @user.isSystemUser then
-       # redirect_to(noaccess_url)
+        redirect_to(noaccess_url)
       end
       redirect_to(noaccess_url) unless current_user?(@user) || current_user.admin?
     end
