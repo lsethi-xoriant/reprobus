@@ -5,7 +5,7 @@ gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record on hamish's chromebook
 group :chromebookdev, :chromebooktest do
-  gem 'sqlite3'
+#  gem 'sqlite3'
 end
 
 group :development, :test, :production do
