@@ -3,14 +3,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record on hamish's chromebook
+# Use sqlite3 as the database for Active Record on hamish's chromebook # Pulled out as going to use pg instead.
 group :chromebookdev, :chromebooktest do
 #  gem 'sqlite3'
 end
 
-group :development, :test, :production do
+#group :development, :test, :production do
   gem 'pg'
-end
+#end
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'

@@ -22,6 +22,8 @@
 #  xpayments           :text
 #  supplier_id         :integer
 #  currency_id         :integer
+#  exchange_amount     :decimal(12, 2)
+#  exchange_rate       :decimal(12, 2)
 #
 
 class Invoice < ActiveRecord::Base

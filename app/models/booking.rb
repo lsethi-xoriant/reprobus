@@ -28,26 +28,26 @@ class Booking < ActiveRecord::Base
   def getCustomerInvoicesAmount
     tot = 0
     self.customer_invoices.each do |i|
-      tot = tot  + i.getTotalAmount
-    end 
+      tot = tot  + i.exchange_amount
+    end
     return tot
   end
   def getSupplierInvoicesAmount
     tot = 0
     self.supplier_invoices.each do |i|
-      tot = tot  + i.getTotalAmount
-    end 
+      tot = tot  + i.exchange_amount
+    end
     return tot
   end
   
   def initInvoiceDates
-    if !self.enquiry.est_date.blank? 
-      if (self.enquiry.est_date - 90) > Date.today && self.enquiry.est_date > Date.today 
+    if !self.enquiry.est_date.blank?
+      if (self.enquiry.est_date - 90) > Date.today && self.enquiry.est_date > Date.today
         return (self.enquiry.est_date - 90), (self.enquiry.est_date - 30)
-      elsif (self.enquiry.est_date - 30) > Date.today 
+      elsif (self.enquiry.est_date - 30) > Date.today
         return (self.enquiry.est_date - 30), (self.enquiry.est_date - 30)
       else
-        return (Date.today), (Date.today)  
+        return (Date.today), (Date.today)
       end
     else
       return (Date.today + 30), (Date.today + 60)
@@ -55,7 +55,7 @@ class Booking < ActiveRecord::Base
   end
 
   def initSupInvoiceDate
-     if !self.enquiry.est_date.blank? 
+     if !self.enquiry.est_date.blank?
        return self.enquiry.est_date - 30
      else
        return (Date.today + 30)
@@ -64,15 +64,15 @@ class Booking < ActiveRecord::Base
   end
   
   def dasboard_customer_name
-    if !self.customer.nil? 
+    if !self.customer.nil?
       self.customer.dashboard_name
-    else 
+    else
       "No Customer Details"
     end
   end
   
   def assigned_to_name
-    if self.user 
+    if self.user
       self.user.name
     end
   end
@@ -80,9 +80,9 @@ class Booking < ActiveRecord::Base
   def created_by_name
     self.user.name
     #User.find(self.user_id).name
-  end  
+  end
   
   def nice_id
-    self.id.to_s.rjust(6, '0')  
+    self.id.to_s.rjust(6, '0')
   end
 end
