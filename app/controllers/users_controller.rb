@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user
+  before_filter :signed_in_user, except: [:new, :create]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
   
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to the Super App!"
       redirect_to @user
     else
-      render 'new'
+      render 'new', :layout => "plain"
     end
   end
   
