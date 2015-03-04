@@ -95,9 +95,9 @@ end
 <div class="pull-right"><h4>Grand Total Supplier Invoices: <%= number_to_currency(totSupInv, precision: 2) %></h4></div>
 <br>
 <br>
-
-
-<div class="panel panel-default">
+<br>
+<div class="row">
+<div class="panel panel-default span5">
   <div class="panel-heading">
     Summary
   </div>
@@ -116,7 +116,7 @@ end
           <td><strong>Margin %</strong></td><td><%= number_to_percentage(marginPercent, precision: 2) %></td>
         </tr>
         <tr>
-          <td><strong>Travel Agent Commission %</strong></td><td><%= number_to_percentage(0, precision: 2 %></td>
+          <td><strong>Travel Agent Commission %</strong></td><td><%= number_to_percentage(0, precision: 2) %></td>
         </tr>
         <tr>
           <td><strong>Deposit</strong></td><td><%= number_to_currency(@booking.getCustomerInvoicesDepositAmount, precision: 2) %></td>
@@ -127,6 +127,7 @@ end
       </tbody>
     </table>
   </div>
+</div>
 </div>
 
   
