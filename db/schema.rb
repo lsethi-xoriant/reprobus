@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225050111) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"  # commented out for chromebook dev
+ActiveRecord::Schema.define(version: 20150305014116) do
 
   create_table "activities", force: true do |t|
     t.string   "type"
@@ -240,6 +237,7 @@ ActiveRecord::Schema.define(version: 20150225050111) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "currency_id"
+    t.string   "payment_gateway"
   end
 
   create_table "stopovers", force: true do |t|

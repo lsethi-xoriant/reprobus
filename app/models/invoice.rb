@@ -37,14 +37,14 @@ class Invoice < ActiveRecord::Base
   serialize  :ccPaymentsDate
   serialize  :xpayments
   serialize  :xdeposits
-  validate   :validate_customer_invoice # validate deposit is set, and deposit due date. 
+  validate   :validate_customer_invoice # validate deposit is set, and deposit due date.
   validate   :validate_supplier_invoice # validate it has a supplier set.
   belongs_to  :currency
 
   validate do |invoice|
     int = 0;
     invoice.line_items.each do |li|
-      int += 1 
+      int += 1
       next if li.valid?
       li.errors.full_messages.each do |msg|
         invoice.errors[:base] << "Line item #{int.to_s} error: #{msg}"
@@ -53,7 +53,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def validate_customer_invoice
-    if self.customer_invoice_id 
+    if self.customer_invoice_id
       if self.deposit.blank?
          errors.add(:deposit, "can't be blank")
       end
@@ -64,7 +64,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def validate_supplier_invoice
-    if self.isSupplierInvoice? 
+    if self.isSupplierInvoice?
       if self.supplier.nil?
         errors.add(:Supplier, "must be selected")
       end
@@ -76,8 +76,8 @@ class Invoice < ActiveRecord::Base
   end
   
   def addCCPayment!(amount)
-    ccArr =  self.ccPaymentsAmount || [] 
-    dateArr =  self.ccPaymentsDate || [] 
+    ccArr =  self.ccPaymentsAmount || []
+    dateArr =  self.ccPaymentsDate || []
     ccArr << amount
     dateArr << Date.today
     self.update_attribute(:ccPaymentsAmount, ccArr)
@@ -114,7 +114,7 @@ class Invoice < ActiveRecord::Base
   def get_invoice_xero
     xero = Xero.new()
     inv = xero.get_invoice(self.xero_id)
-    return inv  
+    return inv
   end
   
   def add_xero_payment(amount)
@@ -125,7 +125,7 @@ class Invoice < ActiveRecord::Base
     #act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
     #if act
     #  user.activities<<(act)
-    #end     
+    #end
   end
   
   def change_xero_invoice(amount)
@@ -136,69 +136,68 @@ class Invoice < ActiveRecord::Base
     #act = self.activities.create(type: "Note", description: "Payment submitted to xero:  $#{amount}")
     #if act
     #  user.activities<<(act)
-    #end     
-  end 
+    #end
+  end
   
   def getPayExpressUrl
     if !self.depositPayUrl.nil?
       return self.depositPayUrl  #using this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
     end
-    
-    require 'nokogiri' 
+    if @setting.payment_gateway != "Payment Express"
+      return ""
+    end
+    require 'nokogiri'
     require 'pxpay'
     
     @setting = Setting.find(1);
     
-    #if Rails.env.development? || Rails.env.test?  || Rails.env.production?  #take of production later when ready to go live
-    #  Pxpay::Base.pxpay_user_id = "Samplepxpayuser"
-    #  Pxpay::Base.pxpay_key = "cff9bd6b6c7614bec6872182e5f1f5bcc531f1afb744f0bcaa00e82ad3b37f6d" 
-    #else
-      Pxpay::Base.pxpay_user_id = @setting.pxpay_user_id
-      Pxpay::Base.pxpay_key = @setting.pxpay_key     
-    #end
+    
+    Pxpay::Base.pxpay_user_id = @setting.pxpay_user_id
+    Pxpay::Base.pxpay_key = @setting.pxpay_key
     Pxpay::Base.pxpay_request_url = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx'
     
+  
     #transId = self.id
     strRef = "Booking payment for " + self.booking.name
     succpath = Rails.application.routes.url_helpers.pxpaymentsuccess_url()
     failpath = Rails.application.routes.url_helpers.pxpaymentfailure_url()
     curCode = self.getCurrencyCode
     
-    request = Pxpay::Request.new(self.id, self.deposit.to_s, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => curCode})    
+    request = Pxpay::Request.new(self.id, self.deposit.to_s, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => curCode})
     url = request.url
     self.update_attribute(:depositPayUrl, url) #saving this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
     return url
   end
   
   def nice_id
-    self.id.to_s.rjust(6, '0')  
-  end  
+    self.id.to_s.rjust(6, '0')
+  end
   
   def getSupplierName
-    self.supplier ? self.supplier.supplier_name : "" 
-  end 
+    self.supplier ? self.supplier.supplier_name : ""
+  end
   
   def getCurrencyCode
-    self.currency ? self.currency.code : Setting.find(1).currencyCode 
-  end  
+    self.currency ? self.currency.code : Setting.find(1).currencyCode
+  end
  
   def getCurrencyDisplay
-    self.currency ? self.currency.displayName : Setting.find(1).currencyDisplay 
-  end  
+    self.currency ? self.currency.displayName : Setting.find(1).currencyDisplay
+  end
   
   def getCurrencySelect2
-    if self.currency 
+    if self.currency
       return self.currency.id.to_s + ":" + self.currency.code + " - " + self.currency.currency
     else
       return ""
     end
-  end 
+  end
   
   def get_current_exchange_amount
     code = self.getCurrencyCode
-    syscode = Setting.find(1).currencyCode 
+    syscode = Setting.find(1).currencyCode
     
-    # get the total amount and times by 100 as Money uses cents.     
+    # get the total amount and times by 100 as Money uses cents.
     mon = Money.new((self.getTotalAmount * 100).to_i, code)
     exch = mon.exchange_to(syscode)
     return exch.dollars
@@ -206,13 +205,13 @@ class Invoice < ActiveRecord::Base
   
   def set_exchange_currency_amount
     code = self.getCurrencyCode
-    syscode = Setting.find(1).currencyCode 
+    syscode = Setting.find(1).currencyCode
     overRideExRate = Setting.find(1).exchange_rates.find_by_currency_code(code)
     
-    if overRideExRate 
-      googleBank = Money.default_bank # save google currency ex, so we can set it back later. 
+    if overRideExRate
+      googleBank = Money.default_bank # save google currency ex, so we can set it back later.
       
-      # set up a new default bank so we can override the currency ex rate. 
+      # set up a new default bank so we can override the currency ex rate.
       Money.default_bank = Money::Bank::VariableExchange.instance
       Money.add_rate(code, syscode, overRideExRate.exchange_rate)
       
@@ -221,10 +220,10 @@ class Invoice < ActiveRecord::Base
       self.exchange_amount = exch.dollars
       self.exchange_rate = overRideExRate.exchange_rate
       
-      # now set back to default google rates 
+      # now set back to default google rates
       Money.default_bank = googleBank
     else
-      # get the total amount and times by 100 as Money uses cents.     
+      # get the total amount and times by 100 as Money uses cents.
       mon = Money.new((self.getTotalAmount * 100).to_i, code)
       exch = mon.exchange_to(syscode)
       self.exchange_amount = exch.dollars

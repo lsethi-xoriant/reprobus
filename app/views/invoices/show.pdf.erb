@@ -1,5 +1,5 @@
 
-<style type="text/css"> .ReadMsgBody {width: 100%; background-color: #ffffff;} .ExternalClass {width: 100%; background-color: #ffffff;} body { width: 100%; background-color: #9CBA5F; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; font-family: Georgia, Times, serif } table {border-collapse: collapse;} @media only screen and (max-width: 640px) { body[yahoo] .deviceWidth {width:440px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } @media only screen and (max-width: 479px) { body[yahoo] .deviceWidth {width:280px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } </style> 
+<style type="text/css"> .ReadMsgBody {width: 100%; background-color: #ffffff;} .ExternalClass {width: 100%; background-color: #ffffff;} body { width: 100%; background-color: #9CBA5F; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; font-family: Georgia, Times, serif } table {border-collapse: collapse;} @media only screen and (max-width: 640px) { body[yahoo] .deviceWidth {width:440px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } @media only screen and (max-width: 479px) { body[yahoo] .deviceWidth {width:280px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } </style>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="font-family: Georgia, Times, serif"> <!-- Wrapper --> <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center"> <tr> <td width="100%" valign="top" bgcolor="#FFFCFC" style="padding-top: 20px;"> <!-- Start Header--> <table width="580" border="0" cellpadding="0" cellspacing="0" align="center" class="deviceWidth"> <tr> <td width="100%" bgcolor="#ffffff"> <!-- Nav --><!-- End Nav --> </td> </tr> </table><!-- End Header --> <!-- One Column --> <table width="720" class="deviceWidth" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eeeeed"> <tr> <td valign="top" style="padding:0" bgcolor="#ffffff"> <a href="http://eclipsetravel.com.au"><img src="http://eclipsetravel.com.au/wp-content/uploads/2014/03/email-template-header.jpg" alt="" border="0" /></a> </td> </tr> <tr> <td style="font-size: 13px; color: #4B4B4B; font-weight: normal; text-align: left; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; padding: 10px 8px 10px 8px" bgcolor="#FCFCFA">
 
@@ -10,26 +10,27 @@
   <strong>Customer/s:</strong>		<%= @booking.customer.fullname %><br>
   
   <div>
-    <h3 class="page-header" ><%= "Invoice for " +  @booking.name%></h3>    
+    <h3 class="page-header" ><%= "Invoice for " +  @booking.name%></h3>
       <br>
 
    <table width="100%">
      <tr>
        <th width="40%" align="left">Description</th><th width="20%" align="left">Quantity</th><th width="20%" align="left">Price</th><th width="20%" align="left">Total</th>
-     </tr> 
+     </tr>
        
       <% @invoice.line_items.each do |item| %>
         <%= render partial: 'invoices/line_items', locals: { item: item } %>
-      <% end %> 
+      <% end %>
       </table>
   </div>
   <br>
   To pay your deposit, please click on the following link **Please note credit card fees apply (2% for Visa and Mastercard, 3% for AMEX)**<br><br>
 
-  
+<% if @setting.usesPaymentGateway %>
   <% url = @invoice.getPayExpressUrl %>
   <a href="<%= url %>" target="_blank" >Pay deposit with credit card</a><br><br>
-   
+<% end %>
+
   To avoid this credit card fee please deposit directly into the following account with the following booking number: <%= @booking.id.to_s.rjust(8, '0')  %>:  <br><br>
 
 <strong>Direct Deposit</strong><br>
@@ -45,10 +46,10 @@ Balance <strong>TO DO</strong><br>
 Total <strong><%=  @invoice.getTotalAmount.to_s %> </strong><br>
 <br><br>
 
-Please Note: This itinerary may change due to local operating conditions. Please see our terms and conditions for more details. Please note that all flights are non-refundable and non-changeable unless advised otherwise. Please be aware that many of our products are based in USD and therefore subject to currency fluctuations until deposit has been made. Additionally if you have booked one of our cruise products - be aware that many operators also reserve the right to apply fuel dependant on the price of crude oil. 
+Please Note: This itinerary may change due to local operating conditions. Please see our terms and conditions for more details. Please note that all flights are non-refundable and non-changeable unless advised otherwise. Please be aware that many of our products are based in USD and therefore subject to currency fluctuations until deposit has been made. Additionally if you have booked one of our cruise products - be aware that many operators also reserve the right to apply fuel dependant on the price of crude oil.
 
 Final payment on bookings is generally due 95 days prior to departure. Please note that if you have an Antarctica booking operated by Quark Expeditions your final payment is due 125 days prior to departure.
 
-Please make sure you have read the Booking Terms & Conditions 
+Please make sure you have read the Booking Terms & Conditions
 <a>www.eclipsetravel.com.au/termsandconditions</a>
 </td> </tr> </table><!-- End One Column --><!-- spacer --> <!-- 2 Column Images & Text Side by SIde --><!-- spacer --> <!-- 4 Columns --> <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center"> <tr> <td bgcolor="#333333" style="padding:30px 0"> <table width="580" border="0" cellpadding="0" cellspacing="0" align="center" class="deviceWidth"> <tr> <td> <table width="45%" cellpadding="0" cellspacing="0" border="0" align="left" class="deviceWidth"> <tr> <td valign="top" style="font-size: 11px; color: #f1f1f1; color:#999; font-family: Arial, sans-serif; padding-bottom:20px" class="center"><p><strong>Eclipse Travel Pty Ltd. </strong><br> Level 6, 115 Pitt St, <br> Sydney NSW, <br> Australia 2000<br> Phone 1300 575 752<br> (+61) 02 8199 9465<br> <br> NSW Travel Agent Licence #: 2TA10218<br> ABN: 42 158 316 959<br> ACN: 158 316 959<br> </p></td> </tr> </table> <table width="40%" cellpadding="0" cellspacing="0" border="0" align="right" class="deviceWidth"> <tr> <td valign="top" style="font-size: 11px; color: #f1f1f1; font-weight: normal; font-family: Georgia, Times, serif; line-height: 26px; vertical-align: top; text-align:right" class="center"> <a href="#"><img src="http://eclipsetravel.com.au/wp-content/uploads/2014/02/eclipselogo-gif.gif" alt="" border="0" /></a><br/></td> </tr> </table> </td> </tr> </table> </td> </tr> </table><!-- End 4 Columns --> </td> </tr> </table> <!-- End Wrapper --> </body>

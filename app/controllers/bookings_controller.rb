@@ -13,11 +13,12 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
+    @setting = Setting.find(1)
     #@activities = @booking.activities.order('created_at DESC').page(params[:page]).per_page(5)
     respond_to do |format|
       format.html
       format.json { render json: {name: @booking.fullname, id: @booking.id  }}
-    end    
+    end
   end
   
   def edit
@@ -33,7 +34,7 @@ class BookingsController < ApplicationController
     else
       render 'new'
     end
-  end  
+  end
 
   def update
      @booking = Booking.find(params[:id])
@@ -46,6 +47,6 @@ class BookingsController < ApplicationController
   end
 private
     def booking_params
-      params.require(:booking).permit(:name, :amount, :deposit, :status)      
-    end  
+      params.require(:booking).permit(:name, :amount, :deposit, :status)
+    end
 end

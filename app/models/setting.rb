@@ -12,27 +12,35 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  currency_id          :integer
+#  payment_gateway      :string(255)
 #
 
 class Setting < ActiveRecord::Base
   validates_presence_of :xero_consumer_key, :if => lambda { self.use_xero }
   validates_presence_of :xero_consumer_secret, :if => lambda { self.use_xero }
+  validates_presence_of :pxpay_user_id, :if => lambda { self.payment_gateway == "Payment Express" }
+  validates_presence_of :pxpay_key, :if => lambda { self.payment_gateway == "Payment Express" }
+  
   belongs_to :currency
   has_many :exchange_rates
   
   def getDefaultCurrency
-    self.currency ? self.currency : Currency.find_by_code("USD") 
-  end   
+    self.currency ? self.currency : Currency.find_by_code("USD")
+  end
   def currencyID
     return self.getDefaultCurrency.id
   end
   def currencyCode
     return self.getDefaultCurrency.code
-  end 
+  end
   def currencyDisplay
     return self.getDefaultCurrency.displayName
-  end    
+  end
   def getCurrencySelect2
     return self.getDefaultCurrency.id.to_s + ":" + self.getDefaultCurrency.code + " - " + self.getDefaultCurrency.currency
+  end
+  
+  def usesPaymentGateway
+    return !self.payment_gateway.blank? && self.payment_gateway != "None"
   end
 end

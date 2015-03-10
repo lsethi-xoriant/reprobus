@@ -22,13 +22,24 @@
          <%= render 'shared/error_messages', object: f.object %>
 
           <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "company_name", f: f } %>
-          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_user_id", f: f } %>  
+          
+          <div class="form-group">
+            <%= f.label :payment_gateway, "Payment Gateway", class: "col-sm-3 control-label"%>
+            <div class="col-sm-2">
+              <%= f.select :payment_gateway, options_for_select(["None", "Payment Express"], @setting.payment_gateway ), {}, class: 'form-control', id: "payselect" %>
+            </div>
+          </div>
+          
+          <div id="paygategroup">
+          <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_user_id", f: f } %>
           <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_key", f: f } %>
+          </div>
 
+    
           <div class="form-group">
             <%= f.label :use_xero, "Xero Integration", class: "col-sm-3 control-label"  %>
             <div class="col-sm-2">
-              <%= f.check_box :use_xero, class: "form-control" %> 
+              <%= f.check_box :use_xero, class: "form-control" %>
             </div>
           </div>
 
@@ -38,7 +49,7 @@
          <div class="form-group">
            <%= f.label :currency_id, "System Default Currency", class: "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.text_field( :currency_id, value: @setting.getCurrencySelect2,  class: "ajax form-control", placeholder: "Add Currency", id: "currencysearch") %>       
+              <%= f.text_field( :currency_id, value: @setting.getCurrencySelect2,  class: "ajax form-control", placeholder: "Add Currency", id: "currencysearch") %>
             </div>
           </div>
       <div class="form-group"><div class="col-sm-6">
@@ -59,7 +70,7 @@
           <div class="form-group">
             <label for="currency_id" class="col-sm-3 control-label">Currency</label>
             <div class="col-sm-3">
-              <%= hidden_field_tag(:currency_id, "", id: 'currencysearch2', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>        
+              <%= hidden_field_tag(:currency_id, "", id: 'currencysearch2', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>
             </div>
           </div>
           
@@ -67,19 +78,19 @@
             <label for="exchange_rate" class="col-sm-3 control-label">Exchange Rate</label>
             <div class="col-sm-3">
               <%= number_field_tag :exchange_rate, nil, class: "form-control", :step => 'any' %>
-            </div> 
+            </div>
           </div>
           
           <div class="col-sm-3">
           <%= hidden_field_tag :setting_id, '', :value => @setting.id %>
           </div>
           
-          <%= submit_tag "Save Exchange Rate", class: "btn btn-primary" %> 
+          <%= submit_tag "Save Exchange Rate", class: "btn btn-primary" %>
           
           <% end %>
         </div><!-- /well -->
       <% else %>
-        <h4>System Currency needs to be set before setting up currencies</h4> 
+        <h4>System Currency needs to be set before setting up currencies</h4>
       <% end %>
       
     </div> <!-- end tab accounts -->
