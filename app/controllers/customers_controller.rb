@@ -33,7 +33,7 @@ class CustomersController < ApplicationController
     end
     
     if @customer.save
-      flash[:success] = "Customer created!"
+      flash[:success] = "#{@customer.cust_sup} created!"
       if @customer.isSupplier?
         redirect_to supplier_path @customer
       elsif @customer.isAgent?

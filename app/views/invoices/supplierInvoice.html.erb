@@ -3,6 +3,7 @@
   <% finalDay =  @invoice.final_payment_due %>
 <% else %>
   <input type="hidden" value=<%= @booking.enquiry.est_date.strftime("%d/%m/%Y") %> id="base_date"> <!-- we are setting this to alow JS to use it to dynamically update if suppler has number due days prior to service configured -->
+   <input type="hidden" value=<%= finalDay.strftime("%d/%m/%Y") %> id="due_date">
 <% end %>
 
 <% provide(:title, 'Create Supplier Invoice') %>
