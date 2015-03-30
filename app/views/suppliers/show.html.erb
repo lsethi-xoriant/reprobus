@@ -28,7 +28,7 @@
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Default Currency</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.getSupplierCurrencyDisplay %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash ( simple_format(@customer.getAddressDetails) ) %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%= simple_format(value_or_dash ( @customer.getAddressDetails) ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.created_at) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>

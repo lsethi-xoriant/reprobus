@@ -33,11 +33,19 @@ $(document).ready(function() {
 $(document).ready(function() {
   $("#sup_select").on("select2-selecting", function(e) {
     $('#supplierDefaultCurrency').val(e.choice.currency);
-    if (e.choice.numdays > 0 && $('#base_date').length ) {
-      var dateComp = $('#base_date').val().split('/');
-      var changeDate = new Date(dateComp[2],dateComp[1]-1,dateComp[0]);
-      changeDate.setDate(changeDate.getDate() - e.choice.numdays);
-      $('#final_payment_due').datepicker('update', changeDate);
+    
+    if ($('#base_date').length) {  // if we are on the supplier invoice screen and (basedate is present) then update pay date
+      if (e.choice.numdays > 0 ) {
+        var dateComp = $('#base_date').val().split('/');
+        var changeDate = new Date(dateComp[2],dateComp[1]-1,dateComp[0]);
+        changeDate.setDate(changeDate.getDate() - e.choice.numdays);
+        $('#final_payment_due').datepicker('update', changeDate);
+      } else {
+        var duedateComp = $('#due_date').val().split('/');
+        var dueDate = new Date(duedateComp[2],duedateComp[1]-1,duedateComp[0]);
+        $('#final_payment_due').datepicker('update', dueDate);
+      }
+      
     }
   })
 });
