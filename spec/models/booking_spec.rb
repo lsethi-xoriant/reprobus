@@ -15,6 +15,7 @@
 #  xpayments   :text
 #  xero_id     :string(255)
 #  xdeposits   :text
+#  agent_id    :integer
 #
 
 require 'spec_helper'

@@ -29,4 +29,7 @@ class Address < ActiveRecord::Base
     return (!exists and empty)
   end
   
+  def getDisplayString
+     [self.street1, self.street2, self.city, self.state, self.zipcode, self.country].select{|line| !(line.nil? or line.empty?)}.join("\n")
+  end
 end

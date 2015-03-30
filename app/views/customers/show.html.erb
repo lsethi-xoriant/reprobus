@@ -5,7 +5,7 @@
       <h1 class="page-header" >Customer Details</h1>
 
        <div class="row">
-        <div class="col-lg-6">     
+        <div class="col-lg-6">
           <div class="row">
             <div class="col-lg-3 "> <%= image_tag "avatar.jpg", class: "avatar img-circle" %> </div>
       
@@ -14,29 +14,41 @@
               <%= link_to edit_customer_path(@customer) do %>
                 <i class="fa fa-pencil editicon"></i>
                 Edit
-              <% end %>   
-              <ul>              
+              <% end %>
+             <!-- <ul>
                 <li><i class="fa fa-envelope"></i> <%= mail_to(@customer.email, @customer.email, bcc: @customer.create_email_link)%></li>
                 <li><i class="fa fa-phone"></i> <%= @customer.phone %> (Landline) </li>
                 <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>
-              </ul>
+              </ul> -->
             </div>
           </div>
-          <ul class="row profile-details">
-            <% if @customer.enquiries.active.empty? %>
-              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
-              <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
-            <% else %>
-              <% @customer.enquiries.active.each do |e| %>
-              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
-              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= enquiry_path e %>><%= e.name %></a></li>
-              <% end %>
-            <% end %> 
+          
+
             
+          <ul class="row profile-details">
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Customer ID</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.nice_id %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
-            <li class="col-lg-9 col-md-9 col-sm-9">TO BE BUILT</li>
+          
+            <% if @customer.enquiries.active.empty? && @customer.bookings.empty?%>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry/Bookings</li>
+              <li class="col-lg-9 col-md-9 col-sm-9">None assigned</li>
+              <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><%= simple_format( value_or_dash ( @customer.getAddressDetails) ) %></li>
+            <% end %>
+            
+            <% @customer.enquiries.active.each do |e| %>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Enquiry</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= enquiry_path e %>><%= e.name %></a></li>
+              <%= render partial: 'enquiry_address', locals: { e: e } %>
+            <% end %>
+       
+            <% @customer.bookings.each do |book| %>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Booking</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= booking_path book %>><%= book.name %></a></li>
+              <%= render partial: 'enquiry_address', locals: { e: book.enquiry } %>
+            <% end %>
+    
+            
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Gender</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.gender ) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">D.O.B</li>
@@ -65,15 +77,15 @@
           
         <% if current_user.admin? %>
           <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
-        <% end %>   
+        <% end %>
 
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
 
-          <div class="timeline-centered">        
+          <div class="timeline-centered">
              <% @activities.each do |act| %>
               <%= render partial: 'shared/timeline', locals: { activity: act } %>
-            <% end %>  
+            <% end %>
             
             <article class="timeline-entry begin">
             <div class="timeline-entry-inner">
@@ -82,7 +94,7 @@
               </div>
             </div>
             </article>
-          </div> 
+          </div>
           
           <ul class="pagination">
             <%= will_paginate  @activities, :container => false %>
@@ -96,17 +108,17 @@
             <%= hidden_field_tag :type, '', :value => "Note" %>
               <%= hidden_field_tag :id, '', :value => @customer.id %>
               <%#= hidden_field_tag :customer, '', :value => @customer.id %>
-              <%= submit_tag "Add a note", class: "btn btn-primary add-note" %>      
+              <%= submit_tag "Add a note", class: "btn btn-primary add-note" %>
               <div class="clearfix"></div>
             <% end %>
           </div>
             <!-- /well -->
           <div class="activity"></div>
-            <!-- /activity --> 
+            <!-- /activity -->
         </div>
       </div>
      
       
     </section>
-  </aside> 
+  </aside>
 </div>

@@ -2,26 +2,25 @@
 <% if  @enquiry.errors.any? %>
   <% custNum = params[:existing_customer] %>
   <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
-  <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' > 
+  <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' >
 
 <% end %>
-
-<% 
-  if params[:user_type] == "New"  
+<%
+  if params[:user_type] == "New"
      newCustDisplay = "display:block;"
      existCustDisplay = "display:none;"
-   elsif params[:user_type] == "Existing" 
-     newCustDisplay = "display:none;" 
+   elsif params[:user_type] == "Existing"
+     newCustDisplay = "display:none;"
      existCustDisplay = "display:block;"
    else
-     newCustDisplay = "display:block;" 
+     newCustDisplay = "display:block;"
      existCustDisplay = "display:none;"
-  end 
+  end
   @enquiry.assigned_to ? ass_user = @enquiry.assigned_to : ass_user = current_user.id
 
-  if params[:existing_customer] && params[:existing_customer] > '0' then 
-     existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name 
-  end   
+  if params[:existing_customer] && params[:existing_customer] > '0' then
+     existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name
+  end
 %>
 
 <%#= render  partial: 'new_customer', locals: { buttontxt: "Create an Enquiry" } #maybe try this again some time - could be used for adding addresses and stuff elsewhere %>
@@ -38,33 +37,40 @@
     <div class="form-group">
       <%= f.label :stage, "Lead Status", class: "col-sm-3 control-label"%>
       <div class="col-sm-2">
-        <%= f.select :stage, options_for_select(["Open", "In Progress", "Closed"], @enquiry.stage ), {}, class: 'form-control' %>	  
-      </div>      
+        <%= f.select :stage, options_for_select(["Open", "In Progress", "Closed"], @enquiry.stage ), {}, class: 'form-control' %>
+      </div>
       <%= f.label :source, class: "col-sm-1 control-label" %>
       <div class="col-sm-2">
-        <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], @enquiry.source ), {}, class: 'form-control'  %>	 
+        <%= f.select :source, options_for_select(["Phone", "Web", "Email", "Walk in"], @enquiry.source ), {}, class: 'form-control'  %>
       </div>
     </div>
 
- <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->  
+  <div class="form-group">
+    <%= f.label :agent_id, "Agent", class: "col-sm-3 control-label"  %>
+      <div class="col-sm-4">
+      <%= hidden_field(:enquiry, :agent_id, id: 'agent_select', class: 'select2 ajax', style: 'width: 100%;' ) %>
+    </div>
+  </div>
+
+ <!-- radio buttons to dynamically display/hide the fields for the New and Existing customers -->
     <div class="form-group">
       <%= label_tag :user_type, "Add Customer", class: "col-sm-3 control-label" %>
       <div class="col-sm-1">
-        <label class="radio-inline">  
-          <%= radio_button_tag :user_type, "New",  (params[:user_type].blank? || (params[:user_type] == "New")), class: "new_fields form-control"  %> 
-          New 
-        </label>   
+        <label class="radio-inline">
+          <%= radio_button_tag :user_type, "New",  (params[:user_type].blank? || (params[:user_type] == "New")), class: "new_fields form-control"  %>
+          New
+        </label>
       </div>
       <div class="col-sm-1">
-        <label class="radio-inline">     
-          <%= radio_button_tag :user_type, "Existing", (params[:user_type] == "Existing"), class: "existing_fields form-control" %> 
+        <label class="radio-inline">
+          <%= radio_button_tag :user_type, "Existing", (params[:user_type] == "Existing"), class: "existing_fields form-control" %>
           Existing
-        </label>   
+        </label>
       </div>
-    </div>      
-    <!-- End dynamic display radio buttons --> 
+    </div>
+    <!-- End dynamic display radio buttons -->
 
-    <!-- Search fields displayed when Existing customer to be entered --> 
+    <!-- Search fields displayed when Existing customer to be entered -->
     <div id="existing_fields" style='<%= existCustDisplay %>'>
       <div class="form-group">
       <%= f.label :existing_customer, "Existing Customer", class: "col-sm-3 control-label" %>
@@ -75,107 +81,107 @@
     </div>
 
 <!--   existCust  -->
-    <!-- Fields displayed when NEW CUSTOMER to be entered    --> 
+    <!-- Fields displayed when NEW CUSTOMER to be entered    -->
     <div id="new_fields" style='<%= newCustDisplay %>' >
 	    <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
       
       <div class="form-group">  <%=  c.label :title, class: "col-sm-3 control-label" %>
         <div class="col-sm-7">   <%= c.select :title, options_for_select(titles_list), {}, class: 'form-control' %>  </div>
-      </div>  
+      </div>
       
       <div class="form-group">
-        <%= c.label :name, "Name", class: "col-sm-3 control-label" %> 
+        <%= c.label :name, "Name", class: "col-sm-3 control-label" %>
           <div class="col-sm-4">
             <%= c.text_field :first_name, class: "form-control", placeholder: "First Name" %>
-          </div> 
-          <div class="col-sm-4">             
-            <%= c.text_field :last_name, class: "form-control", placeholder: "Last Name" %>        
+          </div>
+          <div class="col-sm-4">
+            <%= c.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
           </div>
       </div>
       
       <div class="form-group">
-        <%= c.label :email, class: "col-sm-3 control-label"  %> 
+        <%= c.label :email, class: "col-sm-3 control-label"  %>
         <div class="col-sm-8">
-          <%= c.text_field :email, class: "form-control" %>         
-        </div>  
+          <%= c.text_field :email, class: "form-control" %>
+        </div>
       </div>
       
       <% f.fields_for :address do |builder| %>
-        <div class="form-group"> 
-          <%= builder.label :street1, "Street",  class: "col-sm-3 control-label"  %> 
+        <div class="form-group">
+          <%= builder.label :street1, "Street",  class: "col-sm-3 control-label"  %>
           <div class="col-sm-7">
-            <%= builder.text_field :street1, class: "form-control" %>  
+            <%= builder.text_field :street1, class: "form-control" %>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-3">
-            <%= builder.text_field :city, class: "form-control", placeholder: "City" %>  
+            <%= builder.text_field :city, class: "form-control", placeholder: "City" %>
           </div>
           <div class="col-sm-3">
-            <%= builder.text_field :state, class: "form-control", placeholder: "State" %>  
-          </div> 
+            <%= builder.text_field :state, class: "form-control", placeholder: "State" %>
+          </div>
           <div class="col-sm-3">
-            <%= builder.text_field :zip,  class: "form-control", placeholder: "Zip/Postal Code" %>  
-          </div> 
+            <%= builder.text_field :zip,  class: "form-control", placeholder: "Zip/Postal Code" %>
+          </div>
         </div>
       <% end %>
       
       <div class="form-group">
-        <%= c.label :mobile, "Phone", class: "col-sm-3 control-label"  %> 
+        <%= c.label :mobile, "Phone", class: "col-sm-3 control-label"  %>
           <div class="col-sm-3">
-            <%= c.text_field :mobile, class: "form-control", placeholder: "Mobile" %>  
+            <%= c.text_field :mobile, class: "form-control", placeholder: "Mobile" %>
           </div>
           <div class="col-sm-3">
-            <%= c.text_field :phone, class: "form-control", placeholder: "Other" %>  
-          </div> 
+            <%= c.text_field :phone, class: "form-control", placeholder: "Other" %>
+          </div>
       </div>
           
-      <% end %>	 
+      <% end %>
     </div>
-    <!-- End NEW CUSTOMER --> 
+    <!-- End NEW CUSTOMER -->
 
     <!-- To/From Dates -->
 <!--     <div class="form-group">
       <%= f.label :est_date, "Travel From", class: "col-sm-3 control-label" %>
      <div class="col-sm-2">
-        <%= render partial: 'shared/std_datefield', locals: { name: :est_date, id: 'datetimepicker1', f: f } %>                        
+        <%= render partial: 'shared/std_datefield', locals: { name: :est_date, id: 'datetimepicker1', f: f } %>
       </div>
       <%= f.label :fin_date, "To", class: "col-sm-1 control-label" %>
       <div class="col-sm-2">
-        <%= render partial: 'shared/std_datefield', locals: { name: :fin_date, id: 'datetimepicker2', f: f } %>    
+        <%= render partial: 'shared/std_datefield', locals: { name: :fin_date, id: 'datetimepicker2', f: f } %>
       </div>
     </div> -->
 
     <%= f.label :est_date, "Travel Between", class: "col-sm-3 control-label" %>
-    <%= render partial: 'shared/std_date_range', locals: { from_name: :est_date, to_name: :fin_date, f: f } %>  
+    <%= render partial: 'shared/std_date_range', locals: { from_name: :est_date, to_name: :fin_date, f: f } %>
 
     <div class="form-group">
       <%= f.label :num_people, "Pax", class: "col-sm-3 control-label" %>
       <div class="col-sm-2">
-        <%= f.select :num_people, options_for_select(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"], @enquiry.num_people ), {}, class: 'form-control' %>   
+        <%= f.select :num_people, options_for_select(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"], @enquiry.num_people ), {}, class: 'form-control' %>
       </div>
       <%= f.label :standard, class: "col-sm-1 control-label" %>
       <div class="col-sm-2">
-        <%= f.select :standard, options_for_select(["Luxury", "Superior", "Standard", "Basic"], @enquiry.standard ), {}, class: 'form-control' %>   
+        <%= f.select :standard, options_for_select(["Luxury", "Superior", "Standard", "Basic"], @enquiry.standard ), {}, class: 'form-control' %>
       </div>
     </div>
     <div class="form-group">
       <%= f.label :background_info, "Additional Info", class: "col-sm-3 control-label" %>
       <div class="col-sm-6">
-        <%= f.text_area :background_info, rows: "3", class: "form-control" %>    
+        <%= f.text_area :background_info, rows: "3", class: "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
       <%= f.label :destinations, "Destinations", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field( :destinations, value: @enquiry.destinations_select2,  class: "ajax form-control", placeholder: "Add Destinations", id: "destinationsearch") %>  
+        <%= f.text_field( :destinations, value: @enquiry.destinations_select2,  class: "ajax form-control", placeholder: "Add Destinations", id: "destinationsearch") %>
       </div>
     </div>
     <div class="form-group">
       <%= f.label :stopovers, "Stopovers", class: "col-sm-3 control-label"  %>
       <div class="col-sm-6">
-        <%= f.text_field( :stopovers, value: @enquiry.stopovers_select2,  class: "ajax form-control", placeholder: "Add Stopovers", id: "stopoversearch") %>       
+        <%= f.text_field( :stopovers, value: @enquiry.stopovers_select2,  class: "ajax form-control", placeholder: "Add Stopovers", id: "stopoversearch") %>
       </div>
     </div>
     <div class="form-group">
@@ -189,7 +195,7 @@
       <%= f.label :insurance, "Insurance Required", class: "col-sm-3 control-label"  %>
       <div class="col-sm-2">
         
-        <%= f.check_box :insurance, class: "form-control" %> 
+        <%= f.check_box :insurance, class: "form-control" %>
       </div>
     </div>
 
@@ -200,26 +206,26 @@
       </div>
       <%= f.label :probability, class: "col-sm-1 control-label"  %>
       <div class="col-sm-2">
-        <%= f.select :probability, options_for_select(["High", "Medium", "Low"], @enquiry.probability ), {}, class: 'form-control' %>   
+        <%= f.select :probability, options_for_select(["High", "Medium", "Low"], @enquiry.probability ), {}, class: 'form-control' %>
       </div>
     </div>
 
     <div class="form-group">
       <%= f.label :assigned_to, "Assign To", class: "col-sm-3 control-label"  %>
-        <div class="col-sm-2"> 
+        <div class="col-sm-2">
           <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax form-control', style: 'width: 100%;') %>
-      </div>   
+      </div>
     </div>
 
-    <div class="form-group">   
+    <div class="form-group">
       <%= f.label :reminder, "Set Reminder", class: "col-sm-3 control-label"   %>
-        <div class="col-sm-2">      
-          <%= render partial: 'shared/std_datefield', locals: { name: :reminder, id: "", f: f } %>    
+        <div class="col-sm-2">
+          <%= render partial: 'shared/std_datefield', locals: { name: :reminder, id: "", f: f } %>
       </div>
     </div>
 
 
-      <%#= f.text_field :percent, class: "form-control" %>		  
+      <%#= f.text_field :percent, class: "form-control" %>
  
       <%= f.hidden_field :user_id, :value => current_user.id %>
       <div class="row">

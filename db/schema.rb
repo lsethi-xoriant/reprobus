@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305014116) do
+ActiveRecord::Schema.define(version: 20150324225319) do
 
   create_table "activities", force: true do |t|
     t.string   "type"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150305014116) do
     t.text     "xpayments"
     t.string   "xero_id"
     t.text     "xdeposits"
+    t.integer  "agent_id"
   end
 
   create_table "carriers", force: true do |t|
@@ -89,24 +90,24 @@ ActiveRecord::Schema.define(version: 20150305014116) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",      limit: 64,  default: "",    null: false
-    t.string   "last_name",       limit: 64,  default: "",    null: false
-    t.string   "title",           limit: 64
-    t.string   "source",          limit: 32
-    t.string   "email",           limit: 64
-    t.string   "alt_email",       limit: 64
-    t.string   "phone",           limit: 32
-    t.string   "mobile",          limit: 32
-    t.string   "fax",             limit: 32
-    t.string   "blog",            limit: 128
-    t.string   "linkedin",        limit: 128
-    t.string   "facebook",        limit: 128
-    t.string   "twitter",         limit: 128
+    t.string   "first_name",           limit: 64,  default: "",    null: false
+    t.string   "last_name",            limit: 64,  default: "",    null: false
+    t.string   "title",                limit: 64
+    t.string   "source",               limit: 32
+    t.string   "email",                limit: 64
+    t.string   "alt_email",            limit: 64
+    t.string   "phone",                limit: 32
+    t.string   "mobile",               limit: 32
+    t.string   "fax",                  limit: 32
+    t.string   "blog",                 limit: 128
+    t.string   "linkedin",             limit: 128
+    t.string   "facebook",             limit: 128
+    t.string   "twitter",              limit: 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                 default: false, null: false
+    t.boolean  "do_not_call",                      default: false, null: false
     t.datetime "deleted_at"
     t.string   "background_info"
-    t.string   "skype",           limit: 128
+    t.string   "skype",                limit: 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "issue_date"
@@ -120,6 +121,8 @@ ActiveRecord::Schema.define(version: 20150305014116) do
     t.string   "cust_sup"
     t.string   "supplier_name"
     t.integer  "currency_id"
+    t.integer  "num_days_payment_due"
+    t.string   "after_hours_phone",    limit: 32
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -169,6 +172,7 @@ ActiveRecord::Schema.define(version: 20150305014116) do
     t.date     "reminder"
     t.string   "xero_id"
     t.text     "xpayments"
+    t.integer  "agent_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree

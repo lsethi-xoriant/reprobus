@@ -14,8 +14,8 @@ class SuppliersController < CustomersController
     respond_to do |format|
       format.html
       format.json { render json: {name: @customer.fullname, id: @customer.id, currency: @customer.getSupplierCurrencyDisplay  }}
-    end    
-  end 
+    end
+  end
   
   def create
     super
@@ -25,6 +25,7 @@ class SuppliersController < CustomersController
     super
   end
   
+  #ARE WE USING THIS ???
   def customersearch
     @customers = Customer.select([:id, :supplier_name]).where("cust_sup ILIKE :p", p: "Supplier" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
@@ -35,13 +36,13 @@ class SuppliersController < CustomersController
       where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
+      format.json { render json: {total: resources_count,
         searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}"}}} }
     end
   end
 
   def suppliersearch
-    @customers = Customer.select([:id, :supplier_name, :cust_sup, :currency_id]).where("cust_sup ILIKE :p", p: "Supplier" ).
+    @customers = Customer.select([:id, :supplier_name, :cust_sup, :currency_id, :num_days_payment_due]).where("cust_sup ILIKE :p", p: "Supplier" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
   
@@ -50,8 +51,8 @@ class SuppliersController < CustomersController
       where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
 
     respond_to do |format|
-      format.json { render json: {total: resources_count, 
-        searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay }}} }
+      format.json { render json: {total: resources_count,
+        searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay, numdays: e.num_days_payment_due}}} }
     end
   end
 end

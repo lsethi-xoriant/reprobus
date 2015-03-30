@@ -27,10 +27,20 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     #@customer.emailID = SecureRandom.urlsafe_base64
+    
+    if !customer_params.has_key?(:cust_sup)
+      @customer.cust_sup = "Customer"
+    end
+    
     if @customer.save
       flash[:success] = "Customer created!"
-      @customer.isSupplier? ? (redirect_to supplier_path @customer) : (redirect_to @customer)
-      #redirect_to @customer
+      if @customer.isSupplier?
+        redirect_to supplier_path @customer
+      elsif @customer.isAgent?
+       redirect_to agent_path @customer
+      else
+        redirect_to @customer
+      end
     else
       render 'new'
     end
@@ -41,8 +51,13 @@ class CustomersController < ApplicationController
 
     if @customer.update_attributes(customer_params)
       flash[:success] = "Customer updated"
-      #redirect_to @customer
-      @customer.isSupplier? ? (redirect_to supplier_path @customer) : (redirect_to @customer)
+      if @customer.isSupplier?
+        redirect_to supplier_path @customer
+      elsif @customer.isAgent?
+       redirect_to agent_path @customer
+      else
+        redirect_to @customer
+      end
     else
       render 'edit'
     end
@@ -67,9 +82,9 @@ class CustomersController < ApplicationController
   
 private
     def customer_params
-      params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup,
+      params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id,
-        :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name,
+        :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
         address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])
     end
 end

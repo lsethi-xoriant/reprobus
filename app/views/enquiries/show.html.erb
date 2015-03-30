@@ -7,12 +7,12 @@
       <h1 class="page-header" >Enquiry Details</h1>
 
        <div class="row">
-        <div class="col-lg-6">     
+        <div class="col-lg-6">
           <div class="row">
             <div class="col-lg-9 profile-name">
               <h2><%= @enquiry.name %></h2>
               <% if edit %>
-                <%= link_to edit_enquiry_path(@enquiry) do %><i class="fa fa-pencil editicon"></i> Edit<% end %>   
+                <%= link_to edit_enquiry_path(@enquiry) do %><i class="fa fa-pencil editicon"></i> Edit<% end %>
               <% end%>
             </div>
           </div>
@@ -25,7 +25,12 @@
               <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= customer_path e %>><%= e.fullname %></a></li>
               <% end %>
-            <% end %> 
+            <% end %>
+            
+            <% if @enquiry.agent %>
+              <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Agent</li>
+              <li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= agent_path @enquiry.agent %>><%= @enquiry.agent.fullname %></a></li>
+            <% end %>
             
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Assigned To</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @enquiry.assigned_to_name )%></li>
@@ -52,23 +57,23 @@
           </ul>
           <%if edit %>
             <div class="row">
-              <div class="col-lg-6">     
+              <div class="col-lg-6">
               <%=  form_tag({controller: "enquiries", action: "addbooking"}, method: "get", class: "form-horizontal") do %>
               <%= hidden_field_tag :id, '', :value => @enquiry.id %>
-              <%= submit_tag "Convert to booking", class: "btn btn-primary" %>   
+              <%= submit_tag "Convert to booking", class: "btn btn-primary" %>
               <% end %>
-              </div>  
-            </div>   
+              </div>
+            </div>
           <% end %>
-        </div>   
+        </div>
 
         <div class="col-lg-6 details-activity">
           <h3>Activity Stream</h3>
 
-          <div class="timeline-centered">        
+          <div class="timeline-centered">
              <% @activities.each do |act| %>
               <%= render partial: 'shared/timeline', locals: { activity: act } %>
-            <% end %>  
+            <% end %>
             
             <article class="timeline-entry begin">
             <div class="timeline-entry-inner">
@@ -77,7 +82,7 @@
               </div>
             </div>
             </article>
-          </div> 
+          </div>
           
           <ul class="pagination">
             <%= will_paginate  @activities, :container => false %>
@@ -90,22 +95,22 @@
               <%= text_area_tag :note, nil, rows: "5", class: "form-control" %>
               <%= hidden_field_tag :type, '', :value => "Note" %>
               <%= hidden_field_tag :id, '', :value => @enquiry.id %>
-              <%= submit_tag "Add a note", class: "btn btn-primary add-note" %>      
+              <%= submit_tag "Add a note", class: "btn btn-primary add-note" %>
               <div class="clearfix"></div>
               <% end %>
           </div>
             <!-- /well -->
           <div class="activity"></div>
-            <!-- /activity --> 
+            <!-- /activity -->
           <% if current_user.admin? && edit %>
             <%= link_to "Delete " + @enquiry.name, @enquiry, method: :delete, data: { confirm: "You sure?" } %>
-             <!-- next line commented out as was causing errors in Heroku --> 
+             <!-- next line commented out as was causing errors in Heroku -->
             <%#= render "versions/versions", :object => @enquiry %>
             <% end %>
-            <br> 
-        </div>       
+            <br>
+        </div>
       </div>
     </section>
-  </aside> 
+  </aside>
 </div>
 

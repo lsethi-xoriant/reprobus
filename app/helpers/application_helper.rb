@@ -10,13 +10,15 @@ module ApplicationHelper
     end
   end
   
-  # Returns a dash if the passed in value is nil 
+  # Returns a dash if the passed in value is nil
   # (for use in some bootstrap Divs that need a value to size correctly)
   def value_or_dash(value)
     if value.blank?
-      return " - "
+      " - "
+    elsif value.gsub(/\s+/, "").blank?
+      " - "
     else
-      return value
+      value
     end
   end
   
@@ -25,12 +27,12 @@ module ApplicationHelper
     collection = options.delete(:collection)
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
-  end  
+  end
    
   def titles_list
-    list = ["Ms", 
-            "Miss", 
-            "Mrs",   
+    list = ["Ms",
+            "Miss",
+            "Mrs",
             "Mr",
             "Master",
             "Rev",
@@ -42,8 +44,8 @@ module ApplicationHelper
   end
   
   # adds nice date like: 14 Dec 2014
-  def formated_date(date) 
-    if !date.nil? then 
+  def formated_date(date)
+    if !date.nil? then
       return date.to_formatted_s(:rfc822)
     end
   end
@@ -113,9 +115,9 @@ module ApplicationHelper
       end
       # Call the original 'password_field' method to do the real work
       super
-    end    
+    end
   end
 
   # Add the modified method to ApplicationHelper
-  include BootstrapExtension  
+  include BootstrapExtension
 end

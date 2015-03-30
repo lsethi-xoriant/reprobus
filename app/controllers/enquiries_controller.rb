@@ -125,7 +125,7 @@ class EnquiriesController < ApplicationController
   #  if params[:user_type] == "New"
   #     @enquiry.validate_new_customer(params[:enquiry][:customers_attributes][:email], params[:enquiry][:customers_attributes][:mobile])
   #  end
-    
+
     if @enquiry.update_attributes(enquiry_params)
 #tidy up one day  - find better way to do this
       @enquiry.customers.clear
@@ -253,7 +253,7 @@ class EnquiriesController < ApplicationController
 
 private
     def enquiry_params
-      params.require(:enquiry).permit(:name, :source, :stage,
+      params.require(:enquiry).permit(:name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         :fin_date, :standard, :insurance, :reminder,

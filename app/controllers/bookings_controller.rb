@@ -14,6 +14,7 @@ class BookingsController < ApplicationController
   def show
     @booking = Booking.find(params[:id])
     @setting = Setting.find(1)
+    @enquiry = @booking.enquiry
     #@activities = @booking.activities.order('created_at DESC').page(params[:page]).per_page(5)
     respond_to do |format|
       format.html
@@ -47,6 +48,6 @@ class BookingsController < ApplicationController
   end
 private
     def booking_params
-      params.require(:booking).permit(:name, :amount, :deposit, :status)
+      params.require(:booking).permit(:name, :amount, :deposit, :status, :user_id)
     end
 end

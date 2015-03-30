@@ -1,6 +1,6 @@
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse"> <span class="sr-only">Toggle navigation</span> 
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse"> <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="navbar-brand" href="/dashboard">TripEase</a> </div>
       <!-- /.navbar-header -->
@@ -30,10 +30,10 @@
           <li class="divider"></li>
           <li> <a class="text-center" href="#"> <strong>Read All Messages</strong> <i class="fa fa-angle-right"></i> </a> </li>
         </ul>
-        <!-- /.dropdown-messages --> 
+        <!-- /.dropdown-messages -->
       </li>
       <!-- /.dropdown -->
-<!--      
+<!--
       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
         <ul class="dropdown-menu dropdown-tasks">
           <li> <a href="#">
@@ -73,7 +73,7 @@
             </a> </li>
           <li class="divider"></li>
           <li> <a class="text-center" href="#"> <strong>See All Tasks</strong> <i class="fa fa-angle-right"></i> </a> </li>
-        </ul>           
+        </ul>
       </li>  -->
     <!-- /.dropdown-tasks -->
       <!-- /.dropdown -->
@@ -88,7 +88,7 @@
             <div> <i class="fa fa-bell-o fa-fw"></i>  <%= current_user.getEnquiriesOpenCount.to_s %> Enquiries Open</div>
             </a> </li>
         </ul>
-        <!-- /.dropdown-alerts --> 
+        <!-- /.dropdown-alerts -->
       </li>
       <!-- /.dropdown -->
       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
@@ -99,11 +99,11 @@
           <li><a data-method="delete" href= <%= signout_path %> ><i class="fa fa-sign-out fa-fw"></i> Logout</a> </li>
 
         </ul>
-        <!-- /.dropdown-user --> 
+        <!-- /.dropdown-user -->
       </li>
       <!-- /.dropdown -->
     </ul>
-    <!-- /.navbar-top-links -->    
+    <!-- /.navbar-top-links -->
 
     <div class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
@@ -119,10 +119,13 @@
           <li> <a href= <%= enquiries_path %> ><i class="fa fa-comments-o fa-fw"></i> Enquiries</a> </li>
           <li> <a href= <%= customers_path %> ><i class="fa fa-group fa-fw"></i> Customers</a> </li>
           <li> <a href= <%= suppliers_path %> ><i class="fa fa-group fa-fw"></i> Suppliers</a> </li>
+          <li> <a href= <%= agents_path %> ><i class="fa fa-group fa-fw"></i> Agents</a> </li>
           <li> <a href= <%= tours_path %> ><i class="fa fa-plane fa-fw"></i> Tours</a> </li>
           <li> <a href= <%= bookings_path %> ><i class="fa fa-calendar fa-fw"></i> Bookings</a></li>
           <li> <a href="sales.html"><i class="fa fa-money fa-fw"></i> Sales</a> </li>
+<% if current_user.admin? %>
           <li> <a href=<%= setting_path(1) %>><i class="fa fa-files-o fa-fw"></i> Settings</a> </li>
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Admin <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -133,14 +136,15 @@
               <li><a href=<%= users_path %>><i class="fa fa-table fa-fw"></i> Users</a></li>
               
             </ul>
-          </li>          
+          </li>
+<% end %>
         </ul>
-        <!-- /#side-menu --> 
+        <!-- /#side-menu -->
       </div>
-      <!-- /.sidebar-collapse --> 
+      <!-- /.sidebar-collapse -->
     </div>
-    <!-- /.navbar-static-side --> 
-  </nav>    
+    <!-- /.navbar-static-side -->
+  </nav>
 
 
   

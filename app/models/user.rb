@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   end
   
   def isSystemUser
-    return self.name == "System" || self.email = "hamish@writecode.com.au"
+    return self.name == "System" || self.email == "hamish@writecode.com.au"
   end
   
 private

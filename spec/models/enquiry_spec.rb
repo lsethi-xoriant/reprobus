@@ -28,6 +28,7 @@
 #  reminder         :date
 #  xero_id          :string(255)
 #  xpayments        :text
+#  agent_id         :integer
 #
 
 require 'spec_helper'

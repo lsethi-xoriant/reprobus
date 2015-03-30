@@ -22,10 +22,16 @@ Reprobus::Application.routes.draw do
   resources :suppliers do
     collection do
 #      get 'customersearch'  # /enquires/customersearch
-      get 'suppliersearch'  # /enquires/suppliersearch
+      get 'suppliersearch'  # /suppliers/suppliersearch
     end
   end
-
+  
+  resources :agents  do
+    collection do
+      get 'agentsearch'  # /agents/suppliersearch
+    end
+  end
+  
   resources :customers do
     collection do
       get 'addnote'  # /customers/addnote

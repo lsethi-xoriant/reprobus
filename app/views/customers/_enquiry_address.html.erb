@@ -1,0 +1,15 @@
+<% if e.agent %>
+<li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Agent</li>
+<li class="col-lg-9 col-md-9 col-sm-9"><a href=<%= agent_path e.agent %>><%= e.agent.fullname %></a></li>
+<% end %>
+<hr/>
+<li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Contact Address</li>
+<li class="col-lg-9 col-md-9 col-sm-9"><%=  simple_format(value_or_dash(e.customer_address) ) %></li>
+<li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Contact Details</li>
+<div class="col-lg-9 profile-name">
+<ul>
+<li><i class="fa fa-envelope"></i> <%= mail_to(e.customer_email, e.customer_email, bcc: e.customer_email_link)%></li>
+<li><i class="fa fa-phone"></i> <%= e.customer_phone %> (Landline) </li>
+<li><i class="fa fa-mobile"></i> <%= e.customer_mobile %> (Mobile)</li></ul>
+
+</div>

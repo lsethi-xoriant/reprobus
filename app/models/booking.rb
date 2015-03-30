@@ -15,6 +15,7 @@
 #  xpayments   :text
 #  xero_id     :string(255)
 #  xdeposits   :text
+#  agent_id    :integer
 #
 
 class Booking < ActiveRecord::Base
@@ -24,6 +25,7 @@ class Booking < ActiveRecord::Base
   serialize   :xpayments
   has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_invoice_id
   has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_invoice_id
+  belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   
   def getCustomerInvoicesAmount
     tot = 0
@@ -66,7 +68,6 @@ class Booking < ActiveRecord::Base
      else
        return (Date.today + 30)
      end
-       
   end
   
   def dasboard_customer_name

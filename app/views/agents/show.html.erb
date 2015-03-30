@@ -2,16 +2,16 @@
 <div class="row">
   <aside class="col-lg-12">
     <section>
-      <h1 class="page-header" >Supplier Contact Details</h1>
+      <h1 class="page-header" >Agent Contact Details</h1>
 
        <div class="row">
         <div class="col-lg-6">
           <div class="row">
             <div class="col-lg-9 profile-name">
-              <h2>Supplier: <%= @customer.supplier_name %></h2>
+              <h2>Agent: <%= @customer.supplier_name %></h2>
               <br><br><br>
               <h3>Contact: <%= @customer.first_name + " " + @customer.last_name %>
-                <%= link_to edit_supplier_path(@customer) do %>
+                <%= link_to edit_agent_path(@customer) do %>
                 <i class="fa fa-pencil editicon"></i>Edit
                 <% end %>
               </h3>
@@ -23,12 +23,10 @@
             </div>
           </div>
           <ul class="row profile-details">
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Supplier ID</li>
+            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Agent ID</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.nice_id %></li>
-            <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Default Currency</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= @customer.getSupplierCurrencyDisplay %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Address</li>
-            <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash ( simple_format(@customer.getAddressDetails) ) %></li>
+            <li class="col-lg-9 col-md-9 col-sm-9"><%=  simple_format(value_or_dash(@customer.getAddressDetails)) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Profile Created</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= formated_date(@customer.created_at) %></li>
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
