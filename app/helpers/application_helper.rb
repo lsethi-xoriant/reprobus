@@ -15,8 +15,6 @@ module ApplicationHelper
   def value_or_dash(value)
     if value.blank?
       " - "
-    elsif value.gsub(/\s+/, "").blank?
-      " - "
     else
       value
     end
