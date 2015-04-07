@@ -10,6 +10,7 @@
 #  quantity    :integer
 #  created_at  :datetime
 #  updated_at  :datetime
+#  deposit     :integer
 #
 
 class LineItem < ActiveRecord::Base

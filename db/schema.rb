@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324225319) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20150407052711) do
 
   create_table "activities", force: true do |t|
     t.string   "type"
@@ -232,6 +229,7 @@ ActiveRecord::Schema.define(version: 20150324225319) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "deposit"
   end
 
   create_table "settings", force: true do |t|

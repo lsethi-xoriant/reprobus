@@ -6,6 +6,11 @@
   <td>
     <input type="text" name='desc<%=i%>'  placeholder='Description' class="form-control"/ value="<%= li.description %>">
   </td>
+  <% if !@invoice.isSupplierInvoice? %>
+    <td>
+      <input type="number" name='dep<%=i%>' placeholder='0' class="form-control dep_field" value="<%= li.deposit %>"/>
+    </td>
+  <% end %>
   <td>
     <input type="number" name='qty<%=i%>' placeholder='0' class="form-control qty_field" value="<%= li.quantity %>"/>
   </td>
@@ -14,5 +19,5 @@
   </td>
   <td>
     <input type="number" name='total<%=i%>' placeholder='$0.00' class="form-control" disabled="disabled" value="<%= li.total %>"/>
-  </td>           
+  </td>
 </tr>

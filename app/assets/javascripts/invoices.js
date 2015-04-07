@@ -48,11 +48,11 @@ $(document).ready(function(){
   function showHideDepositCols(){
     if ( $('#depositCheck').length)  {
       if ( $('#depositCheck').is(":checked") ) {
-       // alert("checked");
+       // alert("not hiding col");
         $('td:nth-child(3),th:nth-child(3)').show();
         $("#depositinput").prop('readonly', true);
       } else {
-       //  alert("not checked");
+        //alert("hiding col");
         $('td:nth-child(3),th:nth-child(3)').hide();
         $("#depositinput").prop('readonly', false);
       }
@@ -66,8 +66,8 @@ $(document).ready(function(){
       var rowTotal = $(this).closest('td').next('td').next('td').next('td').find('input').val();
       if (rowTotal !== 0 && rowTotal !== "")  {
       depTot = depTot + (($(this).val()/100) * rowTotal);
-      console.log("HAMIHS rowtot  " + rowTotal);
-      console.log("HAMIHS deptot " + depTot);
+      //console.log("HAMIHS rowtot  " + rowTotal);
+      //console.log("HAMIHS deptot " + depTot);
       return depTot;
       }
     });

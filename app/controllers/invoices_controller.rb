@@ -163,13 +163,13 @@ class InvoicesController < ApplicationController
         break
       end
        
-      if params["desc"+i.to_s].blank? && params["price"+i.to_s].blank? && params["qty"+i.to_s].blank?
+      if params["desc"+i.to_s].blank? && params["price"+i.to_s].blank? && params["qty"+i.to_s].blank? && params["dep"+i.to_s].blank?
         i+=1
         next
       end
       
       total = (params["price"+i.to_s].to_i *  params["qty"+i.to_s].to_i)
-      inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], total: total)
+      inv.line_items.build(description: params["desc"+i.to_s], item_price: params["price"+i.to_s], quantity: params["qty"+i.to_s], deposit: params["dep"+i.to_s], total: total)
       i+=1
     end
 
@@ -209,7 +209,7 @@ class InvoicesController < ApplicationController
 private
   def invoice_params
     params.permit(:invoice_date, :deposit_due, :final_payment_due, :deposit, :currency, :supplier_id, :currency_id,
-        line_item_attributes: [:item_price, :total, :description, :quantity] )
+        line_item_attributes: [:item_price, :total, :description, :quantity, :deposit] )
     end
 end
   

@@ -18,21 +18,22 @@
         <table width="100%">
           <tr>
             <th width="40%" align="left">Description</th><th width="20%" align="left">Quantity</th><th width="20%" align="left">Price</th><th width="20%" align="left">Total</th>
-          </tr> 
+          </tr>
 
           <% @invoice.line_items.each do |item| %>
           <%= render partial: 'invoices/line_items', locals: { item: item } %>
-          <% end %> 
+          <% end %>
         </table>
       </div>
       <br>
       Total <strong><%= number_to_currency(@invoice.getTotalAmount, precision: 2) %> </strong><br>
       <br>
-      Exch Rate when created <strong><%= number_to_currency(@invoice.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
+      Exch Rate when created <strong><%= number_to_currency(@invoice.exchange_rate.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
+      Exch Total when created <strong><%= number_to_currency(@invoice.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %> </strong><br>
       Today Exch Rate <strong><%= number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
 
       </section>
-  </aside> 
+  </aside>
 </div>
 
 <div>
@@ -43,7 +44,7 @@
     <% else %>
     <%=  form_tag({controller: "invoices", action: "getxeroinvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
       <%= hidden_field_tag :id, '', :value => @invoice.id %>
-      <%= submit_tag "Get Xero Invoice Details", id: "invoiceBtn", class: "btn btn-primary" %>     
+      <%= submit_tag "Get Xero Invoice Details", id: "invoiceBtn", class: "btn btn-primary" %>
       <% end %>
     <% end %>
   <% end %>
@@ -51,4 +52,4 @@
   <div id="invoices" >
      <%= render partial: 'invoice', locals: {items: @xinvoice}  %>
   </div>
-</div> 
+</div>
