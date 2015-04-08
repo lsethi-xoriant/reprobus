@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// IF = it is included...
+//
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
@@ -21,5 +23,7 @@
 //= require bootstrap-datepicker
 // require dataTables/jquery.dataTables
 // require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require toastr
 //= require_tree .
+
 

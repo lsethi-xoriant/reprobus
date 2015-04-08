@@ -15,7 +15,7 @@ class InvoicesController < ApplicationController
   def addxeropayment
     @invoice = Invoice.find(params[:id])
     if params[:amount].nil? || !is_number?(params[:amount])
-      flash[:danger] = "Payment amount must be entered. You entered #{params[:amount]}"
+      flash[:error] = "Payment amount must be entered. You entered #{params[:amount]}"
       redirect_to booking_invoice_path( @invoice.booking, @invoice)
     else
       @invoice.add_xero_payment(params[:amount])
@@ -27,7 +27,7 @@ class InvoicesController < ApplicationController
   def changexeroinvoice
     @invoice = Invoice.find(params[:id])
     if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
-      flash[:danger] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
+      flash[:error] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
       redirect_to booking_invoice_path( @invoice.booking, @invoice)
     else
       @invoice.change_xero_invoice(params[:amount])
@@ -131,7 +131,7 @@ class InvoicesController < ApplicationController
         end
         
         if !err
-          flash[:danger] = "Warning: Xero Invoice could not be created"
+          flash[:error] = "Warning: Xero Invoice could not be created"
         end
       end
       @booking.update_attribute(:status, "Invoice created")

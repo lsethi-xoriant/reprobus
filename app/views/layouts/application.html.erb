@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head> 
+  <head>
     <title><%= full_title(yield(:title)) %></title>
     <link href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-    
+
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
+    <%= render 'layouts/toastr_settings' %>
   </head>
   <body>
     <div id="wrapper">
@@ -17,11 +18,15 @@
     <div id="page-wrapper" class="profile">
 
       <div class="row">
-        <div class="col-lg-12">       
+        <div class="col-lg-12">
         <%= yield %>
         <% flash.each do |key, value| %>
-          <div class="alert alert-<%= key %>"><%= raw(value) %></div>
-        <% end %>         
+           <!--<div class="alert alert-<%= key %>"><%= raw(value) %></div>-->
+           <script type="text/javascript">
+              toastr.<%= raw(key.to_s) %>(<%= raw(value.inspect) %>)
+           </script>
+        <% end %>
+      
           
         <%= render 'layouts/footer' %>
         <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && current_user.name == "Hamish Gardiner" %>

@@ -29,7 +29,7 @@ class SettingsController < ApplicationController
       @currTabActive = true
       render 'edit'
     else
-      flash[:danger] = "Error adding currency override. Please check all fields completed"
+      flash[:error] = "Error adding currency override. Please check all fields completed"
       @currTabActive = true
       render 'edit'
     end
