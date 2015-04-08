@@ -124,9 +124,14 @@ class InvoicesController < ApplicationController
     if @invoice.save #&& err.blank?
       @booking.update_attribute(:amount, @invoice.getTotalAmount)
       if Setting.find(1).use_xero
+        begin
         err = @invoice.create_invoice_xero(current_user)
+        rescue Exception
+          err = false;
+        end
+        
         if !err
-          flash[:warning] = "Warning: Xero Invoice could not be created"
+          flash[:danger] = "Warning: Xero Invoice could not be created"
         end
       end
       @booking.update_attribute(:status, "Invoice created")

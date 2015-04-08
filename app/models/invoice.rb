@@ -228,7 +228,11 @@ class Invoice < ActiveRecord::Base
       exch = mon.exchange_to(syscode)
       self.exchange_amount = exch.dollars
       self.exchange_amount = exch.dollars
-      self.exchange_rate = Money.default_bank.get_rate(code, syscode)
+      if code == syscode
+        self.exchange_rate = 1.00
+      else
+        self.exchange_rate = Money.default_bank.get_rate(code, syscode)
+      end
     end
   end
 end
