@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  var saveClicked = false;
   var i = $("#tab_logic > tbody > tr").length-1;
   
   if ( $('#depositCheck').length === 0)  {
@@ -21,13 +22,18 @@ $(document).ready(function(){
     }
   });
   
+ $("#subbutton").click(function(){saveClicked = true;});
+  
   $(document).on("blur",'#tab_logic tr:nth-last-child(2) td:nth-last-child(2)',function() {
-    $('#addr'+i).html(addLineItemRow(i));
-    $('#addr'+i).find('input:first').focus();
-    $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-    i++;
-    
-    showHideDepositCols();
+    setTimeout(function(){
+      if (saveClicked === false) {
+        $('#addr'+i).html(addLineItemRow(i));
+        $('#addr'+i).find('input:first').focus();
+        $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+        i++;
+        showHideDepositCols();
+      }
+    },100);
   });
   
   function addLineItemRow(i) {

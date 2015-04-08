@@ -12,13 +12,13 @@
 <div class="row">
   
 <div class="container">
-   <%= render 'shared/error_messages', object: @invoice %>  
+   <%= render 'shared/error_messages', object: @invoice %>
   
    <%= form_tag({controller: "invoices", action: "create"}, method: "post", class: "form-horizontal") do %>
      <div class="form-group">
       <label for="currency_id" class="col-sm-3 control-label">Currency</label>
       <div class="col-sm-4">
-        <%= hidden_field_tag(:currency_id, currency, id: 'currencysearch', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>        
+        <%= hidden_field_tag(:currency_id, currency, id: 'currencysearch', class: 'select2 ajax', style: 'width: 100%;', placeholder: "Currency" ) %>
       </div>
       </div>
     <div class="form-group">
@@ -32,11 +32,11 @@
     <div class="form-group">
       <label for="deposit" class="col-sm-3 control-label">Deposit Amount</label>
       <div class="col-sm-4">
-        <div class="checkbox"><label><input name='calcDeposit' id = "depositCheck" type="checkbox" checked> Calculate Deposit from line items</label>        
+        <div class="checkbox"><label><input name='calcDeposit' id = "depositCheck" type="checkbox" checked> Calculate Deposit from line items</label>
         <input type="number" name='deposit' id="depositinput" placeholder="$0.00" class="form-control" value="<%= number_with_precision(@invoice.deposit, :precision => 2) %>" readonly>
   </div>
       
-      </div> 
+      </div>
     </div>
   
     <div class="form-group">
@@ -44,8 +44,8 @@
       <div class='input-group date col-sm-4' id='payday' >
         <input type="text" name='deposit_due' class="form-control" data-date-format="DD/MM/YYYY" value=<%= depositDay.strftime("%d/%m/%Y") %> />
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-      </div>    
-    </div> 
+      </div>
+    </div>
 
     <div class="row clearfix">
 		<div class="col-md-12 column">
@@ -62,10 +62,10 @@
 						</th>
 						<th class="text-center">
 							% Deposit
-						</th>              
+						</th>
 						<th class="text-center">
 							Quantity
-						</th>          
+						</th>
 						<th class="text-center">
 							Price
 						</th>
@@ -86,24 +86,24 @@
 						</td>
 						<td>
 						<input type="number" name='dep0' placeholder='0' class="form-control dep_field"/>
-						</td>             
+						</td>
 						<td>
 						<input type="number" name='qty0' placeholder='0' class="form-control qty_field"/>
-						</td>           
+						</td>
 						<td>
 						<input type="number" name='price0' placeholder='$0.00' class="form-control price_field"/>
 						</td>
  						<td>
 						<input type="number" name='total0' placeholder='$0.00' class="form-control" disabled="disabled"/>
-						</td>           
+						</td>
 					</tr>
           <tr id='addr1'></tr>
           <% else %>
             <% i=0 %>
-            <% @invoice.line_items.each do |item| %>            
+            <% @invoice.line_items.each do |item| %>
               <%= render partial: 'invoices/line_item_row', locals: { li: item, i: i } %>
               <% i+=1 %>
-            <% end %> 
+            <% end %>
           <tr id='addr<%= i.to_s %>'></tr>
           <% end %>
         </tbody>
@@ -113,9 +113,9 @@
 	<a id='delete_row' class="pull-left btn btn-default">Delete Row</a><a id="add_row" class="btn btn-default pull-right">Add Row</a>
   <div class="clearfix"></div>
   <br><br>
-  <%= submit_tag "Save Invoice", class: "btn btn-primary" %>    
+  <%= submit_tag "Save Invoice", class: "btn btn-primary", id: "subbutton" %>
   <br>
-<% end %>  
+<% end %>
 </div>
 
   
