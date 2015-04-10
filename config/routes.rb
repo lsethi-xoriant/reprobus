@@ -14,6 +14,7 @@ Reprobus::Application.routes.draw do
   resources :settings, only: [:edit, :update, :show] do
     collection do
       get 'addcurrency' # /settings/addcurrency
+      get 'syncInvoices'
     end
   end
   
@@ -59,6 +60,7 @@ Reprobus::Application.routes.draw do
         get 'addxeropayment'
         get 'changexeroinvoice'
         get 'supplierInvoice'
+        get 'syncInvoice'
         post 'createSupplier'
         match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get'
        # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get'

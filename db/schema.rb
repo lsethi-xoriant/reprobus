@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408043356) do
+ActiveRecord::Schema.define(version: 20150409223355) do
 
   create_table "activities", force: true do |t|
     t.string   "type"
@@ -238,6 +238,8 @@ ActiveRecord::Schema.define(version: 20150408043356) do
     t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "reference"
+    t.date     "date"
   end
 
   create_table "settings", force: true do |t|
@@ -304,5 +306,22 @@ ActiveRecord::Schema.define(version: 20150408043356) do
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+
+  create_table "x_invoices", force: true do |t|
+    t.decimal  "amount_due",     precision: 12, scale: 5
+    t.decimal  "amount_paid",    precision: 12, scale: 5
+    t.decimal  "total",          precision: 12, scale: 5
+    t.string   "currency_code"
+    t.string   "currency_rate"
+    t.date     "date"
+    t.string   "invoice_ref"
+    t.integer  "invoice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "last_sync"
+    t.string   "invoice_number"
+    t.date     "due_date"
+    t.string   "status"
+  end
 
 end

@@ -44,7 +44,24 @@ class SettingsController < ApplicationController
       render 'edit'
     end
   end
-
+  
+  def syncInvoices
+    invoices = []
+    Invoice.all.each do |inv|
+      if inv.xero_id
+       invoices << inv
+      end
+    end
+    
+    xero = Xero.new()
+    xero.sync_invoices(invoices)
+    
+    @invoices = invoices
+    respond_to do |format|
+        format.js
+    end
+  end
+  
 private
   def settings_params
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,

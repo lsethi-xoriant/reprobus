@@ -29,5 +29,12 @@
     </section>
     
     <%= render  partial: 'currency_table' %>
+    
+    <%=  form_tag({controller: "settings", action: "syncInvoices", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+      <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
+    <% end %>
+    <div id="invoices" >
+      <%#= render partial: 'invoices', locals: {items: @invoices}  %>
+    </div>
   </aside>
 </div>

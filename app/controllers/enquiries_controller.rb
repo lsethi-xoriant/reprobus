@@ -103,7 +103,7 @@ class EnquiriesController < ApplicationController
     
     if @enquiry.save
       @enquiry.add_customer(@cust)
-      flash[:success] = "Thank you, enquiry submitted."
+      flash.now[:success] = "Thank you, enquiry submitted."
       render 'confirmation'
     end
     

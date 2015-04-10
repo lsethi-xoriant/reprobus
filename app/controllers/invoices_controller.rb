@@ -43,7 +43,16 @@ class InvoicesController < ApplicationController
         format.js
     end
   end
-
+  
+  def syncInvoice
+    @invoices = Invoice.find(params[:id])
+    @invoice.sync_invoice()
+    @xinvoice = @invoice.x_invoice
+    respond_to do |format|
+        format.js
+    end
+  end
+  
   def pxpaymentsuccess
     response = Pxpay::Response.new(params).response
     @hash = response.to_hash
@@ -78,6 +87,7 @@ class InvoicesController < ApplicationController
     @setting = Setting.find(1)
     @invoice = Invoice.find(params[:id])
     @booking = Booking.find(params[:booking_id])
+    @xinvoice = @invoice.x_invoice
     respond_to do |format|
       format.html
       #format.json { render json: {name: @invoice.fullname, id: @invoice.id  }}

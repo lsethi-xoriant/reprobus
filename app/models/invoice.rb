@@ -39,8 +39,10 @@ class Invoice < ActiveRecord::Base
   serialize  :xdeposits
   validate   :validate_customer_invoice # validate deposit is set, and deposit due date.
   validate   :validate_supplier_invoice # validate it has a supplier set.
-  belongs_to  :currency
-
+  belongs_to :currency
+  has_many   :payments, dependent: :destroy
+  has_one    :x_invoice
+  
   validate do |invoice|
     int = 0;
     invoice.line_items.each do |li|
@@ -114,6 +116,12 @@ class Invoice < ActiveRecord::Base
   def get_invoice_xero
     xero = Xero.new()
     inv = xero.get_invoice(self.xero_id)
+    return inv
+  end
+  
+  def sync_invoice
+    xero = Xero.new()
+    inv = xero.sync_invoice(self)
     return inv
   end
   

@@ -9,8 +9,8 @@ class Xero
   #CONSUM_KEY = "VNC0RNRCXH3BPNK4GDCK0J4SLMSX68"  // dev testing key
   #OAUTH_SECRET_KEY = "DBDRCQLMZABOSGZHCBTVWLXTCJDRUA" // dev testing
   
-  CONSUM_KEY = Setting.find(1).xero_consumer_key  
-  OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret 
+  CONSUM_KEY = Setting.find(1).xero_consumer_key
+  OAUTH_SECRET_KEY = Setting.find(1).xero_consumer_secret
  
   def initialize
     path = Rails.root + "config/privatekey.pem"
@@ -25,7 +25,7 @@ class Xero
       xcontacts = self.client.Contact.all(:where => {:email_address => cust.email})
     end
 
-    if xcontacts.blank? 
+    if xcontacts.blank?
       #add contact to xero
       xcust = self.client.Contact.build(:name => cust.fullname)
       xcust.first_name = cust.first_name
@@ -33,7 +33,7 @@ class Xero
       xcust.email_address = cust.email
       #xcust.add_address(:type => 'STREET', :line1 => '12 Testing Lane', :city => 'Brisbane') # TO BE ADDED
       #xcust.add_phone(:type => 'DEFAULT', :area_code => '07', :number => '3033 1234')  # TO BE ADDED
-      xcust.add_phone(:type => 'MOBILE', :number => cust.mobile)  # ADD nomal phone - may need to structure our phone records like xero does. 
+      xcust.add_phone(:type => 'MOBILE', :number => cust.mobile)  # ADD nomal phone - may need to structure our phone records like xero does.
       xcust.save
     else
       xcust = xcontacts.first
@@ -43,24 +43,24 @@ class Xero
   
   def create_invoice(invoice)
     booking = invoice.booking
-    #if we have a lead customer create contact in xero if it does not already exist. 
-    #self.customers.each do |cust| # xero only allows one contact per invoice. 
+    #if we have a lead customer create contact in xero if it does not already exist.
+    #self.customers.each do |cust| # xero only allows one contact per invoice.
     if invoice.isSupplierInvoice?
       cust = invoice.supplier
     else
       cust = invoice.booking.customer
     end
     
-    xcust = self.getContact(cust)    
+    xcust = self.getContact(cust)
     
-    if invoice.isSupplierInvoice? 
+    if invoice.isSupplierInvoice?
       type = "ACCPAY";
     else
       type = "ACCREC";
     end
     
     currency = invoice.getCurrencyCode
-    if currency.blank? 
+    if currency.blank?
       currency = Setting.find(1).getDefaultCurrency.code
     end
     
@@ -80,7 +80,7 @@ class Xero
         }]
       })
     
-    if invoice.isSupplierInvoice? 
+    if invoice.isSupplierInvoice?
       xinv.invoice_number = booking.nice_id + " " + booking.name
     end
     
@@ -108,8 +108,37 @@ class Xero
     arr = invoice.xpayments || []
     arr <<   xPay.payment_id
     invoice.update_attribute(:xpayments, arr)
+    
+    invoice.payments.create(payment_ref: xPay.payment_id, amount: amount, date: xPay.date, reference: xPay.reference)
   end
   
+  def sync_invoice(invoice)
+    xInv = self.client.Invoice.find(invoice.xero_id)
+    invoice.payments.destroy_all
+     
+    xInv.payments.each do |xPay|
+      invoice.payments.create(payment_ref: xPay.payment_id, amount: xPay.amount, date: Date.today, reference: "Manual payment made via Tripease application")
+    end
+    
+    if !invoice.x_invoice
+      invoice.create_x_invoice(amount_due: xInv.amount_due, amount_paid: xInv.amount_paid, total: xInv.total, currency_code: xInv.currency_code,
+                               currency_rate: xInv.currency_rate, date: xInv.date, invoice_ref: xInv.invoice_id,
+                               invoice_number: xInv.invoice_number, status: xInv.status, due_date: xInv.due_date, last_sync: Time.now)
+    else
+      invoice.x_invoice.update_attributes(amount_due: xInv.amount_due, amount_paid: xInv.amount_paid, total: xInv.total, currency_code: xInv.currency_code,
+                               currency_rate: xInv.currency_rate, date: xInv.date, invoice_ref: xInv.invoice_id,
+                               invoice_number: xInv.invoice_number, status: xInv.status, due_date: xInv.due_date, last_sync: Time.now)
+    end
+  end
+ 
+ 
+  def sync_invoices(invoices)
+    invoices.each do |invoice|
+      # investigate doing this in one hit... possible xero.invoices.all with a where clause.
+      self.sync_invoice(invoice)
+    end
+  end
+ 
   def change_invoice(invoice, amount)
     
     xInv = self.client.Invoice.find(invoice.xero_id)
@@ -119,19 +148,19 @@ class Xero
     #invoice.xpayments.each do |pay|
       deletePay =  self.client.Payment.build
       deletePay.payment_id = pay.payment_id
-      deletePay.status = "DELETED"    
+      deletePay.status = "DELETED"
       deletePay.save
       payArray << pay
     end
     
     li = xInv.line_items.first
     li.unit_amount = amount.to_f
-    xInv.save  
+    xInv.save
     
     xAcc = self.client.Account.find('855')
     arr = []
     
-    payArray.each do |pay|  
+    payArray.each do |pay|
       xPay = self.client.Payment.build(:amount => pay.amount, :date => pay.date, :reference => pay.reference)
       xPay.invoice = xInv
       xPay.account = xAcc
@@ -139,12 +168,12 @@ class Xero
       xPay.save
 
       arr <<   xPay.payment_id
-    end 
-    invoice.update_attribute(:xpayments, arr)   
+    end
+    invoice.update_attribute(:xpayments, arr)
   end
   
   def get_invoice(xero_id)
-    if xero_id.blank? 
+    if xero_id.blank?
       return
     end
     

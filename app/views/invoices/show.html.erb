@@ -41,20 +41,31 @@
 </div>
 
 <div>
-  <a href=<%= booking_invoice_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Pdf</button></a>
-  <br><br>
-  <% if Setting.find(1).use_xero  %>
-    <% if @invoice.xero_id.blank? %>
 
-    <% else %>
-    <%=  form_tag({controller: "invoices", action: "getxeroinvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
-      <%= hidden_field_tag :id, '', :value => @invoice.id %>
-      <%= submit_tag "Get Xero Invoice Details", id: "invoiceBtn", class: "btn btn-primary" %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <br>
+  <a href=<%= booking_invoice_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Deposit Pdf</button></a>
+  <br><br>
+  
   <div id="invoices" >
      <%= render partial: 'invoice', locals: {items: @xinvoice}  %>
   </div>
+  
+  <% if Setting.find(1).use_xero  %>
+    <% if @invoice.xero_id.blank? %>
+      <div><h4>Not previously sent to xero</h4></div>
+    <% else %>
+      <%=  form_tag({controller: "invoices", action: "syncInvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+        <%= hidden_field_tag :id, '', :value => @invoice.id %>
+        <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+
 </div>
+
+<!--  OLD way of intereacting wth xero. now we download and store info.
+      <%=  form_tag({controller: "invoices", action: "getxeroinvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+        <%= hidden_field_tag :id, '', :value => @invoice.id %>
+        <%= submit_tag "Get Xero Invoice Details", id: "invoiceBtn", class: "btn btn-primary" %>
+      <% end %>
+-->
