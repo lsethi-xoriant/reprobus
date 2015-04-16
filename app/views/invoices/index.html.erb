@@ -28,7 +28,7 @@ end
           <th>Email</th>
           <th>Amount</th>
           <th>Org Exch Amt</th>
-          <th>CC Paid</th>
+          <th>Paid (last sync)</th>
           <th>Assigned To</th>
           <th>Status</th>
         </tr>
@@ -41,7 +41,7 @@ end
           <td><%= @booking.customer.email %></td>
           <td><%= number_to_currency(inv.getTotalAmount, precision: 0) + " " + inv.getCurrencyCode %></td>
           <td><%= number_to_currency(inv.exchange_amount.to_s, precision: 2)  + " " +  Setting.find(1).currencyCode %></td>
-          <td><%= number_to_currency(inv.getCCPaidTotal, precision: 0) %></td>
+          <td><%= number_to_currency(inv.getPaidTotal, precision: 0) %></td>
           <td><%= @booking.assigned_to_name %></td>
           <td><%= inv.status %></td>
         </tr>

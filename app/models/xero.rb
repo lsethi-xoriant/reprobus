@@ -133,10 +133,18 @@ class Xero
  
  
   def sync_invoices(invoices)
+    logStr = ""
+    
     invoices.each do |invoice|
       # investigate doing this in one hit... possible xero.invoices.all with a where clause.
+      begin
       self.sync_invoice(invoice)
+      logStr = logStr + "... synced invoice #{invoice.id}, xero invoice #{invoice.x_invoice.invoice_number}<br>"
+      rescue Exception
+        logStr = logStr + "Warning - Invoice #{invoice.id} could not be synced<br>"
+      end
     end
+    return logStr
   end
  
   def change_invoice(invoice, amount)

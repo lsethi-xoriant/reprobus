@@ -52,10 +52,11 @@ class SettingsController < ApplicationController
        invoices << inv
       end
     end
-    
+    logStr = ""
     xero = Xero.new()
-    xero.sync_invoices(invoices)
+    logStr = xero.sync_invoices(invoices)
     
+    @logStr = logStr
     @invoices = invoices
     respond_to do |format|
         format.js

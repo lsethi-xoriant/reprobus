@@ -1,5 +1,5 @@
 $(document).on('click', '#invoiceSyncBtn', function() {
-  $("#invoices").html("Loading... <img id='ajaxLoader' src='http://tdwiki.daverabelink.net/images/3/3a/Throbber_bar.gif' />");
+  $("#invoices").html("<br>Loading... <img id='ajaxLoader' src='http://tdwiki.daverabelink.net/images/3/3a/Throbber_bar.gif' />");
 });
 
 

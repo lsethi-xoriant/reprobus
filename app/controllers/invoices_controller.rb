@@ -45,7 +45,7 @@ class InvoicesController < ApplicationController
   end
   
   def syncInvoice
-    @invoices = Invoice.find(params[:id])
+    @invoice = Invoice.find(params[:id])
     @invoice.sync_invoice()
     @xinvoice = @invoice.x_invoice
     respond_to do |format|
@@ -63,8 +63,8 @@ class InvoicesController < ApplicationController
   end
   
   def pxpaymentfailure
-      response = Pxpay::Response.new(params).response
-      @hash = response.to_hash
+    response = Pxpay::Response.new(params).response
+    @hash = response.to_hash
   end
   
  def index

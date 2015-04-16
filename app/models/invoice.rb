@@ -97,6 +97,14 @@ class Invoice < ActiveRecord::Base
     return tot
   end
   
+  def getPaidTotal
+    tot = 0
+    if self.x_invoice
+      tot = self.x_invoice.amount_paid
+    end
+    return tot
+  end
+  
   def getTotalAmount
     total = 0
     self.line_items.each do |item|

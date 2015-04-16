@@ -1,13 +1,8 @@
 $(document).ready(function(){
+//$(document).on("ready page:load", function(){
   var saveClicked = false;
   var i = $("#tab_logic > tbody > tr").length-1;
   
-  if ( $('#depositCheck').length === 0)  {
-   //alert("Not there");
-  }
-  
-  //alert($('#depositCheck').val());
-
   $("#add_row").click(function(){
     $('#addr'+i).html(addLineItemRow(i));
     $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
@@ -22,7 +17,7 @@ $(document).ready(function(){
     }
   });
   
- $("#subbutton").click(function(){saveClicked = true;});
+  $("#subbutton").click(function(){saveClicked = true;});
   
   $(document).on("blur",'#tab_logic tr:nth-last-child(2) td:nth-last-child(2)',function() {
     setTimeout(function(){
@@ -80,6 +75,7 @@ $(document).ready(function(){
     $("#depositinput").val(depTot);
   }
 });
+
 
 $(document).on('change', '.price_field', function() {
   //alert( "Handler for .blur() called." );

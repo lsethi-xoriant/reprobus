@@ -127,7 +127,7 @@ class Enquiry < ActiveRecord::Base
     if self.agent
       self.agent.getAddressDetails
     else
-      self.customer.first.getAddressDetails
+      self.customers.first.getAddressDetails
     end
   end
   
