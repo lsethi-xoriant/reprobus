@@ -24,6 +24,9 @@
 // require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require toastr
 //= require turbolinks
+//= require nprogress
+//= require nprogress-turbolinks
+//= require nprogress-ajax
 //= require_tree .
 
 Turbolinks.ProgressBar.enable();

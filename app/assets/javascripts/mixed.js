@@ -1,7 +1,3 @@
-$(document).on('click', '#invoiceSyncBtn', function() {
-  $("#invoices").html("<br>Loading... <img id='ajaxLoader' src='http://tdwiki.daverabelink.net/images/3/3a/Throbber_bar.gif' />");
-});
-
 
 $(document).ready(function() {
 $('#exampleModal').on('show.bs.modal', function (event) {
