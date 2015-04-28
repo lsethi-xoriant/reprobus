@@ -92,4 +92,10 @@ class Booking < ActiveRecord::Base
   def nice_id
     self.id.to_s.rjust(6, '0')
   end
+  
+  def trigger_new_booking
+    trigger = Setting.find(1).triggers.find_by_name("New Booking")
+    
+    CustomerMailer.send_trigger_email(trigger,self).deliver
+  end
 end

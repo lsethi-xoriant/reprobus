@@ -14,6 +14,11 @@
 #
 
 class EmailTemplate < ActiveRecord::Base
+  validates_presence_of :name
+  validates_presence_of :from_email
+  validates_presence_of :subject
+  validates_presence_of :body
+  
   has_many :triggers
   
   def trigger_count
