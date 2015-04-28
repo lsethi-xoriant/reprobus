@@ -96,6 +96,8 @@ class Booking < ActiveRecord::Base
   def trigger_new_booking
     trigger = Setting.find(1).triggers.find_by_name("New Booking")
     
-    CustomerMailer.send_trigger_email(trigger,self).deliver
+    if trigger.email_template
+      CustomerMailer.send_trigger_email(trigger.email_template,self).deliver
+    end
   end
 end

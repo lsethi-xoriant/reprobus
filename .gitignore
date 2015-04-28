@@ -24,5 +24,6 @@ doc/
 .DS_Store
 .idea
 .secret
+/config/local_env.yml
 
 #/config/privatekey.pem

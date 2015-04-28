@@ -1,4 +1,4 @@
-class UserMailer < ActionMailer::Base
+class CustomerMailer < ActionMailer::Base
   default from: "donotreply@tripease.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -17,8 +17,8 @@ class UserMailer < ActionMailer::Base
       cc = ""
     end
     
-    mail(to: @booking.enquiry.email, subject: @email_template.subject, reply_to: @email_template.from_email,
-         from: from_name cc: cc)
+    mail(to: @booking.enquiry.customer_email, subject: @email_template.subject, reply_to: @email_template.from_email,
+         from: from_name, cc: cc)
   end
 
 end
