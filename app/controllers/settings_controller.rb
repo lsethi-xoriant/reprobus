@@ -5,11 +5,27 @@ class SettingsController < ApplicationController
   
   def show
     @setting = Setting.find(params[:id])
+    @triggers = @setting.triggers
   end
   
   def edit
     @setting = Setting.find(params[:id])
+    @triggers = @setting.triggers
   end
+  
+  def addEmailTriggers
+    @setting = Setting.find(params[:setting][:id])
+    #more code to whip through triggers and update them.
+
+    @emailTabActive = true
+    if @setting.update_attributes(settings_params)
+      flash[:success] = "Settings updated"
+      redirect_to @setting
+    else
+      render 'edit'
+    end
+  end
+  
   
   def addcurrency
     @setting = Setting.find(params[:setting_id])
@@ -24,13 +40,12 @@ class SettingsController < ApplicationController
       pass = @setting.exchange_rates.create(currency_code: curr.code, exchange_rate: params[:exchange_rate])
     end
     
+    @currTabActive = true
     if pass
       flash[:success] = "New currency override added"
-      @currTabActive = true
       render 'edit'
     else
       flash[:error] = "Error adding currency override. Please check all fields completed"
-      @currTabActive = true
       render 'edit'
     end
   end
@@ -66,6 +81,7 @@ class SettingsController < ApplicationController
 private
   def settings_params
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
-      :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :payment_gateway )
+      :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :payment_gateway,
+      triggers_attributes: [:id, :email_template_id])
     end
 end

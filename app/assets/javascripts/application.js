@@ -29,5 +29,4 @@
 //= require nprogress-ajax
 //= require_tree .
 
-Turbolinks.ProgressBar.enable();
 

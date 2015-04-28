@@ -2,9 +2,15 @@
 <% if @currTabActive == true %>
   <% varCXTabActive = 'active' %>
   <% varAccTabActive = '' %>
+  <% varEmailTabActive = '' %>
+<% elsif @emailTabActive == true  %>
+  <% varAccTabActive = '' %>
+  <% varCXTabActive = '' %>
+  <% varEmailTabActive = 'active' %>
 <% else %>
   <% varAccTabActive = 'active' %>
   <% varCXTabActive = '' %>
+  <% varEmailTabActive = '' %>
 <% end %>
 
 <h1 class="page-header">Edit Settings</h1>
@@ -12,6 +18,7 @@
   <ul class="nav nav-tabs" id="settingsTabs">
     <li class="<%=varAccTabActive%>"><a href="#accountTab">Accounts</a></li>
     <li class="<%=varCXTabActive%>"><a href="#currencyTab">Currency Exchange</a></li>
+    <li class="<%=varEmailTabActive%>"><a href="#emailTab">Email Triggers</a></li>
   </ul>
   
   <div id='content' class="tab-content">
@@ -59,13 +66,19 @@
     
     </div> <!-- end tab accounts -->
     
-    <div class="tab-pane <%=varCXTabActive%>" id="currencyTab">  <!-- begin tab stock -->
+    <div class="tab-pane <%=varEmailTabActive%>" id="emailTab">  <!-- begin tab email -->
+      <br>
+      <%= render  partial: 'email_triggers' %>
+      
+    </div> <!-- end tab email -->
+    
+    <div class="tab-pane <%=varCXTabActive%>" id="currencyTab">  <!-- begin tab cx -->
       <br>
       <% if @setting.currency %>
         <%= render  partial: 'currency_table' %>
         <div class="well well-sm">
           <h4>Exchange Rates</h4>
-          <%=  form_tag({controller: "settings", action: "addcurrency"}, method: "get", class: "form-horizontal") do %>
+          <%=  form_tag({controller: "settings", action: "addcurrency"}, method: "post", class: "form-horizontal") do %>
 
           <div class="form-group">
             <label for="currency_id" class="col-sm-3 control-label">Currency</label>
@@ -93,7 +106,7 @@
         <h4>System Currency needs to be set before setting up currencies</h4>
       <% end %>
       
-    </div> <!-- end tab accounts -->
+    </div> <!-- end tab currency -->
   </div><!-- end all tabs -->
   
 </div>
