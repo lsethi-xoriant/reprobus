@@ -85,6 +85,6 @@ private
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
-        address_attributes: [:street1, :street2, :city, :state, :zipcode, :country])
+        trigger_attributes: [:email_template_id])
     end
 end

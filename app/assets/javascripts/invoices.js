@@ -67,8 +67,6 @@ $(document).ready(function(){
       var rowTotal = $(this).closest('td').next('td').next('td').next('td').find('input').val();
       if (rowTotal !== 0 && rowTotal !== "")  {
       depTot = depTot + (($(this).val()/100) * rowTotal);
-      //console.log("HAMIHS rowtot  " + rowTotal);
-      //console.log("HAMIHS deptot " + depTot);
       return depTot;
       }
     });
@@ -78,7 +76,6 @@ $(document).ready(function(){
 
 
 $(document).on('change', '.price_field', function() {
-  //alert( "Handler for .blur() called." );
   var totalfield = $(this).closest('td').next('td').find('input');
   var qtyfield = $(this).closest('td').prev('td').find('input');
   //$(this).closest('td').next('td').find('input').hide();

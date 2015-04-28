@@ -117,7 +117,7 @@ class Xero
     invoice.payments.destroy_all
      
     xInv.payments.each do |xPay|
-      invoice.payments.create(payment_ref: xPay.payment_id, amount: xPay.amount, date: Date.today, reference: "Manual payment made via Tripease application")
+      invoice.payments.create(payment_ref: xPay.payment_id, amount: xPay.amount, date: xPay.date, reference: xPay.reference)
     end
     
     if !invoice.x_invoice

@@ -23,6 +23,8 @@ class Setting < ActiveRecord::Base
   
   belongs_to :currency
   has_many :exchange_rates
+  has_many :triggers
+  accepts_nested_attributes_for :triggers
   
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")

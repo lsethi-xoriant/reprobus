@@ -14,5 +14,7 @@
  *= require font-awesome
  *= require bootstrap-datepicker3
  *= require toastr
+ *= require nprogress
+ *= require nprogress-bootstrap
  */
 

@@ -3,6 +3,9 @@ class EmailsController < ApplicationController
   
     
   def post
+     # this method recieves a post message from a mail service provider (i.e mailgun)
+     # it then uses the details from the html post, to create an activity on the customer
+     # that mathchs the customer emailID that was part of the email recipient.
      # process various message parameters:
      sender  = params['from']
      subject = params['subject']
@@ -15,7 +18,7 @@ class EmailsController < ApplicationController
      # the quoted part
      actual_body = params["stripped-text"]
 
-    actual_body = "Subject: #{subject}\n\n#{actual_body}" 
+    actual_body = "Subject: #{subject}\n\n#{actual_body}"
      
     # process all attachments: - removed to get up and running
 #      count = params['attachment-count'].to_i
@@ -33,6 +36,6 @@ class EmailsController < ApplicationController
      render :text => "OK"
 #puts "header key: #{sender}, header value: #{subject}, header value: #{recipient}, header value: #{substring}"
     
-   end 
+   end
   
 end

@@ -58,7 +58,7 @@
           <%if edit %>
             <div class="row">
               <div class="col-lg-6">
-              <%=  form_tag({controller: "enquiries", action: "addbooking"}, method: "get", class: "form-horizontal") do %>
+              <%=  form_tag({controller: "enquiries", action: "addbooking"}, method: "post", class: "form-horizontal") do %>
               <%= hidden_field_tag :id, '', :value => @enquiry.id %>
               <%= submit_tag "Convert to booking", class: "btn btn-primary" %>
               <% end %>

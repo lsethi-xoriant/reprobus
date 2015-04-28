@@ -13,13 +13,16 @@ Reprobus::Application.routes.draw do
   
   resources :settings, only: [:edit, :update, :show] do
     collection do
-      get 'addcurrency' # /settings/addcurrency
+      post 'addcurrency' # /settings/addcurrency
       get 'syncInvoices'
+      post 'addEmailTriggers'
     end
   end
   
   resources :tours
   resources :password_resets
+  resources :email_templates
+    
   resources :suppliers do
     collection do
 #      get 'customersearch'  # /enquires/customersearch
@@ -46,7 +49,7 @@ Reprobus::Application.routes.draw do
       get 'destinationsearch'  # /enquires/destinationsearch
       get 'stopoversearch'  # /enquires/stopoversearch
       get 'addnote'  # /enquires/addnote
-      get 'addbooking'  # /enquires/addbooking
+      post 'addbooking'  # /enquires/addbooking
       post "webenquiry"
       get "confirmation"
     end

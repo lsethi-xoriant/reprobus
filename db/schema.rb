@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409223355) do
+ActiveRecord::Schema.define(version: 20150428075517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,17 @@ ActiveRecord::Schema.define(version: 20150409223355) do
     t.integer "destination_id"
   end
 
+  create_table "email_templates", force: true do |t|
+    t.string   "name"
+    t.string   "from_email"
+    t.string   "from_name"
+    t.string   "subject"
+    t.string   "body"
+    t.boolean  "copy_assigned_user"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "enquiries", force: true do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
@@ -273,6 +284,19 @@ ActiveRecord::Schema.define(version: 20150409223355) do
     t.datetime "updated_at"
     t.string   "image"
   end
+
+  create_table "triggers", force: true do |t|
+    t.string   "name"
+    t.integer  "num_days"
+    t.integer  "setting_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "email_template_id"
+  end
+
+  add_index "triggers", ["email_template_id"], name: "index_triggers_on_email_template_id", using: :btree
+  add_index "triggers", ["name"], name: "index_triggers_on_name", using: :btree
+  add_index "triggers", ["setting_id"], name: "index_triggers_on_setting_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
