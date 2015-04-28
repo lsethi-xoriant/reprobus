@@ -90,6 +90,8 @@ class Enquiry < ActiveRecord::Base
        user.activities<<(act)
       end
       self.update_attribute(:stage, "Booking")
+      
+      book.trigger_new_booking
       return true
     else
       return false
