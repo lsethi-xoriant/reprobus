@@ -262,6 +262,6 @@ private
 
     def undo_link
       view_context.link_to("(Undo)",
-        revert_version_path(@enquiry.versions.scoped.last), :method => :post)
+        revert_version_path(@enquiry.versions.last), :method => :post)
     end
 end

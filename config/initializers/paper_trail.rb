@@ -11,7 +11,7 @@ PaperTrail::Version.class_eval do
   belongs_to :related, :polymorphic => true
   belongs_to :user, :foreign_key => :whodunnit
 
-  scope :default_order,  order('created_at ASC')
+  default_scope  { order('created_at ASC') }
   scope :include_events, lambda { |*events| where(:event => events) }
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
   scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }

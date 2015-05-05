@@ -15,7 +15,16 @@ class EmailAddressFilter
       return
     end
       
-    # otherwise, the email should NOT be sent
+
+    
+    #if in dev send to developers.
+    if Rails.env.development?
+      message.to = "hamishgardiner@gmail.com"
+      message.perform_deliveries = true
+      return
+    end
+  
+    # otherwise, the email should NOT be sent.
   end
 end
 

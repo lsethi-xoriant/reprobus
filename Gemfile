@@ -1,12 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
-
-# Use sqlite3 as the database for Active Record on hamish's chromebook # Pulled out as going to use pg instead.
-group :chromebookdev, :chromebooktest do
-#  gem 'sqlite3'
-end
+gem 'rails', '4.2.0'
 
 #group :development, :test, :production do
   gem 'pg'
@@ -17,6 +12,7 @@ group :development, :test do
   gem 'annotate', ">=2.6.0"
   gem 'meta_request'
   gem "better_errors"
+  gem 'web-console', '~> 2.0'
 end
 
 group :production do
@@ -41,7 +37,7 @@ gem 'carrierwave'
 gem 'mini_magick'   # changed from rmagick
 #gem 'rmagick'   # changed as causing issues installing gems
 gem 'select2-rails'
-gem 'paper_trail'
+gem 'paper_trail', '~> 4.0.0.beta'
 gem 'font-awesome-rails'
 gem 'roo'
 #gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
@@ -54,8 +50,9 @@ gem 'money'
 gem 'google_currency'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
-gem 'toastr-rails'
-gem 'nprogress-rails'
+gem 'toastr-rails'    # pretty toast notification
+gem 'nprogress-rails' # pretty progress bar at top of screen when using ajax and turbolinks
+gem 'responders', '~> 2.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 group :chromebookdev, :chromebooktest do

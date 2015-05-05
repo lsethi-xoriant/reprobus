@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many    :customers
   has_many    :bookings
   has_many    :enquiries
-  has_many    :assigned_enquiries, :class_name => 'Enquiry', :foreign_key => 'assigned_to', :order => "enquiries.reminder ASC"
+  has_many    :assigned_enquiries, -> { order("enquiries.reminder ASC") }, :class_name => 'Enquiry', :foreign_key => 'assigned_to'
   
   has_many    :activities, dependent: :destroy
  
