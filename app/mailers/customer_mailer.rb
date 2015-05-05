@@ -6,18 +6,18 @@ class CustomerMailer < ActionMailer::Base
   #
   #   en.customer_mailer.password_reset.subject
   #
-  def send_trigger_email(email_template, booking)
+  def send_trigger_email(email_template, cc_user, to_email)
     @email_template = email_template
     @booking = booking
     
     @email_template.from_name.blank? ? from_name = "" : from_name = @email_template.from_name
     if @email_template.copy_assigned_user
-      cc = @booking.user.email
+      cc = cc_user
     else
       cc = ""
     end
     
-    mail(to: @booking.enquiry.customer_email, subject: @email_template.subject, reply_to: @email_template.from_email,
+    mail(to: to_email, subject: @email_template.subject, reply_to: @email_template.from_email,
          from: from_name, cc: cc)
   end
 

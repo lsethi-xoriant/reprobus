@@ -75,6 +75,7 @@ class EnquiriesController < ApplicationController
     @enquiry.customers.clear if params[:existing_customer].to_i > 0
     if @enquiry.save
       @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0
+      Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
     else

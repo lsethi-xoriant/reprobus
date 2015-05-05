@@ -19,8 +19,9 @@ class SettingsController < ApplicationController
 
     @emailTabActive = true
     if @setting.update_attributes(settings_params)
-      flash[:success] = "Settings updated"
-      redirect_to @setting
+      flash.now[:success] = "Settings updated"
+      #redirect_to @setting
+      render 'edit'
     else
       render 'edit'
     end
@@ -82,6 +83,6 @@ private
   def settings_params
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
       :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :payment_gateway,
-      triggers_attributes: [:id, :email_template_id])
+      triggers_attributes: [:id, :email_template_id, :num_days])
     end
 end

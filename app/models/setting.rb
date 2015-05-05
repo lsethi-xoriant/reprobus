@@ -23,7 +23,7 @@ class Setting < ActiveRecord::Base
   
   belongs_to :currency
   has_many :exchange_rates
-  has_many :triggers
+  has_many :triggers, -> { order ('id ASC') }
   accepts_nested_attributes_for :triggers
   
   def getDefaultCurrency

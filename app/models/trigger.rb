@@ -21,4 +21,21 @@ class Trigger < ActiveRecord::Base
 #  def email_template_id
 #    self.email_template ? self.email_template.id.to_s : "0"
 #  end
+
+  def self.trigger_new_enquiry(enquiry)
+    @trigger = Setting.find(1).triggers.find_by_name("New Enquiry")
+    @enquiry = enquiry
+    
+    if @trigger.email_template
+      if @trigger.num_days.blank? || @trigger.num_days == 0
+        # do job now.
+        SendEmailTemplateJob.perform_later(@trigger.email_template,@enquiry.user.email, @enquiry.customer_email)
+      else
+        # do job in a number of days.
+        secs = 0
+        secs = @trigger.num_days * 60 * 60 * 24
+        SendEmailTemplateJob.set(wait: secs.seconds).perform_later(@trigger.email_template, @enquiry.user.email, @enquiry.customer_email)
+      end
+    end
+  end
 end

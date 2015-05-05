@@ -97,7 +97,15 @@ class Booking < ActiveRecord::Base
     trigger = Setting.find(1).triggers.find_by_name("New Booking")
     
     if trigger.email_template
-      CustomerMailer.send_trigger_email(trigger.email_template,self).deliver
+      if trigger.num_days.blank? || trigger.num_days == 0
+        # do job now.
+        SendEmailTemplateJob.perform_later(trigger.email_template, self.user.email, self.enquiry.customer_email)
+      else
+        # do job in a number of days.
+        secs = 0
+        secs = trigger.num_days * 60 * 60 * 24
+        SendEmailTemplateJob.set(wait: secs.seconds).perform_later(trigger.email_template,self.user.email, self.enquiry.customer_email)
+      end
     end
   end
 end

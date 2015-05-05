@@ -53,6 +53,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'toastr-rails'    # pretty toast notification
 gem 'nprogress-rails' # pretty progress bar at top of screen when using ajax and turbolinks
 gem 'responders', '~> 2.0'
+gem 'delayed_job_active_record'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 group :chromebookdev, :chromebooktest do

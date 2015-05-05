@@ -45,5 +45,7 @@ module Reprobus
     # new rails behaviour for rails 4.2
     config.active_record.raise_in_transactional_callbacks = true
     
+    # set job queue
+    config.active_job.queue_adapter = :delayed_job
   end
 end
