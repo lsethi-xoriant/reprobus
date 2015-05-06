@@ -20,7 +20,7 @@ Reprobus::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -30,7 +30,7 @@ Reprobus::Application.configure do
   config.assets.compile = true
   # set above to false due to this: http://www.reinteractive.net/posts/116-12-tips-for-the-rails-asset-pipeline
   
-  # allow fonts to be precompiled - added to allow  bootstrap glyphs to be uploaded to heroku 
+  # allow fonts to be precompiled - added to allow  bootstrap glyphs to be uploaded to heroku
   #  -- Although doesnt seem to work. changed above to .compile=true which fixed problem
   config.assets.precompile += %w( '.woff', '.eot', '.svg', '.ttf' )
 
@@ -83,7 +83,7 @@ Reprobus::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
   
-  # settings taken from mailgun set up. 
+  # settings taken from mailgun set up.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],

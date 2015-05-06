@@ -8,7 +8,6 @@ class CustomerMailer < ActionMailer::Base
   #
   def send_trigger_email(email_template, cc_user, to_email)
     @email_template = email_template
-    @booking = booking
     
     @email_template.from_name.blank? ? from_name = "" : from_name = @email_template.from_name
     if @email_template.copy_assigned_user
