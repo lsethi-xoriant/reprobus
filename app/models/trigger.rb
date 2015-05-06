@@ -29,7 +29,7 @@ class Trigger < ActiveRecord::Base
     if @trigger.email_template
       if @trigger.num_days.blank? || @trigger.num_days == 0
         # do job now.
-        SendEmailTemplateJob.perform_later(@trigger.email_template,@enquiry.user.email, @enquiry.customer_email)
+        SendEmailTemplateJob.perform_later(@trigger.email_template, @enquiry.user.email, @enquiry.customer_email)
       else
         # do job in a number of days.
         secs = 0
