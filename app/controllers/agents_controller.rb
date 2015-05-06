@@ -34,8 +34,9 @@ class AgentsController < CustomersController
       resources_count = 0
     else
       # also add the total count to enable infinite scrolling
-      resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
-        where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
+  #    resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
+  #                              where("supplier_name ILIKE :q", q: "%#{params[:q]}%")
+      resources_count = @customers.size
     end
     
     respond_to do |format|
