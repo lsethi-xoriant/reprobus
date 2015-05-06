@@ -30,7 +30,9 @@ class AgentsController < CustomersController
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
   
-    if @customers
+    if @customers.empty?
+      resources_count = 0
+    else
       # also add the total count to enable infinite scrolling
       resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
         where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
