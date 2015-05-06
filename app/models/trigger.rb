@@ -22,20 +22,46 @@ class Trigger < ActiveRecord::Base
 #    self.email_template ? self.email_template.id.to_s : "0"
 #  end
 
-  def self.trigger_new_enquiry(enquiry)
-    @trigger = Setting.find(1).triggers.find_by_name("New Enquiry")
-    @enquiry = enquiry
+
+  # CLASS METHODS
+  def self.send_mail(trigger, cc, to)
+    @trigger = trigger
+    @cc = cc
+    @to = to
     
+    # only send email if the trigger has an associated email template
     if @trigger.email_template
       if @trigger.num_days.blank? || @trigger.num_days == 0
         # do job now.
-        SendEmailTemplateJob.perform_later(@trigger.email_template, @enquiry.user.email, @enquiry.customer_email)
+        SendEmailTemplateJob.perform_later(@trigger.email_template, @cc, @to)
       else
         # do job in a number of days.
         secs = 0
         secs = @trigger.num_days * 60 * 60 * 24
-        SendEmailTemplateJob.set(wait: secs.seconds).perform_later(@trigger.email_template, @enquiry.user.email, @enquiry.customer_email)
+        SendEmailTemplateJob.set(wait: secs.seconds).perform_later(@trigger.email_template, @cc, @to)
       end
     end
+  end
+  
+  def self.trigger_new_enquiry(enquiry)
+    @trigger = Setting.find(1).triggers.find_by_name("New Enquiry")
+    @enquiry = enquiry
+    
+    Trigger.send_mail(@trigger, @enquiry.user.email, @enquiry.customer_email)
+  end
+  
+  def self.trigger_new_booking(booking)
+    @trigger = Setting.find(1).triggers.find_by_name("New Booking")
+    @booking = booking
+    
+    Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
+  end
+  
+  def self.trigger_pay_receipt(invoice)
+    @trigger = Setting.find(1).triggers.find_by_name("Payment Received")
+    @invoice = invoice
+    @booking = @invoice.booking
+    
+    Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
   end
 end

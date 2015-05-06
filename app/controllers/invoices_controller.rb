@@ -58,8 +58,9 @@ class InvoicesController < ApplicationController
     @hash = response.to_hash
     @invoice = Invoice.find(@hash[:txn_id])
     @booking = @invoice.booking
-    @booking.update_attribute(:status, "Deposit Paid")
+    @booking.update_attribute(:status, "Payment Received")
     @invoice.addCCPayment!(@hash[:amount_settlement])
+    Trigger.trigger_pay_receipt(@invoice)
   end
   
   def pxpaymentfailure

@@ -91,7 +91,8 @@ class Enquiry < ActiveRecord::Base
       end
       self.update_attribute(:stage, "Booking")
       
-      book.trigger_new_booking
+      Trigger.trigger_new_booking(book)
+      
       return true
     else
       return false

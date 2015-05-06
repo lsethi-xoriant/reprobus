@@ -30,10 +30,12 @@ class AgentsController < CustomersController
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
   
-    # also add the total count to enable infinite scrolling
-    resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
-      where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
-
+    if @customers
+      # also add the total count to enable infinite scrolling
+      resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
+        where("supplier_name ILIKE :q", q: "%#{params[:q]}%").count
+    end
+    
     respond_to do |format|
       format.json { render json: {total: resources_count,
         searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}" }}} }
