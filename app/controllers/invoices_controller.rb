@@ -5,11 +5,29 @@ class InvoicesController < ApplicationController
 
   def addxeroinvoice
     @invoice = Invoice.find(params[:id])
-    if @invoice.create_invoice_xero(current_user)
-      redirect_to booking_invoice_path( @invoice.booking, @invoice)
+    @booking = @invoice.booking
+    @setting = Setting.find(1)
+    
+    if Setting.find(1).use_xero
+      begin
+        err = @invoice.create_invoice_xero(current_user)
+      rescue Xeroizer::ApiException => e
+        message = nice_xeroizer_ex_messages(e)
+        err = false;
+      end
+    
+      if !err
+        flash[:error] = "Warning, Xero Invoice could not be created:<br>" + message
+        redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      else
+        @xinvoice = @invoice.x_invoice
+        redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      end
     else
+       flash[:error] = "Warning, Xero not configured to use in Settings"
       render "show"
     end
+    
   end
   
   def addxeropayment
@@ -56,11 +74,11 @@ class InvoicesController < ApplicationController
   def pxpaymentsuccess
     response = Pxpay::Response.new(params).response
     @hash = response.to_hash
-    @invoice = Invoice.find(@hash[:txn_id])
-    @booking = @invoice.booking
-    @booking.update_attribute(:status, "Payment Received")
-    @invoice.addCCPayment!(@hash[:amount_settlement])
-    Trigger.trigger_pay_receipt(@invoice)
+    #@invoice = Invoice.find(@hash[:txn_id])
+    #@booking = @invoice.booking
+    #@booking.update_attribute(:status, "Payment Received")
+    #@invoice.addCCPayment!(@hash[:amount_settlement])
+    #Trigger.trigger_pay_receipt(@invoice)
   end
   
   def pxpaymentfailure
@@ -137,12 +155,13 @@ class InvoicesController < ApplicationController
       if Setting.find(1).use_xero
         begin
         err = @invoice.create_invoice_xero(current_user)
-        rescue Exception
+        rescue Xeroizer::ApiException => e
+          message = nice_xeroizer_ex_messages(e)
           err = false;
         end
         
         if !err
-          flash[:error] = "Warning: Xero Invoice could not be created"
+          flash[:error] = "Warning, Xero Invoice could not be created:<br>" + message
         end
       end
       @booking.update_attribute(:status, "Invoice created")
@@ -193,9 +212,15 @@ class InvoicesController < ApplicationController
     
     if @invoice.save #&& err.blank?
       if Setting.find(1).use_xero
+        begin
         err = @invoice.create_invoice_xero(current_user)
+        rescue Xeroizer::ApiException => e
+          message = nice_xeroizer_ex_messages(e)
+          err = false;
+        end
+        
         if !err
-          flash[:warning] = "Warning: Xero Invoice could not be created"
+          flash[:error] = "Warning, Xero Invoice could not be created:<br>" + message
         end
       end
       @booking.update_attribute(:status, "Invoice created")

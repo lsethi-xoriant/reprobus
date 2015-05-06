@@ -62,6 +62,21 @@ module SessionsHelper
     session[:return_to] = request.url if request.get?
   end
   
+  def nice_xeroizer_ex_messages(exception)
+    puts exception.message   # output to console to see what is going on
+    errors = []
+    xml = exception.parsed_xml
+    xml.xpath("//ValidationError").each do |err|
+      errors << err.text.gsub(/^\s+/, '').gsub(/\s+$/, '')
+    end
+    
+    message = ""
+    errors.each do |str|
+      message = message + str + '<br>'
+    end
+    message.chomp('<br>')
+  end
+  
 private
 	  def admin_user
       redirect_to(noaccess_url) unless current_user.admin?
