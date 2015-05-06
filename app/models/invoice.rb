@@ -156,16 +156,19 @@ class Invoice < ActiveRecord::Base
   end
   
   def getPayExpressUrl
+    
     if !self.depositPayUrl.nil?
       return self.depositPayUrl  #using this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
     end
+    
+    @setting = Setting.find(1);
+    
     if @setting.payment_gateway != "Payment Express"
       return ""
     end
+    
     require 'nokogiri'
     require 'pxpay'
-    
-    @setting = Setting.find(1);
     
     
     Pxpay::Base.pxpay_user_id = @setting.pxpay_user_id
