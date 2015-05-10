@@ -197,8 +197,7 @@ class EnquiriesController < ApplicationController
                             order('last_name')
   
     # also add the total count to enable infinite scrolling
-    resources_count = Customer.select([:id, :last_name, :first_name]).where("cust_sup ILIKE :p", p: "Customer" ).
-      where("last_name ILIKE :q  OR first_name ILIKE :q", q: "%#{params[:q]}%").count
+    resources_count = @customers.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
@@ -212,8 +211,7 @@ class EnquiriesController < ApplicationController
                             order('name')
   
     # also add the total count to enable infinite scrolling
-    resources_count = Carrier.select([:id, :name]).
-      where("name ILIKE :q", q: "%#{params[:q]}%").count
+    resources_count = @entities.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
@@ -227,8 +225,7 @@ class EnquiriesController < ApplicationController
                             order('name')
   
     # also add the total count to enable infinite scrolling
-    resources_count = Stopover.select([:id, :name]).
-      where("name ILIKE :q", q: "%#{params[:q]}%").count
+    resources_count =  @entities.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
@@ -243,8 +240,7 @@ class EnquiriesController < ApplicationController
                             order('name')
   
     # also add the total count to enable infinite scrolling
-    resources_count = Destination.select([:id, :name]).
-           where("name ILIKE :q", q: "%#{params[:q]}%").count
+    resources_count =  @entities.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,

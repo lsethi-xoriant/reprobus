@@ -1,1 +1,1 @@
-<tr><td><%= item.description %></td><td><%= item.quantity %></td><td><%= item.item_price %></td><td><%= item.total %></td></tr>
+<tr><td><%= item.description %></td><td><%= item.quantity %></td><td><%= number_to_currency(item.item_price, precision: 2) %></td><td><%= number_to_currency(item.total, precision: 2) %></td></tr>

@@ -12,8 +12,11 @@
       <div class="form-group">  <%= f.label :title %>
         <div class="col-sm-6">   <%= f.select :title, options_for_select(titles_list, @customer.title ), {}, class: 'form-control' %>  </div>
       </div>
-    
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "gender", f: f } %>
+
+      <div class="form-group">  <%= f.label :gendergender %>
+        <div class="col-sm-6">   <%= f.select :gender, options_for_select(gender_list, @customer.gender), {}, class: 'form-control' %>  </div>
+      </div>
+      
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "alt_email", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "phone", f: f } %>

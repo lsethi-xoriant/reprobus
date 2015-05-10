@@ -10,7 +10,7 @@
 #  password_digest        :string(255)
 #  remember_token         :string(255)
 #  remember_me            :boolean
-#  admin                  :boolean          default(FALSE)
+#  admin                  :boolean          default("false")
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
 #

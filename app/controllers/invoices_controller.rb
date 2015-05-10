@@ -74,11 +74,16 @@ class InvoicesController < ApplicationController
   def pxpaymentsuccess
     response = Pxpay::Response.new(params).response
     @hash = response.to_hash
-    #@invoice = Invoice.find(@hash[:txn_id])
-    #@booking = @invoice.booking
-    #@booking.update_attribute(:status, "Payment Received")
-    #@invoice.addCCPayment!(@hash[:amount_settlement])
-    #Trigger.trigger_pay_receipt(@invoice)
+    @invoice = Invoice.find_by_pxpay_balance_trxId(@hash[:txn_id]) || Invoice.find_by_pxpay_deposit_trxId(@hash[:txn_id])
+    
+    @booking = @invoice.booking
+    @booking.update_attribute(:status, "Payment Received")
+
+    # create new payment reconciliation, and hit trigger if we haven't seen this ref before.
+    if !@invoice.payments.find_by_cc_payment_ref(@hash[:txn_id])
+      new_pay = @invoice.payments.create(cc_payment_ref: @hash[:dps_txn_ref], amount: @hash[:amount_settlement], date: Date.today, cc_client_info: @hash[:client_info], reference: "CC Payment received through PxPay Gateway", cc_payment: true)
+      Trigger.trigger_pay_receipt(@invoice, new_pay) if new_pay
+    end
   end
   
   def pxpaymentfailure
@@ -107,15 +112,39 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @booking = Booking.find(params[:booking_id])
     @xinvoice = @invoice.x_invoice
-    respond_to do |format|
-      format.html
+#    respond_to do |format|
+#      format.html
       #format.json { render json: {name: @invoice.fullname, id: @invoice.id  }}
+#      format.pdf do
+#        render :pdf => "invoice_no_ " + @invoice.id.to_s.rjust(8, '0') + "_deposit"
+#      end
+#    end
+  end
+ 
+  def pdfRemaining
+    @setting = Setting.find(1)
+    @invoice = Invoice.find(params[:id])
+    @booking = @invoice.booking
+    @xinvoice = @invoice.x_invoice
+    respond_to do |format|
       format.pdf do
-        render :pdf => "invoice_no_ " + @invoice.id.to_s.rjust(8, '0')
+        render :pdf => "invoice_no_ " + @invoice.id.to_s.rjust(8, '0') + "_balance"
       end
     end
   end
  
+   def pdfDeposit
+    @setting = Setting.find(1)
+    @invoice = Invoice.find(params[:id])
+    @booking = @invoice.booking
+    @xinvoice = @invoice.x_invoice
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "invoice_no_ " + @invoice.id.to_s.rjust(8, '0') + "_deposit"
+      end
+    end
+  end
+  
   def showSupplier
     @invoice = Invoice.find(params[:id])
     @booking = Booking.find(params[:booking_id])

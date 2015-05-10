@@ -17,11 +17,6 @@ class Trigger < ActiveRecord::Base
   def email_template_name
    self.email_template ? self.email_template.name : ""
   end
-  
-#  def email_template_id
-#    self.email_template ? self.email_template.id.to_s : "0"
-#  end
-
 
   # CLASS METHODS
   def self.send_mail(trigger, cc, to)
@@ -40,7 +35,9 @@ class Trigger < ActiveRecord::Base
         secs = @trigger.num_days * 60 * 60 * 24
         SendEmailTemplateJob.set(wait: secs.seconds).perform_later(@trigger.email_template, @cc, @to)
       end
+      return true
     end
+    return false
   end
   
   def self.trigger_new_enquiry(enquiry)
@@ -57,11 +54,14 @@ class Trigger < ActiveRecord::Base
     Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
   end
   
-  def self.trigger_pay_receipt(invoice)
+  def self.trigger_pay_receipt(invoice, payment)
     @trigger = Setting.find(1).triggers.find_by_name("Payment Received")
     @invoice = invoice
     @booking = @invoice.booking
-    
-    Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
+    if !payment.receipt_triggered
+      if Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
+        payment.update_attribute(:receipt_triggered, true)
+      end
+    end
   end
 end

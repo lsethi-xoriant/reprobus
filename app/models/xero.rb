@@ -88,8 +88,13 @@ class Xero
     success = xinv.save
     
     cust.update_attribute(:xero_id, xcust.contact_id)
-    #booking.update_attribute(:xero_id, xinv.invoice_id)
-    invoice.update_attribute(:xero_id, xinv.invoice_id)
+    
+    if success
+      invoice.update_attribute(:xero_id, xinv.invoice_id)
+      invoice.create_x_invoice(amount_due: xinv.amount_due, amount_paid: xinv.amount_paid, total: xinv.total, currency_code: xinv.currency_code,
+                               currency_rate: xinv.currency_rate, date: xInv.date, invoice_ref: xinv.invoice_id,
+                               invoice_number: xinv.invoice_number, status: xinv.status, due_date: xinv.due_date, last_sync: Time.now)
+    end
     
     return success;
   end
@@ -109,15 +114,54 @@ class Xero
     arr <<   xPay.payment_id
     invoice.update_attribute(:xpayments, arr)
     
-    invoice.payments.create(payment_ref: xPay.payment_id, amount: amount, date: xPay.date, reference: xPay.reference)
+    new_pay = invoice.payments.create(payment_ref: xPay.payment_id, amount: amount, date: xPay.date, reference: xPay.reference)
+    Trigger.trigger_pay_receipt(invoice, new_pay) if new_pay
+  end
+  
+  def sync_invoices(invoices)
+    # syncs invoices with xero. Will call single sync method that will update payment details and check receipt has been sent.
+    logStr = ""
+    
+    invoices.each do |invoice|
+      # investigate doing this in one hit... possible xero.invoices.all with a where clause.
+      begin
+      self.sync_invoice(invoice)
+      logStr = logStr + "... synced invoice #{invoice.id}, xero invoice #{invoice.x_invoice.invoice_number}<br>"
+      rescue StandardError
+        logStr = logStr + "Warning - Invoice #{invoice.id} could not be synced<br>"
+      end
+    end
+    return logStr
   end
   
   def sync_invoice(invoice)
+    # syncs a single invoices
+    
+    # find xero invoice
     xInv = self.client.Invoice.find(invoice.xero_id)
-    invoice.payments.destroy_all
-     
-    xInv.payments.each do |xPay|
-      invoice.payments.create(payment_ref: xPay.payment_id, amount: xPay.amount, date: xPay.date, reference: xPay.reference)
+    
+    # work through current payment and determine if we have already matched.
+    #build up collection of previous reconciled ids,
+    currIds = invoice.payments.map{|p| p.payment_ref}
+    # build up collection of payment amounts for cc's that have not been reconciled
+    ccPayments = invoice.payments.ccPayments.notReconciled
+
+    xInv.payments.each do |xpay|
+      if !currIds.include?(xpay.payment_id)
+        # we dont have a referrence for this payment, so we need to reconcile it.
+        # check if any cc payments exist that we have not reconciled. if we find one, we dont need to create a payment, but we need to match it
+        payment = ccPayments.find_by_amount(xpay.amount)
+        if payment
+          # update the payment_id.
+          payment.update_attribute("payment_ref", xpay.payment_id)
+          #done, don't need to hit trigger, as payment receipt would already been sent.
+        else
+          # no cc payment, and no previous sync payment. Create a new one.
+          new_pay = invoice.payments.create(payment_ref: xpay.payment_id, amount: xpay.amount, date: xpay.date, reference: xpay.reference)
+          # hit trigger for payment receipt as this is the first time we have seen this payment.
+          Trigger.trigger_pay_receipt(invoice, new_pay) if new_pay
+        end
+      end
     end
     
     if !invoice.x_invoice
@@ -129,22 +173,6 @@ class Xero
                                currency_rate: xInv.currency_rate, date: xInv.date, invoice_ref: xInv.invoice_id,
                                invoice_number: xInv.invoice_number, status: xInv.status, due_date: xInv.due_date, last_sync: Time.now)
     end
-  end
- 
- 
-  def sync_invoices(invoices)
-    logStr = ""
-    
-    invoices.each do |invoice|
-      # investigate doing this in one hit... possible xero.invoices.all with a where clause.
-      begin
-      self.sync_invoice(invoice)
-      logStr = logStr + "... synced invoice #{invoice.id}, xero invoice #{invoice.x_invoice.invoice_number}<br>"
-      rescue Exception
-        logStr = logStr + "Warning - Invoice #{invoice.id} could not be synced<br>"
-      end
-    end
-    return logStr
   end
  
   def change_invoice(invoice, amount)

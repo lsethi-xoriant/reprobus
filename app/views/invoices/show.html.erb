@@ -32,8 +32,10 @@
       Today Exch Rate <strong><%= number_to_currency(@invoice.get_current_exchange_amount, precision: 2) + " " +  Setting.find(1).currencyCode %> </strong><br>
       <br>
       Deposit	<strong><%= number_to_currency(@invoice.deposit, precision: 2) %></strong><br>
-      Amount paid throuh payment gateway <strong><%= number_to_currency(@invoice.getCCPaidTotal, precision: 2) %></strong><br>
-      Balance <strong>TO DO</strong><br>
+      <br>
+      Amount paid through payment gateway <strong><%= number_to_currency(@invoice.getCCPaidTotal, precision: 2) %></strong><br>
+      Amount paid through DD <strong><%= number_to_currency(@invoice.getDDPaidTotal, precision: 2) %></strong><br>
+      Balance <strong><%= number_to_currency(@invoice.getBalance, precision: 2) %></strong><br>
      
       <br>
       </section>
@@ -41,12 +43,14 @@
 </div>
 
 <div>
-
-  <a href=<%= booking_invoice_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Deposit Pdf</button></a>
+<div class="col-sm-2">
+  <a href=<%= pdfDeposit_booking_invoices_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Deposit Pdf</button></a></div>
+  <div class="col-sm-2 col-md-offset-1">
+  <a href=<%= pdfRemaining_booking_invoices_path @booking, @invoice, format: :pdf %>  target="_blank" ><button type="button" class="btn btn-primary">View Balance Pdf</button></a></div>
   <br><br>
   
   <div id="invoices" >
-     <%= render partial: 'invoice', locals: {items: @xinvoice}  %>
+     <%= render partial: 'x_invoice', locals: {items: @xinvoice}  %>
   </div>
   
   <% if Setting.find(1).use_xero  %>

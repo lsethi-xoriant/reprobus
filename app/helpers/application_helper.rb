@@ -26,6 +26,12 @@ module ApplicationHelper
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end
+  
+  def gender_list
+    list = ["Male",
+            "Female",
+            "Unknown"]
+  end
    
   def titles_list
     list = ["Ms",

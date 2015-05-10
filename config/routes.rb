@@ -65,6 +65,9 @@ Reprobus::Application.routes.draw do
         get 'supplierInvoice'
         get 'syncInvoice'
         post 'createSupplier'
+        #get 'pdfRemaining'
+        match ':id/pdfRemaining', to: 'invoices#pdfRemaining',   as: 'pdfRemaining' ,via: 'get'
+        match ':id/pdfDeposit', to: 'invoices#pdfDeposit',   as: 'pdfDeposit' ,via: 'get'
         match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get'
        # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get'
       end
@@ -73,12 +76,6 @@ Reprobus::Application.routes.draw do
   
   match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get'
   match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get'
-  
-  #get 'bookings', to: 'enquiries#index_bookings', as: 'bookings'
-  # redirect booking show via the enquiry controller. may need to change in future depending on what we want to show
-  # ... at present all work to show differences for booking are handled in view through partials
-  #get 'bookings/:id', to: 'enquiries#show', as: 'booking'
-  #get 'bookings/:id/edit', to: 'enquiries#edit_booking', as: 'edit_booking'
   
   resources :sessions, only: [:new, :create, :destroy]
 

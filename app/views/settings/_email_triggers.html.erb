@@ -32,7 +32,7 @@
         <%= f.fields_for :triggers do |t| %>
         <tr>
           <td><%= t.text_field :name, readonly: true %></td>
-          <td><%= t.collection_select(:email_template_id, EmailTemplate.all, :id, :name, {prompt: 'Select Email Template', include_blank: true}, {class: "form-control"}) %></td>
+          <td><%= t.collection_select(:email_template_id, EmailTemplate.all, :id, :name, {include_blank: true}, {class: "form-control"}) %></td>
           <td><%= t.number_field :num_days %> </td>
         </tr>
         <% end %>

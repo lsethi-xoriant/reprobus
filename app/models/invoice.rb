@@ -87,12 +87,19 @@ class Invoice < ActiveRecord::Base
   end
   
   def getCCPaidTotal
-    ccArr = self.ccPaymentsAmount
     tot = 0
-    if !ccArr.nil?
-      ccArr.each do |amount|
-        tot = tot + amount.to_f
-      end
+    pays = self.payments.ccPayments
+    pays.each do |pay|
+        tot = tot + pay.amount
+    end
+    return tot
+  end
+
+  def getDDPaidTotal
+    tot = 0
+    pays = self.payments.ddPayments
+    pays.each do |pay|
+        tot = tot + pay.amount
     end
     return tot
   end
@@ -101,6 +108,8 @@ class Invoice < ActiveRecord::Base
     tot = 0
     if self.x_invoice
       tot = self.x_invoice.amount_paid
+    else
+      tot = self.getCCPaidTotal + self.getDDPaidTotal
     end
     return tot
   end
@@ -111,6 +120,10 @@ class Invoice < ActiveRecord::Base
       total = total + item.total
     end
     return total
+  end
+  
+  def getBalance
+    return getTotalAmount - getPaidTotal
   end
   
   def create_invoice_xero(user)
@@ -155,12 +168,17 @@ class Invoice < ActiveRecord::Base
     #end
   end
   
-  def getPayExpressUrl
+  def getPayExpressUrl(deposit)
     
-    if !self.depositPayUrl.nil?
-      return self.depositPayUrl  #using this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
+    if deposit && !self.pxpay_deposit_url.nil?
+      return self.pxpay_deposit_url  #using this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.
+      # may not be an issue when we use pxpay in live...(dev envio conected to pxpay2.0)
     end
     
+    if !deposit && !self.pxpay_balance_url.nil?
+      return self.pxpay_balance_url  #using this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.
+    end
+     
     @setting = Setting.find(1);
     
     if @setting.payment_gateway != "Payment Express"
@@ -170,21 +188,36 @@ class Invoice < ActiveRecord::Base
     require 'nokogiri'
     require 'pxpay'
     
-    
     Pxpay::Base.pxpay_user_id = @setting.pxpay_user_id
     Pxpay::Base.pxpay_key = @setting.pxpay_key
     Pxpay::Base.pxpay_request_url = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx'
     
-  
     #transId = self.id
     strRef = "Booking payment for " + self.booking.name
     succpath = Rails.application.routes.url_helpers.pxpaymentsuccess_url()
     failpath = Rails.application.routes.url_helpers.pxpaymentfailure_url()
     curCode = self.getCurrencyCode
     
-    request = Pxpay::Request.new(self.id, self.deposit.to_s, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => curCode})
+    if deposit
+      amount = self.deposit.to_s
+      trxID = self.id.to_s + "_deposit"
+    else
+      amount = self.getBalance.to_s
+      trxID = self.id.to_s + "_balance"
+    end
+    
+    request = Pxpay::Request.new(trxID, amount, {:url_success => succpath, :url_failure => failpath, :merchant_reference => strRef, :currency_input => curCode})
     url = request.url
-    self.update_attribute(:depositPayUrl, url) #saving this because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
+    
+    #saving URL because pxpay 2.0 only allows URL generation for a trx ever 48hrs.  - may not be an issue when we use pxpay in live...
+    if deposit
+      self.update_attribute(:pxpay_deposit_url, url)
+      self.update_attribute(:pxpay_deposit_trxId, trxID)
+    else
+      self.update_attribute(:pxpay_balance_url, url)
+      self.update_attribute(:pxpay_balance_trxId, trxID)
+    end
+  
     return url
   end
   

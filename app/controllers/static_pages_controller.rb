@@ -33,8 +33,7 @@ class StaticPagesController < ApplicationController
                             order('code')
   
     # also add the total count to enable infinite scrolling
-  resources_count = Currency.select([:id, :code, :currency]).
-      where("code ILIKE :q OR currency ILIKE :q", q: "%#{params[:q]}%").count
+    resources_count = @entities.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,

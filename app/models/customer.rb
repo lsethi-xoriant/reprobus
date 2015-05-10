@@ -21,7 +21,7 @@
 #  facebook             :string(128)
 #  twitter              :string(128)
 #  born_on              :date
-#  do_not_call          :boolean          default(FALSE), not null
+#  do_not_call          :boolean          default("false"), not null
 #  deleted_at           :datetime
 #  background_info      :string(255)
 #  skype                :string(128)

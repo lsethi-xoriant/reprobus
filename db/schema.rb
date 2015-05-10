@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505071929) do
+ActiveRecord::Schema.define(version: 20150510050022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,7 +236,7 @@ ActiveRecord::Schema.define(version: 20150505071929) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "deposit",                         precision: 12, scale: 2
-    t.string   "depositPayUrl",       limit: 255
+    t.string   "pxpay_deposit_trxId", limit: 255
     t.text     "ccPaymentsAmount"
     t.text     "ccPaymentsDate"
     t.integer  "supplier_invoice_id"
@@ -249,7 +249,13 @@ ActiveRecord::Schema.define(version: 20150505071929) do
     t.integer  "currency_id"
     t.decimal  "exchange_amount",                 precision: 12, scale: 2
     t.decimal  "exchange_rate",                   precision: 12, scale: 2
+    t.string   "pxpay_balance_trxId"
+    t.string   "pxpay_deposit_url"
+    t.string   "pxpay_balance_url"
   end
+
+  add_index "invoices", ["pxpay_balance_trxId"], name: "index_invoices_on_pxpay_balance_trxId", using: :btree
+  add_index "invoices", ["pxpay_deposit_trxId"], name: "index_invoices_on_pxpay_deposit_trxId", using: :btree
 
   create_table "line_items", force: :cascade do |t|
     t.integer  "invoice_id"
@@ -263,13 +269,17 @@ ActiveRecord::Schema.define(version: 20150505071929) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.decimal  "amount",                  precision: 12, scale: 5
-    t.string   "payment_ref", limit: 255
+    t.decimal  "amount",                        precision: 12, scale: 5
+    t.string   "payment_ref",       limit: 255
     t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "reference"
     t.date     "date"
+    t.boolean  "cc_payment",                                             default: false
+    t.string   "cc_payment_ref"
+    t.string   "cc_client_info"
+    t.boolean  "receipt_triggered",                                      default: false
   end
 
   create_table "settings", force: :cascade do |t|
