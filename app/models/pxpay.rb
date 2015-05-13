@@ -1,3 +1,0 @@
-class Pxpay
-  
-end
