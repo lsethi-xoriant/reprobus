@@ -82,7 +82,8 @@ class SettingsController < ApplicationController
 private
   def settings_params
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
-      :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :payment_gateway,
+      :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id,
+      :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex,
       triggers_attributes: [:id, :email_template_id, :num_days])
     end
 end

@@ -71,6 +71,10 @@ class Customer < ActiveRecord::Base
   has_many    :bookings
   belongs_to     :currency
 
+  has_many    :products, :foreign_key => "supplier_id"
+  has_many    :template_infos, :foreign_key => "supplier_id"
+  has_many    :itineraries
+   
   has_paper_trail :ignore => [:created_at, :updated_at]
    
   before_save :default_values

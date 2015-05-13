@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510050022) do
+ActiveRecord::Schema.define(version: 20150513013024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,6 +257,98 @@ ActiveRecord::Schema.define(version: 20150510050022) do
   add_index "invoices", ["pxpay_balance_trxId"], name: "index_invoices_on_pxpay_balance_trxId", using: :btree
   add_index "invoices", ["pxpay_deposit_trxId"], name: "index_invoices_on_pxpay_deposit_trxId", using: :btree
 
+  create_table "itineraries", force: :cascade do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.integer  "num_passengers"
+    t.boolean  "complete"
+    t.boolean  "sent"
+    t.boolean  "quality_check"
+    t.decimal  "price_per_person", precision: 12, scale: 2
+    t.decimal  "price_total",      precision: 12, scale: 2
+    t.string   "bed"
+    t.text     "includes"
+    t.text     "excludes"
+    t.text     "notes"
+    t.string   "flight_reference"
+    t.integer  "user_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree
+  add_index "itineraries", ["user_id"], name: "index_itineraries_on_user_id", using: :btree
+
+  create_table "itinerary_infos", force: :cascade do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "country"
+    t.string   "city"
+    t.string   "product_type"
+    t.string   "product_name"
+    t.string   "product_description"
+    t.string   "product_price"
+    t.string   "rating"
+    t.string   "room_type"
+    t.decimal  "price_per_person",    precision: 12, scale: 2
+    t.decimal  "price_total",         precision: 12, scale: 2
+    t.integer  "position"
+    t.integer  "supplier_id"
+    t.integer  "itinerary_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree
+  add_index "itinerary_infos", ["product_id"], name: "index_itinerary_infos_on_product_id", using: :btree
+  add_index "itinerary_infos", ["supplier_id"], name: "index_itinerary_infos_on_supplier_id", using: :btree
+
+  create_table "itinerary_price_items", force: :cascade do |t|
+    t.string   "booking_ref"
+    t.string   "description"
+    t.decimal  "price_total",        precision: 12, scale: 2
+    t.integer  "supplier_id"
+    t.integer  "itinerary_price_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree
+  add_index "itinerary_price_items", ["supplier_id"], name: "index_itinerary_price_items_on_supplier_id", using: :btree
+
+  create_table "itinerary_prices", force: :cascade do |t|
+    t.integer  "itinerary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "itinerary_prices", ["itinerary_id"], name: "index_itinerary_prices_on_itinerary_id", using: :btree
+
+  create_table "itinerary_template_infos", force: :cascade do |t|
+    t.integer  "position"
+    t.integer  "length"
+    t.integer  "days_from_start"
+    t.integer  "product_id"
+    t.integer  "itinerary_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "itinerary_template_infos", ["itinerary_template_id"], name: "index_itinerary_template_infos_on_itinerary_template_id", using: :btree
+  add_index "itinerary_template_infos", ["product_id"], name: "index_itinerary_template_infos_on_product_id", using: :btree
+
+  create_table "itinerary_templates", force: :cascade do |t|
+    t.string   "name"
+    t.text     "includes"
+    t.text     "excludes"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.integer  "invoice_id"
     t.decimal  "item_price",              precision: 12, scale: 2
@@ -282,6 +374,27 @@ ActiveRecord::Schema.define(version: 20150510050022) do
     t.boolean  "receipt_triggered",                                      default: false
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "country"
+    t.string   "city"
+    t.string   "description"
+    t.decimal  "price_single",   precision: 12, scale: 2
+    t.decimal  "price_double",   precision: 12, scale: 2
+    t.decimal  "price_tripple",  precision: 12, scale: 2
+    t.string   "product_type"
+    t.string   "room_type"
+    t.string   "rating"
+    t.string   "destination"
+    t.integer  "default_length"
+    t.integer  "supplier_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
+
   create_table "settings", force: :cascade do |t|
     t.string   "company_name",         limit: 255
     t.string   "pxpay_user_id",        limit: 255
@@ -293,6 +406,9 @@ ActiveRecord::Schema.define(version: 20150510050022) do
     t.datetime "updated_at"
     t.integer  "currency_id"
     t.string   "payment_gateway",      limit: 255
+    t.decimal  "cc_mastercard",                    precision: 5, scale: 4
+    t.decimal  "cc_visa",                          precision: 5, scale: 4
+    t.decimal  "cc_amex",                          precision: 5, scale: 4
   end
 
   create_table "stopovers", force: :cascade do |t|

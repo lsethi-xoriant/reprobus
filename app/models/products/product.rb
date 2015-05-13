@@ -21,11 +21,7 @@
 #  updated_at     :datetime
 #
 
-class Activity < ActiveRecord::Base
-  validates :type, presence: true
-  validates :description, presence: true
-  belongs_to  :customer
-  belongs_to  :user
-  belongs_to  :enquiry
-  
+class Product < ActiveRecord::Base
+  has_many    :itinerary_infos
+  has_many    :itinerary_template_infos
 end

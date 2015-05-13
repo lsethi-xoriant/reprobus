@@ -28,7 +28,20 @@ en:
     attributes:
       enquiry:
         num_people: "Number of People"
-
+      setting:
+        cc_mastercard: "Mastercard % fee"
+        cc_visa: "Visa % fee"
+        cc_amex: "Other CC % fee"
+    errors:
+      models:
+        setting:
+          attributes:
+            cc_mastercard:
+              less_than: "must be less than 100%"
+            cc_visa:
+              less_than: "must be less than 100%"
+            cc_amex:
+              less_than: "must be less than 100%"
   versions: History
   version:
     create: ! '%{item} created by %{by}'

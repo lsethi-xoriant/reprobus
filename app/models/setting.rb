@@ -13,13 +13,15 @@
 #  updated_at           :datetime
 #  currency_id          :integer
 #  payment_gateway      :string(255)
+#  cc_mastercard        :decimal(5, 4)
+#  cc_visa              :decimal(5, 4)
+#  cc_amex              :decimal(5, 4)
 #
 
 class Setting < ActiveRecord::Base
-  validates_presence_of :xero_consumer_key, :if => lambda { self.use_xero }
-  validates_presence_of :xero_consumer_secret, :if => lambda { self.use_xero }
-  validates_presence_of :pxpay_user_id, :if => lambda { self.payment_gateway == "Payment Express" }
-  validates_presence_of :pxpay_key, :if => lambda { self.payment_gateway == "Payment Express" }
+  validates_presence_of :xero_consumer_key,:xero_consumer_secret, :if => lambda { self.use_xero }
+  validates_presence_of :pxpay_user_id, :pxpay_key, :if => lambda { self.payment_gateway == "Payment Express" }
+  validates :cc_mastercard,:cc_visa,:cc_amex,  :numericality => {:greater_than => 0, :less_than => 1}
   
   belongs_to :currency
   has_many :exchange_rates
@@ -45,4 +47,38 @@ class Setting < ActiveRecord::Base
   def usesPaymentGateway
     return !self.payment_gateway.blank? && self.payment_gateway != "None"
   end
+  
+  def get_cc_mastercard_display
+    return self.cc_mastercard * 100 if self.cc_mastercard
+  end
+  def get_cc_visa_display
+    return self.cc_visa * 100 if self.cc_visa
+  end
+  def get_cc_other_display
+    return self.cc_amex * 100 if self.cc_amex
+  end
+  
+  def cc_mastercard=(value)
+    if value && is_number?(value)
+      value = value.to_f/100
+    end
+    write_attribute(:cc_mastercard, value)
+  end
+  def cc_visa=(value)
+    if value && is_number?(value)
+      value = value.to_f/100
+    end
+    write_attribute(:cc_visa, value)
+  end
+  def cc_amex=(value)
+    if value && is_number?(value)
+      value = value.to_f/100
+    end
+    write_attribute(:cc_amex, value)
+  end
+  
+  def is_number?(mystring)
+    true if Float(mystring) rescue false
+  end
+  
 end

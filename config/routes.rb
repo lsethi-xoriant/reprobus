@@ -105,6 +105,14 @@ Reprobus::Application.routes.draw do
     resources :stopovers
   end
   
+  namespace :products do
+    get '', to: 'dashboard#index', as: '/'
+    resources :tour, :controller => "products", :type => "tour"
+    resources :cruise, :controller => "products", :type => "cruise"
+    resources :transfer, :controller => "products", :type => "transfer"
+    resources :hotel, :controller => "products", :type => "hotel"
+  end
+  
   post "emails/post"
 
   # The priority is based upon order of creation: first created -> highest priority.

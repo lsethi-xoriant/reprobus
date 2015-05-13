@@ -21,11 +21,5 @@
 #  updated_at     :datetime
 #
 
-class Activity < ActiveRecord::Base
-  validates :type, presence: true
-  validates :description, presence: true
-  belongs_to  :customer
-  belongs_to  :user
-  belongs_to  :enquiry
-  
+class Activity < Product
 end

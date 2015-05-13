@@ -19,7 +19,7 @@ class Trigger < ActiveRecord::Base
   end
 
   # CLASS METHODS
-  def self.send_mail(trigger, cc, to)
+  def self.send_mail(trigger, to, cc)
     @trigger = trigger
     @cc = cc
     @to = to
@@ -43,15 +43,13 @@ class Trigger < ActiveRecord::Base
   def self.trigger_new_enquiry(enquiry)
     @trigger = Setting.find(1).triggers.find_by_name("New Enquiry")
     @enquiry = enquiry
-    
-    Trigger.send_mail(@trigger, @enquiry.user.email, @enquiry.customer_email)
+    Trigger.send_mail(@trigger, @enquiry.customer_email, @enquiry.user.email)
   end
   
   def self.trigger_new_booking(booking)
     @trigger = Setting.find(1).triggers.find_by_name("New Booking")
     @booking = booking
-    
-    Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
+    Trigger.send_mail(@trigger, @booking.enquiry.customer_email, @booking.user.email)
   end
   
   def self.trigger_pay_receipt(invoice, payment)
@@ -59,7 +57,7 @@ class Trigger < ActiveRecord::Base
     @invoice = invoice
     @booking = @invoice.booking
     if !payment.receipt_triggered
-      if Trigger.send_mail(@trigger, @booking.user.email, @booking.enquiry.customer_email)
+      if Trigger.send_mail(@trigger, @booking.enquiry.customer_email, @booking.user.email)
         payment.update_attribute(:receipt_triggered, true)
       end
     end

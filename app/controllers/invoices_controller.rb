@@ -81,9 +81,16 @@ class InvoicesController < ApplicationController
 
     # create new payment reconciliation, and hit trigger if we haven't seen this ref before.
     if !@invoice.payments.find_by_cc_payment_ref(@hash[:txn_id])
+      
+      
       new_pay = @invoice.payments.create(cc_payment_ref: @hash[:dps_txn_ref], amount: @hash[:amount_settlement], date: Date.today, cc_client_info: @hash[:client_info], reference: "CC Payment received through PxPay Gateway", cc_payment: true)
+      
       Trigger.trigger_pay_receipt(@invoice, new_pay) if new_pay
     end
+    
+    # check payment back, we will need to udpate invoice with amount.
+    
+    
   end
   
   def pxpaymentfailure

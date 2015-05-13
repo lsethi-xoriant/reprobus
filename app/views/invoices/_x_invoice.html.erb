@@ -49,8 +49,9 @@
   </div>
   <% end %>
 
+  <% if @invoice.payments.empty? %>
   <div class="well well-sm">
-    <h4>Change Xero Invoice Amount (this will delete and re-apply any existing payments)</h4>
+    <h4>Change Xero Invoice Amount</h4>
     <%= form_tag({controller: "invoices", action: "changexeroinvoice"}, method: "get", class: "form-inline") do %>
     <%= hidden_field_tag :id, '', :value => @invoice.id %>
     <%= hidden_field_tag :amount_due, '', :value => @xinvoice.amount_due %>
@@ -62,5 +63,5 @@
     <%= submit_tag "Change Amount", class: "btn btn-warning change-amount" %>
     <% end %>
   </div>
-
+  <% end %>
 <% end %>

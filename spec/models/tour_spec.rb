@@ -1,15 +1,24 @@
 # == Schema Information
 #
-# Table name: tours
+# Table name: products
 #
-#  id          :integer          not null, primary key
-#  tourName    :string(255)
-#  destination :string(255)
-#  country     :string(255)
-#  tourPrice   :decimal(, )
-#  created_at  :datetime
-#  updated_at  :datetime
-#  image       :string(255)
+#  id             :integer          not null, primary key
+#  type           :string
+#  name           :string
+#  country        :string
+#  city           :string
+#  description    :string
+#  price_single   :decimal(12, 2)
+#  price_double   :decimal(12, 2)
+#  price_tripple  :decimal(12, 2)
+#  product_type   :string
+#  room_type      :string
+#  rating         :string
+#  destination    :string
+#  default_length :integer
+#  supplier_id    :integer
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 
 require 'spec_helper'

@@ -11,7 +11,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  deposit             :decimal(12, 2)
-#  depositPayUrl       :string(255)
+#  pxpay_deposit_trxId :string(255)
 #  ccPaymentsAmount    :text
 #  ccPaymentsDate      :text
 #  supplier_invoice_id :integer
@@ -24,6 +24,9 @@
 #  currency_id         :integer
 #  exchange_amount     :decimal(12, 2)
 #  exchange_rate       :decimal(12, 2)
+#  pxpay_balance_trxId :string
+#  pxpay_deposit_url   :string
+#  pxpay_balance_url   :string
 #
 
 class Invoice < ActiveRecord::Base
@@ -199,7 +202,12 @@ class Invoice < ActiveRecord::Base
     curCode = self.getCurrencyCode
     
     if deposit
-      amount = self.deposit.to_s
+      if @setting.cc_mastercard
+        amount = (self.deposit + (self.deposit * @setting.cc_mastercard).round(2)).to_s
+      else
+        amount = self.deposit.to_s
+      end
+      
       trxID = self.id.to_s + "_deposit"
     else
       amount = self.getBalance.to_s

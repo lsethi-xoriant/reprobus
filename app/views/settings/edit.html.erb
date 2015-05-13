@@ -42,6 +42,19 @@
           <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "pxpay_key", f: f } %>
           </div>
 
+
+<div class="form-group">
+  <%= f.label :cc_mastercard, "Mastercard % Fee" %>
+  <div class="col-sm-1">  <%= f.number_field :cc_mastercard, value: number_with_precision(@setting.get_cc_mastercard_display, strip_insignificant_zeros: true, precision: 2), class: 'form-control', step: 0.1 %>  </div>
+</div>
+<div class="form-group">
+  <%= f.label :cc_visa, "Visa % Fee" %>
+  <div class="col-sm-1">  <%= f.number_field :cc_visa, value: number_with_precision(@setting.get_cc_visa_display, strip_insignificant_zeros: true, precision: 2), class: 'form-control', step: 0.1 %>  </div>
+</div>
+<div class="form-group">
+  <%= f.label :cc_amex, "Other CC % Fee" %>
+  <div class="col-sm-1">  <%= f.number_field :cc_amex, value: number_with_precision(@setting.get_cc_other_display, strip_insignificant_zeros: true, precision: 2), class: 'form-control', step: 0.1 %>  </div>
+</div>
     
           <div class="form-group">
             <%= f.label :use_xero, "Xero Integration", class: "col-sm-3 control-label"  %>

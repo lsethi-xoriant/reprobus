@@ -31,6 +31,7 @@ module Reprobus
     config.assets.enabled = true
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
     config.autoload_paths += %W(#{config.root}/app/models/activities)
+    config.autoload_paths += %W(#{config.root}/app/models/products)
     
     #added below to allow the GMAIL ENV variables in dev.
     # Version of your assets, change this if you want to expire all your assets

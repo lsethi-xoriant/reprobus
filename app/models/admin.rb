@@ -16,7 +16,7 @@ class Admin < ActiveRecord::Base
   end
   
 #   def self.import(file)
-#     if !file.nil? then 
+#     if !file.nil? then
 #       CSV.foreach(file.path, headers: true) do |row|
 #         ent = find_by_id(row["id"]) || new
 #         str = (row["name"])
@@ -41,8 +41,8 @@ class Admin < ActiveRecord::Base
   end
 
   def self.open_spreadsheet(file)
-    puts "HAMISHSSSSSSSSSSSS"
-    puts file.path
+#    puts "HAMISHSSSSSSSSSSSS"
+#    puts file.path
   case File.extname(file.original_filename)
   when ".csv" then Roo::CSV.new(file.path)
   when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
