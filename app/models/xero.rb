@@ -92,7 +92,7 @@ class Xero
     if success
       invoice.update_attribute(:xero_id, xinv.invoice_id)
       invoice.create_x_invoice(amount_due: xinv.amount_due, amount_paid: xinv.amount_paid, total: xinv.total, currency_code: xinv.currency_code,
-                               currency_rate: xinv.currency_rate, date: xxnv.date, invoice_ref: xinv.invoice_id,
+                               currency_rate: xinv.currency_rate, date: xinv.date, invoice_ref: xinv.invoice_id,
                                invoice_number: xinv.invoice_number, status: xinv.status, due_date: xinv.due_date, last_sync: Time.now)
     end
     
