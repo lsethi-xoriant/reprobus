@@ -104,14 +104,21 @@ Reprobus::Application.routes.draw do
     resources :destinations
     resources :stopovers
   end
+ 
+ 
+  #resources :products
   
   namespace :products do
     get '', to: 'dashboard#index', as: '/'
-    resources :tour, :controller => "products", :type => "tour"
-    resources :cruise, :controller => "products", :type => "cruise"
-    resources :transfer, :controller => "products", :type => "transfer"
-    resources :hotel, :controller => "products", :type => "hotel"
+   # resources :tours, :controller => "products", :type => "Tour"
+    resources :cruises, :controller => "products", :type => "Cruise"
+    resources :transfers, :controller => "products", :type => "Transfer", :as => :transfers
+    resources :hotels, :controller => "products", :type => "Hotel"
+    resources :flights, :controller => "products", :type => "Flight"
   end
+  match '/products', to: 'products/products#create',     via: 'post'
+  match '/products/:id', to: 'products/products#update',     via: 'patch', :as => :current_product
+
   
   post "emails/post"
 

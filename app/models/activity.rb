@@ -1,24 +1,16 @@
 # == Schema Information
 #
-# Table name: products
+# Table name: activities
 #
-#  id             :integer          not null, primary key
-#  type           :string
-#  name           :string
-#  country        :string
-#  city           :string
-#  description    :string
-#  price_single   :decimal(12, 2)
-#  price_double   :decimal(12, 2)
-#  price_tripple  :decimal(12, 2)
-#  product_type   :string
-#  room_type      :string
-#  rating         :string
-#  destination    :string
-#  default_length :integer
-#  supplier_id    :integer
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id          :integer          not null, primary key
+#  type        :string(255)
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  customer_id :integer
+#  user_id     :integer
+#  user_email  :string(255)
+#  enquiry_id  :integer
 #
 
 class Activity < ActiveRecord::Base

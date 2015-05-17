@@ -22,4 +22,7 @@
 #
 
 class Hotel < Product
+  def self.sti_name
+    "Hotel"
+  end
 end

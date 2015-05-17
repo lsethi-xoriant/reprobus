@@ -22,4 +22,7 @@
 #
 
 class Transfer < Product
+  def self.sti_name
+    "Transfer"
+  end
 end

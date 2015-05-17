@@ -21,5 +21,8 @@
 #  updated_at     :datetime
 #
 
-class Tour < Product
+class Products::Tour < Product
+  def self.sti_name
+    "Tour"
+  end
 end

@@ -21,8 +21,15 @@
 #  updated_at     :datetime
 #
 
-class Cruise < Product
-  def self.sti_name
-    "Cruise"
+class Product < ActiveRecord::Base
+  validates :type,:name, presence: true
+
+  has_many    :itinerary_infos
+  has_many    :itinerary_template_infos
+  belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
+
+
+  def supplierName
+    return self.supplier.supplier_name if self.supplier
   end
 end

@@ -1,0 +1,11 @@
+<% if params[:type] == 'transfer' %>
+      <%= render 'products/transfers/index' %>
+<% elsif params[:type] == 'tour'  %>
+      <%= render 'products/tour/index' %>
+<% elsif params[:type] == 'flight'  %>
+      <%= render 'products/flights/index' %>
+<% elsif params[:type] == 'cruise'  %>
+      <%= render 'products/cruises/index' %>
+<% elsif params[:type] == 'hotel'  %>
+      <%= render 'products/hotels/index' %>
+<% end%>

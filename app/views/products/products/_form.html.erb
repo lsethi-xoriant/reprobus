@@ -1,0 +1,47 @@
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @product.becomes(Product), :url => formpath, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.hidden_field :type, :value => params[:type] %>
+    
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "name", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "country", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "city", f: f } %>
+      
+      <div class="form-group">
+      <%= f.label :description %>
+        <div class="col-sm-6">
+        <%= f.text_area :description, rows: 5, class: "form-control", placeholder: "Enter description"  %>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :price_single %>
+        <div class="col-sm-2">  <%= f.number_field :price_single, class: 'form-control', step: 0.01 %>  </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :price_double %>
+        <div class="col-sm-2">  <%= f.number_field :price_double, class: 'form-control', step: 0.01 %>  </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :price_tripple %>
+        <div class="col-sm-2">  <%= f.number_field :price_tripple, class: 'form-control', step: 0.01 %>  </div>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :supplier_id %>
+        <div class="col-sm-4">
+          <%= f.hidden_field(:supplier_id, value: @product.supplier_id, id: 'sup_select', class: 'select2 ajax', style: 'width: 100%;', data: { source: suppliersearch_suppliers_path, placeholder: 'Search for a name' } ) %>
+        </div>
+      </div>
+      
+      <div class="row">
+      <div class="col-sm-6 col-md-offset-3">
+      <%= f.submit buttontxt, class: "btn btn-large btn-primary" %>
+      </div>
+      </div>
+    <% end %>
+   
+  </div>
+</div>

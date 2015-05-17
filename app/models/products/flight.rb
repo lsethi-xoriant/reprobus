@@ -22,5 +22,7 @@
 #
 
 class Flight < Product
-
+  def self.sti_name
+    "Flight"
+  end
 end
