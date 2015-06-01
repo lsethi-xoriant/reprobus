@@ -55,7 +55,8 @@ module ApplicationHelper
   end
   
      
-  module MaterializeExtension
+  module BootstrapExtension
+    # not used anymore - not called below.
     FORM_CONTROL_CLASS = "input-field col s6"
     LABEL_CONTROL_CLASS = "col-sm-3 control-label"
     LABEL_CONTROL_CLASS_PLAIN = "control-label"

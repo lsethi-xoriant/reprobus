@@ -48,7 +48,7 @@ class Enquiry < ActiveRecord::Base
   
   serialize :xpayments
   
-  scope :new, -> { where(stage: 'New Enquiry') }
+  scope :new_enquirires, -> { where(stage: 'New Enquiry') }
   scope :open, -> { where(stage: 'Open') }
   scope :in_progress, -> { where(stage: 'In Progress') }
   scope :bookings, -> { where(stage: 'Booking') }

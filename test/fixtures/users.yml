@@ -1,0 +1,9 @@
+one:
+  name: MyString
+  email: email@email1.com
+  password_digest: 'password'
+
+two:
+  name: MyString
+  email: email@email2.com
+  password_digest: 'password'
