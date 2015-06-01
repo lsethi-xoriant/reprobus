@@ -1,93 +1,46 @@
-   <!-- NOT USED AT THE MOMENT - wrapped up into navbar html-->
-
-
-<div class="navbar-header">
-
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="/">TripEase</a>
-  </div>
-  
-    <div class="navbar-inner">
-      <ul class="nav pull-right">
-        
-        <% if signed_in? %>
+<header id="header" class="page-topbar">
+<div class="navbar-fixed">
+  <nav class="teal">
+    <div class="nav-wrapper">
+      <h1 class="logo-wrapper">
+        <a href="/dashboard" class="brand-logo darken-1"><img src=<%= asset_path('rocketTrip-logo.png') %> alt="materialize logo"></a>
+      </h1>
+      
+      <ul class="right hide-on-med-and-down">
         <li>
-	        <form class="search form-inline">
-	          <input type="text" placeholder="Search...">
-	          <button class="search-submit btn-search" value="" type="submit"><i class="icon-search"></i></button>                        
-	        </form>                        
-	      </li>
-        
-        
-  
-        <li class="dropdown header-border">
-          <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="email-notify"><i class="icon-envelope-alt"></i><span class="email-alert"><i class="icon-circle"></i> </span></span>
+          <a href=<%= dashboard_path(:remindersOnly => "y")%> class="waves-effect waves-block waves-light">
+            <i class="mdi-social-notifications"></i><%= current_user.getRemindersDueCount.to_s %>
           </a>
-
-          <ul class="dropdown-menu block-dark messages">
-            <li class="view-all"><a href="#">View all messages</a></li>   
-            <li><a href="#">
-              <div class="avatar"><img height="45" width="45" src= <%= asset_path "face-1.jpg" %> alt="Your profile"></div>
-              <div class="info">Antonio Heide <span class="timer">36 min</span></div>    
-              <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem necessitatibus.</div>
-              </a>
-            </li>
-            <li><a href="#">
-              <div class="avatar"><img height="45" width="45" src= <%= asset_path "face-2.jpg" %> alt="Your profile"></div>
-              <div class="info">Melissa Evans <span class="timer">52 min</span></div>    
-              <div class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis optio ad placeat incidunt iste non enim nisi quae culpa.</div>
-              </a>
-            </li>                                               
-          </ul>
-        </li>   
-
-        <li class="dropdown header-border">
-          <a href="#" role="button" class="dropdown-toggle " data-toggle="dropdown">
-            <div class="notify">7</div>
-          </a>
-
-          <ul class="dropdown-menu block-dark messages msg-notify">
-            <li class="view-all"><a href="#">View all notifications</a></li>   
-            <li><a href="#"><div><i class="icon-comment"></i>  new comment <span class="timer">2 min</span></div></a>                        
-            <li><a href="#"><div><i class="icon-twitter"></i>  new follower <span class="timer">6 min</span></div></a> 
-            <li><a href="#"><div><i class="icon-thumbs-up"></i> new like <span class="timer">9 min</span></div></a>                        
-            <li><a href="#"><div><i class="icon-twitter"></i>  new follower <span class="timer">25 min</span></div></a> 
-            <li><a href="#"><div><i class="icon-user"></i>  new registration <span class="timer">32 min</span></div></a>                        
-            <li><a href="#"><div><i class="icon-comment"></i>  new comment <span class="timer">2 hours</span></div></a>     
-            <li><a href="#"><div><i class="icon-map-marker"></i>  new localization <span class="timer">Yesterday</span></div></a>     
-          </ul>
-        </li>                                   
-
-        <li class="dropdown header-border">
-          <a href="#" role="button" class="dropdown-toggle " data-toggle="dropdown">
-            <div class="thumb-account">
-              <img height="20" width="20" src= <%= asset_path "timeline-team.jpg" %> alt="Your profile">
-              <span><i class="icon-caret-down"></i></span>
-            </div>
-          </a>
-
-          <ul class="dropdown-menu block-dark account">
-            <li class="first"><a tabindex="-1" href="#"><i class="icon-user"></i> Your profile</a></li>
-            <li><a tabindex="-1" href= <%= edit_user_path(current_user) %> ><i class="icon-cogs"></i> Settings</a></li>
-            <li><a tabindex="-1" href="sign-in.html"><i class="icon-signin"></i> Log in</a></li>
-            <li class="last notify-disabled"><a data-method="delete" tabindex="-1" href= <%= signout_path %> <i class="icon-signout" rel="nofollow"></i> Logout</a></li>
+        </li>
+    
+  <!--  OLD notification drop down
+        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <%= current_user.getRemindersDueCount.to_s %> <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+          <ul class="dropdown-menu dropdown-alerts">
+            <li> <a href= <%= dashboard_path(:remindersOnly => "y") %> >
+              <div> <i class="fa fa-bell fa-fw"></i>  <%= current_user.getRemindersDueCount.to_s %> Enquiry Reminders Overdue</div>
+              </a> </li>
+            <li class="divider"></li>
+            <li> <a href= <%= dashboard_path %> >
+              <div> <i class="fa fa-bell-o fa-fw"></i>  <%= current_user.getEnquiriesOpenCount.to_s %> Enquiries Open</div>
+              </a> </li>
           </ul>
         </li>
-        
-        <% else %>
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Sign in", signin_path %></li>
-        <% end %>
-        
+  -->
+  
+      
+        <!-- OLD STUFF FOR USERS
+        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+          <ul class="dropdown-menu dropdown-user">
+            <li><a href= <%= user_path(current_user) %> ><i class="fa fa-user fa-fw"></i> User Profile</a> </li>
+            <li><a href= <%= edit_user_path(current_user) %> ><i class="fa fa-gear fa-fw"></i> Settings</a> </li>
+            <li class="divider"></li>
+            <li><a data-method="delete" href= <%= signout_path %> ><i class="fa fa-sign-out fa-fw"></i> Logout</a> </li>
+  
+          </ul>
+        </li>
+        -->
         
       </ul>
-
     </div>
-</div>
+  </nav>
+</header>

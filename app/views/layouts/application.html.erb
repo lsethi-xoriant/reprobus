@@ -2,40 +2,39 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
-    <link href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <%= render 'layouts/toastr_settings' %>
   </head>
-  <body>
-    <div id="wrapper">
-     
-    <%= render 'layouts/navbar' %>
-      
-    <div id="page-wrapper" class="profile">
+  <body class="loaded">
+    <%= render 'layouts/header' %>
 
-      <div class="row">
-        <div class="col-lg-12">
-        <%= yield %>
-        <% flash.each do |key, value| %>
-           <!--<div class="alert alert-<%= key %>"><%= raw(value) %></div>-->
-           <script type="text/javascript">
-              toastr.<%= raw(key.to_s) %>(<%= raw(value.inspect) %>)
-           </script>
-        <% end %>
-      
-          
-        <%= render 'layouts/footer' %>
-        <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && current_user.name == "Hamish Gardiner" %>
-        </div>
-      </div><!-- /.row -->
-
-    </div><!-- /#page-wrapper -->
-    </div><!-- /#wrapper -->
+    <div id="main">
+      <div id="wrapper">
+        <%= render 'layouts/navbar' %>
+        <section id="content">
+        <%= render 'layouts/breadcrumbs' %>
+        
+          <div class="container">
+            <div class="section">
+              <div class="row">
+                <%= yield %>
+                
+                <% flash.each do |key, value| %>
+                   <script type="text/javascript">
+                      toastr.<%= raw(key.to_s) %>(<%= raw(value.inspect) %>)
+                   </script>
+                <% end %>
+            
+                <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && current_user.name == "Hamish Gardiner" %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div><!-- #wrapper -->
+    </div><!-- #main -->
   </body>
   <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
-  <script src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 </html>

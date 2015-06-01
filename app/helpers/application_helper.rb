@@ -55,8 +55,8 @@ module ApplicationHelper
   end
   
      
-  module BootstrapExtension
-    FORM_CONTROL_CLASS = "form-control"
+  module MaterializeExtension
+    FORM_CONTROL_CLASS = "input-field col s6"
     LABEL_CONTROL_CLASS = "col-sm-3 control-label"
     LABEL_CONTROL_CLASS_PLAIN = "control-label"
 
@@ -123,5 +123,5 @@ module ApplicationHelper
   end
 
   # Add the modified method to ApplicationHelper
-  include BootstrapExtension
+  #include MaterializeExtension
 end

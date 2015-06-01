@@ -15,13 +15,9 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require bootstrap
+//= require materialize-sprockets
 //= require select2
 // require moment
-// require bootstrap-datetimepicker
-//= require bootstrap-datepicker
-// require dataTables/jquery.dataTables
-// require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require toastr
 //= require turbolinks
 //= require nprogress

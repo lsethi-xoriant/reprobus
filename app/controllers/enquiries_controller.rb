@@ -5,6 +5,8 @@ class EnquiriesController < ApplicationController
   skip_before_filter :signed_in_user, only: [:webenquiry, :confirmation]
   layout "plain", only: [:webenquiry, :confirmation]
   
+  @pageName = "Enquiry"
+  
   def addbooking
     @enquiry = Enquiry.find(params[:id])
     ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one.

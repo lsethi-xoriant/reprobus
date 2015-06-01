@@ -18,8 +18,7 @@ Reprobus::Application.routes.draw do
       post 'addEmailTriggers'
     end
   end
-  
-  resources :tours
+
   resources :password_resets
   resources :email_templates
     
@@ -104,13 +103,10 @@ Reprobus::Application.routes.draw do
     resources :destinations
     resources :stopovers
   end
- 
- 
-  #resources :products
-  
+
   namespace :products do
     get '', to: 'dashboard#index', as: '/'
-   # resources :tours, :controller => "products", :type => "Tour"
+    resources :tours, :controller => "products", :type => "Tour"
     resources :cruises, :controller => "products", :type => "Cruise"
     resources :transfers, :controller => "products", :type => "Transfer", :as => :transfers
     resources :hotels, :controller => "products", :type => "Hotel"

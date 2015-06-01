@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#stopoversearch").select2({
       //placeholder: "Search for user",
       allowClear: true,
-      multiple: true, 
+      multiple: true,
       tokenSeparators: [",", " "],
       
       //minimumInputLength: 1,
@@ -20,9 +20,9 @@ $(document).ready(function() {
             }
     },
       initSelection: function(element, callback) {
-        var data = [];        
+        var data = [];
         $(element.val().split(",")).each(function(i) {
-          var item = this.split(':');                
+          var item = this.split(':');
           data.push({
             id: item[0],
             text: item[1]
@@ -34,4 +34,4 @@ $(document).ready(function() {
     dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
     });
 
-; });
+ });

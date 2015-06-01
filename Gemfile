@@ -26,13 +26,13 @@ group :test do
 end
   
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass'
+gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '2.1.1'
-gem 'bootstrap-sass', '~> 3.1.1'
 gem 'sprockets', '2.11.0'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
-gem 'bootstrap-will_paginate', '0.0.9'
+gem 'materialize-sass'
 gem 'carrierwave'
 gem 'mini_magick'   # changed from rmagick
 #gem 'rmagick'   # changed as causing issues installing gems
@@ -65,8 +65,7 @@ gem 'jquery-rails'
 
 # datepicker gems
 #gem 'momentjs-rails', '~> 2.8.1' #OLD removed due to conflict with tablesorter
-#gem 'bootstrap3-datetimepicker-rails', '~> 3.1.2' #OLD removed due to conflict with tablesorter
-gem 'bootstrap-datepicker-rails'
+
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

@@ -12,9 +12,8 @@
  *= require_tree .
  *= require select2
  *= require font-awesome
- *= require bootstrap-datepicker3
  *= require toastr
  *= require nprogress
- *= require nprogress-bootstrap
+ * require nprogress-bootstrap
  */
 

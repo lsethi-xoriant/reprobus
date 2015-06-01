@@ -48,12 +48,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-datepicker-rails (1.3.0.2)
-      railties (>= 3.0)
-    bootstrap-sass (3.1.1.1)
-      sass (~> 3.2)
-    bootstrap-will_paginate (0.0.9)
-      will_paginate
     builder (3.2.2)
     callsite (0.0.11)
     capybara (2.1.0)
@@ -118,6 +112,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    materialize-sass (0.95.2)
+      sass (~> 3.1)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -209,12 +205,13 @@ GEM
       rspec-mocks (~> 2.13.0)
     ruby-ole (1.2.11.7)
     rubyzip (0.9.9)
-    sass (3.2.19)
-    sass-rails (4.0.5)
+    sass (3.4.14)
+    sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.2)
-      sprockets (~> 2.8, < 3.0)
-      sprockets-rails (~> 2.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (~> 1.1)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -279,9 +276,6 @@ DEPENDENCIES
   annotate (>= 2.6.0)
   bcrypt-ruby (~> 3.0.0)
   better_errors
-  bootstrap-datepicker-rails
-  bootstrap-sass (~> 3.1.1)
-  bootstrap-will_paginate (= 0.0.9)
   capybara (= 2.1.0)
   carrierwave
   coffee-rails (~> 4.0.0)
@@ -293,6 +287,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   jquery-turbolinks
+  materialize-sass
   meta_request
   mini_magick
   money
@@ -305,7 +300,8 @@ DEPENDENCIES
   responders (~> 2.0)
   roo
   rspec-rails (= 2.13.1)
-  sass-rails (~> 4.0.0)
+  sass
+  sass-rails (~> 5.0)
   sdoc
   select2-rails
   selenium-webdriver (= 2.35.1)
