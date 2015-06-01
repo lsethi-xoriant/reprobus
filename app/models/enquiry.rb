@@ -33,7 +33,7 @@
 
 class Enquiry < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 64 }
-  validates :source, presence: true, length: { maximum: 32 }
+  #validates :source, presence: true, length: { maximum: 32 }
   validates :stage, presence: true, length: { maximum: 32 }
   validates :num_people, allow_nil: true,  numericality: { only_integer: true }, allow_blank: true
   validates :amount, numericality: true,  allow_blank: true
@@ -48,10 +48,11 @@ class Enquiry < ActiveRecord::Base
   
   serialize :xpayments
   
+  scope :new, -> { where(stage: 'New Enquiry') }
   scope :open, -> { where(stage: 'Open') }
   scope :in_progress, -> { where(stage: 'In Progress') }
   scope :bookings, -> { where(stage: 'Booking') }
-  scope :active, -> {where(:stage => ['In Progress', 'Open'])}
+  scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
  # scope :notClosed, -> {where('stage != "Closed"') }
   
   belongs_to  :user

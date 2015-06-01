@@ -25,9 +25,12 @@
 
   <h4 class="header2">Customer Details</h4>
   <div class="row">
-  
+
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
+	  
+	  <%= f.hidden_field :user_id, :value => current_user.id %>
+	  <%= f.hidden_field :stage, :value => @enquiry.stage %>
 	  
 	  
 	  <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
@@ -45,20 +48,20 @@
     
     <h4 class="header2">Enquiry Details</h4>
       <div class="row">
-        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f, name: "Enquiry Name" } %>
+        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f, name: "Enquiry Name"} %>
       </div>
 
       <div class="row">
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "est_date", f: f, name: "Departure Date"} %>
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "fin_date", f: f, name: "Return Date"} %>
+        <%= render partial: 'shared/material_date_cols6', locals: { field: "est_date", f: f, name: "Departure Date", value: (@enquiry.est_date.strftime("%Y/%m/%d") unless @enquiry.est_date.nil?) } %>
+        <%= render partial: 'shared/material_date_cols6', locals: { field: "fin_date", f: f, name: "Return Date", value: (@enquiry.fin_date.strftime("%Y/%m/%d") unless @enquiry.fin_date.nil?) } %>
       </div>
       
       <div class="row">
         <div class="input-field col s6">
-          <%= f.select :standard, options_for_select(["Budget", "Comfort", "Superior", "Deluxe", "Boutique"], @enquiry.standard ), {} %>
-          <%= f.label :standard, "Select Class" %>
+          <%= f.select :standard, options_for_select(["Budget", "Comfort", "Superior", "Deluxe", "Boutique"].
+               insert(0, "Select a class"), @enquiry.standard ), {} %>
         </div>
-        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_people", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_people", f: f, name: "Number Traveling" } %>
       </div>
       <p>
         <%= f.check_box :insurance, class: "filled-in" %>
@@ -68,8 +71,8 @@
       <div class="row">
          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "amount", f: f, name: "Booking Value"} %>
         <div class="input-field col s6">
-          <%= f.select :probability, options_for_select(["High", "Medium", "Low"], @enquiry.probability ), {} %>
-          <%= f.label :probability %>
+          <%= f.select :probability, options_for_select(["High", "Medium", "Low"].
+               insert(0, "Select a probability"), @enquiry.probability ), {} %>
         </div>
       </div>
   
@@ -78,7 +81,7 @@
       <div class="row">
         <div class="input-field col s6">
           <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax', style: 'width: 100%;') %>
-          <%= f.label :assigned_to, "Assign To"  %>
+          <%= f.label :assigned_to, "Assign To", class: 'active'  %>
         </div>
         
         <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder" } %>
@@ -87,20 +90,18 @@
     
       <div class="row">
         <div class="input-field col s12">
-          <%= f.text_area :background_info, rows: "3", class: "input-field col s12", length: "120" %>
-          <%= f.label :background_info, "Additional Details", class: "col-sm-3 control-label" %>
-          <span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span>
+          <%= f.text_area :background_info, class: "materialize-textarea", length: "120" %>
+          <%= f.label :background_info, "Additional Details" %>
         </div>
       </div>
  
      <div class="row">
       <div class="input-field col s6">
         <%= hidden_field(:enquiry, :agent_id, id: 'agent_select', class: 'select2 ajax', style: 'width: 100%;' ) %>
-        <%= f.label :agent_id, "Agent" %>
+        <%= f.label :agent_id, "Agent",  class: 'active' %>
       </div>
     </div>
 
-      <%= f.hidden_field :user_id, :value => current_user.id %>
       <div class="row">
         <div class="input-field col s12">
             <%#= f.submit buttontxt + '<i class="mdi-content-send right"></i>', class: "btn cyan waves-effect waves-light right" %>

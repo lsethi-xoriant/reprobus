@@ -1,7 +1,7 @@
 <div class="input-field col s6">
   <%= f.text_field field.to_sym %>
   <% if local_assigns.has_key? :name %>
-    <%= f.label field.to_sym, name, class: "active" %>
+    <%= f.label field.to_sym %>
   <% else %>
    <%= f.label field.to_sym %>
   <% end %>

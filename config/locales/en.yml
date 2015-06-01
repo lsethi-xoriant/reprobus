@@ -28,6 +28,7 @@ en:
     attributes:
       enquiry:
         num_people: "Number of People"
+        name: "Enquiry Name"
       setting:
         cc_mastercard: "Mastercard % fee"
         cc_visa: "Visa % fee"

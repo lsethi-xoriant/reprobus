@@ -54,6 +54,7 @@ class EnquiriesController < ApplicationController
 	  @enquiry.customers.build
     @enquiry.customers.first.build_address
     @customer = @enquiry.customers.first
+    @enquiry.stage = "New Enquiry"
   end
 
   def show
