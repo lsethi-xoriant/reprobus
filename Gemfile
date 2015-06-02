@@ -2,10 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-
-#group :development, :test, :production do
-  gem 'pg'
-#end
+gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
@@ -20,6 +17,7 @@ group :production do
 end
 
 group :test do
+# old way, decided to use minitest
 #  gem 'selenium-webdriver', '2.35.1'
 #  gem 'capybara', '2.1.0'
 #  gem 'factory_girl_rails', '4.2.1'
@@ -46,8 +44,7 @@ gem 'select2-rails'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'font-awesome-rails'
 gem 'roo'
-#gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
-#gem 'jquery-datatables-rails', '~> 3.1.1'
+gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -61,17 +58,8 @@ gem 'nprogress-rails' # pretty progress bar at top of screen when using ajax and
 gem 'responders', '~> 2.0'
 gem 'delayed_job_active_record'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-group :chromebookdev, :chromebooktest do
-  gem 'therubyracer', platforms: :ruby   # uncommented for  chromebook dev
-end
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# datepicker gems
-#gem 'momentjs-rails', '~> 2.8.1' #OLD removed due to conflict with tablesorter
-
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -87,12 +75,6 @@ end
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]

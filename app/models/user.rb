@@ -51,11 +51,11 @@ class User < ActiveRecord::Base
     generate_token_pw_reset
     self.password_reset_sent_at = Time.zone.now
     save!
-    UserMailer.password_reset(self).deliver
+    UserMailer.password_reset(self).deliver_now
   end
   
   def send_welcome_email
-    UserMailer.welcome_email(self).deliver
+    UserMailer.welcome_email(self).deliver_now
   end
   
   def getRemindersDueCount
@@ -75,6 +75,13 @@ class User < ActiveRecord::Base
   
   def isSystemUser
     return self.name == "System" || self.email == "hamish@writecode.com.au"
+  end
+ 
+  # Returns the hash digest of the given string.
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
   end
   
 private

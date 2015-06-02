@@ -11,6 +11,7 @@
  *= require_self
  *= require select2
  *= require_tree .
+ *= require dataTables/jquery.dataTables
  *= require font-awesome
  *= require toastr
  *= require nprogress

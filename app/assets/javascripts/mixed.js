@@ -10,5 +10,5 @@ $(document).ready(function() {
     //modal.find('.modal-body input').val(recipient);
     //alert("he work now");
   });
-        
 });
+

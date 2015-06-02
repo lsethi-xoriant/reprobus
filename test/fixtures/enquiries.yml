@@ -1,0 +1,9 @@
+firstenq:
+  name: first enq
+  stage: New Enquiry
+  user: :one
+
+secondenq:
+  name: second enq
+  stage: New Enquiry
+  user: :two
