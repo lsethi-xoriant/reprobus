@@ -1,5 +1,5 @@
 <aside id="left-sidenar-nav">
-  <ul id="slide-out" class="side-nav fixed leftside-navigation ps-container ps-active-y" style="width: 240px;">
+  <ul id="slide-out" class="side-nav fixed leftside-navigation ps-container ps-active-y" style="width: 240px; left: 0px;">
     <li class="bold"><a href="/dashboard" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a> </li>
     <li class="bold"><a href=<%= enquiries_path %> class="waves-effect waves-cyan"><i class="mdi-communication-email"></i> Enquiries <span class="new badge">4</span></a> </li>
     <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-circle"></i> Customers</a> </li>
@@ -10,12 +10,12 @@
     <li class="li-hover">
       <div class="divider"></div>
     </li>
-    <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
+    <li class="bold"><a href=<%= products_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
     
     <% if current_user.admin? %>
-      <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-action-thumb-up"></i> Settings</a> </li>
-      <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-social-people"></i> Users</a> </li>
-      <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-social-pages"></i> Admin</a> </li>
+      <li class="bold"><a href=<%= setting_path(1) %> class="waves-effect waves-cyan"><i class="mdi-action-thumb-up"></i> Settings</a> </li>
+      <li class="bold"><a href=<%= users_path %> class="waves-effect waves-cyan"><i class="mdi-social-people"></i> Users</a> </li>
+      <li class="bold"><a href=<%= admin_path %> class="waves-effect waves-cyan"><i class="mdi-social-pages"></i> Admin</a> </li>
     <% end %>
     
   </ul>

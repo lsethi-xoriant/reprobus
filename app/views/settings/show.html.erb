@@ -1,13 +1,13 @@
 <% provide(:title, @setting.company_name + " Settings") %>
-<div class="row">
-  <aside class="span4">
-    <section>
-      <h1 class="page-header">
-        <%= @setting.company_name + " Settings"%>
-      </h1>
-      <%= link_to "Edit " + @setting.company_name + " Settings" , edit_setting_path(@setting) %>
 
+<div class="col s12 m12 l12">
+  <div class ="card-panel">
+      <h4>
+        <%= @setting.company_name + " Settings"%>
+      </h4>
       
+      <a href=<%= edit_setting_path(@setting) %> ><button type="button" class="btn">Edit Settings</button></a>
+
        <ul class="row profile-details">
             <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Company</li>
             <li class="col-lg-6 col-md-6 col-sm-6"><%= @setting.company_name %></li><br>
@@ -31,16 +31,21 @@
             <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.xero_consumer_secret ) %></li>
             <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">System Default Currency</li>
          <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.currencyDisplay ) %></li>
-         </ul>
-    </section>
+      </ul>
+  </div>
     
-    <%= render  partial: 'currency_table' %>
+    <div class ="card-panel">
+      <%= render  partial: 'currency_table' %>
+    </div>
     
-    <%=  form_tag({controller: "settings", action: "syncInvoices", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
-      <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
-    <% end %>
+    <div class ="card-panel">
+      <%=  form_tag({controller: "settings", action: "syncInvoices", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+        <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    
     <div id="invoices" >
       <%#= render partial: 'invoices', locals: {items: @invoices}  %>
     </div>
-  </aside>
+  
 </div>

@@ -32,23 +32,34 @@
 	  <%= f.hidden_field :stage, :value => @enquiry.stage %>
 	  
 	  
-	  
-	  <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
-	    <h4 class="header2">Customer Details</h4>
-	    
-      <div class="row">
-        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: c } %>
-        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: c } %>
-      </div>
+	  <div class ="card-panel">
+  	  <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
+  	    <h4 class="header2">Customer Details</h4>
+  	    
+        <div class="row">
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: c } %>
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: c } %>
+        </div>
+  
+        <div class="row">
+          <%= render partial: 'shared/material_emailfield_cols6', locals: { field: "email", f: c } %>
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: c } %>
+        </div>
+        
+      <% end %>
 
       <div class="row">
-        <%= render partial: 'shared/material_emailfield_cols6', locals: { field: "email", f: c } %>
-        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: c } %>
+        <div class="input-field col s6">
+          <%= hidden_field(:enquiry, :agent_id, id: 'agent_select', class: 'select2 ajax', style: 'width: 100%;' ) %>
+          <%= f.label :agent_id, "Agent",  class: 'active' %>
+        </div>
       </div>
-      
-    <% end %>
+    </div>
     
-    <h4 class="header2">Enquiry Details</h4>
+    <div class ="card-panel">
+    
+      <h4 class="header2">Enquiry Details</h4>
+      
       <div class="row">
         <%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f, name: "Enquiry Name"} %>
       </div>
@@ -65,28 +76,28 @@
         </div>
         <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_people", f: f, name: "Number Traveling" } %>
       </div>
+
       <p>
         <%= f.check_box :insurance, class: "filled-in" %>
         <%= f.label :insurance, "Insurance Required"  %>
       </p>
+
   
       <div class="row">
          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "amount", f: f, name: "Booking Value"} %>
+         
         <div class="input-field col s6">
           <%= f.select :probability, options_for_select(["High", "Medium", "Low"].
                insert(0, "Select a probability"), @enquiry.probability ), {} %>
         </div>
       </div>
   
-  
-  
       <div class="row">
-        <div class="input-field col s6">
-          <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax', style: 'width: 100%;') %>
-          <%= f.label :assigned_to, "Assign To", class: 'active'  %>
-        </div>
-        
         <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder" } %>
+        
+        <div class="input-field col s6">
+          <%= f.select :stage, options_for_select(["New Enquiry", "Open", "In Progress", "Closed"], @enquiry.stage ) %>
+        </div>
       </div>
 
     
@@ -97,24 +108,25 @@
         </div>
       </div>
  
-     <div class="row">
-      <div class="input-field col s6">
-        <%= hidden_field(:enquiry, :agent_id, id: 'agent_select', class: 'select2 ajax', style: 'width: 100%;' ) %>
-        <%= f.label :agent_id, "Agent",  class: 'active' %>
-      </div>
-    </div>
-
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
+          <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax', style: 'width: 100%;') %>
+          <%= f.label :assigned_to, "Assign To", class: 'active'  %>
+        </div>
+        
+        <div class="input-field col s6">
             <%#= f.submit buttontxt + '<i class="mdi-content-send right"></i>', class: "btn cyan waves-effect waves-light right" %>
             <%= button_tag( :class => "btn cyan waves-effect waves-light right") do %>
               <%= buttontxt %><i class="mdi-content-send right"></i>
             <% end %>
         </div>
       </div>
-    <% end %>
-  </div>
-  
+      
+    </div>
+  <% end %>
+    
+
+</div>
 
 
 
