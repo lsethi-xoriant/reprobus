@@ -43,7 +43,7 @@ gem 'mini_magick'   # changed from rmagick
 gem 'select2-rails'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'font-awesome-rails'
-gem 'roo'
+#gem 'roo'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
