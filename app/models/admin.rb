@@ -1,6 +1,6 @@
 class Admin < ActiveRecord::Base
-  require 'roo'
-  require 'spreadsheet'
+  #require 'roo'
+  #require 'spreadsheet'
 
   self.abstract_class = true
   
