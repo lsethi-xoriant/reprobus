@@ -69,7 +69,7 @@ class Customer < ActiveRecord::Base
   accepts_nested_attributes_for :address
   has_many    :activities,  dependent: :destroy
   has_many    :bookings
-  belongs_to     :currency
+  belongs_to  :currency
 
   has_many    :products, :foreign_key => "supplier_id"
   has_many    :template_infos, :foreign_key => "supplier_id"

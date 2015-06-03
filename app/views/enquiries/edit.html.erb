@@ -1,7 +1,14 @@
-<% provide(:title, 'Edit Enquiry') %>
-<h1 class="page-header">Edit Enquiry</h1>
 <%  params[:user_type] = "Existing" %>
 <%  params[:existing_customer] = @enquiry.customers.first.id.to_s unless @enquiry.customers.empty? %>
-<% if !@enquiry.is_booking %>
-  <%= render  partial: 'form', locals: { buttontxt: "Update Enquiry" } %>
-<% end %>
+
+<% provide(:title, 'Edit Enquiry') %>
+<h4 class="page-header">Edit Enquiry</h4>
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class ="card-panel">
+    <% if !@enquiry.is_booking %>
+      <%= render  partial: 'form', locals: { buttontxt: "Update Enquiry" } %>
+    <% end %>
+    </div>
+  </div>
+</div>

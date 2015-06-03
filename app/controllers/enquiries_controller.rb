@@ -75,9 +75,9 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.new(enquiry_params)
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
     
-    @enquiry.customers.clear if params[:existing_customer].to_i > 0
+    #@enquiry.customers.clear if params[:existing_customer].to_i > 0
     if @enquiry.save
-      @enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0
+      #@enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0
       Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
@@ -85,62 +85,24 @@ class EnquiriesController < ApplicationController
       render 'new'
     end
   end
-
-  def webenquiry
-    ###### SHOULD HAVE SOME VERIFICATION HERE TO CHECK SITES ACCESSING THIS ARE ALLOWED (maybe hidden field in enquiry form plug in?)
-    @enquiry = Enquiry.new()
-    @enquiry.name = "Web Enq - " + params[:firstname] + " " + params[:surname]
-    @enquiry.source = "Web"
-    @enquiry.stage = "Open"
-    @enquiry.user_id = User.find_by_name("System").id
-    @enquiry.background_info = params[:enquiry_detail]
-    @cust = Customer.find_by_email(params[:email]) unless params[:email].nil?
-    if @cust.nil?
-      @cust = Customer.new()
-    end
-    @cust.first_name = params[:firstname]
-    @cust.last_name = params[:surname]
-    @cust.email = params[:email]
-    @cust.mobile = params[:phone]
-    
-    @cust.save
-    
-    if @enquiry.save
-      @enquiry.add_customer(@cust)
-      flash.now[:success] = "Thank you, enquiry submitted."
-      render 'confirmation'
-    end
-    
-  end
-  
-  def confirmation
-    #stub... i think we need this here blank
-  end
   
   def update
     if params[:existing_customer].to_i > 0
-      params[:enquiry].delete(:customers_attributes)
+    #  params[:enquiry].delete(:customers_attributes)
     end
     
     @enquiry = Enquiry.find(params[:id])
-    @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+    @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
-    # below not working, may have to reinvestigate. email is already unigue for customers, so dont need that validation
-  #  if params[:user_type] == "New"
-  #     @enquiry.validate_new_customer(params[:enquiry][:customers_attributes][:email], params[:enquiry][:customers_attributes][:mobile])
-  #  end
-
     if @enquiry.update_attributes(enquiry_params)
-#tidy up one day  - find better way to do this
-      @enquiry.customers.clear
-      
-      if params[:existing_customer].to_i > 0
-        @enquiry.add_customer(Customer.find(params[:existing_customer]))
-      elsif !params[:enquiry][:customer_ids].nil?
-        params[:enquiry][:customer_ids].each do |cust|
-          @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
-        end
-      end
+      # work out what to do with muli customers... may not need to do anything?
+      #if params[:existing_customer].to_i > 0
+        # @enquiry.add_customer(Customer.find(params[:existing_customer]))
+      #elsif !params[:enquiry][:customer_ids].nil?
+       # params[:enquiry][:customer_ids].each do |cust|
+        #   @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
+      #  end
+      #end
       
       if params[:enquiry][:carriers] then
         @enquiry.carriers.clear
@@ -181,6 +143,37 @@ class EnquiriesController < ApplicationController
     else
       render 'edit'
     end
+  end
+  
+  def webenquiry
+    ###### SHOULD HAVE SOME VERIFICATION HERE TO CHECK SITES ACCESSING THIS ARE ALLOWED (maybe hidden field in enquiry form plug in?)
+    @enquiry = Enquiry.new()
+    @enquiry.name = "Web Enq - " + params[:firstname] + " " + params[:surname]
+    @enquiry.source = "Web"
+    @enquiry.stage = "Open"
+    @enquiry.user_id = User.find_by_name("System").id
+    @enquiry.background_info = params[:enquiry_detail]
+    @cust = Customer.find_by_email(params[:email]) unless params[:email].nil?
+    if @cust.nil?
+      @cust = Customer.new()
+    end
+    @cust.first_name = params[:firstname]
+    @cust.last_name = params[:surname]
+    @cust.email = params[:email]
+    @cust.mobile = params[:phone]
+    
+    @cust.save
+    
+    if @enquiry.save
+      @enquiry.add_customer(@cust)
+      flash.now[:success] = "Thank you, enquiry submitted."
+      render 'confirmation'
+    end
+    
+  end
+  
+  def confirmation
+    #stub... i think we need this here blank
   end
 
   def destroy
@@ -257,7 +250,7 @@ private
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         :fin_date, :standard, :insurance, :reminder,
-        customers_attributes: [:first_name, :last_name, :email, :phone, :mobile, :title] )
+        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title] )
     end
 
     def undo_link

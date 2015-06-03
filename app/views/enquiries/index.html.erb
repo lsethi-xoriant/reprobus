@@ -1,5 +1,7 @@
 <% provide(:title, 'All Enquiries') %>
 <h4>All Enquiries</h4>
+
+
 <div id="table-datatables">
  <div class="row">
     <div class="col s12 m12 l12">
@@ -13,6 +15,7 @@
             <th>Phone</th>
             <th>Assigned To</th>
             <th>Status</th>
+            <th>Est. Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +27,8 @@
             <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>
             <td><%= enquiry.customer_phone %></td>
             <td><%= enquiry.assigned_to_name %></td>
-            <td><%= enquiry.stage %></td>
+            <td><span class="<%= get_status_color(enquiry.stage)%>"><%= enquiry.stage.upcase %></span></td>
+            <td><%= number_to_currency(enquiry.amount, precision: 0) %></td>
           </tr>
           <% end %>
         </tbody>
