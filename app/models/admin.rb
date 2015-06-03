@@ -41,7 +41,6 @@ class Admin < ActiveRecord::Base
   end
 
   def self.open_spreadsheet(file)
-#    puts "HAMISHSSSSSSSSSSSS"
 #    puts file.path
   case File.extname(file.original_filename)
   when ".csv" then Roo::CSV.new(file.path)

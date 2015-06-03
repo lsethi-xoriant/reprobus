@@ -36,7 +36,7 @@ gem 'uglifier', '2.1.1'
 gem 'sprockets', '2.11.0'
 gem 'faker', '1.4.2'
 gem 'will_paginate', '3.0.4'
-gem 'materialize-sass'
+gem 'materialize-sass', '0.95.2'
 gem 'carrierwave'
 gem 'mini_magick'   # changed from rmagick
 #gem 'rmagick'   # changed as causing issues installing gems
