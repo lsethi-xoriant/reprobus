@@ -1,0 +1,21 @@
+
+  <div class="nested-fields">
+    <div class="field">
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
+    </div>
+  
+    <div class="field">
+      <%= render partial: 'shared/material_emailfield_cols6', locals: { field: "email", f: f } %>
+      <%#= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f } %>
+      <div class="input-field col s5">
+        <%= f.text_field "phone" %>
+        <%= f.label :phone %>
+      </div>
+    </div>
+    <div class="input-field col s1">
+      <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red"} do %>
+                    <i class="mdi-content-clear"></i>
+      <% end %>
+    </div>
+  </div>

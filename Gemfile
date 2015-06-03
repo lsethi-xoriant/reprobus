@@ -57,6 +57,7 @@ gem 'toastr-rails'    # pretty toast notification
 gem 'nprogress-rails' # pretty progress bar at top of screen when using ajax and turbolinks
 gem 'responders', '~> 2.0'
 gem 'delayed_job_active_record'
+gem 'cocoon'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

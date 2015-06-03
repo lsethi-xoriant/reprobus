@@ -250,7 +250,7 @@ private
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         :fin_date, :standard, :insurance, :reminder,
-        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title] )
+        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :_destroy] )
     end
 
     def undo_link

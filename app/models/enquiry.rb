@@ -59,7 +59,7 @@ class Enquiry < ActiveRecord::Base
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, dependent: :destroy
   has_many    :customers, -> { order("customers.id DESC") }, through: :customer_enquiries
-  accepts_nested_attributes_for :customers, :allow_destroy => false;
+  accepts_nested_attributes_for :customers, allow_destroy: true;
   has_many    :activities,  dependent: :destroy
   has_one     :booking
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
