@@ -1,3 +1,19 @@
+  <!--  OLD notification drop down FROM HEADER
+        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <%= current_user.getRemindersDueCount.to_s %> <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+          <ul class="dropdown-menu dropdown-alerts">
+            <li> <a href= <%= dashboard_path(:remindersOnly => "y") %> >
+              <div> <i class="fa fa-bell fa-fw"></i>  <%= current_user.getRemindersDueCount.to_s %> Enquiry Reminders Overdue</div>
+              </a> </li>
+            <li class="divider"></li>
+            <li> <a href= <%= dashboard_path %> >
+              <div> <i class="fa fa-bell-o fa-fw"></i>  <%= current_user.getEnquiriesOpenCount.to_s %> Enquiries Open</div>
+              </a> </li>
+          </ul>
+        </li>
+  -->
+
+
+
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse"> <span class="sr-only">Toggle navigation</span>

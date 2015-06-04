@@ -49,7 +49,8 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_url, notice: "<strong>Please sign in.</strong>"
+      flash[:warning] = "Please sign in."
+      redirect_to signin_url, notify: "<strong>Please sign in.</strong>"
     end
   end
 	

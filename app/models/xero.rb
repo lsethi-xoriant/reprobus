@@ -103,7 +103,7 @@ class Xero
     
     xInv = self.client.Invoice.find(invoice.xero_id)
     xAcc = self.client.Account.find('855')
-    xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripease application")
+    xPay = self.client.Payment.build(:amount => amount, :date => Date.today, :reference => "Manual payment made via Tripez application")
     xPay.invoice = xInv
     xPay.account = xAcc
     

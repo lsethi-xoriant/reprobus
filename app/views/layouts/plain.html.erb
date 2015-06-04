@@ -6,6 +6,7 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
+    <%= render 'layouts/toastr_settings' %>
     
     <style type="text/css">
       html,
@@ -22,13 +23,20 @@
       }
     </style>
   </head>
+  
+  
   <body class="teal">
-
+  
     <%= yield %>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= raw(value) %></div>
-    <% end %>
 
     <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && current_user.name == "Hamish Gardiner" %>
+
+    
+    <% flash.each do |key, value| %>
+    <script type="text/javascript">
+      toastr.<%= raw(key.to_s) %>(<%= raw(value.inspect) %>)
+    </script>
+    <% end %>
+    
   </body>
 </html>

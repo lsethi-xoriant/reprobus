@@ -1,11 +1,18 @@
 <% provide(:title, 'Home') %>
 
-<div class="center hero-unit">
-  <h1 class="page-header">Home</h1>
-  <h2>Welcome to TripEase, the super travel booking managment app</h2>
-
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+<div class="col s12 z-depth-4 card-panel">
+  <div class="row">
+    <div class="input-field col s12 center">
+      <img src=<%= asset_path('login-logo.png') %> alt="" class="circle responsive-img valign profile-image-login">
+      <p class="center login-form-text">Rocket trip</p>
+    </div>
+  </div>
+  
+  <h5>Welcome to Tripez, the super travel booking managment app</h5>
   <br>
+  <div class="input-field col s12 center">
+  <%= link_to "Sign up now!", signup_path, class: "btn btn-large" %>
+  </div>
   <br>
   <p>Existing user? <%= link_to "Sign in", signin_path %></p>
 </div>

@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  #before_filter :signed_in_user
+  before_filter :signed_in_user
   skip_before_filter :signed_in_user, :only => [:home, :about]
   layout "plain"
   
