@@ -79,8 +79,6 @@ $(function() {
   $('.sidebar-collapse').sideNav({
     //edge: 'left', // Choose the horizontal origin
   });
- 
-  $(".button-collapse").sideNav();
 
   // Pikadate datepicker
   $('.datepicker').pickadate({

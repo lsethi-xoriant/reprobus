@@ -4,7 +4,10 @@
 <% int = 0 %>
 
 
-<h4><%= current_user.name %>&#39;s open enquiries &nbsp;</h4><h5> <%= Date.today.to_formatted_s(:rfc822)  %></h5>
+<h4><%= current_user.name %>&#39;s enquiries &nbsp;</h4><h5> <%= Date.today.to_formatted_s(:rfc822)  %></h5>
+<% if params[:remindersOnly] == "y" %>
+<h5>Enquiries with reminder dates: </h5>
+<% end %>
 
 <%= render partial: 'dash_view_btns' %>
 <div class='row'>

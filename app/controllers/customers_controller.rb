@@ -22,6 +22,7 @@ class CustomersController < ApplicationController
   
   def edit
     @customer = Customer.find(params[:id])
+    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per_page(5)
   end
   
   def create

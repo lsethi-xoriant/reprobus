@@ -1,0 +1,31 @@
+<% if activity.user_id == 0
+    userName = "system"
+  elsif activity.user_id.nil?
+    userName = "system"
+  else
+    userName = User.find(activity.user_id).name
+  end %>
+
+
+<% if activity.type == "Note" %>
+  <li class="collection-item avatar"> <i class="mdi-action-account-circle circle"></i>
+    <span class="title">New Note added by <%= userName %> on <%= activity.created_at.strftime("%d/%m/%Y") %></span>
+    <p><%= activity.description %></p>
+  </li>
+<% elsif activity.type == "Converted" %>
+  <li class="collection-item avatar">
+  <i class="mdi-editor-attach-money circle"></i>
+  <span class="title">New Booking added by added by <%= userName %>  on  <%= activity.created_at.strftime("%d/%m/%Y") %></span>
+    <p><%= activity.description %></p>
+  </li>
+<% elsif activity.type == "EmailSent" %>
+  <li class="collection-item avatar"> <i class="mdi-communication-email circle "></i>
+    <span class="title">Email Sent by <%= activity.user_email %>  on  <%= activity.created_at.strftime("%d/%m/%Y") %></span>
+    <p><%= simple_format(activity.description) %></p>
+  </li>
+<% elsif activity.type == "EmailRecieved" %>
+  <li class="collection-item avatar"> <i class="mdi-content-drafts"></i>
+    <span class="title">Email Recieved from <%= @customer.fullname %> on  <%= activity.created_at.strftime("%d/%m/%Y") %></span>
+    <p><%= simple_format(activity.description) %></p>
+  </li>
+<% end %>

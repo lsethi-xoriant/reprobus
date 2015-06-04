@@ -1,12 +1,9 @@
 <% provide(:title, @customer.first_name + " " + @customer.last_name) %>
-<div class="row">
   <aside class="col-lg-12">
     <section>
       <h1 class="page-header" >Customer Details</h1>
 
-       <div class="row">
-        <div class="col-lg-6">
-          <div class="row">
+    
             <div class="col-lg-3 "> <%= image_tag "avatar.jpg", class: "avatar img-circle" %> </div>
       
             <div class="col-lg-9 profile-name">
@@ -21,7 +18,7 @@
                 <li><i class="fa fa-mobile"></i> <%= @customer.mobile %> (Mobile)</li>
               </ul> -->
             </div>
-          </div>
+         
           
 
             
@@ -73,8 +70,7 @@
             <li class="col-lg-3 col-md-3 col-sm-3 profile-details-field">Notes</li>
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.background_info ) %></li>
           </ul>
-        </div>
-          
+
         <% if current_user.admin? %>
           <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
         <% end %>
@@ -116,9 +112,6 @@
           <div class="activity"></div>
             <!-- /activity -->
         </div>
-      </div>
-     
       
     </section>
   </aside>
-</div>

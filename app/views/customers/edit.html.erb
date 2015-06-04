@@ -1,3 +1,51 @@
 <% provide(:title, 'Edit Customer') %>
-<h1 class="page-header">Edit Customer</h1>
-<%= render  partial: 'form', locals: { buttontxt: "Update Customer" } %>
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+      <!--Avatar Content-->
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <h4><%= @customer.fullname %></h4>
+
+          <%= render  partial: 'form', locals: { buttontxt: "Update Customer" } %>
+          
+        </div>
+          
+        <div class="col s12 m6 l6">
+          <ul class="collection">
+            <% @activities.each do |act| %>
+              <%= render partial: 'shared/activity', locals: { activity: act } %>
+            <% end %>
+          </ul>
+          <ul class="pagination">
+            <%= will_paginate  @activities, :container => false %>
+          </ul>
+
+          
+          <div id="input-character-counter" class="section">
+            <div class="row">
+              <div class="col s12 m12 l12">
+                <div class="row">
+                  <%=  form_tag({controller: "customers", action: "addnote"}, method: "get", class: "col s12") do %>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <%= text_area_tag :note, nil, class: "materialize-textarea", length: "120" %>
+                        <label for="textarea1">Add a Note</label>
+                      </div>
+                    </div>
+                    <%= hidden_field_tag :type, '', :value => "Note" %>
+                    <%= hidden_field_tag :id, '', :value => @customer.id %>
+                  
+                    <%= submit_tag "Add a note", class: "btn add-note" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+          
+      </div>
+    </div>
+  </div>
+</div>
