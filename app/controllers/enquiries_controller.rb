@@ -59,7 +59,6 @@ class EnquiriesController < ApplicationController
 
   def show
     @enquiry = Enquiry.find(params[:id])
-   # @activities = @enquiry.activities.order('created_at ASC').page(params[:page]).per_page(5)
     @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per_page(5)
   end
 
@@ -75,9 +74,7 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.new(enquiry_params)
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
     
-    #@enquiry.customers.clear if params[:existing_customer].to_i > 0
     if @enquiry.save
-      #@enquiry.add_customer(Customer.find(params[:existing_customer])) if params[:existing_customer].to_i > 0
       Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
@@ -95,15 +92,8 @@ class EnquiriesController < ApplicationController
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
     if @enquiry.update_attributes(enquiry_params)
-      # work out what to do with muli customers... may not need to do anything?
-      #if params[:existing_customer].to_i > 0
-        # @enquiry.add_customer(Customer.find(params[:existing_customer]))
-      #elsif !params[:enquiry][:customer_ids].nil?
-       # params[:enquiry][:customer_ids].each do |cust|
-        #   @enquiry.add_customer(Customer.find(cust)) unless cust.blank?
-      #  end
-      #end
       
+      # move these to nested form type arrangement - maybe with coocon?
       if params[:enquiry][:carriers] then
         @enquiry.carriers.clear
         params[:enquiry][:carriers].split(",").each do |id|
