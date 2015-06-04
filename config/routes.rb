@@ -81,6 +81,7 @@ Reprobus::Application.routes.draw do
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/noaccess',   to: 'static_pages#noaccess',   via: 'get'
   match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'
+  match '/snapshot',   to: 'static_pages#snapshot' ,   via: 'get'
   match '/dashboard_list',   to: 'static_pages#dashboard_list' ,   via: 'get'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

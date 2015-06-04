@@ -1,9 +1,9 @@
-<% if !enquiry.reminder.nil? 
-      dateStr = enquiry.reminder.to_formatted_s(:rfc822)  
+<% if !enquiry.reminder.nil?
+      dateStr = enquiry.reminder.to_formatted_s(:rfc822)
       if enquiry.reminder.past?
-        colorStr = "label label-danger"
+        colorStr = "red-text text-darken-2  red lighten-5"
       else
-        colorStr = "label label-success"
+        colorStr = "green-text text-darken-2"
       end
   else
     dateStr = "No reminder"
@@ -13,14 +13,16 @@
 
 
 <!-- Start card -->
-<div class="well well-sm col-md-3 dashwell">
-  <a href=<%= enquiry_path enquiry %> > 
+<div class="col s4">
+<div class="card-panel">
+  <a href=<%= enquiry_path enquiry %> >
   <button class="btn btn-info pull-right"  data-toggle="modal"> <i class="fa fa-cog"></i> </button></a>
-  <h4><%= enquiry.dasboard_customer_name %></h4>
+  <h6><%= enquiry.dasboard_customer_name %></h6>
   <p> <span><i class="fa fa-envelope"></i></span><span class="body"> <%= mail_to(enquiry.first_customer.email, enquiry.first_customer.email, bcc: enquiry.first_customer.create_email_link) unless enquiry.first_customer.nil? %> </span></p>
-  <p> <span><i class="fa fa-tag"></i> </span><span class="body"><%= enquiry.source %></span></p>
-  <p> <span><i class="fa fa-map-marker"> </i> </span><span class="body"><%= enquiry.name %></span></p>
-  <p> <span><i class="fa fa-bell"> </i> </span><span class="<%=colorStr%>"><%=dateStr%></span> </p>
-  <p> <span><i class="fa fa-money"> </i> </span><span class="body"><%= number_to_currency(enquiry.amount, precision: 0) %></span></p>
+  <p> <span><i class="fa fa-tag"></i> </span><span class="body"> <%= enquiry.source %></span></p>
+  <p> <span><i class="fa fa-map-marker"> </i> </span><span class="body"> <%= enquiry.name %></span></p>
+  <p> <span><i class="fa fa-bell"> </i> </span><span class="<%=colorStr%>"> <%=dateStr%></span> </p>
+  <p> <span><i class="fa fa-money"> </i> </span><span class="body"> <%= number_to_currency(enquiry.amount, precision: 0) %></span></p>
+</div>
 </div>
 <!-- End card -->

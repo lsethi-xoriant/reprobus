@@ -6,8 +6,13 @@
     
     
   <ul id="slide-out" class="side-nav fixed leftside-navigation">
+    <li class="bold"><a href="/snapshot" class="waves-effect waves-cyan"><i class="mdi-image-wb-sunny"></i> Snapshot</a> </li>
     <li class="bold"><a href="/dashboard" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a> </li>
-    <li class="bold"><a href=<%= enquiries_path %> class="waves-effect waves-cyan"><i class="mdi-communication-email"></i> Enquiries <span class="new badge">4</span></a> </li>
+    <li class="bold">
+      <a href=<%= enquiries_path %> class="waves-effect waves-cyan">
+      <i class="mdi-communication-email"></i> Enquiries <span class="new badge"><%= Enquiry.new_enquirires.count.to_s %></span>
+      </a>
+    </li>
     <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-circle"></i> Customers</a> </li>
     <li class="bold"><a href=<%= suppliers_path %> class="waves-effect waves-cyan"><i class="mdi-action-assignment-ind"></i> Suppliers</a> </li>
     <li class="bold"><a href=<%= agents_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-child"></i> Agents</a> </li>

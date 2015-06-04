@@ -1,0 +1,90 @@
+<% provide(:title, @user.name + " Dashboard" ) %>
+<% openStr = "<div class='container-fluid'><div class='row-fluid'>".html_safe %>
+<% closeStr = "</div></div>".html_safe %>
+<% int = 0 %>
+
+
+<h5 class="page-header">KEY SUMMARIES &nbsp;<small><%= Date.today.to_formatted_s(:rfc822)  %></small></h5>
+
+    <div id="card-stats">
+      <div class="row">
+        <div class="col s12 m6 l3">
+          <div class="card">
+            <div class="card-content  green white-text">
+              <p class="card-stats-title"><i class="mdi-social-group-add"></i> New enquiries over past week</p>
+              <h4 class="card-stats-number"><%= count_new_enquiries_this_week %></h4>
+              <p class="card-stats"><span class="text-lighten-5"><i class="mdi-action-track-changes"></i>&nbsp; <%= count_new_enquiries_for_me %> assigned to me </span></p>
+            </div>
+            <div class="card-action  green darken-2">
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m6 l3">
+          <div class="card">
+            <div class="card-content red white-text">
+              <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Outstanding total on open enquiries</p>
+              <h4 class="card-stats-number"><%= count_total_outstanding_enquiries() %></h4>
+              <p class="card-stats"><span class="purple-text text-lighten-5"><%= count_total_outstanding_enquiries_for_me %> assigned to me </span></p>
+            </div>
+            <div class="card-action red darken-2">
+            </div>
+          </div>
+        </div>
+        <% month_tot = count_total_converted_bookings_month() %>
+        <div class="col s12 m6 l3">
+          <div class="card">
+            <div class="card-content cyan white-text">
+              <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Sales over past month<br>&nbsp;</p>
+              <h4 class="card-stats-number"><%= month_tot %></h4>
+              <p class="card-stats-compare"><span class="blue-grey-text text-lighten-5">(confirmed bookings)</span> </p>
+            </div>
+            <div class="card-action cyan darken-2">
+            </div>
+          </div>
+        </div>
+        <% month_avg = count_total_converted_bookings_year_avg() %>
+        <% if month_tot > month_avg %>
+          <% str = "<i class='mdi-social-cake'></i> Congratulations! You are on track to top your monthly average!!!" %>
+        <% else %>
+          <% str = "<i class='mdi-communication-ring-volume'></i> Keep going to chase your average montly sales!" %>
+        <% end %>
+        <div class="col s12 m6 l3">
+          <div class="card">
+            <div class="card-content deep-purple white-text">
+              <p class="card-stats-title"><i class="mdi-editor-attach-money"></i> Avg. monthly sales last 12 months </p>
+              <h4 class="card-stats-number"><%= month_avg %></h4>
+              <p class="card-stats-compare"> <%= str.html_safe %></p>
+            </div>
+            <div class="card-action  deep-purple darken-2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--card stats end-->
+    
+  <!--work collections start-->
+  <h4 class="header">Key Enquiry Details</h4>
+    <div id="work-collections">
+      <div class="row">
+        <div class="col s12 m12 l6">
+          <ul id="projects-collection" class="collection">
+            <li class="collection-item avatar"> <i class="mdi-social-mood white-text circle green"></i> <span class="collection-header">&nbsp;Key Opportunities</span>
+              <p>Current top 5 enquiries by value</p>
+            </li>
+              <%= render partial: "snapshot_enquiry", collection: top_five_open_enquiries_for_me, as: :enquiry, locals: {neglected: false} %>
+          </ul>
+        </div>
+        <div class="col s12 m12 l6">
+          <ul id="issues-collection" class="collection">
+            <li class="collection-item avatar"> <i class="medium mdi-alert-error white-text circle red"></i> <span class="collection-header">&nbsp; Neglected Opportunities</span>
+              <p>Current top 5 enquiries not recently attended</p>
+            </li>
+            
+            <%= render partial: "snapshot_enquiry", collection: top_five_neglected_enquiries_for_me, as: :enquiry, locals: {neglected: true} %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--work collections end-->

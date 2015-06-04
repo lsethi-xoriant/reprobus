@@ -10,4 +10,16 @@ module EnquiriesHelper
       return "task-cat indigo darken-4"
     end
   end
+  
+  def get_date_status_color(datetime)
+    if datetime <= 4.week.ago
+      return "task-cat red accent-4"
+    elsif datetime <= 2.week.ago
+      return "task-cat orange darken-4"
+    elsif datetime <= 7.day.ago
+      return "task-cat amber lighten-1"
+    else
+      return "task-cat green"
+    end
+  end
 end

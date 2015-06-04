@@ -1,36 +1,29 @@
 <% provide(:title, @user.name + " Dashboard" ) %>
-<% openStr = "<div class='container-fluid'><div class='row-fluid'>".html_safe %>
-<% closeStr = "</div></div>".html_safe %>
+<% openStr = "<div class='row'>".html_safe %>
+<% closeStr = "</div>".html_safe %>
 <% int = 0 %>
 
 
-<h1 class="page-header">My Dashboard &nbsp;<small> <%= Date.today.to_formatted_s(:rfc822)  %></small></h1>
+<h4><%= current_user.name %>&#39;s open enquiries &nbsp;</h4><h5> <%= Date.today.to_formatted_s(:rfc822)  %></h5>
 
 <%= render partial: 'dash_view_btns' %>
-
-<div class="wrapper-content">
-  <div class="container-fluid">
-    <div class="row-fluid"> 
-              
-    <% if @assigned_enquiries.any? %>
-      <%  @assigned_enquiries.each do |enquiry| %>  
-        <%  if (int > 0) && (int % 3 == 0) %> 
-          <%=  closeStr %>
-          <%=  openStr %>
-        <% end %>
-      
-        <%= render partial: 'dashboard_enquiry', locals: { enquiry: enquiry } %>
-        <% int = int + 1 %> 
-      
+<div class='row'>
+  <% if @assigned_enquiries.any? %>
+    <%  @assigned_enquiries.each do |enquiry| %>
+      <%  if (int > 0) && (int % 3 == 0) %>
+        <%=  closeStr %>
+        <%=  openStr %>
       <% end %>
-    <% else %>
-        <h3>No Enquiries</h3>
+    
+      <%= render partial: 'dashboard_enquiry', locals: { enquiry: enquiry } %>
+      <% int = int + 1 %>
+    
     <% end %>
-      
-      
-    </div>
-  </div>
-<div>  
+  <% else %>
+      <h3>No Enquiries</h3>
+  <% end %>
+</div>
+
   
   <ul class="pagination pull-right">
     <%= will_paginate  @assigned_enquiries, :container => false %>

@@ -1,0 +1,8 @@
+NewEnquiry:
+  name: "New Enquiry"
+  setting: :firstcompany
+  
+NewBooking:
+  name: New Booking
+  setting: :firstcompany
+

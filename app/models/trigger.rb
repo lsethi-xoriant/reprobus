@@ -13,12 +13,13 @@
 
 class Trigger < ActiveRecord::Base
   belongs_to :email_template
+  belongs_to :setting
   
   def email_template_name
    self.email_template ? self.email_template.name : ""
   end
 
-  # CLASS METHODS
+  ##### CLASS METHODS #####
   def self.send_mail(trigger, to, cc)
     @trigger = trigger
     @cc = cc

@@ -84,10 +84,7 @@ class EnquiriesController < ApplicationController
   end
   
   def update
-    if params[:existing_customer].to_i > 0
-    #  params[:enquiry].delete(:customers_attributes)
-    end
-    
+
     @enquiry = Enquiry.find(params[:id])
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   

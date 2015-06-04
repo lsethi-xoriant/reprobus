@@ -17,15 +17,21 @@ class PasswordResetsController < ApplicationController
   end
     
   def edit
-    @user = User.find_by_password_reset_token!(params[:id])
+    @user = User.find_by_password_reset_token(params[:id])
+    if !@user
+      redirect_to root_url
+    end
   end
     
   def update
     @user = User.find_by_password_reset_token!(params[:id])
-    if @user.password_reset_sent_at < 2.hours.ago
+    
+    if params[:user][:password].empty?
+      flash.now[:error] = "Password can't be empty"
+      render :edit
+    elsif @user.password_reset_sent_at < 2.hours.ago
       flash[:error] = "Password reset has expired."
       redirect_to new_password_reset_path
-      
     elsif @user.update_attributes(user_params)
       flash[:success] = "Password has been reset."
       redirect_to signin_path

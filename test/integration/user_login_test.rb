@@ -19,7 +19,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_redirected_to dashboard_path
     
     follow_redirect!
-    assert_template 'static_pages/dashboard'
+    assert_template 'static_pages/snapshot'
     #assert user_signed_in?, "Not signed in"
   end
   

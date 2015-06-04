@@ -106,6 +106,18 @@ class Enquiry < ActiveRecord::Base
       User.find(self.assigned_to).name
     end
   end
+
+
+  def customer_name_and_title
+    str = ""
+    if !self.customers.empty?
+      str = self.customers.first.title + " " if self.customers.first.title
+      str = str + self.customers.first.first_name + " " + self.customers.first.last_name
+    else
+      str = "No Customer Details"
+    end
+  end
+  
   
   def dasboard_customer_name
     if !self.customers.empty?

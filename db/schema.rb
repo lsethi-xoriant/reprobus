@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527015857) do
+ActiveRecord::Schema.define(version: 20150604132830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20150527015857) do
     t.integer  "customer_id"
     t.integer  "enquiry_id"
     t.integer  "user_id"
-    t.decimal  "amount",                  precision: 12, scale: 2
-    t.decimal  "deposit",                 precision: 12, scale: 2
+    t.decimal  "amount",                  precision: 12, scale: 2, default: 0.0
+    t.decimal  "deposit",                 precision: 12, scale: 2, default: 0.0
     t.string   "name",        limit: 255
     t.string   "status",      limit: 255
     t.datetime "created_at"
@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(version: 20150527015857) do
     t.string   "source",           limit: 32
     t.string   "stage",            limit: 32
     t.string   "probability",      limit: 255
-    t.decimal  "amount",                       precision: 12, scale: 2
-    t.decimal  "discount",                     precision: 12, scale: 2
+    t.decimal  "amount",                       precision: 12, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount",                     precision: 12, scale: 2, default: 0.0,      null: false
     t.date     "closes_on"
     t.datetime "deleted_at"
     t.string   "background_info",  limit: 255
@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20150527015857) do
     t.datetime "final_payment_due"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "deposit",                         precision: 12, scale: 2
+    t.decimal  "deposit",                         precision: 12, scale: 2, default: 0.0
     t.string   "pxpay_deposit_trxId", limit: 255
     t.text     "ccPaymentsAmount"
     t.text     "ccPaymentsDate"
@@ -247,8 +247,8 @@ ActiveRecord::Schema.define(version: 20150527015857) do
     t.text     "xpayments"
     t.integer  "supplier_id"
     t.integer  "currency_id"
-    t.decimal  "exchange_amount",                 precision: 12, scale: 2
-    t.decimal  "exchange_rate",                   precision: 12, scale: 2
+    t.decimal  "exchange_amount",                 precision: 12, scale: 2, default: 0.0
+    t.decimal  "exchange_rate",                   precision: 12, scale: 2, default: 0.0
     t.string   "pxpay_balance_trxId"
     t.string   "pxpay_deposit_url"
     t.string   "pxpay_balance_url"
@@ -309,7 +309,7 @@ ActiveRecord::Schema.define(version: 20150527015857) do
   create_table "itinerary_price_items", force: :cascade do |t|
     t.string   "booking_ref"
     t.string   "description"
-    t.decimal  "price_total",        precision: 12, scale: 2
+    t.decimal  "price_total",        precision: 12, scale: 2, default: 0.0
     t.integer  "supplier_id"
     t.integer  "itinerary_price_id"
     t.datetime "created_at"
@@ -351,8 +351,8 @@ ActiveRecord::Schema.define(version: 20150527015857) do
 
   create_table "line_items", force: :cascade do |t|
     t.integer  "invoice_id"
-    t.decimal  "item_price",              precision: 12, scale: 2
-    t.decimal  "total",                   precision: 12, scale: 2
+    t.decimal  "item_price",              precision: 12, scale: 2, default: 0.0
+    t.decimal  "total",                   precision: 12, scale: 2, default: 0.0
     t.string   "description", limit: 255
     t.integer  "quantity"
     t.datetime "created_at"
@@ -361,7 +361,7 @@ ActiveRecord::Schema.define(version: 20150527015857) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.decimal  "amount",                        precision: 12, scale: 5
+    t.decimal  "amount",                        precision: 12, scale: 5, default: 0.0
     t.string   "payment_ref",       limit: 255
     t.integer  "invoice_id"
     t.datetime "created_at"
@@ -467,9 +467,9 @@ ActiveRecord::Schema.define(version: 20150527015857) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   create_table "x_invoices", force: :cascade do |t|
-    t.decimal  "amount_due",                 precision: 12, scale: 5
-    t.decimal  "amount_paid",                precision: 12, scale: 5
-    t.decimal  "total",                      precision: 12, scale: 5
+    t.decimal  "amount_due",                 precision: 12, scale: 5, default: 0.0
+    t.decimal  "amount_paid",                precision: 12, scale: 5, default: 0.0
+    t.decimal  "total",                      precision: 12, scale: 5, default: 0.0
     t.string   "currency_code",  limit: 255
     t.string   "currency_rate",  limit: 255
     t.date     "date"

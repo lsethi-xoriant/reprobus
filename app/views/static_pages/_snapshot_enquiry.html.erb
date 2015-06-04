@@ -1,0 +1,22 @@
+
+<li class="collection-item">
+  <div class="row">
+    <div class="col s1">
+      <%= link_to edit_enquiry_path(enquiry) do %>
+        <i class='mdi-image-edit'></i>
+      <% end %>
+    </div>
+    <div class="col s5">
+      <p class="collections-title"><%= enquiry.customer_name_and_title %></p>
+      <p class="collections-content"><%= enquiry.name %></p>
+    </div>
+    <% if neglected %>
+      <div class="col s3 center-align"> <span class="<%= get_date_status_color(enquiry.updated_at) %>"><%= time_ago_in_words(enquiry.updated_at) %></span> </div>
+    <% else %>
+      <div class="col s3 center-align"> <span class="<%= get_status_color(enquiry.stage) %>"><%= enquiry.stage %></span> </div>
+    <% end %>
+    <div class="col s3">
+      <h5 class="secondary-content"><%= number_to_currency(enquiry.amount, precision: 0) %></h5>
+    </div>
+  </div>
+</li>
