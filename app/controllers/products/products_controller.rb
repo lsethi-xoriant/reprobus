@@ -35,7 +35,7 @@ class Products::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     
     if @product.update_attributes(product_params)
-      flash[:success] = "#{@product.name} created!"
+      flash[:success] = "#{@product.name} updated!"
       redirect_to product_index_path @product
     else
       render 'new'

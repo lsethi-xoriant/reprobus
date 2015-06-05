@@ -15,6 +15,6 @@
  *= require font-awesome
  *= require toastr
  *= require nprogress
- * require nprogress-bootstrap
+ *= require nprogress-bootstrap
  */
 

@@ -1,4 +1,11 @@
 <% provide(:title, 'Edit ' + params[:type]) %>
-<h1 class="page-header">Edit <%= params[:type] %></h1>
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+      <h4 class="header">Edit <%= params[:type] %></h4>
 
-<%= render  partial: 'form', locals: { buttontxt: "Save " + params[:type], formpath: current_product_path(@product)} %>
+      <%= render  partial: 'form', locals: { buttontxt: "Save " + params[:type], formpath: current_product_path(@product)} %>
+      
+    </div>
+  </div>
+</div>
