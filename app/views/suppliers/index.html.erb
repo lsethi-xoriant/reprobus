@@ -1,33 +1,36 @@
-<% provide(:title, 'All Suppliers') %>
-<h4>Suppliers</h4>
+<% provide(:title, 'Suppliers') %>
 
-<a href=<%= new_supplier_path %> ><button type="button" class="btn">Create New Supplier</button></a>
+<div class="section">
+  <a href=<%= new_supplier_path %> ><button type="button" class="btn waves-effect waves-light">Create New Supplier</button></a>
+</div>
 
-<div id="table-datatables">
- <div class="row">
-    <div class="col s12 m12 l12">
-      <table id="data-table-simple" class="responsive-table display" >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Email</th>
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @customers.each do |cust| %>
-          <tr>
-            <td><a href=<%= supplier_path cust %> </a> <%= cust.supplier_name %></td>
-            <td><%= cust.fullname %></td>
-            <td><%= cust.email %></td>
-            <td><%= cust.phone %></td>
-          </tr>
-          <% end %>
-        </tbody>
-    </table>
-    
-    
+<div class="divider"></div>
+
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="data-table-simple" class="responsive-table display" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |cust| %>
+            <tr>
+              <td><a href=<%= supplier_path cust %> </a> <%= cust.supplier_name %></td>
+              <td><%= cust.fullname %></td>
+              <td><%= cust.email %></td>
+              <td><%= cust.phone %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

@@ -8,15 +8,13 @@
    end
 %>
 
+<div class="col s12 m12 l12">
+  <div class ="card-panel">
 
-<div class="row">
-  <aside class="col-lg-12">
     <section>
       <h1 class="page-header" >Booking Details</h1>
 
-       <div class="row">
         <div class="col-lg-6">
-          <div class="row">
             <div class="col-lg-9 profile-name">
               <h2><%= @booking.name %></h2>
               <%= link_to edit_booking_path(@booking) do %>
@@ -24,7 +22,6 @@
                 Edit
               <% end %>
             </div>
-          </div>
           <ul class="row profile-details">
             <% if @booking.customer.nil? %>
               <li class="col-lg-3 col-md-3 col-sm-3 col-md-5 col-sm-5 profile-details-field">Customer</li>
@@ -73,8 +70,6 @@
             <% end %>
           </div>
         </div>        <!-- end col 6 -->
-      </div>   <!-- row -->
     </section>
-  </aside>
-</div>
 
+ </div> </div>

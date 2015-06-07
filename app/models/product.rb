@@ -23,6 +23,7 @@
 
 class Product < ActiveRecord::Base
   validates :type,:name, presence: true
+  validates :supplier_id,  presence: true
 
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos
@@ -31,5 +32,9 @@ class Product < ActiveRecord::Base
 
   def supplierName
     return self.supplier.supplier_name if self.supplier
+  end
+  
+  def product_details
+    return self.type.upcase + " | " + self.name + " | " + self.city + " | " + self.country
   end
 end

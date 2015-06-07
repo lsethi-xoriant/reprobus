@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: triggers
+#
+#  id                :integer          not null, primary key
+#  name              :string(255)
+#  num_days          :integer
+#  setting_id        :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  email_template_id :integer
+#
+
 NewEnquiry:
   name: "New Enquiry"
   setting: :firstcompany

@@ -1,37 +1,49 @@
-<% provide(:title, @user.name + " Dashboard" ) %>
+<% provide(:title, @user.name + " enquiries" ) %>
 
-<h4 class="page-header"><%= current_user.name %>&#39;s open enquiries &nbsp;</h4><h5><%= Date.today.to_formatted_s(:rfc822)  %></h5>
-<%= render partial: 'dash_view_btns' %>
+<div class="section">
+<div class="left">
+  <h5><%= Date.today.to_formatted_s(:rfc822)  %></h5>
+  
+  <% if params[:remindersOnly] == "y" %>
+  <h6>Enquiries with reminder dates: </h6>
+  <% end %>
+</div>
+  <%= render partial: 'dash_view_btns' %>
+</div>
 
-<div id="table-datatables">
- <div class="row">
-    <div class="col s12 m12 l12">
-      <table id="data-table-simple" class="responsive-table display" >
-        <thead>
-          <tr>
-            <th>Enquiry</th>
-            <th>Customer Name</th>
-            <th>Email</th>
-            <th>Date Added</th>
-            <th>Phone</th>
-            <th>Assigned To</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @assigned_enquiries.each do |enquiry| %>
-          <tr>
-            <td><%= link_to(enquiry.name, enquiry) %></td>
-            <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
-            <td><%= enquiry.customer_email %></td>
-            <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>
-            <td><%= enquiry.customer_phone %></td>
-            <td><%= enquiry.assigned_to_name %></td>
-            <td><%= enquiry.stage %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+<div class="divider"></div>
+
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="data-table-simple" class="responsive-table display" >
+          <thead>
+            <tr>
+              <th>Enquiry</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Date Added</th>
+              <th>Phone</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @assigned_enquiries.each do |enquiry| %>
+            <tr>
+              <td><%= link_to(enquiry.name, enquiry) %></td>
+              <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
+              <td><%= enquiry.customer_email %></td>
+              <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>
+              <td><%= enquiry.customer_phone %></td>
+              <td><%= enquiry.assigned_to_name %></td>
+              <td><%= enquiry.stage %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

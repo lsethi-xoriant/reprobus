@@ -24,24 +24,4 @@ class AgentsController < CustomersController
   def update
     super
   end
-
-  def agentsearch
-    @customers = Customer.select([:id, :supplier_name, :cust_sup, :currency_id]).where("cust_sup ILIKE :p", p: "Agent" ).
-                            where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
-                            order('last_name')
-  
-    if @customers.empty?
-      resources_count = 0
-    else
-      # also add the total count to enable infinite scrolling
-  #    resources_count = Customer.select([:id, :supplier_name, :cust_sup]).where("cust_sup ILIKE :p", p: "Agent" ).
-  #                              where("supplier_name ILIKE :q", q: "%#{params[:q]}%")
-      resources_count = @customers.size
-    end
-    
-    respond_to do |format|
-      format.json { render json: {total: resources_count,
-        searchSet: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}" }}} }
-    end
-  end
 end

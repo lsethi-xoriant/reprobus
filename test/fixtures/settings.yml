@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: settings
+#
+#  id                   :integer          not null, primary key
+#  company_name         :string(255)
+#  pxpay_user_id        :string(255)
+#  pxpay_key            :string(255)
+#  use_xero             :boolean
+#  xero_consumer_key    :string(255)
+#  xero_consumer_secret :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  currency_id          :integer
+#  payment_gateway      :string(255)
+#  cc_mastercard        :decimal(5, 4)
+#  cc_visa              :decimal(5, 4)
+#  cc_amex              :decimal(5, 4)
+#
+
 firstcompany:
   id: 1
   company_name: firstcompany

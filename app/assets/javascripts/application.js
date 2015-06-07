@@ -17,7 +17,7 @@
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require materialize-sprockets
-//= require select2
+// require select2
 //= require toastr
 //= require turbolinks
 //= require nprogress

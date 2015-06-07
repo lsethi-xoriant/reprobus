@@ -144,6 +144,7 @@ class Customer < ActiveRecord::Base
     end
   end
   
+  
   def getSupplierCurrencySelect2
     if !self.cust_sup == "Supplier"
       return "";
@@ -160,11 +161,7 @@ class Customer < ActiveRecord::Base
     if !self.cust_sup == "Supplier"
       return "";
     else
-      if self.currency.blank?
-        return "No default currency set";
-      else
-        return self.currency.code + " - " + self.currency.currency
-      end
+      return self.currency.displayName if self.currency
     end
   end
   

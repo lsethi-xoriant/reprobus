@@ -2,11 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="col s12 m12 l12">
-        <h5 class="breadcrumbs-title"><%=@pageName%></h5>
-        <ol class="breadcrumb">
-          <li><a href="/dashboard">Dashboard</a></li>
+        <h5 class="breadcrumbs-title"><%= yield(:title) %></h5>
 
-        </ol>
+          <ol class="breadcrumb">
+            <!--<li><a href="/dashboard">Dashboard</a></li>-->
+          </ol>
+        
       </div>
     </div>
   </div>

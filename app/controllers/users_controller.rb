@@ -50,24 +50,7 @@ class UsersController < ApplicationController
     flash[:success] = "User deleted."
     redirect_to users_url
   end
-
-  def usersearch
-    @users = User.select([:id, :name]).
-                            where("name ILIKE :q", q: "%#{params[:q]}%").
-                            order('name')
-    
-    # remove system user if it is in there
-    @users = @users.reject { |u| u.name == "System" }
-    
-    # also add the total count to enable infinite scrolling
-    resources_count = @users.size
-
-    respond_to do |format|
-      format.json { render json: {total: resources_count,
-                  searchSet: @users.map { |e| {id: e.id, text: "#{e.name}"} }} }
-    end
-  end
-
+  
 private
     def user_params
       params.require(:user).permit(:name, :email, :password,

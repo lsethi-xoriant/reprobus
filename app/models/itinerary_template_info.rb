@@ -13,7 +13,17 @@
 #
 
 class ItineraryTemplateInfo < ActiveRecord::Base
+  validates :product_id, presence: true
+    
   belongs_to  :itinerary_template
   belongs_to  :product
+
+  def get_product_details
+    return self.product.product_details if self.product
+  end
   
+  def get_product_name
+    return self.product.name if self.product
+  end
 end
+

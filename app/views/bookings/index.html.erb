@@ -1,33 +1,34 @@
-<% provide(:title, 'All Bookings') %>
-<h4>Bookings</h4>
+<% provide(:title, 'Bookings') %>
 
-<div id="table-datatables">
- <div class="row">
-    <div class="col s12 m12 l12">
-      <table id="data-table-simple" class="responsive-table display" >
-        <thead>
-          <tr>
-            <th>Booking</th>
-            <th>Customer Name</th>
-            <th>Email</th>
-            <th>Est. Amount</th>
-            <th>Assigned To</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @bookings.each do |booking| %>
-          <tr>
-            <td><%= link_to(booking.name, booking_path(booking)) %></td>
-            <td><%= link_to(booking.dasboard_customer_name, booking.customer) %></td>
-            <td><%= booking.customer.email %></td>
-            <td><%= number_to_currency(booking.amount, precision: 0) %></td>
-            <td><%= booking.assigned_to_name %></td>
-            <td><%= booking.status %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="data-table-simple" class="responsive-table display" >
+          <thead>
+            <tr>
+              <th>Booking</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Est. Amount</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bookings.each do |booking| %>
+            <tr>
+              <td><%= link_to(booking.name, booking_path(booking)) %></td>
+              <td><%= link_to(booking.dasboard_customer_name, booking.customer) %></td>
+              <td><%= booking.customer.email %></td>
+              <td><%= number_to_currency(booking.amount, precision: 0) %></td>
+              <td><%= booking.assigned_to_name %></td>
+              <td><%= booking.status %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

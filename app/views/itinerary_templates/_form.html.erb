@@ -1,0 +1,47 @@
+
+<div class="section">
+  <div class="card-panel">
+  <%= form_for @template, :html => {:multipart => true, :class => "col s12"} do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    
+
+    <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
+    <div class="row">
+      <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "500"} %>
+      <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
+    </div>
+    <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
+    
+    
+    
+    
+      <h4 class="header">Trip Details</h4>
+      
+      <div id="itinerary_template_infos">
+        <div class="sortable">
+        
+      	  <%= f.fields_for :itinerary_template_infos, :html => {:class => "form-horizontal"}  do |i| %>
+        	    <%= render partial: 'itinerary_template_infos', locals: { f: i } %>
+          <% end %>
+  
+          
+          
+          <div class="links input-field col s1">
+            <%= link_to_add_association  f, :itinerary_template_infos, {partial: 'itinerary_template_infos', class: "btn-floating btn-small waves-effect waves-light green"} do %>
+              <i class="mdi-content-add"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      
+
+
+      <div class="row">
+        <div class="input-field col s12">
+         <%= f.submit buttontxt, class: "btn right" %>
+        </div>
+      </div>
+    
+  <% end %>
+  </div>
+</div>

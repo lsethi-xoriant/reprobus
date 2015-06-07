@@ -10,8 +10,8 @@
 #  source           :string(32)
 #  stage            :string(32)
 #  probability      :string(255)
-#  amount           :decimal(12, 2)
-#  discount         :decimal(12, 2)
+#  amount           :decimal(12, 2)   default("0.0"), not null
+#  discount         :decimal(12, 2)   default("0.0"), not null
 #  closes_on        :date
 #  deleted_at       :datetime
 #  background_info  :string(255)

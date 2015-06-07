@@ -1,10 +1,4 @@
 
-<% if  @enquiry.errors.any? %>
-  <% custNum = params[:existing_customer] %>
-  <% custName = Customer.find(custNum).fullname unless custNum.blank? %>
-  <input type='hidden' name='input' id='test' style='width:300px;' data-init-text='<%= custName %>' value= '<%= custNum.to_s %>' >
-
-<% end %>
 <%
   if params[:user_type] == "New"
      newCustDisplay = "display:block;"
@@ -27,34 +21,35 @@
 
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
-	 
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
 	  
 	  <div class ="card-panel">
+	   
 	    <div id="customers">
+	    
 	      <h4 class="header2">Customer Details</h4>
 	      
-    	  <%= f.fields_for :customers, :html => {:class => "form-horizontal"}  do |c| %>
+    	  <%= f.fields_for :customers, :html => {:class => "col s12"}  do |c| %>
     	    <div class="row">
-      	  <%= render partial: 'shared/customer', locals: { f: c } %>
+      	    <%= render partial: 'shared/customer', locals: { f: c } %>
       	  </div>
         <% end %>
  
-  	    <div class="links">
-            <div class="row"><div class="input-field col s1 offset-s11">
-            <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green"} do %>
-              <i class="mdi-content-add"></i>
-            <% end %>
-            </div></div>
-        </div>
+  	    <div class="links"><div class="row"><div class="input-field col s1 offset-s11">
+          <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+            <i class="mdi-content-add"></i>
+          <% end %>
+        </div></div></div>
+        
       </div>
       
       <div class="row">
         <div class="input-field col s6">
-          <%= hidden_field(:enquiry, :agent_id, id: 'agent_select', class: 'select2 ajax', style: 'width: 100%;' ) %>
+          <%= f.select(:agent_id, options_for_select([[f.object.agent_name, f.object.agent_id]],f.object.agent_id),{},{class: "select2-agents browser-default"}) %>
           <%= f.label :agent_id, "Agent",  class: 'active' %>
         </div>
       </div>
+      
     </div>
       
     <div class ="card-panel">
@@ -102,16 +97,13 @@
 
     
       <div class="row">
-        <div class="input-field col s12">
-          <%= f.text_area :background_info, class: "materialize-textarea", length: "120" %>
-          <%= f.label :background_info, "Additional Details" %>
-        </div>
+        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "background_info", f: f, name: "Additional Details", length: "180"} %>
       </div>
  
       <div class="row">
         <div class="input-field col s6">
-          <%= hidden_field_tag(:assigned_to, ass_user, id: 'usersearch', class: 'ajax', style: 'width: 100%;') %>
-          <%= f.label :assigned_to, "Assign To", class: 'active'  %>
+          <%= f.select(:assigned_to, options_for_select([[f.object.assignee.name, f.object.assignee.id]],f.object.assignee.id),{},{class: "select2-users browser-default"}) %>
+          <%= f.label :assigned_to, "Assign To",  class: 'active' %>
         </div>
       </div>
       

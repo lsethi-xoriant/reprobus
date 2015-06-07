@@ -10,8 +10,8 @@
 #  source           :string(32)
 #  stage            :string(32)
 #  probability      :string(255)
-#  amount           :decimal(12, 2)
-#  discount         :decimal(12, 2)
+#  amount           :decimal(12, 2)   default("0.0"), not null
+#  discount         :decimal(12, 2)   default("0.0"), not null
 #  closes_on        :date
 #  deleted_at       :datetime
 #  background_info  :string(255)
@@ -58,10 +58,11 @@ class Enquiry < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   has_many    :customer_enquiries, dependent: :destroy
-  has_many    :customers, -> { order("customers.id DESC") }, through: :customer_enquiries
+  has_many    :customers, -> { order("customers.id ASC") }, through: :customer_enquiries
   accepts_nested_attributes_for :customers, allow_destroy: true;
   has_many    :activities,  dependent: :destroy
   has_one     :booking
+  has_one     :itinerary
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
@@ -99,6 +100,10 @@ class Enquiry < ActiveRecord::Base
       return false
     end
 
+  end
+  
+  def agent_name
+    return self.agent.fullname if self.agent
   end
   
   def assigned_to_name

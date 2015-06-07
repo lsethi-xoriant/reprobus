@@ -5,11 +5,7 @@ Reprobus::Application.routes.draw do
   post "versions/:id/revert" => "versions#revert", as:
        "revert_version"
 
-  resources :users do
-    collection do
-      get 'usersearch'  # /users/usersearch
-    end
-  end
+  resources :users
   
   resources :settings, only: [:edit, :update, :show] do
     collection do
@@ -21,19 +17,11 @@ Reprobus::Application.routes.draw do
 
   resources :password_resets
   resources :email_templates
+  resources :itinerary_templates
+  resources :itineraries
     
-  resources :suppliers do
-    collection do
-#      get 'customersearch'  # /enquires/customersearch
-      get 'suppliersearch'  # /suppliers/suppliersearch
-    end
-  end
-  
-  resources :agents  do
-    collection do
-      get 'agentsearch'  # /agents/suppliersearch
-    end
-  end
+  resources :suppliers
+  resources :agents
   
   resources :customers do
     collection do
@@ -87,7 +75,7 @@ Reprobus::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   
-  get 'static_pages/currencysearch'
+  
   get "admin/carriers/export"
   get "admin/destinations/export"
   get "admin/stopovers/export"
@@ -98,6 +86,14 @@ Reprobus::Application.routes.draw do
   post "admin/destinations/importfile"
   post "admin/stopovers/importfile"
   
+  get 'searches/product'
+  get 'searches/product_search'
+  get 'searches/agent_search'
+  get 'searches/user_search'
+  get 'searches/currency_search'
+  get 'searches/template_search'
+  get 'searches/supplier_search'
+       
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
     resources :carriers

@@ -6,8 +6,8 @@
 #  customer_id :integer
 #  enquiry_id  :integer
 #  user_id     :integer
-#  amount      :decimal(12, 2)
-#  deposit     :decimal(12, 2)
+#  amount      :decimal(12, 2)   default("0.0")
+#  deposit     :decimal(12, 2)   default("0.0")
 #  name        :string(255)
 #  status      :string(255)
 #  created_at  :datetime

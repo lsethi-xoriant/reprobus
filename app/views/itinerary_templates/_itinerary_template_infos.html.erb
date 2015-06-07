@@ -1,0 +1,42 @@
+<div class="nested-fields">
+  <div class ="card-panel">
+  <div class ="row">
+
+    <div class="field">
+      <div class="input-field col s1 valign-wrapper">
+        <i class="mdi-editor-format-line-spacing small grey-text"></i>
+        <h6 class="grey-text valign iti_postion_number"></h6>
+      </div>
+      
+      <div class="input-field col s3">
+      <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
+      </div>
+      
+      <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
+
+      <div class="input-field col s1">
+          <%= f.text_field "length" %>
+          <%= f.label :length %>
+      </div>
+      
+      <div class="input-field col s1">
+          <%= f.text_field "days_from_start" %>
+          <%= f.label :days_from_start, "From start"  %>
+      </div>
+   
+      <div class="input-field col s5 product_details_cont">
+        <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details active", :readonly => true  ) %>
+        <%= f.label :product_name %>
+      </div>
+     </div>
+     
+     
+    <div class="input-field col s1">
+      <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
+        <i class="mdi-content-clear"></i>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+</div>

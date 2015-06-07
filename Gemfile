@@ -40,7 +40,7 @@ gem 'materialize-sass', '0.96.1'
 gem 'carrierwave'
 gem 'mini_magick'   # changed from rmagick
 #gem 'rmagick'   # changed as causing issues installing gems
-gem 'select2-rails'
+#gem 'select2-rails'
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'font-awesome-rails'
 #gem 'roo'

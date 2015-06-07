@@ -1,33 +1,33 @@
-<% provide(:title, 'All Users') %>
-<h4>Users</h4>
-
-<div id="table-datatables">
- <div class="row">
-    <div class="col s12 m12 l12">
-      <table id="data-table-simple" class="responsive-table display" >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Num Active Enquiries</th>
-            <th>Num Enq Created</th>
-            <th>Joined</th>
-            <th>Thumbnail</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-          <tr>
-            <td><%= link_to user.name, user %> </td>
-            <td><%= user.email %></td>
-            <td><%= user.assigned_enquiries.active.count %></td>
-            <td><%= user.enquiries.count %></td>
-            <td><%= user.created_at.strftime("%d/%m/%Y")  %></td>
-            <td><%= gravatar_for(user, size: 52) %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-     </div>
+<% provide(:title, 'Users') %>
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="data-table-simple" class="responsive-table display" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Num Active Enquiries</th>
+              <th>Num Enq Created</th>
+              <th>Joined</th>
+              <th>Thumbnail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+            <tr>
+              <td><%= link_to user.name, user %> </td>
+              <td><%= user.email %></td>
+              <td><%= user.assigned_enquiries.active.count %></td>
+              <td><%= user.enquiries.count %></td>
+              <td><%= user.created_at.strftime("%d/%m/%Y")  %></td>
+              <td><%= gravatar_for(user, size: 52) %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+       </div>
+    </div>
   </div>
 </div>

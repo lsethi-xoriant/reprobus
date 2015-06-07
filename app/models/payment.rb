@@ -3,7 +3,7 @@
 # Table name: payments
 #
 #  id                :integer          not null, primary key
-#  amount            :decimal(12, 5)
+#  amount            :decimal(12, 5)   default("0.0")
 #  payment_ref       :string(255)
 #  invoice_id        :integer
 #  created_at        :datetime

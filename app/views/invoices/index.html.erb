@@ -1,4 +1,4 @@
-<% provide(:title, 'All Bookings') %>
+<% provide(:title, 'Booking Invoices') %>
 <%
 totCustInv = @booking.getCustomerInvoicesAmount
 totSupInv = @booking.getSupplierInvoicesAmount
@@ -11,7 +11,7 @@ end
 
 %>
 
-<h1 class="page-header">All Invoices for <%= @booking.name %></h1>
+<h4 class="page-header">All Invoices for <%= @booking.name %></h4>
 
 <div class="panel panel-default">
   <div class="panel-heading">

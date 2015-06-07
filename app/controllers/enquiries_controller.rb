@@ -55,6 +55,7 @@ class EnquiriesController < ApplicationController
     @enquiry.customers.first.build_address
     @customer = @enquiry.customers.first
     @enquiry.stage = "New Enquiry"
+    @enquiry.assignee = current_user
   end
 
   def show
@@ -64,6 +65,7 @@ class EnquiriesController < ApplicationController
 
   def edit
     @enquiry = Enquiry.find(params[:id])
+    @customer = @enquiry.customers.first
   end
   
   def edit_booking

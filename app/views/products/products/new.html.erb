@@ -1,4 +1,3 @@
-<% provide(:title, 'Create ' + nice_products_name(params[:type])) %>
-<h1 class="page-header">Create a <%= nice_products_name(params[:type]) %></h1>
+<% provide(:title, 'Create a ' + @product.type) %>
 
-<%= render  partial: 'form', locals: { buttontxt: "Create " + nice_products_name(params[:type]), formpath: products_path(@product)} %>
+<%= render  partial: 'form', locals: { buttontxt: "Create " + @product.type, formpath: products_path(@product)} %>

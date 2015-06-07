@@ -25,7 +25,17 @@
 #
 
 class ItineraryInfo < ActiveRecord::Base
+
+ 
   belongs_to  :itinerary
   belongs_to  :product
+  belongs_to  :supplier
   
+  def get_product_name
+    return self.product.name if self.product
+  end
+  
+  def supplier_name
+    return self.supplier.supplier_name if self.supplier
+  end
 end

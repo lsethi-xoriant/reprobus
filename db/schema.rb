@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604132830) do
+ActiveRecord::Schema.define(version: 20150607100849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,8 +264,8 @@ ActiveRecord::Schema.define(version: 20150604132830) do
     t.boolean  "complete"
     t.boolean  "sent"
     t.boolean  "quality_check"
-    t.decimal  "price_per_person", precision: 12, scale: 2
-    t.decimal  "price_total",      precision: 12, scale: 2
+    t.decimal  "price_per_person",      precision: 12, scale: 2
+    t.decimal  "price_total",           precision: 12, scale: 2
     t.string   "bed"
     t.text     "includes"
     t.text     "excludes"
@@ -275,9 +275,13 @@ ActiveRecord::Schema.define(version: 20150604132830) do
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "itinerary_template_id"
+    t.integer  "enquiry_id"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree
+  add_index "itineraries", ["enquiry_id"], name: "index_itineraries_on_enquiry_id", using: :btree
+  add_index "itineraries", ["itinerary_template_id"], name: "index_itineraries_on_itinerary_template_id", using: :btree
   add_index "itineraries", ["user_id"], name: "index_itineraries_on_user_id", using: :btree
 
   create_table "itinerary_infos", force: :cascade do |t|

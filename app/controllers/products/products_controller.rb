@@ -16,8 +16,6 @@ class Products::ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     #@product.type = params[:type]
-    
-   # @product = product_type.new(product_params)
 
     if @product.save
       flash[:success] = "#{@product.name} created!"
@@ -38,7 +36,7 @@ class Products::ProductsController < ApplicationController
       flash[:success] = "#{@product.name} updated!"
       redirect_to product_index_path @product
     else
-      render 'new'
+      render 'edit'
     end
   end
 

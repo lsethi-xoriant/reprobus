@@ -1,0 +1,39 @@
+/* UPDATE NPROGRESS STYLE*/
+
+#nprogress .bar {
+  background: #ec407a;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #ec407a, 0 0 5px #ec407a;
+}
+
+/* update to none  to get rid of the spinner */
+/* line 38, /home/hamishgardiner/.rvm/gems/ruby-2.0.0-p643/gems/nprogress-rails-0.1.6.6/app/assets/stylesheets/nprogress.scss */
+#nprogress .spinner {
+  display: block;
+}
+
+/* line 46, /home/hamishgardiner/.rvm/gems/ruby-2.0.0-p643/gems/nprogress-rails-0.1.6.6/app/assets/stylesheets/nprogress.scss */
+#nprogress .spinner-icon {
+  border-top-color: #ec407a;
+  border-left-color: #ec407a;
+}
+
+/* Sortable js plugin.... */
+.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 120px;
+  margin-bottom: 10px;
+}
+ 
+.sortable {
+  display: list-item;
+  list-style-type: none;
+}
+
+.iti_postion_number{
+  padding-left: 10px;
+}

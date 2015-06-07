@@ -4,8 +4,8 @@
 #
 #  id          :integer          not null, primary key
 #  invoice_id  :integer
-#  item_price  :decimal(12, 2)
-#  total       :decimal(12, 2)
+#  item_price  :decimal(12, 2)   default("0.0")
+#  total       :decimal(12, 2)   default("0.0")
 #  description :string(255)
 #  quantity    :integer
 #  created_at  :datetime
