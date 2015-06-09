@@ -22,6 +22,7 @@
 #  product_id          :integer
 #  created_at          :datetime
 #  updated_at          :datetime
+#  length              :integer
 #
 
 class ItineraryInfo < ActiveRecord::Base
@@ -29,7 +30,7 @@ class ItineraryInfo < ActiveRecord::Base
  
   belongs_to  :itinerary
   belongs_to  :product
-  belongs_to  :supplier
+  belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
   
   def get_product_name
     return self.product.name if self.product
@@ -37,5 +38,9 @@ class ItineraryInfo < ActiveRecord::Base
   
   def supplier_name
     return self.supplier.supplier_name if self.supplier
+  end
+  
+  def get_product_details
+    return self.product.product_details if self.product
   end
 end

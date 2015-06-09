@@ -1,27 +1,9 @@
 $(document).ready(function() {
   
   initProductSelect2();  // intialise select drop downs
-   
-  $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-    initProductSelect2();
-    sort_itinerary_items();
-  });
-  
-  $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-    initProductSelect2();
-    sort_itinerary_items();
-    
-    // Pikadate datepicker
-    $('.datepicker').pickadate({
-      //selectMonths: true, // Creates a dropdown to control month
-      //selectYears: 15 // Creates a dropdown of 15 years to control year
-      // HAMISH - select drop down not working very well for YEARS or MONTHS!!
-      formatSubmit: 'yyyy/mm/dd',
-      hiddenSuffix: ''
-    });
-  });
-  
-  
+
+ });
+
   function formatProduct (product) {
     var markup = "";
     if (product.text) {
@@ -34,8 +16,6 @@ $(document).ready(function() {
   function formatProductSelection (product) {
     return product.text;
   }
- 
- 
  
   function initProductSelect2() {
     $(".select2-products").select2({
@@ -70,8 +50,7 @@ $(document).ready(function() {
     $eventSelect.on("select2:select", function (e) {
     var nextProdField = $(this).closest('.field').find(".product_details");
     nextProdField.val(e.params.data.type + " | "  + e.params.data.name + " | "  + e.params.data.city + " | "  + e.params.data.country);
-    nextProdField.next().addClass('active');
+    nextProdField.next().addClass('active'); // set label to be active.
     });
     
   }
- });

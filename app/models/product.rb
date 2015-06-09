@@ -24,6 +24,7 @@
 class Product < ActiveRecord::Base
   validates :type,:name, presence: true
   validates :supplier_id,  presence: true
+  
 
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos

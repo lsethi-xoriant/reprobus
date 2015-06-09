@@ -60,6 +60,7 @@ class Enquiry < ActiveRecord::Base
   has_many    :customer_enquiries, dependent: :destroy
   has_many    :customers, -> { order("customers.id ASC") }, through: :customer_enquiries
   accepts_nested_attributes_for :customers, allow_destroy: true;
+  
   has_many    :activities,  dependent: :destroy
   has_one     :booking
   has_one     :itinerary

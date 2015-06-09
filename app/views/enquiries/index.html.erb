@@ -26,7 +26,7 @@
           <tbody>
             <% @enquiries.each do |enquiry| %>
             <tr>
-              <td><%= link_to(enquiry.name, enquiry) %></td>
+              <td><a href=<%=edit_enquiry_path(enquiry)%>><%= enquiry.name %></a></td>
               <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
               <td><%= enquiry.customer_email %></td>
               <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>

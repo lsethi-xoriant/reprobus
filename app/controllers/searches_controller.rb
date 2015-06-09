@@ -15,7 +15,6 @@ class SearchesController < ApplicationController
     end
   end
   
-  
   def agent_search
     @agents = Customer.select([:id, :supplier_name, :cust_sup, :currency_id]).where("cust_sup ILIKE :p", p: "Agent" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
@@ -28,8 +27,6 @@ class SearchesController < ApplicationController
         items: @agents.map { |e| {id: e.id, text: "#{e.supplier_name}" }}} }
     end
   end
-  
-  
   
   def currency_search
     @entities = Currency.select([:id, :code,  :currency]).
@@ -44,7 +41,20 @@ class SearchesController < ApplicationController
     end
   end
   
+  def customer_search
+    @customers = Customer.select([:id, :last_name, :first_name, :title, :phone, :email ]).where("cust_sup ILIKE :p", p: "Customer" ).
+                            where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
+                            order('last_name')
   
+    # also add the total count to enable infinite scrolling
+    resources_count = @customers.size
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count,
+                    items: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}", title: e.title,
+                    firstname: e.first_name, lastname: e.last_name, email: e.email, phone: e.phone }}} }
+    end
+  end
         
   def product_search
     @products = Product.select([:id, :name, :country, :city, :type]).

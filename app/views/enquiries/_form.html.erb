@@ -24,7 +24,7 @@
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
 	  
 	  <div class ="card-panel">
-	   
+
 	    <div id="customers">
 	    
 	      <h4 class="header2">Customer Details</h4>
@@ -34,15 +34,25 @@
       	    <%= render partial: 'shared/customer', locals: { f: c } %>
       	  </div>
         <% end %>
- 
-  	    <div class="links"><div class="row"><div class="input-field col s1 offset-s11">
-          <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
-            <i class="mdi-content-add"></i>
-          <% end %>
-        </div></div></div>
-        
+  	    
+  	    <div class="links">
+    	    <div class="row">
+    	      <div class="offset-s10 col s2">
+              <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+                <i class="mdi-content-add"></i>
+              <% end %>
+              <!--<a class="btn-floating btn-small waves-effect waves-light blue modal-trigger-custsearch right" href="#cust_search_modal">
+                <i class="mdi-action-account-circle"></i>-->
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
       
+      
+   
+
+        
       <div class="row">
         <div class="input-field col s6">
           <%= f.select(:agent_id, options_for_select([[f.object.agent_name, f.object.agent_id]],f.object.agent_id),{},{class: "select2-agents browser-default"}) %>
@@ -117,6 +127,31 @@
     </div>
   <% end %>
     
+    
+  <div id="cust_search_modal" class="modal">
+    <div class="modal-content">
+      <h4>Search for customer</h4>
+       <div class="section">
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <div class ="card-panel">
+            <div class="row">
+              <div class="input-field col s6">
+                <%= select_tag(:customer_id, options_for_select([[]],''),{class: "select2-customers browser-default", :style => "width:350px"}) %>
+                <label for="customer_id" class="active">Customers</label>
+              </div>
+              
+               <%= button_tag( :class => "btn cyan waves-effect waves-light right", id: "customer_search_enquiry" ) do %>
+                 Select Customer
+              <% end %>
+              
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 

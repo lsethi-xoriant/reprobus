@@ -12,9 +12,6 @@
     </div>
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
     
-    
-    
-    
       <h4 class="header">Trip Details</h4>
       
       <div id="itinerary_template_infos">
@@ -23,18 +20,16 @@
       	  <%= f.fields_for :itinerary_template_infos, :html => {:class => "form-horizontal"}  do |i| %>
         	    <%= render partial: 'itinerary_template_infos', locals: { f: i } %>
           <% end %>
-  
-          
-          
+
           <div class="links input-field col s1">
+          <!--<div class="fixed-action-btn" style="bottom: 45px; right: 44px;"> -->
             <%= link_to_add_association  f, :itinerary_template_infos, {partial: 'itinerary_template_infos', class: "btn-floating btn-small waves-effect waves-light green"} do %>
               <i class="mdi-content-add"></i>
             <% end %>
+          <!--</div> -->
           </div>
         </div>
       </div>
-      
-
 
       <div class="row">
         <div class="input-field col s12">

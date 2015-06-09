@@ -30,12 +30,11 @@ class ItinerariesController < ApplicationController
   
   def create
     @itinerary = Itinerary.new(itinerary_params)
-    @template =  ItineraryTemplate.find(params[:itinerary_template_id])
-    
-    @itinerary.copy_template(@template)
+
+    @itinerary.copy_template(@itinerary.itinerary_template)
     
     if @itinerary.save
-      flash[:success] = "Template created!"
+      flash[:success] = "Itinerary created!"
       redirect_to  edit_itinerary_path(@itinerary)
     else
       render 'new'
@@ -46,7 +45,7 @@ class ItinerariesController < ApplicationController
      @itinerary = Itinerary.find(params[:id])
      
     if @itinerary.update_attributes(itinerary_params)
-      flash[:success] = "Template updated"
+      flash[:success] = "Itinerary updated"
       redirect_to edit_itinerary_path(@itinerary)
     else
       render 'edit'
@@ -61,10 +60,9 @@ class ItinerariesController < ApplicationController
   
 private
     def itinerary_params
-      params.require(:itinerary).permit(:name, :includes, :excludes, :notes,
-      itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date,
-      :end_date, :country, :city, :product_type, :product_name, :rating, :room_type,
-      :supplier_id,  :_destroy ])
-      
+      params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
+      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
+      itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, :country,
+      :city, :product_type, :product_name, :rating, :room_type, :supplier_id,  :_destroy ])
     end
 end

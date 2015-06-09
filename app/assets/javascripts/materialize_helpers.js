@@ -64,6 +64,10 @@ $(function() {
   // Materialize Parallax
   $('.parallax').parallax();
   $('.modal-trigger').leanModal();
+  
+  $('.modal-trigger-custsearch').leanModal({
+    ready: function() { $('.select2-customers').select2('open'); }
+    });
 
   // Materialize scrollSpy
   $('.scrollspy').scrollSpy();
@@ -82,10 +86,12 @@ $(function() {
 
   // Pikadate datepicker
   $('.datepicker').pickadate({
-    //selectMonths: true, // Creates a dropdown to control month
-    //selectYears: 15 // Creates a dropdown of 15 years to control year
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 5, // Creates a dropdown of 15 years to control year
     // HAMISH - select drop down not working very well for YEARS or MONTHS!!
-    formatSubmit: 'yyyy/mm/dd',
+    formatSubmit: 'yyyy-mm-dd',
+    format: 'yyyy-mm-dd',
+    min: new Date(),
     hiddenSuffix: ''
   });
 

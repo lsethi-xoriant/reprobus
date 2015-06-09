@@ -1,38 +1,3 @@
-/*CUSTOM CODE TO SET UP SORTABLE PLUGIN IS PLUGIN CODE*/
-
-
-  function sort_itinerary_items(){
-      set_sort_positions();
-    
-      // call sortable on our div with the sortable class
-      $('.sortable').sortable({
-        items: '.nested-fields'
-      });
-  }
- 
- function set_sort_positions(){
-    // loop through and give each task a data-pos
-    // attribute that holds its position in the DOM
-    $('.iti_position_field').each(function(i){
-        $(this).val(i+1);
-    });
-    $('.iti_postion_number').each(function(i){
-        $(this).text(i+1);
-    });
-  }
-  
-  $(document).ready(function() {
-    
-    sort_itinerary_items();
-    
-     $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-        // set the updated positions
-        set_sort_positions();
-     });
-  });
-
-/*BELOW IS PLUGIN CODE*/
-
 /*
  * HTML5 Sortable jQuery Plugin
  * https://github.com/voidberg/html5sortable
@@ -431,19 +396,3 @@ sortable.disable = function(sortable) {
 $.fn.sortable = function(options) {
   return sortable(this, options);
 };
-/* start-testing */
-sortable.__testing = {
-  // add internal methods here for testing purposes
-  _removeSortableEvents: _removeSortableEvents,
-  _removeItemEvents: _removeItemEvents,
-  _removeItemData: _removeItemData,
-  _removeSortableData: _removeSortableData,
-  _listsConnected: _listsConnected,
-  _getOptions: _getOptions,
-  _attachGhost: _attachGhost,
-  _addGhostPos: _addGhostPos,
-  _getGhost: _getGhost,
-  _makeGhost: _makeGhost
-};
-//module.exports = sortable;
-/* end-testing */

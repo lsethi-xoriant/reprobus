@@ -67,6 +67,7 @@ class Customer < ActiveRecord::Base
   has_many    :enquiries, -> { order("enquiries.id DESC")}, :through => :customer_enquiries
   has_one    :address, :as => :addressable
   accepts_nested_attributes_for :address
+  
   has_many    :activities,  dependent: :destroy
   has_many    :bookings
   belongs_to  :currency

@@ -31,7 +31,6 @@ Reprobus::Application.routes.draw do
 
   resources :enquiries do
     collection do
-      get 'customersearch'  # /enquires/customersearch
       get 'carriersearch'  # /enquires/carriersearch
       get 'destinationsearch'  # /enquires/destinationsearch
       get 'stopoversearch'  # /enquires/stopoversearch
@@ -93,6 +92,7 @@ Reprobus::Application.routes.draw do
   get 'searches/currency_search'
   get 'searches/template_search'
   get 'searches/supplier_search'
+  get 'searches/customer_search'
        
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'

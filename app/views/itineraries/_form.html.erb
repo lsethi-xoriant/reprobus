@@ -11,7 +11,7 @@
       <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
     </div>
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
-    
+    <div class="row"><%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %></div>
     
     
     
@@ -19,7 +19,6 @@
       
       <div id="itinerary_infos">
         <div class="sortable">
-
       	  <%= f.fields_for :itinerary_infos, :html => {:class => "form-horizontal"}  do |i| %>
         	    <%= render partial: 'itinerary_infos', locals: { f: i } %>
           <% end %>

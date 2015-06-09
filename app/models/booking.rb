@@ -63,30 +63,20 @@ class Booking < ActiveRecord::Base
   end
 
   def initSupInvoiceDate
-     if !self.enquiry.est_date.blank?
-       return self.enquiry.est_date - 30
-     else
-       return (Date.today + 30)
-     end
+     !self.enquiry.est_date.blank? ? (self.enquiry.est_date - 30) : (Date.today + 30)
   end
   
   def dasboard_customer_name
-    if !self.customer.nil?
-      self.customer.dashboard_name
-    else
-      "No Customer Details"
-    end
+    !self.customer.nil? ? self.customer.dashboard_name : "No Customer Details"
   end
   
   def assigned_to_name
-    if self.user
-      self.user.name
-    end
+    # consider if we need an assigned to user. at moment both created and assigned are the same.
+    self.user.name if self.user
   end
   
   def created_by_name
-    self.user.name
-    #User.find(self.user_id).name
+    self.user.name if self.user
   end
   
   def nice_id

@@ -1,5 +1,5 @@
 <div class="nested-fields">
-  <div class ="card-panel">
+  <div class ="card-panel itinerary-infos">
   <div class ="row">
 
     <div class="field">
@@ -26,7 +26,7 @@
    
       <div class="input-field col s5 product_details_cont">
         <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details active", :readonly => true  ) %>
-        <%= f.label :product_name %>
+        <%= f.label :product_name, "Product Details" %>
       </div>
      </div>
      

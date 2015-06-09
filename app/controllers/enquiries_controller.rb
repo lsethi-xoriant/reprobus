@@ -73,10 +73,25 @@ class EnquiriesController < ApplicationController
   end
   
   def create
-    @enquiry = Enquiry.new(enquiry_params)
-    @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+    #@enquiry = Enquiry.new(enquiry_params)
     
-    if @enquiry.save
+    @enquiry = Enquiry.new()
+    
+    @enquiry.customer_enquiries.build(params[:enquiry][:customers_attributes])
+    
+    @enquiry.save
+    
+#    params[:enquiry][:customers_attributes].each do |p|
+#      if p[:id].to_i > 0
+#        cust = Customer.find(p[:id].to_i)
+#        @enquiry.add_customer(cust)
+#      end
+#    end
+    
+    #@enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+    
+    #if @enquiry.save
+    if @enquiry.update_attributes(enquiry_params)
       Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to @enquiry
@@ -176,19 +191,6 @@ class EnquiriesController < ApplicationController
     Float(str) != nil rescue false
   end
         
-  def customersearch
-    @customers = Customer.select([:id, :last_name, :first_name]).where("cust_sup ILIKE :p", p: "Customer" ).
-                            where("last_name ILIKE :q OR first_name ILIKE :q", q: "%#{params[:q]}%").
-                            order('last_name')
-  
-    # also add the total count to enable infinite scrolling
-    resources_count = @customers.size
-
-    respond_to do |format|
-      format.json { render json: {total: resources_count,
-                    searchSet: @customers.map { |e| {id: e.id, text: "#{e.first_name} #{e.last_name}"} }} }
-    end
-  end
 
   def carriersearch
     @entities = Carrier.select([:id, :name]).
@@ -235,7 +237,7 @@ class EnquiriesController < ApplicationController
 
 private
     def enquiry_params
-      params.require(:enquiry).permit(:name, :source, :stage, :agent_id,
+      params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
         :fin_date, :standard, :insurance, :reminder,

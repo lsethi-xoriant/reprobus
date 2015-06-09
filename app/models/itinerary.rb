@@ -21,10 +21,12 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  itinerary_template_id :integer
+#  enquiry_id            :integer
 #
 
 class Itinerary < ActiveRecord::Base
   validates :name, presence: true
+  validates :start_date, presence: true
   
   belongs_to    :user
   has_one       :itinerary_price
@@ -40,7 +42,9 @@ class Itinerary < ActiveRecord::Base
   end
   
   def copy_template(template)
-    !template ? return
+    if !template
+      return
+    end
     
     # populates itinerary from a template - WARNING - destroys old intinrary infos...
     
@@ -53,7 +57,7 @@ class Itinerary < ActiveRecord::Base
     startleg = self.start_date
     
     template.itinerary_template_infos.each do |i|
-      endleg = startleg + length.days
+      endleg = startleg + i.length.days
       
       info = self.itinerary_infos.build(
                             name: i.product.name,
