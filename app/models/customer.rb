@@ -63,10 +63,14 @@ class Customer < ActiveRecord::Base
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_many    :customer_enquiries, :dependent => :destroy
-  has_many    :enquiries, -> { order("enquiries.id DESC")}, :through => :customer_enquiries
+#  has_many    :customers_enquiries
+ # has_many    :enquiries, -> { order("enquiries.id DESC")}, :through => :customers_enquiries
+  has_and_belongs_to_many :enquiries
+  accepts_nested_attributes_for :enquiries, allow_destroy: true;
+  
   has_one    :address, :as => :addressable
   accepts_nested_attributes_for :address
+  
   
   has_many    :activities,  dependent: :destroy
   has_many    :bookings

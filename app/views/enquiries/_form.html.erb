@@ -22,6 +22,7 @@
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
+	  <%= hidden_field_tag :search_cust_id %>
 	  
 	  <div class ="card-panel">
 
@@ -41,18 +42,14 @@
               <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
                 <i class="mdi-content-add"></i>
               <% end %>
-              <!--<a class="btn-floating btn-small waves-effect waves-light blue modal-trigger-custsearch right" href="#cust_search_modal">
-                <i class="mdi-action-account-circle"></i>-->
+              <a class="btn-floating btn-small waves-effect waves-light blue modal-trigger-custsearch right" href="#cust_search_modal">
+                <i class="mdi-action-account-circle"></i>
               </a>
             </div>
           </div>
         </div>
       </div>
       
-      
-   
-
-        
       <div class="row">
         <div class="input-field col s6">
           <%= f.select(:agent_id, options_for_select([[f.object.agent_name, f.object.agent_id]],f.object.agent_id),{},{class: "select2-agents browser-default"}) %>

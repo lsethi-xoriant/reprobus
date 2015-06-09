@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608031702) do
+ActiveRecord::Schema.define(version: 20150609005451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,15 +79,6 @@ ActiveRecord::Schema.define(version: 20150608031702) do
     t.datetime "updated_at"
   end
 
-  create_table "customer_enquiries", force: :cascade do |t|
-    t.integer  "customer_id"
-    t.integer  "enquiry_id"
-    t.string   "role",        limit: 32
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "customers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "lead_id"
@@ -137,6 +128,17 @@ ActiveRecord::Schema.define(version: 20150608031702) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "customers_enquiries", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "enquiry_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customers_enquiries", ["customer_id"], name: "index_customers_enquiries_on_customer_id", using: :btree
+  add_index "customers_enquiries", ["enquiry_id"], name: "index_customers_enquiries_on_enquiry_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false

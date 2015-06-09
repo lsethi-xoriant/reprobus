@@ -73,36 +73,32 @@ class EnquiriesController < ApplicationController
   end
   
   def create
-    #@enquiry = Enquiry.new(enquiry_params)
+    @enquiry = Enquiry.new(enquiry_params)
     
-    @enquiry = Enquiry.new()
-    
-    @enquiry.customer_enquiries.build(params[:enquiry][:customers_attributes])
     
     @enquiry.save
-    
-#    params[:enquiry][:customers_attributes].each do |p|
-#      if p[:id].to_i > 0
-#        cust = Customer.find(p[:id].to_i)
-#        @enquiry.add_customer(cust)
-#      end
-#    end
-    
+
     #@enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
     
-    #if @enquiry.save
-    if @enquiry.update_attributes(enquiry_params)
+    if @enquiry.save
+    #if @enquiry.update_attributes(enquiry_params)
       Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
-      redirect_to @enquiry
+      redirect_to edit_enquiry_path(@enquiry)
     else
       render 'new'
     end
   end
   
   def update
-
     @enquiry = Enquiry.find(params[:id])
+    if params[:search_cust_id]
+      params[:search_cust_id].split(",").each do |custid|
+        @customer = Customer.find(custid)
+        @enquiry.customers << @customer
+      end
+    end
+          
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
     if @enquiry.update_attributes(enquiry_params)
@@ -143,7 +139,7 @@ class EnquiriesController < ApplicationController
       revert_version_path(@enquiry.versions.last), :method => :post)
       
       flash[:success] = "Enquiry updated.  #{undo_link}"
-      redirect_to @enquiry
+      redirect_to edit_enquiry_path(@enquiry)
     else
       render 'edit'
     end
