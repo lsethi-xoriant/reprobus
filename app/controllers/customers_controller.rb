@@ -3,8 +3,21 @@ class CustomersController < ApplicationController
   before_filter :admin_user, only: :destroy
   
   def index
-    @customers = Customer.where(cust_sup: "Customer").paginate(page: params[:page])
+    @customers = Customer.where(cust_sup: "Customer")
+   respond_to do |format|
+      format.html
+      format.json { render json: CustomerDatatable.new(view_context, { user: current_user }) }
+    end
   end
+  
+  
+  def indextable
+   respond_to do |format|
+      format.html
+      format.json { render json: CustomerDatatable.new(view_context, { user: current_user }) }
+    end
+  end
+  
   
   def new
     @customer = Customer.new

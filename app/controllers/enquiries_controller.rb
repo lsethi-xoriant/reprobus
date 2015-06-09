@@ -73,15 +73,18 @@ class EnquiriesController < ApplicationController
   end
   
   def create
-    @enquiry = Enquiry.new(enquiry_params)
-    
-    
-    @enquiry.save
+    @enquiry = Enquiry.new()
 
-    #@enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0  #refactor
+    params[:enquiry][:customers_attributes].each do |key, value|
+      if !value[:id].to_s.blank? #existing customer
+        @customer = Customer.find(value[:id])
+        @enquiry.customers << @customer
+      end
+    end
     
+    @enquiry.assign_attributes(enquiry_params);
+
     if @enquiry.save
-    #if @enquiry.update_attributes(enquiry_params)
       Trigger.trigger_new_enquiry(@enquiry)
       flash[:success] = "Enquiry Created!  #{undo_link}"
       redirect_to edit_enquiry_path(@enquiry)
@@ -92,10 +95,13 @@ class EnquiriesController < ApplicationController
   
   def update
     @enquiry = Enquiry.find(params[:id])
-    if params[:search_cust_id]
-      params[:search_cust_id].split(",").each do |custid|
-        @customer = Customer.find(custid)
-        @enquiry.customers << @customer
+    
+    # if we have added existing customers through search, need to add them to relationship otherwise
+    # rails will throw error as relationship does not exist.
+    params[:enquiry][:customers_attributes].each do |key, value|
+      if !value[:id].to_s.blank? #existing customer
+        @customer = Customer.find(value[:id])
+        @enquiry.customers << @customer unless @enquiry.customers.include?(@customer)
       end
     end
           
@@ -103,7 +109,7 @@ class EnquiriesController < ApplicationController
   
     if @enquiry.update_attributes(enquiry_params)
       
-      # move these to nested form type arrangement - maybe with coocon?
+# move these to nested form type arrangement - maybe with coocon?
       if params[:enquiry][:carriers] then
         @enquiry.carriers.clear
         params[:enquiry][:carriers].split(",").each do |id|

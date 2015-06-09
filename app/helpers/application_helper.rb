@@ -28,13 +28,15 @@ module ApplicationHelper
   end
   
   def gender_list
-    list = ["Male",
+    list = ["Select Gender",
+            "Male",
             "Female",
             "Unknown"]
   end
    
   def titles_list
-    list = ["Ms",
+    list = ["Select Title",
+            "Ms",
             "Miss",
             "Mrs",
             "Mr",

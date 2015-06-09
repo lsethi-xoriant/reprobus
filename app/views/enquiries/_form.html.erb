@@ -22,8 +22,7 @@
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
-	  <%= hidden_field_tag :search_cust_id %>
-	  
+
 	  <div class ="card-panel">
 
 	    <div id="customers">
@@ -32,14 +31,14 @@
 	      
     	  <%= f.fields_for :customers, :html => {:class => "col s12"}  do |c| %>
     	    <div class="row">
-      	    <%= render partial: 'shared/customer', locals: { f: c } %>
+      	    <%= render partial: 'customer', locals: { f: c } %>
       	  </div>
         <% end %>
   	    
   	    <div class="links">
     	    <div class="row">
     	      <div class="offset-s10 col s2">
-              <%= link_to_add_association  f, :customers, {partial: 'shared/customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+              <%= link_to_add_association  f, :customers, {partial: 'customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
                 <i class="mdi-content-add"></i>
               <% end %>
               <a class="btn-floating btn-small waves-effect waves-light blue modal-trigger-custsearch right" href="#cust_search_modal">
@@ -73,9 +72,10 @@
       
       <div class="row">
         <div class="input-field col s6">
-          <%= f.select :standard, options_for_select(["Budget", "Comfort", "Superior", "Deluxe", "Boutique"].
-               insert(0, "Select a class"), @enquiry.standard ), {} %>
+          <%= f.select :standard, options_for_select(["Class", "Budget", "Comfort", "Superior", "Deluxe", "Boutique"],
+              disabled: "Class", selected: f.object.standard || "Class" ), {} %>
         </div>
+
         <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_people", f: f, name: "Number Traveling" } %>
       </div>
 
@@ -89,8 +89,8 @@
          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "amount", f: f, name: "Booking Value"} %>
          
         <div class="input-field col s6">
-          <%= f.select :probability, options_for_select(["High", "Medium", "Low"].
-               insert(0, "Select a probability"), @enquiry.probability ), {} %>
+          <%= f.select :probability, options_for_select(["Probability", "High", "Medium", "Low"],
+              disabled: "Probability", selected: f.object.probability || "Probability" ), {} %>
         </div>
       </div>
   

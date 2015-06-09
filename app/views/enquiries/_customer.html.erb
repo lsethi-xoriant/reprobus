@@ -1,0 +1,36 @@
+
+<div class="nested-fields">
+<div class ="card-panel">
+  <div class ="row">
+    <div class="field">
+      <%= f.select :title, options_for_select(titles_list, disabled: "Select Title", selected: f.object.title || "Select Title"), {}, {class: "input-field col s12"} %>
+    </div>
+  
+    <div class="field">
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
+      <%#= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
+      <div class="input-field col s5">
+        <%= f.text_field "last_name" %>
+        <%= f.label :last_name %>
+      </div>
+    </div>
+  
+    <div class="field">
+      <%= render partial: 'shared/material_emailfield_cols6', locals: { field: "email", f: f } %>
+      <%#= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f } %>
+      <div class="input-field col s5">
+        <%= f.text_field "phone" %>
+        <%= f.label :phone %>
+      </div>
+    </div>
+    
+    <%= f.hidden_field :id %>
+    
+    <div class="input-field col s1">
+      <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
+                    <i class="mdi-content-clear"></i>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>

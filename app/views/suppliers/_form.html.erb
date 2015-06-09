@@ -22,7 +22,7 @@
     <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
 
     <div class="input-field col s12">
-      <%= f.select :title, options_for_select(titles_list, @customer.title ), {} %>
+      <%= f.select :title, options_for_select(titles_list, disabled: "Select Title", selected: f.object.title || "Select Title"), {}, {} %>
     </div>
   
     <%= render partial: 'shared/material_textfield_cols6', locals: { field: "email", f: f } %>

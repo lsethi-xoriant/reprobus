@@ -26,6 +26,7 @@ Reprobus::Application.routes.draw do
   resources :customers do
     collection do
       get 'addnote'  # /customers/addnote
+      get 'indextable'
     end
   end
 

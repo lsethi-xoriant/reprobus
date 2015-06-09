@@ -37,3 +37,20 @@ $(document).ready(function(){
         }
     });
 });
+
+
+jQuery(document).ready(function() {
+  $('#customers-data-table-simple').dataTable({
+    "processing": true,
+    "serverSide": true,
+    responsive: true,
+    "ajax": $('#customers-data-table-simple').data('source'),
+    "pagingType": "full_numbers",
+    "aoColumnDefs": [
+          { 'bSortable': false, 'aTargets': [ -1 ] }
+       ]
+    // optional, if you want full pagination controls.
+    // Check dataTables documentation to learn more about
+    // available options.
+  });
+});

@@ -1,0 +1,31 @@
+<% provide(:title, 'Customers') %>
+
+<div class="section">
+    <a href=<%= new_customer_path %> ><button type="button" class="waves-effect waves-light btn">Create New Customer</button></a>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="customers-data-table-simple" class="responsive-table display", data-source="<%= indextable_customers_path(format: :json) %>" >
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Title</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

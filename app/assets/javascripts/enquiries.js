@@ -70,15 +70,10 @@ $(document).ready(function() {
         customer_fields[0].getElementsByTagName('input')[3].value = customer_search_email;
         customer_fields[0].getElementsByTagName('input')[4].value = customer_search_phone;
         customer_fields[0].getElementsByTagName('input')[5].value = customer_search_id;
-        if ($("#search_cust_id").val !== "") {
-          customer_search_id = customer_search_id + "," + $("#search_cust_id").val();
-        }
-        $("#search_cust_id").val(customer_search_id);
         
       //  customer_fields[0].getElementsByTagName('input').prop('readonly', true);
         customer_fields.find(':input').prop('readonly', true);
         customer_fields.find('label').addClass('active');
-
 
         customer_search_occured = false;
     }

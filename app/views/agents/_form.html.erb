@@ -1,42 +1,51 @@
 <div class="row">
-  <div class="span6 offset2">
-    <%= form_for @customer, :url => {:controller => "agents", :action => action}, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+
+    <%= form_for @customer, :url => {:controller => "agents", :action => action}, :html => {:multipart => true, :class => "col s12"} do |f| %>
       <%= f.hidden_field :cust_sup, :value => "Agent" %>
+      
 	    <%= render 'shared/error_messages', object: f.object %>
-      <div class="form-group">
-        <%= f.label "Agent" %>
-        <div class="col-sm-6">  <%= f.text_field :supplier_name %>  </div>
+	    
+	    <div class="row">
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "supplier_name", f: f } %>
       </div>
 
-       <div class="form-group">
-        <%= f.label "Contact details" %>
-         <div class="col-sm-6"> &nbsp; </div>
-       </div>
-  
-  
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "first_name", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "last_name", f: f } %>
-
-      <div class="form-group">  <%= f.label :title %>
-        <div class="col-sm-6">   <%= f.select :title, options_for_select(titles_list, @customer.title ), {}, class: 'form-control' %>  </div>
+      <div class="row"><div class="col s12">
+        <h6>Contact details</h6>
+      </div></div>
+      
+      <div class="row">
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
       </div>
-    
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "alt_email", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "phone", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "mobile", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "fax", f: f } %>
+      
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select :title, options_for_select(titles_list, disabled: "Select Title", selected: f.object.title || "Select Title"), {}, {} %>
+        </div>
+      </div>
 
-
+      <div class="row">
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "email", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "alt_email", f: f } %>
+      </div>
+      <div class="row">
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "mobile", f: f } %>
+      </div>
+      
+      <div class="row">
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "fax", f: f } %>
+      </div>
+      
+      
       <%= f.fields_for :address do |address| %>
         <%= render :partial => 'shared/address', :locals => {:f => address} %>
       <% end %>
     
-      <div class="row">
-      <div class="col-sm-6 col-md-offset-3">
-        <%= f.submit buttontxt, class: "btn waves-effect waves-light" %>
+      <div class="input-field col s12">
+        <%= f.submit buttontxt, class: "btn" %>
       </div>
-      </div>
+      
     <% end %>
   </div>
 </div>

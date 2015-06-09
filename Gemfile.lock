@@ -36,6 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    ajax-datatables-rails (0.3.0)
+      railties (>= 3.1)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -301,6 +303,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ajax-datatables-rails
   annotate (>= 2.6.0)
   bcrypt-ruby (~> 3.1.2)
   better_errors
@@ -313,7 +316,7 @@ DEPENDENCIES
   google_currency
   guard-minitest (= 2.3.1)
   jbuilder (~> 1.2)
-  jquery-datatables-rails (~> 3.3.0)
+  jquery-datatables-rails
   jquery-rails
   jquery-turbolinks
   materialize-sass (= 0.96.1)
