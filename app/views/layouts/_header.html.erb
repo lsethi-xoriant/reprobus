@@ -22,8 +22,8 @@
       
       <ul class="right hide-on-med-and-down">
         <li>
-          <div class="input-field col s1 valign-wrapper">
-            <h6><%= current_user.getRemindersDueCount.to_s %></h6>
+          <div class="col s1 valign-wrapper">
+            <h6 class="valign reminder-heading-number"><%= current_user.getRemindersDueCount.to_s %></h6>
             <a href=<%= dashboard_path(:remindersOnly => "y")%> class="waves-effect waves-block waves-light">
               <i class="mdi-social-notifications"></i>
             </a>

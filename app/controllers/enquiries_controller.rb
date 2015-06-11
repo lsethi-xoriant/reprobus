@@ -45,6 +45,15 @@ class EnquiriesController < ApplicationController
     @enquiries = Enquiry.includes(:customers).active.paginate(page: params[:page])
   end
   
+  def table
+    #@enquiries = Enquiry.includes(:customers).active.paginate(page: params[:page])
+   respond_to do |format|
+      format.html
+      format.json { render json: EnquiryDatatable.new(view_context, { user: current_user }) }
+    end
+
+  end
+  
   def index_bookings
     @bookings = Enquiry.bookings.paginate(page: params[:page])
   end
@@ -53,7 +62,6 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.new
 	  @enquiry.customers.build
     @enquiry.customers.first.build_address
-    @customer = @enquiry.customers.first
     @enquiry.stage = "New Enquiry"
     @enquiry.assignee = current_user
   end
@@ -104,7 +112,7 @@ class EnquiriesController < ApplicationController
         @enquiry.customers << @customer unless @enquiry.customers.include?(@customer)
       end
     end
-          
+
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
     if @enquiry.update_attributes(enquiry_params)
@@ -241,9 +249,9 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
-        :assigned_to, :num_people, :duration, :est_date, :percent,  :existing_customer,
+        :assigned_to, :num_people, :duration, :est_date, :percent,
         :fin_date, :standard, :insurance, :reminder,
-        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :_destroy] )
+        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy] )
     end
 
     def undo_link

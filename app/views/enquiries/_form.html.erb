@@ -1,23 +1,4 @@
-
-<%
-  if params[:user_type] == "New"
-     newCustDisplay = "display:block;"
-     existCustDisplay = "display:none;"
-   elsif params[:user_type] == "Existing"
-     newCustDisplay = "display:none;"
-     existCustDisplay = "display:block;"
-   else
-     newCustDisplay = "display:block;"
-     existCustDisplay = "display:none;"
-  end
-  @enquiry.assigned_to ? ass_user = @enquiry.assigned_to : ass_user = current_user.id
-
-  if params[:existing_customer] && params[:existing_customer] > '0' then
-     existCust = Customer.find(params[:existing_customer]).first_name + " " + Customer.find(params[:existing_customer]).last_name
-  end
-%>
-
-  <div class="row">
+<div class="row">
 
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>

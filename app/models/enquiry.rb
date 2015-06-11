@@ -29,6 +29,7 @@
 #  xero_id          :string(255)
 #  xpayments        :text
 #  agent_id         :integer
+#  lead_customer_id :integer
 #
 
 class Enquiry < ActiveRecord::Base
@@ -60,7 +61,7 @@ class Enquiry < ActiveRecord::Base
  
 #  has_many    :customers_enquiries
  # has_many    :customers, -> { order("customers.id ASC") }, through: :customers_enquiries
- has_and_belongs_to_many :customers
+  has_and_belongs_to_many :customers
  
   accepts_nested_attributes_for :customers, allow_destroy: true;
   
@@ -68,16 +69,30 @@ class Enquiry < ActiveRecord::Base
   has_one     :booking
   has_one     :itinerary
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
+  belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
   
+  before_save  :set_lead
+
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
   def isActive
     return stage == "Open" || stage == "In Progress"
   end
   
+  def is_customer_lead(customer)
+    return self.lead_customer == customer
+  end
+  
   def add_customer(customer)
-    self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
-    #self.customers << customer unless customer.nil?
+    #self.customer_enquiries.create!(customer_id: customer.id) unless customer.nil?
+    self.customers << customer unless customer.nil?
+  end
+ 
+  def set_lead
+    self.customers.each do |c|
+      self.lead_customer = c if c.lead_customer
+    end
+    self.lead_customer = self.customers.first if !self.lead_customer
   end
   
   def created_by_name
@@ -88,7 +103,7 @@ class Enquiry < ActiveRecord::Base
   def convert_to_booking!(user)
     book = self.build_booking(name: self.name, amount: self.amount, status: "New Booking")
     book.user = user
-    book.customer = self.customers.first
+    book.customer = self.lead_customer
     book.enquiry = self
     if book.save
       act = self.activities.create(type: "Converted", description: "Enquiry converted to Booking")
@@ -111,17 +126,15 @@ class Enquiry < ActiveRecord::Base
   end
   
   def assigned_to_name
-    if self.assigned_to
-      User.find(self.assigned_to).name
-    end
+    self.assignee.name if self.assignee
   end
 
 
   def customer_name_and_title
     str = ""
-    if !self.customers.empty?
-      str = self.customers.first.title + " " if self.customers.first.title
-      str = str + self.customers.first.first_name + " " + self.customers.first.last_name
+    if self.lead_customer
+      str = self.lead_customer.title + " " if self.lead_customer.title
+      str = str + self.lead_customer.first_name + " " + self.lead_customer.last_name
     else
       str = "No Customer Details"
     end
@@ -129,11 +142,7 @@ class Enquiry < ActiveRecord::Base
   
   
   def dasboard_customer_name
-    if !self.customers.empty?
-      self.customers.first.last_name + ", " + self.customers.first.first_name
-    else
-      "No Customer Details"
-    end
+    self.lead_customer ? self.lead_customer.last_name + ", " + self.lead_customer.first_name : "No Customer Details"
   end
   
   def customer_names
@@ -145,14 +154,14 @@ class Enquiry < ActiveRecord::Base
   end
   
   def customer_title
-    self.customers.first.title unless self.customers.empty?
+    self.lead_customer.title! unless !self.lead_customer
   end
   
   def customer_address
     if self.agent
       self.agent.getAddressDetails
     else
-      self.customers.first.getAddressDetails
+      self.lead_customer.getAddressDetails if self.lead_customer
     end
   end
   
@@ -160,7 +169,7 @@ class Enquiry < ActiveRecord::Base
     if self.agent
       self.agent.email unless self.agent.email.blank?
     else
-      self.customers.first.email unless self.customers.empty?
+      self.lead_customer.email if self.lead_customer
     end
   end
   
@@ -168,7 +177,7 @@ class Enquiry < ActiveRecord::Base
     if self.agent
       self.agent.create_email_link unless self.agent.email.blank?
     else
-      self.customers.first.create_email_link unless self.customers.empty?
+      self.lead_customer.create_email_link if self.lead_customer
     end
   end
   
@@ -176,7 +185,7 @@ class Enquiry < ActiveRecord::Base
     if self.agent
       self.agent.phone unless self.agent.phone.blank?
     else
-      self.customers.first.phone unless self.customers.empty?
+      self.lead_customer.phone if self.lead_customer
     end
   end
   
@@ -184,7 +193,7 @@ class Enquiry < ActiveRecord::Base
     if self.agent
       self.agent.mobile unless self.agent.mobile.blank?
     else
-      self.customers.first.mobile unless self.customers.empty?
+      self.lead_customer.mobile if self.lead_customer
     end
   end
   
@@ -252,17 +261,8 @@ class Enquiry < ActiveRecord::Base
   
   def enquiry_display_str
     str = "( "
-    if self.assigned_to
-      str = str + self.assigned_to_name
-    else
-      str = str + "UNASSIGNED"
-    end
-    
-    if self.customers.count > 0 then
-      str = str + " | " + self.dasboard_customer_name
-    else
-      str = str + " | NO CUSTOMER"
-    end
+    self.assigned_to ? str = str + self.assigned_to_name : str = str + "UNASSIGNED"
+    self.customers.count > 0 ? str = str + " | " + self.dasboard_customer_name : str = str + " | NO CUSTOMER"
     str = str + " )"
   end
     
@@ -281,11 +281,11 @@ class Enquiry < ActiveRecord::Base
   end
     
   def get_first_customer_num
-    num = self.customers.first.id unless self.customers.empty?
+    num = self.lead_customer.id unless self.lead_customer.nil?
   end
     
   def first_customer
-    return self.customers.first unless self.customers.empty?
+    return self.lead_customer unless self.lead_customer.nil?
   end
     
   def validate_new_customer(email, mobile)

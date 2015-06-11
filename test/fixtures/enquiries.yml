@@ -29,6 +29,7 @@
 #  xero_id          :string(255)
 #  xpayments        :text
 #  agent_id         :integer
+#  lead_customer_id :integer
 #
 
 firstenq:

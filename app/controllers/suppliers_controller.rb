@@ -1,7 +1,11 @@
 class SuppliersController < CustomersController
   
   def index
-    @customers = Customer.where(cust_sup: "Supplier").paginate(page: params[:page])
+#    @customers = Customer.where(cust_sup: "Supplier").paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: SupplierDatatable.new(view_context, { user: current_user }) }
+    end
   end
   
   def new

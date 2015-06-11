@@ -40,11 +40,12 @@ $(document).ready(function(){
 
 
 jQuery(document).ready(function() {
-  $('#customers-data-table-simple').dataTable({
+  $('#ajax-data-table-simple').dataTable({
     "processing": true,
     "serverSide": true,
+    stateSave: true,
     responsive: true,
-    "ajax": $('#customers-data-table-simple').data('source'),
+    "ajax": $('#ajax-data-table-simple').data('source'),
     "pagingType": "full_numbers",
     "aoColumnDefs": [
           { 'bSortable': false, 'aTargets': [ -1 ] }

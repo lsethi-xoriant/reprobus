@@ -1,0 +1,32 @@
+<% provide(:title, 'Enquiries') %>
+
+<div class="section">
+  <a href=<%= new_enquiry_path %> ><button type="button" class="waves-effect waves-light btn">Create New Enquiry</button></a>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div id="table-datatables">
+   <div class="row">
+      <div class="col s12 m12 l12">
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= table_enquiries_path(format: :json) %>" >
+          <thead>
+            <tr>
+              <th>Enquiry</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Date Added</th>
+              <th>Phone</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+              <th>Est. Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

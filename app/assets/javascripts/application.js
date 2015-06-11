@@ -24,6 +24,7 @@
 //= require nprogress-turbolinks
 //= require nprogress-ajax
 //= require cocoon
+//= require select2.min
 //= require_tree .
 
 

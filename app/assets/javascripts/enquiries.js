@@ -92,6 +92,10 @@ $(document).ready(function() {
     customer_search_id = e.params.data.id;
   });
     
+  $('.lead-customer-check').on('change', function() {
+      $('.lead-customer-check').not(this).prop('checked', false);
+  });
+
 });
 
 

@@ -10,7 +10,7 @@
   <div id="table-datatables">
    <div class="row">
       <div class="col s12 m12 l12">
-        <table id="data-table-simple" class="responsive-table display" >
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= customers_path(format: :json) %>" >
           <thead>
             <tr>
               <th>First Name</th>
@@ -18,27 +18,11 @@
               <th>Title</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Mobile</th>
               <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <% @customers.each do |cust| %>
-            <tr>
 
-              <td><%= cust.first_name %></td>
-              <td><%= cust.last_name %></td>
-              <td><%= cust.title %></td>
-              <td><%= cust.email %></td>
-              <td><%= cust.phone %></td>
-              <td><%= cust.mobile %></td>
-              <td class="center-align">
-                <%= link_to edit_customer_path(cust), :class => 'btn-floating waves-effect waves-light pink' do %>
-                  <i class="mdi-image-edit"></i>
-                <% end %>
-              </td>
-            </tr>
-            <% end %>
           </tbody>
         </table>
       </div>

@@ -43,6 +43,8 @@
 #
 
 class Customer < ActiveRecord::Base
+  attr_accessor :lead_customer
+  
   validates :first_name, presence: true, length: { maximum: 64 }
   validates :last_name, presence: true, length: { maximum: 64 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -58,8 +60,6 @@ class Customer < ActiveRecord::Base
   validates :fax, length: { maximum: 32 }
   validates :after_hours_phone, length: { maximum: 32 }
   validates :num_days_payment_due, numericality: true,  allow_blank: true
- 
-
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -83,7 +83,7 @@ class Customer < ActiveRecord::Base
   has_paper_trail :ignore => [:created_at, :updated_at]
    
   before_save :default_values
-   
+  
   def default_values
     self.cust_sup ||= 'Customer'  # default to customer.
   end
