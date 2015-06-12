@@ -21,7 +21,7 @@
 class Setting < ActiveRecord::Base
   validates_presence_of :xero_consumer_key,:xero_consumer_secret, :if => lambda { self.use_xero }
   validates_presence_of :pxpay_user_id, :pxpay_key, :if => lambda { self.payment_gateway == "Payment Express" }
-  validates :cc_mastercard,:cc_visa,:cc_amex,  :numericality => {:greater_than => 0, :less_than => 1}
+  validates :cc_mastercard,:cc_visa,:cc_amex, :numericality => {:greater_than => 0, :less_than => 1}, :allow_blank => true
   
   belongs_to :currency
   has_many :exchange_rates

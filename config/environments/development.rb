@@ -14,7 +14,7 @@ Reprobus::Application.configure do
   config.action_controller.perform_caching = false
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'firstapp-rails-86540.apse2.nitrousbox.com' }
+  config.action_mailer.default_url_options = { :host => 'tripeze-hamcool.c9.io' }
   config.action_mailer.delivery_method = :smtp
   # change to true to allow email to be sent during development
   config.action_mailer.perform_deliveries = true

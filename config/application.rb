@@ -57,7 +57,7 @@ module Reprobus
         html_field.to_s.html_safe
       else
         html_tag
-     end
+      end
     end
   end
 end
