@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-  Setting.create!(company_name: 'demo company')
-  user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )
+    Setting.create!(company_name: 'demo company')
+     user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )
 
     Currency.create!(:code => 'AED' , :currency => 'United Arab Emirates Dirham' )
     Currency.create!(:code => 'AFN' , :currency => 'Afghanistan Afghani' )
@@ -171,3 +171,19 @@
     Currency.create!(:code => 'ZAR' , :currency => 'South Africa Rand' )
     Currency.create!(:code => 'ZMW' , :currency => 'Zambia Kwacha' )
     Currency.create!(:code => 'ZWD' , :currency => 'Zimbabwe Dollar' )
+    
+    
+    Trigger.create!(:name => 'New Enquiry' , :setting_id => '1' )
+    Trigger.create!(:name => 'New Booking' , :setting_id => '1' )
+    Trigger.create!(:name => 'Confirmed Booking' , :setting_id => '1' )
+    Trigger.create!(:name => 'Payment Received' , :setting_id => '1' )
+    Trigger.create!(:name => 'Payment Failed' , :setting_id => '1' )
+    Trigger.create!(:name => 'Deposit Due' , :setting_id => '1' )
+    Trigger.create!(:name => 'Balance Due Soon' , :setting_id => '1' )
+    Trigger.create!(:name => 'Balance Due' , :setting_id => '1' )
+    Trigger.create!(:name => 'Balance Overdue' , :setting_id => '1' )
+    Trigger.create!(:name => 'Pre-trip' , :setting_id => '1' )
+    Trigger.create!(:name => 'Mid-trip' , :setting_id => '1' )
+    Trigger.create!(:name => 'Post-trip' , :setting_id => '1' )
+    Trigger.create!(:name => 'Trip Anniversary' , :setting_id => '1' )
+    Trigger.create!(:name => 'Enquiry Follow Up' , :setting_id => '1' )

@@ -10,32 +10,21 @@
   <div id="table-datatables">
    <div class="row">
       <div class="col s12 m12 l12">
-        <table id="data-table-simple" class="responsive-table display" >
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= enquiries_path(format: :json) %>" >
           <thead>
             <tr>
               <th>Enquiry</th>
-              <th>Customer Name</th>
+              <th>Lead Customer</th>
               <th>Email</th>
-              <th>Date Added</th>
               <th>Phone</th>
-              <th>Assigned To</th>
-              <th>Status</th>
+              <th>Date Added</th>
               <th>Est. Amount</th>
+              <th>Status</th>
+              <th>Assigned To</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <% @enquiries.each do |enquiry| %>
-            <tr>
-              <td><a href=<%=edit_enquiry_path(enquiry)%>><%= enquiry.name %></a></td>
-              <td><%= link_to(enquiry.dasboard_customer_name, enquiry.first_customer) %></td>
-              <td><%= enquiry.customer_email %></td>
-              <td><%= enquiry.created_at.strftime("%d/%m/%Y") %></td>
-              <td><%= enquiry.customer_phone %></td>
-              <td><%= enquiry.assigned_to_name %></td>
-              <td><span class="<%= get_status_color(enquiry.stage)%>"><%= enquiry.stage.upcase %></span></td>
-              <td><%= number_to_currency(enquiry.amount, precision: 0) %></td>
-            </tr>
-            <% end %>
           </tbody>
         </table>
       </div>

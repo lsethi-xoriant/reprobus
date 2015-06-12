@@ -93,6 +93,7 @@ class Enquiry < ActiveRecord::Base
       self.lead_customer = c if c.lead_customer
     end
     self.lead_customer = self.customers.first if !self.lead_customer
+    self.lead_customer ? self.lead_customer_name = self.lead_customer.fullname : self.lead_customer_name = ""
   end
   
   def created_by_name

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610225016) do
+ActiveRecord::Schema.define(version: 20150612043817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,31 +181,32 @@ ActiveRecord::Schema.define(version: 20150610225016) do
   create_table "enquiries", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",             limit: 64,                           default: "",       null: false
-    t.string   "access",           limit: 8,                            default: "Public"
-    t.string   "source",           limit: 32
-    t.string   "stage",            limit: 32
-    t.string   "probability",      limit: 255
-    t.decimal  "amount",                       precision: 12, scale: 2, default: 0.0,      null: false
-    t.decimal  "discount",                     precision: 12, scale: 2, default: 0.0,      null: false
+    t.string   "name",               limit: 64,                           default: "",       null: false
+    t.string   "access",             limit: 8,                            default: "Public"
+    t.string   "source",             limit: 32
+    t.string   "stage",              limit: 32
+    t.string   "probability",        limit: 255
+    t.decimal  "amount",                         precision: 12, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount",                       precision: 12, scale: 2, default: 0.0,      null: false
     t.date     "closes_on"
     t.datetime "deleted_at"
-    t.string   "background_info",  limit: 255
+    t.string   "background_info",    limit: 255
     t.text     "subscribed_users"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "duration",         limit: 255
+    t.string   "duration",           limit: 255
     t.date     "est_date"
-    t.string   "num_people",       limit: 255
+    t.string   "num_people",         limit: 255
     t.integer  "percent"
     t.date     "fin_date"
-    t.string   "standard",         limit: 255
+    t.string   "standard",           limit: 255
     t.boolean  "insurance"
     t.date     "reminder"
-    t.string   "xero_id",          limit: 255
+    t.string   "xero_id",            limit: 255
     t.text     "xpayments"
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
+    t.string   "lead_customer_name"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree

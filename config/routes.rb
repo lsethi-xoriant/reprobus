@@ -38,7 +38,6 @@ Reprobus::Application.routes.draw do
       post 'addbooking'  # /enquires/addbooking
       post "webenquiry"
       get "confirmation"
-      get "table"
     end
   end
   
