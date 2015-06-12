@@ -1,6 +1,6 @@
 module EnquiriesHelper
   def get_status_color(status)
-    if status == 'New Enquiry'
+    if status == 'New Enquiry' || status == 'New Itinerary'
       return "task-cat pink accent-2"
     elsif status == 'Open'
       return "task-cat orange accent-2"
@@ -8,6 +8,8 @@ module EnquiriesHelper
       return "task-cat indigo darken-4"
     elsif status == 'Booking'
       return "task-cat indigo darken-4"
+    else
+      return ""
     end
   end
   

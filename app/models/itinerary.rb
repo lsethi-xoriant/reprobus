@@ -36,7 +36,6 @@ class Itinerary < ActiveRecord::Base
   has_many :itinerary_infos, -> { order("position ASC")}
   accepts_nested_attributes_for :itinerary_infos
   
-  
   def template_name
     return self.itinerary_template.name if self.itinerary_template
   end

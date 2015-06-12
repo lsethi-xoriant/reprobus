@@ -3,7 +3,10 @@ class ItinerariesController < ApplicationController
   before_filter :admin_user, only: :destroy
   
   def index
-    @itineraries = Itinerary.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: ItineraryDatatable.new(view_context, { user: current_user }) }
+    end
   end
   
   def new
@@ -14,14 +17,12 @@ class ItinerariesController < ApplicationController
     end
     
     @itinerary = Itinerary.new
+    @itinerary.user = current_user
+    @itinerary.status = "New Itinerary"
   end
 
   def show
     @itinerary = Itinerary.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: {name: @itinerary.fullname, id: @itinerary.id  }}
-    end
   end
   
   def edit
@@ -63,6 +64,7 @@ private
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
       itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, :country,
-      :city, :product_type, :product_name, :rating, :room_type, :supplier_id,  :_destroy ])
+      :user_id, :status, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,  :_destroy ])
     end
 end
+ 

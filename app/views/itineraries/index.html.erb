@@ -10,24 +10,20 @@
   <div id="table-datatables">
    <div class="row">
       <div class="col s12 m12 l12">
-        <table id="data-table-simple" class="responsive-table display" >
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= itineraries_path(format: :json) %>" >
           <thead>
             <tr>
               <th>Name</th>
-              <th>Number Products</th>
+              <th>Lead Customer</th>
               <th>Created</th>
               <th>Updated</th>
+              <th>Owner</th>
+              <th>Number Products</th>
+              <th>Status</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <% @itineraries.each do |itin| %>
-            <tr>
-              <td><a href=<%=edit_itinerary_path(itin)%>><%= itin.name %></a></td>
-              <td><%= itin.itinerary_infos.count %></td>
-              <td><%= itin.created_at.strftime("%d/%m/%Y") %></td>
-              <td><%= itin.updated_at.strftime("%d/%m/%Y") %></td>
-            </tr>
-            <% end %>
           </tbody>
         </table>
       </div>

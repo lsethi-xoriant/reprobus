@@ -3,6 +3,8 @@
   <div class="card-panel">
   <%= form_for @itinerary, :html => {:multipart => true, :class => "col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
+	  <%= f.hidden_field :user_id %>
+	  <%= f.hidden_field :status %>
     
 
     <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
