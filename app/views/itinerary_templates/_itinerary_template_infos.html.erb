@@ -8,8 +8,15 @@
         <h6 class="grey-text valign iti_postion_number"></h6>
       </div>
       
-      <div class="input-field col s3">
-      <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
+      <div class="input-field col s2">
+        <%= select_tag(:destination, options_for_select([[]],''),{class: "select2-destinations browser-default"}) %>
+        <label for="destination" class="active">Destination</label>
+      </div>
+
+              
+      <div class="input-field col s2">
+        <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
+        <label for="product_id" class="active">Product</label>
       </div>
       
       <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
@@ -24,7 +31,7 @@
           <%= f.label :days_from_start, "From start"  %>
       </div>
    
-      <div class="input-field col s5 product_details_cont">
+      <div class="input-field col s4 product_details_cont">
         <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details active", :readonly => true  ) %>
         <%= f.label :product_name, "Product Details" %>
       </div>

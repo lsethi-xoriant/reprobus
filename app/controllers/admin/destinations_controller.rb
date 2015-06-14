@@ -2,7 +2,7 @@ class Admin::DestinationsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @destinations = Destination.paginate(page: params[:page])
+    @destinations = Destination.all
     respond_to do |format|
       format.html
       format.csv { send_data @destinations.to_csv }

@@ -83,15 +83,21 @@ class SearchesController < ApplicationController
   end
   
   def product_search
-    @products = Product.select([:id, :name, :country, :city, :type]).
-                            where("name ILIKE :q OR country ILIKE :q OR city ILIKE :q", q: "%#{params[:q]}%").
+    if params[:destination] == ""
+      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).
+                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
                             order('name')
+    else
+      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).where("destination_id = :destination", destination: params[:destination].to_i).
+                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q", q: "%#{params[:q]}%").
+                            order('name') 
+    end
   
     resources_count = @products.size
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
-                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, country: e.country, city: e.city, type: e.type  }}}}
+                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, country: e.country_search, city: e.destination_search, type: e.type  }}}}
     end
   end
 

@@ -18,6 +18,7 @@
            /* JS hooks to update sortable elements   */
     $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
       initProductSelect2();  // re-init product search dropdowns as new ones have been added
+      initDestinationSelect2();
       sort_itinerary_items();
       reset_material_active_labels('#itinerary_template_infos');
     });
@@ -38,7 +39,16 @@
         hiddenSuffix: ''
       });
     });
-     
+    
+    
+  /* on selection of product set other fields in row */
+  var $eventSelect = $(".select2-products");
+  $eventSelect.on("select2:select", function (e) {
+  var nextProdField = $(this).closest('.field').find(".product_details");
+  nextProdField.val(e.params.data.type + " | "  + e.params.data.name + " | "  + e.params.data.city + " | "  + e.params.data.country);
+  nextProdField.next().addClass('active'); // set label to be active.
+  });
+  
   });
 
 /* JS hooks to update sortable elements   */
@@ -90,7 +100,7 @@
       });
     }
   }
-
+    
 
  function reset_material_active_labels(container_id) {
    //DONT NEED THIS NOW - IS ACTUALLY WORKING. KEEPING IT INCASE NEED TO USE IT AGAIN.

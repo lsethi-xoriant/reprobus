@@ -5,7 +5,7 @@ class Products::ProductsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @products = Product.where(type: params[:type]).paginate(page: params[:page])
+    @products = Product.where(type: params[:type])
   end
   
   def new
@@ -43,8 +43,8 @@ class Products::ProductsController < ApplicationController
 
 private
     def product_params
-      params.require(:product).permit(:type, :name, :description, :country, :city, :image, :image_cache,
-        :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :destination, :default_length,
+      params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image, :image_cache,
+        :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :default_length,
         :supplier_id)
     end
 end

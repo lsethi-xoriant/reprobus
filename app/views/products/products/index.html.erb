@@ -14,7 +14,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>City</th>
+              <th>Destination</th>
               <th>Country</th>
               <th>Supplier Name</th>
             </tr>
@@ -23,8 +23,8 @@
             <% @products.each do |product| %>
             <tr>
               <td><%= link_to(product.name, get_edit_path(product)) %></td>
-              <td><%= product.city %></td>
-              <td><%= product.country %></td>
+              <td><%= product.destination_name %></td>
+              <td><%= product.country_name %></td>
               <td><%= product.supplierName %></td>
             </tr>
             <% end %>

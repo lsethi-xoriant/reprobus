@@ -2,7 +2,7 @@ class Admin::CarriersController < ApplicationController
   before_filter :admin_user
   
   def index
-    @carriers = Carrier.paginate(page: params[:page])
+    @carriers = Carrier.all
     respond_to do |format|
       format.html
       format.csv { send_data @carriers.to_csv }

@@ -2,7 +2,7 @@ class Admin::StopoversController < ApplicationController
   before_filter :admin_user
   
   def index
-    @stopovers = Stopover.paginate(page: params[:page])
+    @stopovers = Stopover.all
     respond_to do |format|
       format.html
       format.csv { send_data @stopovers.to_csv }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614055343) do
+ActiveRecord::Schema.define(version: 20150614094821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -393,12 +393,10 @@ ActiveRecord::Schema.define(version: 20150614055343) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
-    t.string   "country"
-    t.string   "city"
     t.text     "description"
-    t.decimal  "price_single",   precision: 12, scale: 2
-    t.decimal  "price_double",   precision: 12, scale: 2
-    t.decimal  "price_tripple",  precision: 12, scale: 2
+    t.decimal  "price_single",       precision: 12, scale: 2
+    t.decimal  "price_double",       precision: 12, scale: 2
+    t.decimal  "price_tripple",      precision: 12, scale: 2
     t.string   "product_type"
     t.string   "room_type"
     t.string   "rating"
@@ -410,6 +408,8 @@ ActiveRecord::Schema.define(version: 20150614055343) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
+    t.string   "country_search"
+    t.string   "destination_search"
   end
 
   add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree

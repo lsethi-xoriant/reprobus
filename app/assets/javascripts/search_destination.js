@@ -1,7 +1,9 @@
 $(document).ready(function() {
   
   initDestinationSelect2();  // intialise select drop downs
-  
+ 
+});
+
   function formatDestination (searchOb) {
     if (searchOb.loading) return searchOb.text;
     var markup = "";
@@ -44,4 +46,4 @@ $(document).ready(function() {
    });
    
   }
- });
+

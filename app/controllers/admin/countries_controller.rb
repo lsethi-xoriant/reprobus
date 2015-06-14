@@ -2,7 +2,7 @@ class Admin::CountriesController < ApplicationController
   before_filter :admin_user
   
   def index
-    @countries = Country.paginate(page: params[:page])
+    @countries = Country.all
     respond_to do |format|
       format.html
       format.csv { send_data @countries.to_csv }
