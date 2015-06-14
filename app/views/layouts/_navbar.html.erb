@@ -15,10 +15,10 @@
     <li class="li-hover">
       <div class="divider"></div>
     </li>
-    <li class="bold"><a href=<%= products_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
-    <li class="bold"><a href=<%= itinerary_templates_path %> class="waves-effect waves-cyan"><i class="mdi-action-list"></i> Itinerary Templates</a> </li>
-    
+
     <% if current_user.admin? %>
+      <li class="bold"><a href=<%= products_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
+      <li class="bold"><a href=<%= itinerary_templates_path %> class="waves-effect waves-cyan"><i class="mdi-action-list"></i> Itinerary Templates</a> </li>    
       <li class="bold"><a href=<%= setting_path(1) %> class="waves-effect waves-cyan"><i class="mdi-action-thumb-up"></i> Settings</a> </li>
       <li class="bold"><a href=<%= users_path %> class="waves-effect waves-cyan"><i class="mdi-action-face-unlock"></i> Users</a> </li>
       <li class="bold"><a href=<%= admin_path %> class="waves-effect waves-cyan"><i class="mdi-social-pages"></i> Admin</a> </li>

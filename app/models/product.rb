@@ -7,7 +7,7 @@
 #  name           :string
 #  country        :string
 #  city           :string
-#  description    :string
+#  description    :text
 #  price_single   :decimal(12, 2)
 #  price_double   :decimal(12, 2)
 #  price_tripple  :decimal(12, 2)
@@ -19,9 +19,12 @@
 #  supplier_id    :integer
 #  created_at     :datetime
 #  updated_at     :datetime
+#  image          :string
 #
 
 class Product < ActiveRecord::Base
+  mount_uploader :image, ImageUploader
+  
   validates :type,:name, presence: true
   validates :supplier_id,  presence: true
   

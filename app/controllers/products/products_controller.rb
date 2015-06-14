@@ -16,6 +16,7 @@ class Products::ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     #@product.type = params[:type]
+    @product.image = params[:image]
 
     if @product.save
       flash[:success] = "#{@product.name} created!"
@@ -42,7 +43,7 @@ class Products::ProductsController < ApplicationController
 
 private
     def product_params
-      params.require(:product).permit(:type, :name, :description, :country, :city,
+      params.require(:product).permit(:type, :name, :description, :country, :city, :image, :image_cache,
         :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :destination, :default_length,
         :supplier_id)
     end

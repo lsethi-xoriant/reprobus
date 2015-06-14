@@ -22,6 +22,7 @@
 #  updated_at            :datetime
 #  itinerary_template_id :integer
 #  enquiry_id            :integer
+#  status                :string
 #
 
 class Itinerary < ActiveRecord::Base

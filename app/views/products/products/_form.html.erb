@@ -23,23 +23,16 @@
       </div>
     </div>
     
-    <div class="row">
-      <div class="input-field col s4">
-        <%= f.label :price_single %>
-        <%= f.number_field :price_single, class: 'form-control', step: 0.01 %>
+    <div class="file-field input-field col s12">
+      <input class="file-path validate" type="text"/>
+      <div class="btn"><span>File</span>     
+       <%= f.file_field :image, class: "file-path validate" %>
+       <%= f.hidden_field :image_cache %>
       </div>
-      
-      <div class="input-field col s4">
-        <%= f.label :price_double %>
-        <%= f.number_field :price_double, class: 'form-control', step: 0.01 %>
-      </div>
-      
-      <div class="input-field col s4">
-        <%= f.label :price_tripple %>
-        <%= f.number_field :price_tripple, class: 'form-control', step: 0.01 %>
-      </div>
-    </div>
-
+    </div>    
+    
+    <%= image_tag(@product.image_url(:thumb)) if @product.image? %>
+    
     <div class="row">
       <div class="input-field col s12">
        <%= f.submit buttontxt, class: "btn" %>
