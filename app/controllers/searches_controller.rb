@@ -28,6 +28,19 @@ class SearchesController < ApplicationController
     end
   end
   
+  def country_search
+    @entities = Country.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
+  
+    resources_count = @entities.size
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count,
+                    items: @entities.map { |e| {id: e.id, text: e.name} }} }
+    end
+  end
+  
   def currency_search
     @entities = Currency.select([:id, :code,  :currency]).
                             where("code ILIKE :q OR currency ILIKE :q", q: "%#{params[:q]}%").
@@ -55,7 +68,20 @@ class SearchesController < ApplicationController
                     firstname: e.first_name, lastname: e.last_name, email: e.email, phone: e.phone }}} }
     end
   end
-        
+
+  def destination_search
+    @entities = Destination.select([:id, :name]).
+                            where("name ILIKE :q", q: "%#{params[:q]}%").
+                            order('name')
+  
+    resources_count = @entities.size
+
+    respond_to do |format|
+      format.json { render json: {total: resources_count,
+                    items: @entities.map { |e| {id: e.id, text: e.name} }} }
+    end
+  end
+  
   def product_search
     @products = Product.select([:id, :name, :country, :city, :type]).
                             where("name ILIKE :q OR country ILIKE :q OR city ILIKE :q", q: "%#{params[:q]}%").

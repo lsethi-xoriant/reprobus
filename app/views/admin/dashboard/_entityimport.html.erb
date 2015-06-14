@@ -1,23 +1,32 @@
 <% provide(:title, "Import " + entity.name.pluralize) %>
-<div class="row-fluid">
-  <div class="page-header">
-  <h1>Import <%=entity.name.pluralize%></h1>
+
+<div class="section">
   <%= render partial: 'admin/dashboard/tableheader', locals: { entity: entity, state: "import" } %>
-   
-    <br>
-    <div class="col-sm-3">
-    Import an csv file. 
+</div>
+  
+<div class="section"> 
+  <div class="row">  
+    <div class="col 12">
+    <p>Import an csv file. </p><p>File should have a header and rows for: ID (when updating existing - can be blank for new), Name </p>
     </div>
-    <br>
-    <br>
-    <%= form_tag eval("admin_#{entity.name.pluralize.downcase}_importfile_path"), multipart: true do %>
-    <div class="col-sm-3">
-    <%= file_field_tag :file, class: "form-control" %>
-    </div>
-    <div class="col-sm-1">
-    <%= submit_tag "Import", class: "btn btn-primary" %>
-    </div>
-    <% end %>
-    <br><br>
   </div>
+  
+  <%= form_tag eval("admin_#{entity.name.pluralize.downcase}_importfile_path"), multipart: true do %>
+
+  <div class="row">   
+    <div class="file-field input-field">
+      <div class="col s6 offset-s1">
+        <input class="file-path validate input-field" type="text"/>
+      </div>
+      <div class="btn"><span>Select File</span> 
+      <%= file_field_tag :file, class: "file-path validate" %>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="section">  
+  <div class="row">   
+    <%= submit_tag "Import", class: "btn-large" %>
+  </div>
+  <% end %>
 </div>

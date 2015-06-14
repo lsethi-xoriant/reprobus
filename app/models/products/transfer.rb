@@ -20,6 +20,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  image          :string
+#  country_id     :integer
+#  destination_id :integer
 #
 
 class Transfer < Product

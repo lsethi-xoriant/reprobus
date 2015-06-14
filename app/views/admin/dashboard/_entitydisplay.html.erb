@@ -1,8 +1,9 @@
-<h1><%=entity.name.pluralize%></h1>
+<div class="section">
+  <%= render partial: 'admin/dashboard/tableheader', locals: { entity: entity, state: "index" } %>
+</div>
 
-<%= render partial: 'admin/dashboard/tableheader', locals: { entity: entity, state: "index" } %>
-
-  <table class="table table-condensed table-hover ">
+<div class="section">
+  <table class="table centered bordered hoverable responsive-table">
       <thead>
         <tr>
           <th>#</th>
@@ -22,5 +23,5 @@
         <% end %> 
       </tbody>
     </table>
-
+</div>
 <%= will_paginate collect %>

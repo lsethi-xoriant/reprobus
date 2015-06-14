@@ -19,6 +19,7 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.new
     @itinerary.user = current_user
     @itinerary.status = "New Itinerary"
+    @itinerary.enquiry = @enquiry
   end
 
   def show
@@ -33,8 +34,10 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.new(itinerary_params)
 
     @itinerary.copy_template(@itinerary.itinerary_template)
-    
+     
     if @itinerary.save
+      @itinerary.enquiry.stage = "Itinerary"
+      @itinerary.enquiry.save
       flash[:success] = "Itinerary created!"
       redirect_to  edit_itinerary_path(@itinerary)
     else

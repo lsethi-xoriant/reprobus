@@ -1,0 +1,15 @@
+<div class="section">
+  <%= render partial: 'admin/dashboard/tableheader', locals: { entity: Destination, state: "new" } %>
+</div>
+<div class="section">
+  <%= form_for [:admin, @destination], :html => {:multipart => true, :class => "form-horizontal" } do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+  
+    <%= render partial: 'shared/material_textfield_cols6', locals: { field: "name", f: f } %>
+    <div class="row">
+      <div class="col-sm-6 col-md-offset-3">    
+      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

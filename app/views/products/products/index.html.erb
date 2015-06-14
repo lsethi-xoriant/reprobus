@@ -17,9 +17,6 @@
               <th>City</th>
               <th>Country</th>
               <th>Supplier Name</th>
-              <th>Price Sng</th>
-              <th>Price Dbl</th>
-              <th>Price Trp</th>
             </tr>
           </thead>
           <tbody>
@@ -29,9 +26,6 @@
               <td><%= product.city %></td>
               <td><%= product.country %></td>
               <td><%= product.supplierName %></td>
-              <td><%= number_to_currency(product.price_single, precision: 2) %></td>
-              <td><%= number_to_currency(product.price_double, precision: 2) %></td>
-              <td><%= number_to_currency(product.price_tripple, precision: 2) %></td>
             </tr>
             <% end %>
           </tbody>

@@ -43,7 +43,7 @@ gem 'mini_magick'   # changed from rmagick
 #gem 'select2-rails' #installed directly in vendor folder as wanted lastest version.
 gem 'paper_trail', '~> 4.0.0.beta'
 gem 'font-awesome-rails'
-#gem 'roo'
+gem 'roo'
 gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'xeroizer', '~> 2.15.6'

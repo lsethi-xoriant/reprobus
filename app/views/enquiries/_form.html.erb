@@ -94,18 +94,27 @@
           <%= f.label :assigned_to, "Assign To",  class: 'active' %>
         </div>
       </div>
-      
-      <div class="row">
-        <div class="input-field col s6">
-            <%= button_tag( :class => "btn cyan waves-effect waves-light right") do %>
-              <%= buttontxt %><i class="mdi-content-send right"></i>
-            <% end %>
-        </div>
+    </div>  
+    
+      <div class="input-field col s6">
+          <%= button_tag( :class => "btn cyan waves-effect waves-light right") do %>
+            <%= buttontxt %><i class="mdi-content-send right"></i>
+          <% end %>
       </div>
-    </div>
+
+   
   <% end %>
     
-    
+    <div class="input-field col s6">
+      <% if @enquiry.persisted? %>
+        <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
+          <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
+          <%= button_tag( "Create Itinerary", :class => "btn waves-effect waves-light right") %>
+        <% end %>
+      <% end %>
+    </div>
+  
+     
   <div id="cust_search_modal" class="modal">
     <div class="modal-content">
       <h4>Search for customer</h4>

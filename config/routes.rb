@@ -32,7 +32,6 @@ Reprobus::Application.routes.draw do
   resources :enquiries do
     collection do
       get 'carriersearch'  # /enquires/carriersearch
-      get 'destinationsearch'  # /enquires/destinationsearch
       get 'stopoversearch'  # /enquires/stopoversearch
       get 'addnote'  # /enquires/addnote
       post 'addbooking'  # /enquires/addbooking
@@ -78,12 +77,15 @@ Reprobus::Application.routes.draw do
   get "admin/carriers/export"
   get "admin/destinations/export"
   get "admin/stopovers/export"
+  get "admin/countries/export"
   get "admin/carriers/import"
   get "admin/destinations/import"
   get "admin/stopovers/import"
+  get "admin/countries/import"
   post "admin/carriers/importfile"
   post "admin/destinations/importfile"
   post "admin/stopovers/importfile"
+  post "admin/countries/importfile"
   
   get 'searches/product'
   get 'searches/product_search'
@@ -93,11 +95,15 @@ Reprobus::Application.routes.draw do
   get 'searches/template_search'
   get 'searches/supplier_search'
   get 'searches/customer_search'
-       
+  get 'searches/country_search'
+  get 'searches/destination_search'
+      
+      
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
     resources :carriers
     resources :destinations
+    resources :countries
     resources :stopovers
   end
 

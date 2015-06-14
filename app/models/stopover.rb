@@ -10,4 +10,5 @@
 
 class Stopover < Admin
    has_and_belongs_to_many :enquiries
+   validates :name, presence: true, length: { maximum: 255 }
 end

@@ -20,6 +20,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  image          :string
+#  country_id     :integer
+#  destination_id :integer
 #
 
 class Product < ActiveRecord::Base
@@ -32,7 +34,8 @@ class Product < ActiveRecord::Base
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos
   belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
-
+  belongs_to  :country
+  belongs_to  :destination
 
   def supplierName
     return self.supplier.supplier_name if self.supplier
@@ -41,4 +44,12 @@ class Product < ActiveRecord::Base
   def product_details
     return self.type.upcase + " | " + self.name + " | " + self.city + " | " + self.country
   end
+  
+  def country_name
+    return self.country.name if self.country
+  end
+  def destination_name
+    return self.destination.name if self.destination
+  end
+  
 end

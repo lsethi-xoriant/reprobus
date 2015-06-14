@@ -1,6 +1,4 @@
-<% provide(:title, 'All Stopovers') %>
-<div class="row-fluid">
-  <div class="page-header">
-    <%= render partial: 'admin/dashboard/entitydisplay', locals: { entity: Stopover, collect: @stopovers } %>
-  </div>
+<% provide(:title, 'Stopovers') %>
+<div class="row">
+  <%= render partial: 'admin/dashboard/entitydisplay', locals: { entity: Stopover, collect: @stopovers } %>
 </div> 

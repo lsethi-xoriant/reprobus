@@ -1,31 +1,32 @@
-<ul class="nav nav-tabs">
-  <li title="" rel="" class="icon index_collection_link <%= ' active' if state == 'index' %>">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>">
-      <i class="icon-th-list"></i>
-      <span>List</span>
-    </a>
-  </li>
+<div class="row">
+  
+  <div class="col offset-s1 s2">
+    <a href="/admin/<%=entity.name.pluralize.downcase%>" class="btn-floating waves-effect waves-light green"> 
+    <i class='mdi-action-toc'></i>
+    </a> View 
+  </div>
+   
+  <div class="col offset-s1 s2">
+    <a href="/admin/<%=entity.name.pluralize.downcase%>/new" class="btn-floating waves-effect waves-light red"> 
+     <i class='mdi-content-add'></i>
+    </a> New 
+  </div>
+  
+  <div class="col offset-s1 s2">
+    <a href="/admin/<%=entity.name.pluralize.downcase%>/export" class="btn-floating waves-effect waves-light blue"> 
+     <i class='mdi-file-file-download'></i>
+    </a> Export
+  </div>
+  
+  
+  <div class="col offset-s1 s2">
+    <a href="/admin/<%=entity.name.pluralize.downcase%>/import" class="btn-floating waves-effect waves-light blue"> 
+     <i class='mdi-file-file-upload'></i>
+    </a> Import 
+  </div>
+ 
+</div>
+<div class="section">
+  
+</div> <div class="divider"></div>
 
-  <li title="" rel="" class="icon new_collection_link <%= ' active' if state == 'new' %>">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/new">
-      <i class="icon-plus"></i>
-      <span>Add new</span>
-    </a>
-  </li>
-
-  <li title="" rel="" class="icon export_collection_link <%= ' active' if state == 'export' %>">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/export">
-      <i class="icon-share"></i>
-      <span>Export</span>
-    </a>
-  </li>
-
-  <li title="" rel="" class="icon history_index_collection_link <%= ' active' if state == 'import' %>">
-    <a class="pjax" href="/admin/<%=entity.name.pluralize.downcase%>/import">
-      <i class="icon-exchange"></i>
-      <span>Import</span>
-    </a>
-  </li>
-</ul>
-
-<br>

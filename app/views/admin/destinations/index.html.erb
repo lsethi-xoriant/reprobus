@@ -1,6 +1,4 @@
-<% provide(:title, 'All Destinations') %>
-<div class="row-fluid">
-  <div class="page-header">
-    <%= render partial: 'admin/dashboard/entitydisplay', locals: { entity: Destination, collect: @destinations } %>
-  </div>
+<% provide(:title, 'Destinations') %>
+<div class="row">
+  <%= render partial: 'admin/dashboard/entitydisplay', locals: { entity: Destination, collect: @destinations } %>
 </div> 

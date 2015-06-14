@@ -1,18 +1,21 @@
-<h1 class="page-header">Administration</h1> 
- <div class="rails_admin"> 
-<table class="table table-condensed table-striped table-hover">
+<% provide(:title, 'Administration') %>
+
+<div class="rails_admin"> 
+
+<table class="table centered bordered hoverable responsive-table">
   <thead>
     <tr>
     <th class="shrink model-name">Model name</th>
     <th class="records">Records</th>
-    <th class="shrink controls"></th>
+    <th>View</th>
+    <th>New</th>
     </tr>
   </thead>
 <tbody>
   <%= render partial: 'admin/dashboard/admintablerow', locals: { entity: Carrier } %>
   <%= render partial: 'admin/dashboard/admintablerow', locals: { entity: Destination } %>
   <%= render partial: 'admin/dashboard/admintablerow', locals: { entity: Stopover } %>
-  
+  <%= render partial: 'admin/dashboard/admintablerow', locals: { entity: Country } %>
 </tbody>
 </table>
 </div>

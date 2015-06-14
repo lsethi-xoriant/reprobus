@@ -1,10 +1,10 @@
 class Admin < ActiveRecord::Base
-  #require 'roo'
+  require 'roo'
   #require 'spreadsheet'
 
   self.abstract_class = true
   
-   def self.to_csv
+  def self.to_csv
     CSV.generate do |csv|
       csv << ["id","name",'created_at']
       all.each do |ent|
