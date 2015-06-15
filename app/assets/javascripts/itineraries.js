@@ -39,16 +39,6 @@
         hiddenSuffix: ''
       });
     });
-    
-    
-  /* on selection of product set other fields in row */
-  var $eventSelect = $(".select2-products");
-  $eventSelect.on("select2:select", function (e) {
-  var nextProdField = $(this).closest('.field').find(".product_details");
-  nextProdField.val(e.params.data.type + " | "  + e.params.data.name + " | "  + e.params.data.city + " | "  + e.params.data.country);
-  nextProdField.next().addClass('active'); // set label to be active.
-  });
-  
   });
 
 /* JS hooks to update sortable elements   */

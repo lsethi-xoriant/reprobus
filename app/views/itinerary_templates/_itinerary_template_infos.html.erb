@@ -9,7 +9,7 @@
       </div>
       
       <div class="input-field col s2">
-        <%= select_tag(:destination, options_for_select([[]],''),{class: "select2-destinations browser-default"}) %>
+        <%= select_tag(:destination, options_for_select([[f.object.get_product_destination, f.object.get_product_destination_id]],f.object.get_product_destination_id),{class: "select2-destinations browser-default"}) %>
         <label for="destination" class="active">Destination</label>
       </div>
 

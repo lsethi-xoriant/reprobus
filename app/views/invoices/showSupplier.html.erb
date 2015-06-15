@@ -7,7 +7,7 @@
       <strong>Invoice #</strong>	<%= @invoice.nice_id %><br>
       <strong>Supplier</strong>	<%= @invoice.supplier.fullname %><br>
       <strong>Booking #</strong>	<%= @booking.nice_id %><br>
-      <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
+      <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y") if @booking.enquiry.est_date %><br>
       <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
       <strong>Payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
       <strong>Currency</strong>	<%= @invoice.getCurrencyDisplay %><br>

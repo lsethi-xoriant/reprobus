@@ -4,7 +4,7 @@
     <section>
       <h1 class="page-header" ><%= "Invoice for " +  @booking.name%></h1>
        <a href=<%= booking_path @booking%>><button type="button" class="btn btn-primary">Back to Booking</button></a> <br><br>
-      <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
+      <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y") if @booking.enquiry.est_date %><br>
       <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
       <strong>Deposit due</strong>	<%= @invoice.deposit_due.strftime("%d/%m/%Y")  %><br>
       <strong>Final payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>

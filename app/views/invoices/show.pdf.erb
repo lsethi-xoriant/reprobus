@@ -3,7 +3,7 @@
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="font-family: Georgia, Times, serif"> <!-- Wrapper --> <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center"> <tr> <td width="100%" valign="top" bgcolor="#FFFCFC" style="padding-top: 20px;"> <!-- Start Header--> <table width="580" border="0" cellpadding="0" cellspacing="0" align="center" class="deviceWidth"> <tr> <td width="100%" bgcolor="#ffffff"> <!-- Nav --><!-- End Nav --> </td> </tr> </table><!-- End Header --> <!-- One Column --> <table width="720" class="deviceWidth" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eeeeed"> <tr> <td valign="top" style="padding:0" bgcolor="#ffffff"> <a href="http://eclipsetravel.com.au"><img src="http://eclipsetravel.com.au/wp-content/uploads/2014/03/email-template-header.jpg" alt="" border="0" /></a> </td> </tr> <tr> <td style="font-size: 13px; color: #4B4B4B; font-weight: normal; text-align: left; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; padding: 10px 8px 10px 8px" bgcolor="#FCFCFA">
 
-  <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
+  <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y") if @booking.enquiry.est_date %><br>
   <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
   <strong>Deposit due</strong>	<%= @invoice.deposit_due.strftime("%d/%m/%Y")  %><br>
   <strong>Final payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
