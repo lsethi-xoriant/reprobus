@@ -19,7 +19,16 @@ function formatProductSelection (product) {
   return product.text;
 }
 
+function getDestinationSearchTerm(theSelect2Element) {
+  console.log(theSelect2Element);
+  var nextProdField = $(theSelect2Element).closest('.field').find(".select2-destinations");
+  console.log(nextProdField);
+  console.log("searc tem = " + $(nextProdField).val());
+  return $(nextProdField).val();
+}
+
 function initProductSelect2() {
+  var theSelect2Element = null;
   $(".select2-products").select2({
     ajax: {
       url: "/searches/product_search",
@@ -28,7 +37,7 @@ function initProductSelect2() {
       data: function (params) {
         return {
           q: params.term, // search term
-          destination: "",
+          destination: getDestinationSearchTerm(theSelect2Element),
           page: params.page
         };
       },
@@ -46,8 +55,9 @@ function initProductSelect2() {
     minimumInputLength: 1,
     templateResult: formatProduct,
     templateSelection: formatProductSelection
-  });
-  
+  }).on('select2:open', function(e){ 
+   theSelect2Element = e.currentTarget;});
+  /*
   // reinit if destination field udpated with destination field set. i.e itinerary templage field. 
   var $eventSelect = $(".select2-destinations");
   $eventSelect.on("select2:select", function (e) {
@@ -82,5 +92,5 @@ function initProductSelect2() {
       templateResult: formatProduct,
       templateSelection: formatProductSelection
     });
-  });      
+  });    */  
 }

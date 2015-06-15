@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     if @user.save
 	    sign_in @user
       @user.send_welcome_email
-      flash[:success] = "Welcome to the Super App!"
+      flash[:success] = "Welcome to tripeze!"
       redirect_to @user
     else
       render 'new', :layout => "plain"

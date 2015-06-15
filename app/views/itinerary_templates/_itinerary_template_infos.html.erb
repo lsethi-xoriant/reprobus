@@ -14,7 +14,7 @@
       </div>
 
               
-      <div class="input-field col s2">
+      <div class="input-field col s3">
         <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
         <label for="product_id" class="active">Product</label>
       </div>
@@ -23,17 +23,17 @@
 
       <div class="input-field col s1">
           <%= f.text_field "length" %>
-          <%= f.label :length %>
+          <%= f.label :length, class: 'active' %>
       </div>
       
       <div class="input-field col s1">
           <%= f.text_field "days_from_start" %>
-          <%= f.label :days_from_start, "From start"  %>
+          <%= f.label :days_from_start, "From start", class: 'active'  %>
       </div>
    
-      <div class="input-field col s4 product_details_cont">
-        <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details active", :readonly => true  ) %>
-        <%= f.label :product_name, "Product Details" %>
+      <div class="input-field col s3 product_details_cont">
+        <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
+        <%= f.label :product_name, "Product Details", class: "active" %>
       </div>
      </div>
      

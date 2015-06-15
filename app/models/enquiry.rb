@@ -73,7 +73,7 @@ class Enquiry < ActiveRecord::Base
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
   
-  before_save  :set_lead
+  after_save  :set_lead
 
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
@@ -92,10 +92,15 @@ class Enquiry < ActiveRecord::Base
  
   def set_lead
     self.customers.each do |c|
-      self.lead_customer = c if c.lead_customer
+      self.update_column(:lead_customer_id, c.id) if c.lead_customer
     end
-    self.lead_customer = self.customers.first if !self.lead_customer
-    self.lead_customer ? self.lead_customer_name = self.lead_customer.fullname : self.lead_customer_name = ""
+    
+    if !self.lead_customer 
+      # if lead customer not set default to first customer
+      self.update_column(:lead_customer_id,self.customers.first.id) if self.customers.first
+    end
+    
+    self.lead_customer ? self.update_column(:lead_customer_name, self.lead_customer.fullname) : self.update_column(:lead_customer_name, "")
   end
   
   def created_by_name

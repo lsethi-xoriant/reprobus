@@ -4,42 +4,43 @@
 
 /* JS to initiate sortable elements   */
 
-  $(document).ready(function() {
+$(document).ready(function() {
     
-    sort_itinerary_items();  // sorts table and sets up intial pos numbers
+  sort_itinerary_items();  // sorts table and sets up intial pos numbers
+  
+  // set labels to active in these containers as we want the to look small
+  reset_material_active_labels('#itinerary_template_infos'); 
+  reset_material_active_labels('#itinerary_infos');
     
-    reset_material_active_labels('.sortable'); // resets lables to active if values present
-    
-     $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-        set_sort_positions_and_dates();   // set positions if any resort occurs.
-     });
+  $('.sortable').sortable().bind('sortupdate', function(e, ui) {
+    set_sort_positions_and_dates();   // set positions if any resort occurs.
+  });
      
-     
-           /* JS hooks to update sortable elements   */
-    $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      initProductSelect2();  // re-init product search dropdowns as new ones have been added
-      initDestinationSelect2();
-      sort_itinerary_items();
-      reset_material_active_labels('#itinerary_template_infos');
-    });
+  /* JS hooks to update sortable elements   */
+  $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+    initProductSelect2();  // re-init product search dropdowns as new ones have been added
+    initDestinationSelect2();
+    sort_itinerary_items();
+    reset_material_active_labels('#itinerary_template_infos');
+  });
+  
+  $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+    initProductSelect2();  // re-init product search dropdowns as new ones have been added
+    sort_itinerary_items();
+    reset_material_active_labels('#itinerary_infos');
     
-    $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      initProductSelect2();  // re-init product search dropdowns as new ones have been added
-      sort_itinerary_items();
-      reset_material_active_labels('#itinerary_infos');
-      
-      // redo Pikadate datepicker
-      $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 5, // Creates a dropdown of 15 years to control year
-        // HAMISH - select drop down not working very well for YEARS or MONTHS!!
-        formatSubmit: 'yyyy-mm-dd',
-        format: 'yyyy-mm-dd',
-        min: new Date(2015,6,08),
-        hiddenSuffix: ''
-      });
+    // redo Pikadate datepicker
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 5, // Creates a dropdown of 15 years to control year
+      // HAMISH - select drop down not working very well for YEARS or MONTHS!!
+      formatSubmit: 'yyyy-mm-dd',
+      format: 'yyyy-mm-dd',
+      min: new Date(2015,6,08),
+      hiddenSuffix: ''
     });
   });
+});
 
 /* JS hooks to update sortable elements   */
 
@@ -86,22 +87,18 @@
         }
         console.log('hamish start date2 after' + int + " " + start_date2);
       
-      
       });
     }
   }
     
-
  function reset_material_active_labels(container_id) {
-   //DONT NEED THIS NOW - IS ACTUALLY WORKING. KEEPING IT INCASE NEED TO USE IT AGAIN.
-   
-  // resets lables to active if values present - when adding some inputs dynamically,
-  // sometimes the materilize labels do not get set to active, and cover value
+  // resets lables to active 
+  // sometimes the materilize labels do not get set to active, plus we want them to be small on the itinerary forms
   $(container_id + " input").each(function() {
-    if ($(this).val() !== ""){
+    //if ($(this).val() !== ""){
       var fieldId = $(this).attr("id");
-     // $("label[for='"+fieldId+"']").addClass('active');
-    }
+      $("label[for='"+fieldId+"']").addClass('active');
+    //}
   });
  }
 

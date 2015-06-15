@@ -68,7 +68,7 @@ class EnquiriesController < ApplicationController
 
   def edit
     @enquiry = Enquiry.find(params[:id])
-    @customer = @enquiry.customers.first
+    @customer = @enquiry.lead_customer
   end
   
   def edit_booking
