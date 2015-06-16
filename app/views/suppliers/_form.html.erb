@@ -4,7 +4,7 @@
 
     <div class="col s2 right">
       <%= link_to "Delete", supplier_path(@customer), method: :delete,
-                                          data: { confirm: "You sure?"}, class: "btn red" %>
+                                          data: { confirm: "You sure you want to DELETE this Supplier?"}, class: "btn red" %>
     </div>
     
     <%= render 'shared/error_messages', object: f.object %>

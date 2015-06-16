@@ -68,7 +68,9 @@ class Product < ActiveRecord::Base
     header = spreadsheet.row(1)
     int = 0
     skip = 0
+    val = 0
     returnStr = ""
+    errstr = ""
     
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
@@ -80,9 +82,20 @@ class Product < ActiveRecord::Base
         next # don't update this one as existing record is for wrong type. 
       end
       
-      if ent.new_record? && find_by_name(row["Name"])
+      if ent.new_record? && find_by_name(row["Name"]) && type != "Transfer"
         skip = skip + 1 # record alread exists with these details. skip it. 
         next
+      end
+      
+      if type == "Transfer"
+        # have special condition where name, destination, and country need to match before we skip
+        obs = Transfer.where(:name => row["Name"])
+        obs.each do |o|
+          if o.country_name == row["Country"] && o.country_name == row["Destination"] 
+            skip = skip + 1 # record alread exists with these details. skip it. 
+            next            
+          end
+        end
       end
       
       ent.type = type
@@ -100,12 +113,19 @@ class Product < ActiveRecord::Base
       dest = Destination.find_by_name(str)
       ent.destination = dest
         
-      ent.save!
+      if !ent.save
+        errstr = "<br>" + "#{type}: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}" + errstr 
+        val = val + 1
+        next
+      end
       int = int + 1
-      
     end
-    returnStr = (spreadsheet.last_row - 1).to_s + " rows read. " + int.to_s + " countries created. " + skip.to_s + " records skip due to conflicts (record exists but not matched correctly)"  
-    return returnStr;
+    
+    returnStr = "<strong>#{type} Import</strong><br>" + 
+                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " created.<br>" + 
+                skip.to_s + " records skipped due to record already exists<br>" + 
+                val.to_s + " Validation errors:"
+    return returnStr + errstr;
   end   
   
 end

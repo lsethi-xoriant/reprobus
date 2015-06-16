@@ -10,14 +10,14 @@
   <% flash[:fileloadmsg] = "" %>
     
   <ul class="list-of-actions">
-      <p><strong>Files should be imported in the order listed below.</strong> This is to allow linking of data throiugh later files referencing items included in earlier loads. </p>
-      <p>Import can be an csv or xlsx file. </p>
+      <p><strong>Files should be imported in the order listed below.</strong> This is to allow linking of data through subsequent file loads.</p>
+      <p>Imports can be either an csv or xlsx file. </p>
+      <p>If a record already exists (matched by name) the import of that record will be ignored. </p>
     <li>
 	    <h4>Countries</h4> 
-        File should contain a header and rows with the following fields:
+        File should contain a header, and rows with the following fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
-            <li>- <strong>Country</strong></li>
+          <li>- <strong>Country</strong></li>
         </ul>
         <div class="section">   
             <%= form_tag('/import_countries', multipart: true) do %>
@@ -62,9 +62,6 @@
                   </div>
              <% end %>
          </div>
-         <% if @destionation_import_str %>
-           <p><strong><%= @destionation_import_str %></strong></p>
-         <% end %>         
     </li>
     <div class="divider"></div>
     <li>
@@ -99,9 +96,6 @@
                   </div>
              <% end %>
          </div>
-         <% if @supplier_import_str %>
-           <p><strong><%= @supplier_import_str.html_safe %></strong></p>
-         <% end %>          
     </li>
     <div class="divider"></div>
     <h3 class="text-center">Products</h3>

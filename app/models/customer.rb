@@ -230,13 +230,15 @@ class Customer < ActiveRecord::Base
       if !ent.save
         errstr = "<br>" + "Supplier: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}" + errstr 
         val = val + 1
+        next
       end
       int = int + 1
       
     end
+    
     returnStr = "<strong>Supplier Import</strong><br>" + 
-                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " countries created.<br>" + 
-                skip.to_s + " records skip due to conflicts (record exists but not matched through ID)<br>" + 
+                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " suppliers created.<br>" + 
+                skip.to_s + " records skipped due to record already exists<br>" + 
                 val.to_s + " Validation errors:"
     return returnStr + errstr;
   end     
