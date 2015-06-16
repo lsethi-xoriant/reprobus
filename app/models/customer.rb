@@ -61,6 +61,9 @@ class Customer < ActiveRecord::Base
   validates :after_hours_phone, length: { maximum: 255 }
   validates :num_days_payment_due, numericality: true,  allow_blank: true
   
+  validates :supplier_name, uniqueness: { case_sensitive: false },allow_blank: true
+  
+  
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
 #  has_many    :customers_enquiries
@@ -185,17 +188,12 @@ class Customer < ActiveRecord::Base
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       
-      ent = find_by_id(row["ID"]) || find_by_id(row["Id"]) || new
-      
-      if !ent.new_record? && ent.cust_sup != "Supplier"
-        skip = skip + 1
-        next # don't update this one as record could be customer or agent. 
-      end
-      
-      if ent.new_record? && (find_by_email(row["EmailAddress"]) ||  find_by_email(row["SupplierName"]))
+      if (find_by_email(row["EmailAddress"]) || find_by_supplier_name(row["SupplierName"]))
         skip = skip + 1 # trying to create a record that already exists with these details. skip it. 
         next
       end
+      
+      ent = new
       
       ent.cust_sup = "Supplier"
       str = (row["SupplierName"])

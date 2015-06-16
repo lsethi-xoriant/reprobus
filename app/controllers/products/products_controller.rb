@@ -5,7 +5,8 @@ class Products::ProductsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @products = Product.where(type: params[:type])
+    @products = Product.includes(:supplier).where(type: params[:type])
+    
   end
   
   def new

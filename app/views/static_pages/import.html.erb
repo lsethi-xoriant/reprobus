@@ -66,6 +66,7 @@
     <div class="divider"></div>
     <li>
 	    <h4>Suppliers</h4> 
+	      Note: Record will be ignored if it contains the same email or name as an existing Supplier. 
         File should contain a header with optional rows of the following fields:
         <ul>
             <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
@@ -102,6 +103,7 @@
     <div class="divider"></div>
     <li>
 	    <h4>Transfers</h4> 
+	      Note:  Imported records will only be ignored if there is an existing match present on Name, Destination & Country (as opposed to just name as with other products)  
         File should contain a header and rows with the following optional fields:
         <ul>
             <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>

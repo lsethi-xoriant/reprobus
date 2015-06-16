@@ -74,30 +74,32 @@ class Product < ActiveRecord::Base
     
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
+
       
-      ent = find_by_id(row["ID"]) || find_by_id(row["Id"]) || new
-      
-      if !ent.new_record? && ent.type != type
-        skip = skip + 1
-        next # don't update this one as existing record is for wrong type. 
-      end
-      
-      if ent.new_record? && find_by_name(row["Name"]) && type != "Transfer"
+      if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"]) 
         skip = skip + 1 # record alread exists with these details. skip it. 
         next
       end
       
+      count = Country.find_by_name(row["Country"])
+      dest = Destination.find_by_name(row["Destination"])
+      supp = Customer.find_by_supplier_name(row["Supplier"])
+          
       if type == "Transfer"
-        # have special condition where name, destination, and country need to match before we skip
-        obs = Transfer.where(:name => row["Name"])
-        obs.each do |o|
-          if o.country_name == row["Country"] && o.country_name == row["Destination"] 
+        # have special condition where only skip if name, destination, and country match (lost with same name)
+        doSkip = false
+        
+        Transfer.where(name: row["Name"]).each do |o|
+          if (o.country == count) && (o.destination == dest) && (o.supplier == supp) 
             skip = skip + 1 # record alread exists with these details. skip it. 
-            next            
+            doSkip = true
+            break            
           end
         end
+        next if doSkip
       end
       
+      ent = new
       ent.type = type
       str = (row["Name"])
       ent.name = str
@@ -114,7 +116,7 @@ class Product < ActiveRecord::Base
       ent.destination = dest
         
       if !ent.save
-        errstr = "<br>" + "#{type}: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}" + errstr 
+        errstr = "<br>" + "#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}" + errstr 
         val = val + 1
         next
       end
