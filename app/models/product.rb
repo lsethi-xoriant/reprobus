@@ -60,6 +60,7 @@ class Product < ActiveRecord::Base
     return self.destination.name if self.destination
   end
   
+  
   def self.import(file, type)
     require 'roo'
     
@@ -67,6 +68,8 @@ class Product < ActiveRecord::Base
     header = spreadsheet.row(1)
     int = 0
     skip = 0
+    returnStr = ""
+    
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       

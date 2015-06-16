@@ -28,4 +28,8 @@ class SuppliersController < CustomersController
   def update
     super
   end
+  
+  def destroy
+    super
+  end  
 end

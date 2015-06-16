@@ -80,9 +80,16 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    Customer.find(params[:id]).destroy
-    flash[:success] = "Customer deleted."
-    redirect_to customers_url
+    @customer = Customer.find(params[:id]).destroy
+    flash[:success] = "#{@customer.cust_sup} deleted."
+    
+    if @customer.isSupplier?
+      redirect_to suppliers_url
+    elsif @customer.isAgent?
+     redirect_to agents_url
+    else
+      redirect_to customers_url
+    end    
   end
   
 private

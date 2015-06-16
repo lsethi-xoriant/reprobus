@@ -178,6 +178,10 @@ class Customer < ActiveRecord::Base
     header = spreadsheet.row(1)
     int = 0
     skip = 0
+    val = 0
+    errstr = ""
+    returnStr = ""
+    
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       
@@ -189,7 +193,7 @@ class Customer < ActiveRecord::Base
       end
       
       if ent.new_record? && (find_by_email(row["EmailAddress"]) ||  find_by_email(row["SupplierName"]))
-        skip = skip + 1 # record alread exists with these details. skip it. 
+        skip = skip + 1 # trying to create a record that already exists with these details. skip it. 
         next
       end
       
@@ -223,11 +227,17 @@ class Customer < ActiveRecord::Base
       str = (row["Currency"])
       curr = Currency.find_by_code(str)
       ent.currency = curr             
-      ent.save!
+      if !ent.save
+        errstr = "<br>" + "Supplier: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}" + errstr 
+        val = val + 1
+      end
       int = int + 1
       
     end
-    returnStr = (spreadsheet.last_row - 1).to_s + " rows read. " + int.to_s + " countries created. " + skip.to_s + " records skip due to conflicts (record exists but not matched correctly)"  
-    return returnStr;
+    returnStr = "<strong>Supplier Import</strong><br>" + 
+                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " countries created.<br>" + 
+                skip.to_s + " records skip due to conflicts (record exists but not matched through ID)<br>" + 
+                val.to_s + " Validation errors:"
+    return returnStr + errstr;
   end     
 end

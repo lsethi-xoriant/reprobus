@@ -1,6 +1,14 @@
 <% provide(:title, 'Import') %>
 
 <div class="section">
+  <% flash.each do |name, msg| %>
+    <%  if name == "fileloadmsg" %>
+      <%= content_tag :div, msg.html_safe, class: "card-panel blue lighten-3" %>
+    <% end %>
+  <% end %>
+  <% flash.discard(:fileloadmsg) %>
+  <% flash[:fileloadmsg] = "" %>
+    
   <ul class="list-of-actions">
       <p><strong>Files should be imported in the order listed below.</strong> This is to allow linking of data throiugh later files referencing items included in earlier loads. </p>
       <p>Import can be an csv or xlsx file. </p>
@@ -92,7 +100,7 @@
              <% end %>
          </div>
          <% if @supplier_import_str %>
-           <p><strong><%= @supplier_import_str %></strong></p>
+           <p><strong><%= @supplier_import_str.html_safe %></strong></p>
          <% end %>          
     </li>
     <div class="divider"></div>

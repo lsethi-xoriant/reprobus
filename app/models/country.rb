@@ -19,6 +19,8 @@ class Country < Admin
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     int = 0
+    returnStr = ""
+    
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       ent = find_by_id(row["ID"]) || new

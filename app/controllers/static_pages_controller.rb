@@ -55,6 +55,9 @@ class StaticPagesController < ApplicationController
     if !params[:file].nil? then 
       @country_import_str = Country.import(params[:file])
       flash[:success] = "Countries imported!"
+      if @country_import_str
+        flash[:fileloadmsg] = @country_import_str
+      end        
       redirect_to import_path
     else
       flash[:warning] = "No File!"
@@ -66,6 +69,9 @@ class StaticPagesController < ApplicationController
     if !params[:file].nil? then 
       @destionation_import_str = Destination.import(params[:file])
       flash[:success] = "Destinations imported!"
+      if @destionation_import_str
+        flash[:fileloadmsg] = @destionation_import_str
+      end        
       redirect_to import_path
     else
       flash[:warning] = "No File!"
@@ -77,6 +83,9 @@ class StaticPagesController < ApplicationController
     if !params[:file].nil? then 
       @supplier_import_str = Customer.importSupplier(params[:file])
       flash[:success] = "Suppliers imported!"
+      if @supplier_import_str
+        flash[:fileloadmsg] = @supplier_import_str
+      end      
       redirect_to import_path
     else
       flash[:warning] = "No File!"
@@ -87,8 +96,11 @@ class StaticPagesController < ApplicationController
 
   def import_products
     if !params[:file].nil? then 
-      @supplier_import_str = Product.import(params[:file],params[:type])
+      @product_import_str = Product.import(params[:file],params[:type])
       flash[:success] = params[:type].pluralize(2) + " imported!"
+      if @product_import_str
+        flash[:fileloadmsg] = @product_import_str
+      end
       redirect_to import_path
     else
       flash[:warning] = "No File!"
