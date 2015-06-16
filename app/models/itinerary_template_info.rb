@@ -15,7 +15,7 @@
 class ItineraryTemplateInfo < ActiveRecord::Base
   validates :product_id, presence: true
   validates :length, presence: true
-  validates :days_from_start, presence: true
+  #validates :days_from_start, presence: true
     
   belongs_to  :itinerary_template
   belongs_to  :product

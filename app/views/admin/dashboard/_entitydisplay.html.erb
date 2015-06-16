@@ -9,6 +9,9 @@
         <tr>
           <th>#</th>
           <th>Edit</th>
+          <% if entity == Destination %>
+            <th>Country</th>
+          <% end %>          
           <th>Delete</th>
         </tr>
       </thead>
@@ -18,6 +21,11 @@
           <td><%= ob.id %></td>
   
           <td><%= link_to ob.name, "#{entity.name.pluralize.downcase}/#{ob.id}/edit" %></td> 
+          
+          <% if entity == Destination %>
+            <td><%= ob.country_name %></td>
+          <% end %>
+          
           <td><%= link_to "Delete", "#{entity.name.pluralize.downcase}/#{ob.id}", method: :delete,
                                           data: { confirm: "You sure?" } %></td> 
         </tr>

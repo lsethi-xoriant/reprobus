@@ -1,0 +1,234 @@
+<% provide(:title, 'Import') %>
+
+<div class="section">
+  <ul class="list-of-actions">
+      <p><strong>Files should be imported in the order listed below.</strong> This is to allow linking of data throiugh later files referencing items included in earlier loads. </p>
+      <p>Import can be an csv or xlsx file. </p>
+    <li>
+	    <h4>Countries</h4> 
+        File should contain a header and rows with the following fields:
+        <ul>
+            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+            <li>- <strong>Country</strong></li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_countries', multipart: true) do %>
+              <%= submit_tag "Import Countries", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+         <% if @country_import_str %>
+           <p><strong><%= @country_import_str %></strong></p>
+         <% end %>
+    </li>
+    <div class="divider"></div>
+    <li>
+	    <h4>Destinations</h4> 
+        File should contain a header and rows with the following fields:
+        <ul>
+            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+            <li>- <strong>Destination</strong></li>
+            <li>- <strong>Country</strong> (Must already exist in application. Will be linked on Country name) </li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_destinations', multipart: true) do %>
+              <%= submit_tag "Import Destinations", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+         <% if @destionation_import_str %>
+           <p><strong><%= @destionation_import_str %></strong></p>
+         <% end %>         
+    </li>
+    <div class="divider"></div>
+    <li>
+	    <h4>Suppliers</h4> 
+        File should contain a header with optional rows of the following fields:
+        <ul>
+            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+            <li>- <strong>SupplierName</strong> (mandatory)</li>
+            <li>- <strong>AddressLine1</strong></li>
+            <li>- <strong>AddressLine2</strong></li>
+            <li>- <strong>Suburb</strong></li>
+            <li>- <strong>Country</strong></li>
+            <li>- <strong>Postcode</strong></li>
+            <li>- <strong>ContactName</strong></li>
+            <li>- <strong>PhoneNo</strong></li>
+            <li>- <strong>EmergencyPh</strong></li>
+            <li>- <strong>EmailAddress</strong></li>
+            <li>- <strong>Currency</strong> (ISO three letter currency code) </li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_suppliers', multipart: true) do %>
+              <%= submit_tag "Import Suppliers", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+         <% if @supplier_import_str %>
+           <p><strong><%= @supplier_import_str %></strong></p>
+         <% end %>          
+    </li>
+    <div class="divider"></div>
+    <h3 class="text-center">Products</h3>
+    <div class="divider"></div>
+    <li>
+	    <h4>Transfers</h4> 
+        File should contain a header and rows with the following optional fields:
+        <ul>
+            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+            <li>- <strong>Name</strong></li>
+            <li>- <strong>Description</strong></li>
+            <li>- <strong>Destination</strong> (Should match to existing Destination name )</li>
+            <li>- <strong>Country</strong> (Should match to existing Country name )</li>    
+            <li>- <strong>Supplier</strong> (Should match to existing Supplier name)</li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_products', multipart: true) do %>
+              <%= hidden_field_tag :type, '', value: "Transfer" %>
+              <%= submit_tag "Import Transfers", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+    </li>
+    <div class="divider"></div>
+    <li>
+	    <h4>Flights</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+            <li>- ID (if updating existing records - can be left blank for new records)</li>
+            <li>- Country</li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_products', multipart: true) do %>
+              <%= hidden_field_tag :type, '', value: "Flight" %>
+            
+              <%= submit_tag "Import Flights", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+    </li>
+    <div class="divider"></div>
+        <li>
+	    <h4>Tours</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+            <li>- ID (if updating existing records - can be left blank for new records)</li>
+            <li>- Country</li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_tours', multipart: true) do %>
+              <%= hidden_field_tag :type, '', value: "Tour" %>
+              <%= submit_tag "Import Tours", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+    </li>
+    <div class="divider"></div>
+        <li>
+	    <h4>Hotels</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+            <li>- ID (if updating existing records - can be left blank for new records)</li>
+            <li>- Country</li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_products', multipart: true) do %>
+            <%= hidden_field_tag :type, '', value: "Hotel" %>
+        
+              <%= submit_tag "Import Hotels", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+    </li>
+    <div class="divider"></div>
+        <li>
+	    <h4>Cruises</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+            <li>- ID (if updating existing records - can be left blank for new records)</li>
+            <li>- Country</li>
+        </ul>
+        <div class="section">   
+            <%= form_tag('/import_products', multipart: true) do %>
+            <%= hidden_field_tag :type, '', value: "Cruise" %>
+            
+              <%= submit_tag "Import Cruises", class: "btn-large right" %>
+                  <div class="row">   
+                    <div class="file-field input-field">
+                      <div class="col s6 offset-s1">
+                        <input class="file-path validate input-field" type="text"/>
+                      </div>
+                      <div class="waves-effect waves-light btn"><span>Select File</span> 
+                      <%= file_field_tag :file, class: "file-path validate" %>
+                      </div>
+                    </div>
+                  </div>
+             <% end %>
+         </div>
+    </li>
+    <div class="divider"></div>
+  </ul>
+</div>

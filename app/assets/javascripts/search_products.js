@@ -20,10 +20,7 @@ function formatProductSelection (product) {
 }
 
 function getDestinationSearchTerm(theSelect2Element) {
-  console.log(theSelect2Element);
   var nextProdField = $(theSelect2Element).closest('.field').find(".select2-destinations");
-  console.log(nextProdField);
-  console.log("searc tem = " + $(nextProdField).val());
   return $(nextProdField).val();
 }
 

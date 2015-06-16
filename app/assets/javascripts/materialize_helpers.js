@@ -83,17 +83,7 @@ $(function() {
   $('.sidebar-collapse').sideNav({
     //edge: 'left', // Choose the horizontal origin
   });
-
-  // Pikadate datepicker
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 5, // Creates a dropdown of 15 years to control year
-    // HAMISH - select drop down not working very well for YEARS or MONTHS!!
-    formatSubmit: 'yyyy-mm-dd',
-    format: 'yyyy-mm-dd',
-    min: new Date(),
-    hiddenSuffix: ''
-  });
+  
 
 // select dropdowns
   $('select').not('.disabled').material_select();

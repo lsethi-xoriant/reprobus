@@ -8,24 +8,34 @@
         <h6 class="grey-text valign iti_postion_number"></h6>
       </div>
       
-      <div class="input-field col s2">
-      <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
+      <div class="input-field col s1">
+        <%= select_tag(:destination, options_for_select([[f.object.get_product_destination, f.object.get_product_destination_id]],f.object.get_product_destination_id),{class: "select2-destinations browser-default"}) %>
+        <label for="destination" class="active">Destination</label>
+      </div>
+      
+      <div class="input-field col s3">
+        <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
       </div>
       
       <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
 
-      <div class="input-field col s2">
-          <%= f.date_field :start_date, class:"datepicker start", :"data-value" =>  (f.object.start_date.strftime("%Y/%m/%d") unless f.object.start_date.nil?) %>
+      <div class="input-field col s1">
+          <%= f.date_field :start_date, class:"datepicker start", :"data-value" =>  f.object.start_date %>
           <%= f.label :start_date, class: 'active' %>
       </div>
 
-      <div class="input-field col s2">
-          <%= f.date_field :end_date, class:"datepicker", :"data-value" =>  (f.object.end_date.strftime("%Y/%m/%d") unless f.object.end_date.nil?), :readonly => true %>
+      <div class="input-field col s1">
+          <%= f.text_field :length, class: "length-field" %>
+          <%= f.label :length, class: 'active' %>
+      </div>
+      
+      <div class="input-field col s1">
+          <%= f.date_field :end_date, class:"end-date_field", :"data-value" =>  f.object.end_date, readonly: true %>
           <%= f.label :end_date, class: 'active' %>
       </div>
       
-      <div class="input-field col s4 product_details_cont">
-        <%= text_field_tag(:product_details, f.object.get_product_details, class: "product_details active", :readonly => true  ) %>
+      <div class="input-field col s3 product_details_cont">
+        <%= text_field_tag(:product_details, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
         <%= f.label :product_details, "Product Details" %>
       </div>
      </div>

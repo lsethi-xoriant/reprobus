@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614094821) do
+ActiveRecord::Schema.define(version: 20150615182656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20150614094821) do
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "street1",          limit: 255
-    t.string   "street2",          limit: 255
+    t.text     "street1"
+    t.text     "street2"
     t.string   "city",             limit: 64
     t.string   "state",            limit: 64
     t.string   "zipcode",          limit: 16
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20150614094821) do
     t.string   "source",               limit: 32
     t.string   "email",                limit: 64
     t.string   "alt_email",            limit: 64
-    t.string   "phone",                limit: 32
+    t.string   "phone",                limit: 255
     t.string   "mobile",               limit: 32
     t.string   "fax",                  limit: 32
     t.string   "blog",                 limit: 128
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20150614094821) do
     t.string   "supplier_name",        limit: 255
     t.integer  "currency_id"
     t.integer  "num_days_payment_due"
-    t.string   "after_hours_phone",    limit: 32
+    t.string   "after_hours_phone",    limit: 255
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20150614094821) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "country_id"
   end
 
   create_table "destinations_enquiries", id: false, force: :cascade do |t|

@@ -47,8 +47,8 @@
       </div>
 
       <div class="row">
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "est_date", f: f, name: "Departure Date", value: (@enquiry.est_date.strftime("%Y/%m/%d") unless @enquiry.est_date.nil?) } %>
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "fin_date", f: f, name: "Return Date", value: (@enquiry.fin_date.strftime("%Y/%m/%d") unless @enquiry.fin_date.nil?) } %>
+        <%= render partial: 'shared/material_date_cols6', locals: { field: "est_date", f: f, name: "Departure Date", value: @enquiry.est_date } %>
+        <%= render partial: 'shared/material_date_cols6', locals: { field: "fin_date", f: f, name: "Return Date", value: @enquiry.fin_date } %>
       </div>
       
       <div class="row">

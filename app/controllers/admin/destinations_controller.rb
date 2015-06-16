@@ -2,7 +2,7 @@ class Admin::DestinationsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @destinations = Destination.all
+    @destinations = Destination.includes(:country).all
     respond_to do |format|
       format.html
       format.csv { send_data @destinations.to_csv }
@@ -69,7 +69,7 @@ class Admin::DestinationsController < ApplicationController
   
 private
     def destination_params
-      params.require(:destination).permit(:name)
+      params.require(:destination).permit(:name, :country_id)
     end  
   
 end

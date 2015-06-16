@@ -46,19 +46,19 @@ class Customer < ActiveRecord::Base
   attr_accessor :lead_customer
   
   validates :first_name, presence: true, length: { maximum: 64 }
-  validates :last_name, presence: true, length: { maximum: 64 }
+  validates :last_name, length: { maximum: 64 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence:   true,
-                    format:     { with: VALID_EMAIL_REGEX },
+  validates :email, presence:   false,
+                    format:     { with: VALID_EMAIL_REGEX }, :allow_blank => true,
                     uniqueness: { case_sensitive: false }
   VALID_EMAIL_REGEX_INCL_BLANK = /\A^$|[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :alt_email, presense: false,
                     format:     { with: VALID_EMAIL_REGEX_INCL_BLANK }, :allow_blank => true,
                     uniqueness: { case_sensitive: false }
-  validates :phone,  length: { maximum: 32 }
+  validates :phone,  length: { maximum: 255 }
   validates :mobile, length: { maximum: 32 }
   validates :fax, length: { maximum: 32 }
-  validates :after_hours_phone, length: { maximum: 32 }
+  validates :after_hours_phone, length: { maximum: 255 }
   validates :num_days_payment_due, numericality: true,  allow_blank: true
   
   belongs_to  :user
@@ -169,5 +169,65 @@ class Customer < ActiveRecord::Base
       return self.currency.displayName if self.currency
     end
   end
-  
+ 
+ 
+  def self.importSupplier(file)
+    require 'roo'
+    
+    spreadsheet = Admin.open_spreadsheet(file)
+    header = spreadsheet.row(1)
+    int = 0
+    skip = 0
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      
+      ent = find_by_id(row["ID"]) || find_by_id(row["Id"]) || new
+      
+      if !ent.new_record? && ent.cust_sup != "Supplier"
+        skip = skip + 1
+        next # don't update this one as record could be customer or agent. 
+      end
+      
+      if ent.new_record? && (find_by_email(row["EmailAddress"]) ||  find_by_email(row["SupplierName"]))
+        skip = skip + 1 # record alread exists with these details. skip it. 
+        next
+      end
+      
+      ent.cust_sup = "Supplier"
+      str = (row["SupplierName"])
+      ent.supplier_name = str
+      
+      if ent.new_record? || ent.address.nil?
+        ent.build_address
+      end
+      
+      str = (row["AddressLine1"])
+      ent.address.street1 = str
+      str = (row["AddressLine2"])
+      ent.address.street2 = str
+      str = (row["Suburb"])
+      ent.address.city = str
+      str = (row["Country"])
+      ent.address.country = str      
+      str = (row["Postcode"])
+      ent.address.zipcode = str
+      str = (row["ContactName"])
+      str ||= ent.supplier_name
+      ent.first_name = str      
+      str = (row["PhoneNo"])
+      ent.phone = str      
+      str = (row["EmergencyPh"])
+      ent.after_hours_phone = str  
+      str = (row["EmailAddress"])
+      ent.email = str  
+      str = (row["Currency"])
+      curr = Currency.find_by_code(str)
+      ent.currency = curr             
+      ent.save!
+      int = int + 1
+      
+    end
+    returnStr = (spreadsheet.last_row - 1).to_s + " rows read. " + int.to_s + " countries created. " + skip.to_s + " records skip due to conflicts (record exists but not matched correctly)"  
+    return returnStr;
+  end     
 end

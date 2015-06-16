@@ -28,14 +28,14 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <%= f.text_area :description, class: "materialize-textarea", length: "120" %>
+        <%= f.text_area :description, class: "materialize-textarea" %>
         <%= f.label :description %>
       </div>
     </div>
     
     <div class="file-field input-field col s12">
       <input class="file-path validate" type="text"/>
-      <div class="btn"><span>File</span>     
+      <div class="btn"><span>Image</span>     
        <%= f.file_field :image, class: "file-path validate" %>
        <%= f.hidden_field :image_cache %>
       </div>

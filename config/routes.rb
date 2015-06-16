@@ -69,9 +69,16 @@ Reprobus::Application.routes.draw do
   match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'
   match '/snapshot',   to: 'static_pages#snapshot' ,   via: 'get'
   match '/dashboard_list',   to: 'static_pages#dashboard_list' ,   via: 'get'
+  match '/import',   to: 'static_pages#import' ,   via: 'get'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+  
+  match '/import_products',   to: 'static_pages#import_products' ,   via: 'post'
+  match '/import_countries',   to: 'static_pages#import_countries' ,   via: 'post'  
+  match '/import_destinations',   to: 'static_pages#import_destinations' ,   via: 'post'
+  match '/import_suppliers',   to: 'static_pages#import_suppliers' ,   via: 'post'
+
   
   
   get "admin/carriers/export"

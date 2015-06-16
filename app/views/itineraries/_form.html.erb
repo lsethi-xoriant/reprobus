@@ -6,6 +6,7 @@
 	  <%= f.hidden_field :user_id %>
 	  <%= f.hidden_field :status %>
 	  <%= f.hidden_field :enquiry_id %>
+	  <%= f.hidden_field :status %>
 
     <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
     <div class="row">
@@ -13,7 +14,7 @@
       <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
     </div>
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
-    <div class="row"><%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %></div>
+    <div class="row"><%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %></div>
     
     
     

@@ -45,6 +45,10 @@ class ItineraryInfo < ActiveRecord::Base
   end
   
   def get_product_destination_id
-    return self.product.destination_id if self.product.destination
-  end  
+    return self.product.destination_id if self.product
+  end 
+  
+  def get_product_destination
+    return self.product.destination.name if self.product && self.product.destination 
+  end    
 end

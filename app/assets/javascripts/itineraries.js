@@ -26,19 +26,30 @@ $(document).ready(function() {
   
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
     initProductSelect2();  // re-init product search dropdowns as new ones have been added
+    initDestinationSelect2();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_infos');
     
+
     // redo Pikadate datepicker
-    $('.datepicker').pickadate({
+    $('.datepicker .start').pickadate({
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 5, // Creates a dropdown of 15 years to control year
       // HAMISH - select drop down not working very well for YEARS or MONTHS!!
       formatSubmit: 'yyyy-mm-dd',
       format: 'yyyy-mm-dd',
-      min: new Date(2015,6,08),
+      min: new Date(),
       hiddenSuffix: ''
     });
+  });
+  
+  $('#itinerary_start_date').on('change', function(e, insertedItem) { 
+    set_sort_positions_and_dates();
+  });
+  
+  
+  $('.length-field').on('change', function(e, insertedItem) { 
+    set_sort_positions_and_dates();
   });
 });
 
@@ -64,29 +75,45 @@ $(document).ready(function() {
     
     // if on itinerary page, need to recalc dates.
     if ($('#itinerary_start_date').length) {
-  //console.log('hamish  ' + $('#itinerary_start_date').val());
+
       var start_$input = $('#itinerary_start_date').pickadate(),
            start_picker = start_$input.pickadate('picker');
+           
+      var dateStr = start_picker.get();
       
-      var start_date = new Date(start_picker.get());
-      var currdate = new Date();
+      var yearStr = parseInt(dateStr.substring(0,4));
+      var monStr = parseInt(dateStr.substring(5,7));
+      var dayStr = parseInt(dateStr.substring(8,10));
+      monStr = monStr-1;  // minus one as months are 0-11
+//console.log('hamish get date  '  + " " + start_picker.get());
+  
+      
+      var current_date = new Date(yearStr,monStr,dayStr);
       var int = 0;
-  //console.log('hamish2  ' + start_date);
-      
+
       $('#itinerary_infos').find('.datepicker').each(function(i){
-        int ++;
-        var initdate = new Date( $(this).val());
-      
-        console.log('HAMISH ');
-        console.log('hamish initdate  ' + int + " " + initdate);
-        console.log('hamish start_date  ' + int + " " + start_date);
-        console.log('hamish  dif ' + int + " " + (initdate - start_date));
+
+//int ++;
+//console.log('hamish current_date in loop  ' + int + " " + current_date);
         
-        if ( (initdate- start_date) > 0) {
-          var start_date2 = new Date((start_date + (initdate - start_date)));
+        var picker = $(this).pickadate().pickadate('picker');
+        picker.set('select', current_date);
+        
+        var num_days = $(this).closest(".field").find(".length-field").val();
+        if (num_days > 0){
+          
+//   console.log('hamish num days  ' + int + " " + num_days);
+          
+          current_date.setDate(current_date.getDate() + parseInt(num_days));
         }
-        console.log('hamish start date2 after' + int + " " + start_date2);
-      
+        
+//   console.log('hamish  new current date ' + int + " " + current_date);
+        
+        var formatEndDateStr  = current_date.yyyymmdd();
+        
+//  console.log('hamish  formatEndDateStr date ' + int + " " + formatEndDateStr);      
+        $(this).closest(".field").find(".end-date_field").val(formatEndDateStr);
+        
       });
     }
   }
@@ -103,3 +130,13 @@ $(document).ready(function() {
  }
 
 /*JS to hook into Products seach drop down */
+
+Date.prototype.yyyymmdd = function() {         
+                              
+      var yyyy = this.getFullYear().toString();                                    
+      var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+      var dd  = this.getDate().toString();             
+                          
+      return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+ }; 
+   

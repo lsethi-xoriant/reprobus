@@ -1,7 +1,17 @@
 @import "materialize/components/color";
 /* override colors after import above .. */
 
+
+
 @import "materialize";
+
+.end-date_field{
+  width: 150%!important;
+}
+
+.row .field .col {
+  padding: 0 0.25rem;
+}
 
 
 .select2-selection {
@@ -617,7 +627,7 @@ nav.top-nav a.page-title {
   display: inline-block;
 }
 .breadcrumb a {
-  color: #009688;
+  color: #0288d1;
 }
 .breadcrumb .active {
   font-weight: normal;

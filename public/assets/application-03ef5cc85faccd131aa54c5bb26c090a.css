@@ -18392,11 +18392,11 @@ table.dataTable td {
 
 /* line 334, /home/hamishgardiner/.rvm/gems/ruby-2.0.0-p643/gems/jquery-datatables-rails-3.3.0/app/assets/stylesheets/dataTables/jquery.dataTables.scss */
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
+  float: left;
+width: 30px;
+height: 30px;
+margin: 0 10px;
+border-radius: 2px;
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;

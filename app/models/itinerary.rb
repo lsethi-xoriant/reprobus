@@ -73,7 +73,8 @@ class Itinerary < ActiveRecord::Base
                             room_type: i.product.room_type,
                             position: i.position,
                             supplier_id:  i.product.supplier.id,
-                            product_id: i.product_id)
+                            product_id: i.product_id,
+                            length: i.product.length)
                             
       info.supplier_id = i.product.supplier.id if i.product.supplier
       startleg = endleg

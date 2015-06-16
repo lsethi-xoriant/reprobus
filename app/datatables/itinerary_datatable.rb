@@ -37,6 +37,7 @@ class ItineraryDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     # insert query here
     Itinerary.joins(:enquiry, :user).all
+    #Itinerary.all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
