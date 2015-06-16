@@ -86,17 +86,11 @@ class Product < ActiveRecord::Base
       supp = Customer.find_by_supplier_name(row["Supplier"])
           
       if type == "Transfer"
-        # have special condition where only skip if name, destination, and country match (lost with same name)
-        doSkip = false
-        
-        Transfer.where(name: row["Name"]).each do |o|
-          if (o.country == count) && (o.destination == dest) && (o.supplier == supp) 
-            skip = skip + 1 # record alread exists with these details. skip it. 
-            doSkip = true
-            break            
-          end
+        # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
+        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]) 
+          skip = skip + 1 # record alread exists with these details. skip it. 
+          next
         end
-        next if doSkip
       end
       
       ent = new
@@ -105,14 +99,9 @@ class Product < ActiveRecord::Base
       ent.name = str
       str = (row["Description"])
       ent.description = str
-      str = (row["Supplier"])
-      supp = Customer.find_by_supplier_name(str)
+
       ent.supplier = supp
-      str = (row["Country"])
-      count = Country.find_by_name(str)
       ent.country = count
-      str = (row["Destination"])
-      dest = Destination.find_by_name(str)
       ent.destination = dest
         
       if !ent.save
