@@ -1,11 +1,12 @@
 <div class="row">
   <%= form_for @customer, :url => {:controller => "suppliers", :action => action}, :html => {:multipart => true, :class => "col s12"} do |f| %>
   
-
-    <div class="col s2 right">
-      <%= link_to "Delete", supplier_path(@customer), method: :delete,
-                                          data: { confirm: "You sure you want to DELETE this Supplier?"}, class: "btn red" %>
-    </div>
+    <% if !@customer.new_record? %>
+      <div class="col s2 right">
+        <%= link_to "Delete", supplier_path(@customer), method: :delete,
+                                            data: { confirm: "You sure you want to DELETE this Supplier?"}, class: "btn red" %>
+      </div>
+    <% end %>
     
     <%= render 'shared/error_messages', object: f.object %>
     <%= f.hidden_field :cust_sup, :value => "Supplier" %>

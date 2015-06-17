@@ -1,6 +1,13 @@
 
 <div class="section">
   <div class="card-panel">
+    <% if !@product.new_record? %>
+      <div class="col s2 right">
+        <%= link_to "Delete", get_show_path(@product), method: :delete,
+                                            data: { confirm: "You sure you want to DELETE this #{@product.type}?"}, class: "btn red" %>
+      </div>
+    <% end %>
+    
   <%= form_for @product.becomes(Product), :url => formpath, :html => {:multipart => true, :class => "col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <%= f.hidden_field :type, :value => f.object.type  %>

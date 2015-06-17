@@ -41,6 +41,13 @@ class Products::ProductsController < ApplicationController
       render 'edit'
     end
   end
+  
+  def destroy
+    @product = Product.find(params[:id]).destroy
+    flash[:success] = "#{@product.type} deleted."
+    redirect_to product_index_path @product
+  end
+  
 
 private
     def product_params

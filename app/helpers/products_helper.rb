@@ -12,6 +12,20 @@ module ProductsHelper
       return edit_products_hotel_path(product)
     end
   end
+
+  def get_show_path(product)
+    if product.type == 'Transfer'
+      return products_transfer_path(product)
+    elsif product.type == 'Tour'
+      return products_tour_path(product)
+    elsif product.type == 'Flight'
+      return products_flight_path(product)
+    elsif product.type == 'Cruise'
+      return products_cruise_path(product)
+    elsif product.type == 'Hotel'
+      return products_hotel_path(product)
+    end
+  end
   
   def product_index_path(product)
     if product.type == 'Transfer'

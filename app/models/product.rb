@@ -87,7 +87,7 @@ class Product < ActiveRecord::Base
           
       if type == "Transfer"
         # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
-        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]) 
+        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0 
           skip = skip + 1 # record alread exists with these details. skip it. 
           next
         end

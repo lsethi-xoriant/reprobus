@@ -46,6 +46,9 @@ class StaticPagesController < ApplicationController
                     searchSet: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}"} }} }
     end
   end
+
+  def noaccess
+  end
   
   def import
     render :layout => "application"
@@ -63,6 +66,7 @@ class StaticPagesController < ApplicationController
       flash[:warning] = "No File!"
       redirect_to import_path
     end
+    cleanTempFile
   end
   
   def import_destinations
@@ -77,6 +81,7 @@ class StaticPagesController < ApplicationController
       flash[:warning] = "No File!"
       redirect_to import_path
     end
+    cleanTempFile
   end  
 
   def import_suppliers
@@ -91,6 +96,7 @@ class StaticPagesController < ApplicationController
       flash[:warning] = "No File!"
       redirect_to import_path
     end
+    cleanTempFile
   end  
 
 
@@ -106,10 +112,16 @@ class StaticPagesController < ApplicationController
       flash[:warning] = "No File!"
       redirect_to import_path
     end
+    cleanTempFile
   end
     
   
+
   
-  def noaccess
+  def cleanTempFile
+    tempfile = params[:file].tempfile.path
+    if File::exists?(tempfile)
+      File::delete(tempfile)
+    end
   end
 end
