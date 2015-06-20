@@ -5,6 +5,8 @@
 #  id                 :integer          not null, primary key
 #  type               :string
 #  name               :string
+#  country_search     :string
+#  destination_search :string
 #  description        :text
 #  price_single       :decimal(12, 2)
 #  price_double       :decimal(12, 2)
@@ -20,8 +22,7 @@
 #  image              :string
 #  country_id         :integer
 #  destination_id     :integer
-#  country_search     :string
-#  destination_search :string
+#  remote_url         :string
 #
 
 class Hotel < Product

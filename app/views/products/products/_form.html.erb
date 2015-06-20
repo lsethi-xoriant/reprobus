@@ -42,18 +42,18 @@
     
     
     <% if @setting.use_dropbox %>
-      <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "remote_url", f: f } %></div>
-
-      <%= image_tag(@product.get_dropbox_image_link, :class => "product_image") %>
+      <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "remote_url", f: f, name: "Dropbox File Name" } %></div>
       
-    <% else %>  
+      <%= image_tag(@product.get_dropbox_image_link, :class => "product_image") %>
+
+    <% else %>
       <div class="file-field input-field col s12">
         <input class="file-path validate" type="text"/>
-        <div class="btn"><span>Image</span>     
+        <div class="btn"><span>Image</span>
          <%= f.file_field :image, class: "file-path validate" %>
          <%= f.hidden_field :image_cache %>
         </div>
-      </div>    
+      </div>
     
       <%= image_tag(@product.image_url(:thumb)) if @product.image? %>
     <% end %>

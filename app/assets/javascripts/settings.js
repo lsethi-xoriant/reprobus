@@ -1,11 +1,6 @@
 
 $(document).ready(function(){
-  $('#settingsTabs a').click(function (e) {
-    e.preventDefault();
-    $(this).tab('show');
-  })
-  
-  
+
   $('#payselect').on('change', function () {
     var val = $(this).val();
 
@@ -17,4 +12,16 @@ $(document).ready(function(){
   });
   
   $('#payselect').trigger('change');
+  
+  
+  $('#setting_use_dropbox').change(function(){
+    if (this.checked) {
+      $('#settings_dropbox_group').show();
+    } else {
+      $('#settings_dropbox_group').hide();
+    }
+  });
+  
+  $('#setting_use_dropbox').trigger('change');
+  
  });

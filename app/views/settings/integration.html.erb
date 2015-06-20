@@ -18,12 +18,11 @@
           <div id="paygategroup">
             <div class="row">
             <%= render partial: 'shared/material_textfield_cols6', locals: { field: "pxpay_user_id", f: f } %>
-            </div>
-            <div class="row">
             <%= render partial: 'shared/material_textfield_cols6', locals: { field: "pxpay_key", f: f } %>
             </div>
           </div>
-    
+          <div class="divider"></div>
+<br>
           <p>
           <%= f.check_box :use_xero, class: "filled-in" %>
           <%= f.label :use_xero, "Xero Integration", class: ""  %>
@@ -31,46 +30,52 @@
 
           <div class="row">
             <%= render partial: 'shared/material_textfield_cols6', locals: { field: "xero_consumer_key", f: f } %>
-          </div>
-          <div class="row">
-            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "xero_consumer_secret", f: f } %>         
+            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "xero_consumer_secret", f: f } %>
           </div>
           
+          <div class="divider"></div>
+  <br>
 
           <p>
           <%= f.check_box :use_dropbox, class: "filled-in" %>
           <%= f.label :use_dropbox, "Dropbox Images Integration", class: ""  %>
           </p>
 
-
-
-          <div class="row">
-            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "dropbox_user", f: f } %>
-          </div>          
-          <div class="row">
-            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "dropbox_key", f: f } %>
-          </div>
-          <div class="row">
-            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "dropbox_secret", f: f } %>         
-          </div>
           
-          <% if @setting.use_dropbox && @setting.dropbox_session.nil? %>
-            <p><strong>Dropbox currently not authorised</strong></p>
-            <%= link_to "Authorise Dropbox", dropbox_authorize_path, {:class => "dropbox-connect"} %>
-          <% else %>
-              <p><strong>Dropbox succesfully authorised</strong></p>
-          <% end%>
+          <div id="settings_dropbox_group">
 
+              <div class="row">
+                <%= render partial: 'shared/material_textfield_cols6', locals: { field: "dropbox_user", f: f } %>
+                <%= render partial: 'shared/material_textfield_cols6', locals: { field: "dropbox_default_path", f: f } %>
+              </div>
+              <div class="row">
+              
+                <% if @setting.dropbox_user.blank? %>
+                  <div class="input-field col s6 offset-s6">
+                  <%= link_to "Authorise Dropbox Connection", dropbox_authorize_path, {:class => " btn dropbox-connect disabled"} %>
+                  <p class="blue-text"><strong>Add Dropbox user before authorising connection</strong></p>
+                  </div>
+                <% elsif @setting.dropbox_session.blank? %>
+                  <div class="input-field col s6 offset-s6">
+                  <%= link_to "Authorise Dropbox Connection", dropbox_authorize_path, {:class => " btn dropbox-connect"} %>
+                  <p class="red-text"><strong>Dropbox not currently integrated</strong></p>
+                  </div>
+                <% else %>
+                    <div class="input-field col s6 offset-s6">
+                    <p class="green-text"><strong>Dropbox succesfully authorised</strong></p>
+                    </div>
+                <% end%>
+              </div>
+          </div>
 
-          
           <div class="row"><div class="col s6">
           <%#= f.submit "Save changes", class: "btn " %>
-              <%= button_tag( :class => "btn waves-effect waves-light right") do %>
+              <%= button_tag( :class => "btn waves-effect waves-light left") do %>
                 Save Changes
               <% end %>
           </div></div>
         <% end %>
     
     </div>
-  </div> 
-</div>           
+  </div>
+</div>

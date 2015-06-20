@@ -17,9 +17,9 @@
 #  cc_visa              :decimal(5, 4)
 #  cc_amex              :decimal(5, 4)
 #  dropbox_user         :string
-#  dropbox_secret       :string
-#  dropbox_key          :string
-#  serialized_session   :text
+#  dropbox_session      :text
+#  use_dropbox          :boolean
+#  dropbox_default_path :string
 #
 
 class Setting < ActiveRecord::Base
@@ -33,6 +33,15 @@ class Setting < ActiveRecord::Base
   has_many :triggers, -> { order ('id ASC') }
   accepts_nested_attributes_for :triggers
  
+ 
+  def dropbox_default_path=(value)
+    if !value.blank?
+      value = value + "/" if value[-1] != "/"
+      value = "/" + value if value[1] != "/"
+    end
+    
+    self[:dropbox_default_path] = value
+  end
  
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")

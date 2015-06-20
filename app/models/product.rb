@@ -5,6 +5,8 @@
 #  id                 :integer          not null, primary key
 #  type               :string
 #  name               :string
+#  country_search     :string
+#  destination_search :string
 #  description        :text
 #  price_single       :decimal(12, 2)
 #  price_double       :decimal(12, 2)
@@ -20,8 +22,7 @@
 #  image              :string
 #  country_id         :integer
 #  destination_id     :integer
-#  country_search     :string
-#  destination_search :string
+#  remote_url         :string
 #
 
 class Product < ActiveRecord::Base
@@ -61,13 +62,12 @@ class Product < ActiveRecord::Base
   end
   
   def get_dropbox_image_link
-    if !self.remote_url.nil?
+    if !self.remote_url.blank?
       return DropboxHelper.get_db_image_link_url(self.remote_url)
     else
-      return ActionController::Base.helpers.asset_path('noImage.png')
+      return ActionController::Base.helpers.image_path('noImage.jpg')
     end
   end
-  
   
   def self.import(file, type)
     require 'roo'
@@ -84,8 +84,8 @@ class Product < ActiveRecord::Base
       row = Hash[[header, spreadsheet.row(i)].transpose]
 
       
-      if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"]) 
-        skip = skip + 1 # record alread exists with these details. skip it. 
+      if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"])
+        skip = skip + 1 # record alread exists with these details. skip it.
         next
       end
       
@@ -95,8 +95,8 @@ class Product < ActiveRecord::Base
           
       if type == "Transfer"
         # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
-        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0 
-          skip = skip + 1 # record alread exists with these details. skip it. 
+        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0
+          skip = skip + 1 # record alread exists with these details. skip it.
           next
         end
       end
@@ -113,18 +113,18 @@ class Product < ActiveRecord::Base
       ent.destination = dest
         
       if !ent.save
-        errstr = "<br>" + "#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}" + errstr 
+        errstr = "<br>" + "#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}" + errstr
         val = val + 1
         next
       end
       int = int + 1
     end
     
-    returnStr = "<strong>#{type} Import</strong><br>" + 
-                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " created.<br>" + 
-                skip.to_s + " records skipped due to record already exists<br>" + 
+    returnStr = "<strong>#{type} Import</strong><br>" +
+                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " created.<br>" +
+                skip.to_s + " records skipped due to record already exists<br>" +
                 val.to_s + " Validation errors:"
     return returnStr + errstr;
-  end   
+  end
   
 end
