@@ -16,6 +16,10 @@
 #  cc_mastercard        :decimal(5, 4)
 #  cc_visa              :decimal(5, 4)
 #  cc_amex              :decimal(5, 4)
+#  dropbox_user         :string
+#  dropbox_secret       :string
+#  dropbox_key          :string
+#  serialized_session   :text
 #
 
 class Setting < ActiveRecord::Base
@@ -28,7 +32,8 @@ class Setting < ActiveRecord::Base
   has_many :exchange_rates
   has_many :triggers, -> { order ('id ASC') }
   accepts_nested_attributes_for :triggers
-  
+ 
+ 
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")
   end
@@ -40,9 +45,6 @@ class Setting < ActiveRecord::Base
   end
   def currencyDisplay
     return self.getDefaultCurrency.displayName
-  end
-  def getCurrencySelect2
-    return self.getDefaultCurrency.id.to_s + ":" + self.getDefaultCurrency.code + " - " + self.getDefaultCurrency.currency
   end
   
   def usesPaymentGateway

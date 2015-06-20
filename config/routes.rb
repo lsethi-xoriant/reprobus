@@ -5,6 +5,7 @@ Reprobus::Application.routes.draw do
   post "versions/:id/revert" => "versions#revert", as:
        "revert_version"
 
+  resources :password_resets
   resources :users
   
   resources :settings, only: [:edit, :update, :show] do
@@ -12,10 +13,20 @@ Reprobus::Application.routes.draw do
       post 'addcurrency' # /settings/addcurrency
       get 'syncInvoices'
       post 'addEmailTriggers'
+      get 'general'
+      get 'integration'
+      get 'email'
+      get 'currency'
+      get 'operation'
     end
   end
 
-  resources :password_resets
+  get '/dropbox_authorize' => 'settings#db_authorize', as: 'dropbox_authorize'
+  get '/dropbox_unauthorize' => 'settings#db_unauthorize', as: 'dropbox_unauthorize'
+  get '/dropbox_path_change' => 'settings#db_path_change', as: 'dropbox_path_change'
+  get '/dropbox_callback' => 'settings#db_callback', as: 'dropbox_callback'
+
+  
   resources :email_templates
   resources :itinerary_templates
   resources :itineraries
@@ -79,8 +90,6 @@ Reprobus::Application.routes.draw do
   match '/import_destinations',   to: 'static_pages#import_destinations' ,   via: 'post'
   match '/import_suppliers',   to: 'static_pages#import_suppliers' ,   via: 'post'
 
-  
-  
   get "admin/carriers/export"
   get "admin/destinations/export"
   get "admin/stopovers/export"

@@ -1,35 +1,34 @@
 class SettingsController < ApplicationController
   before_filter :signed_in_user
   before_filter :admin_user, only: [:edit, :update]
+  skip_before_filter :signed_in_user, only: [:dp_callback]
+  
+  before_action :setCompanySettings
+  
+  def setCompanySettings
+    @setting = Setting.find(1)
+    @triggers = @setting.triggers
+  end
   
   
   def show
-    @setting = Setting.find(params[:id])
-    @triggers = @setting.triggers
   end
   
   def edit
-    @setting = Setting.find(params[:id])
-    @triggers = @setting.triggers
   end
   
   def addEmailTriggers
-    @setting = Setting.find(params[:setting][:id])
     #more code to whip through triggers and update them.
-
     @emailTabActive = true
     if @setting.update_attributes(settings_params)
       flash.now[:success] = "Settings updated"
-      #redirect_to @setting
-      render 'edit'
+      render 'email'
     else
-      render 'edit'
+      render 'email'
     end
   end
   
-  
   def addcurrency
-    @setting = Setting.find(params[:setting_id])
     curr = Currency.find(params[:currency_id])
     er = @setting.exchange_rates.find_by_currency_code(curr.code)
     
@@ -44,20 +43,20 @@ class SettingsController < ApplicationController
     @currTabActive = true
     if pass
       flash[:success] = "New currency override added"
-      render 'edit'
+      render 'currency'
     else
       flash[:error] = "Error adding currency override. Please check all fields completed"
-      render 'edit'
+      render 'currency'
     end
   end
 
   def update
-     @setting = Setting.find(params[:id])
     if @setting.update_attributes(settings_params)
       flash[:success] = "Settings updated"
       redirect_to @setting
     else
-      render 'edit'
+      #render 'edit'
+      render params[:redirect]
     end
   end
   
@@ -79,11 +78,60 @@ class SettingsController < ApplicationController
     end
   end
   
+  def general
+  end
+  
+  def operation
+  end
+  
+  def email
+  end
+  
+  def operation
+  end
+  
+  def integration
+  end
+  
+  
+  
+  def db_authorize
+  require 'dropbox_sdk'
+  
+    dbsession = DropboxSession.new(@setting.dropbox_key,@setting.dropbox_secret)
+    #serialize and save this DropboxSession
+    session[:dropbox_session] = dbsession.serialize
+    #pass to get_authorize_url a callback url that will return the user here
+    redirect_to dbsession.get_authorize_url url_for(:action => 'db_callback')
+  end
+   
+
+  def db_callback
+  require 'dropbox_sdk'
+  
+    dbsession = DropboxSession.deserialize(session[:dropbox_session])
+    dbsession.get_access_token #we've been authorized, so now request an access_token
+    session[:dropbox_session] = dbsession.serialize
+    @setting.update_attributes(:dropbox_session => session[:dropbox_session])
+    session.delete :dropbox_session
+    flash[:success] = "You have successfully authorized with dropbox."
+    redirect_to integration_settings_path
+  end # end of dropbox_callback action
+   
+  def dp_unauthorize
+  require 'dropbox_sdk'
+  
+    session[:dropbox_session] = nil
+    @setting.dropbox_session = nil
+    @setting.save!
+  end  
+  
 private
   def settings_params
-    params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
-      :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id,
-      :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex,
-      triggers_attributes: [:id, :email_template_id, :num_days])
-    end
+    params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key, 
+    :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, 
+    :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user, 
+    :dropbox_secret, :dropbox_key, :dropbox_session, :use_dropbox,
+    triggers_attributes: [:id, :email_template_id, :num_days])
+  end
 end

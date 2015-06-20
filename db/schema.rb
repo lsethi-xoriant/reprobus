@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615182656) do
+ActiveRecord::Schema.define(version: 20150619071827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -411,6 +411,7 @@ ActiveRecord::Schema.define(version: 20150615182656) do
     t.integer  "destination_id"
     t.string   "country_search"
     t.string   "destination_search"
+    t.string   "remote_url"
   end
 
   add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
@@ -429,6 +430,10 @@ ActiveRecord::Schema.define(version: 20150615182656) do
     t.decimal  "cc_mastercard",                    precision: 5, scale: 4
     t.decimal  "cc_visa",                          precision: 5, scale: 4
     t.decimal  "cc_amex",                          precision: 5, scale: 4
+    t.string   "dropbox_user"
+    t.text     "dropbox_session"
+    t.boolean  "use_dropbox"
+    t.string   "dropbox_default_path"
   end
 
   create_table "stopovers", force: :cascade do |t|

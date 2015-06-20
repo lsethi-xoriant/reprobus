@@ -29,6 +29,7 @@ class Products::ProductsController < ApplicationController
   
   def edit
     @product = Product.find(params[:id])
+    @setting = Setting.find(1)
   end
   
   def update
@@ -52,7 +53,7 @@ class Products::ProductsController < ApplicationController
 private
     def product_params
       params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image, :image_cache,
-        :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :default_length,
+        :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :default_length, :remote_url,
         :supplier_id)
     end
 end

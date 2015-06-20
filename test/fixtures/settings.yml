@@ -16,6 +16,10 @@
 #  cc_mastercard        :decimal(5, 4)
 #  cc_visa              :decimal(5, 4)
 #  cc_amex              :decimal(5, 4)
+#  dropbox_user         :string
+#  dropbox_secret       :string
+#  dropbox_key          :string
+#  serialized_session   :text
 #
 
 firstcompany:

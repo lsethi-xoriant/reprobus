@@ -1,0 +1,41 @@
+<% provide(:title, 'General Settings') %>
+
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+
+        <%= form_for @setting, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+         <%= render 'shared/error_messages', object: f.object %>
+         <%= hidden_field_tag :redirect, '', value: "general" %>
+
+          <div class="row">
+            <%= render partial: 'shared/material_textfield_cols6', locals: { field: "company_name", f: f } %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_mastercard", f: f, value: @setting.get_cc_mastercard_display, name: "Mastercard % Fee"} %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_visa", f: f, value: @setting.get_cc_visa_display, name: "Visa % Fee"} %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_amex", f: f, value: @setting.get_cc_other_display, name: "Other CC % Fee"} %>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s6">
+              <%= f.select(:currency_id, options_for_select([[f.object.currencyDisplay, f.object.currency_id]],f.object.currency_id),{},{class: "select2-currencies browser-default"}) %>
+              <%= f.label :currency_id, "Default Currency",  class: 'active' %>
+            </div>
+          </div>
+          
+          <div class="row"><div class="col s6">
+          <%#= f.submit "Save changes", class: "btn " %>
+              <%= button_tag( :class => "btn waves-effect waves-light right") do %>
+                Save Changes
+              <% end %>
+          </div></div>
+        <% end %>
+    
+    </div>
+  </div> 
+</div> 

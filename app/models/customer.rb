@@ -13,7 +13,7 @@
 #  source               :string(32)
 #  email                :string(64)
 #  alt_email            :string(64)
-#  phone                :string(32)
+#  phone                :string(255)
 #  mobile               :string(32)
 #  fax                  :string(32)
 #  blog                 :string(128)
@@ -39,7 +39,7 @@
 #  supplier_name        :string(255)
 #  currency_id          :integer
 #  num_days_payment_due :integer
-#  after_hours_phone    :string(32)
+#  after_hours_phone    :string(255)
 #
 
 class Customer < ActiveRecord::Base

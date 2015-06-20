@@ -80,6 +80,8 @@ GEM
       activerecord (>= 3.0, < 5.0)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
+    dropbox-sdk (1.6.4)
+      json
     erubis (2.7.0)
     execjs (2.2.2)
     faker (1.4.2)
@@ -315,6 +317,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.0.0)
   delayed_job_active_record
+  dropbox-sdk
   faker (= 1.4.2)
   font-awesome-rails
   google_currency

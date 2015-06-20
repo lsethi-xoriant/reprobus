@@ -60,6 +60,14 @@ class Product < ActiveRecord::Base
     return self.destination.name if self.destination
   end
   
+  def get_dropbox_image_link
+    if !self.remote_url.nil?
+      return DropboxHelper.get_db_image_link_url(self.remote_url)
+    else
+      return ActionController::Base.helpers.asset_path('noImage.png')
+    end
+  end
+  
   
   def self.import(file, type)
     require 'roo'

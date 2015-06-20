@@ -1,51 +1,32 @@
-<% provide(:title, @setting.company_name + " Settings") %>
+<% provide(:title, 'Products') %>
 
-<div class="col s12 m12 l12">
-  <div class ="card-panel">
-      <h4>
-        <%= @setting.company_name + " Settings"%>
-      </h4>
-      
-      <a href=<%= edit_setting_path(@setting) %> ><button type="button" class="btn">Edit Settings</button></a>
-
-       <ul class="row profile-details">
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Company</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= @setting.company_name %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Payment Gateway</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.payment_gateway ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Payment Express PxPay User Id</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.pxpay_user_id ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Payment Express PxPay Key</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.pxpay_key ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Mastercard % fee</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( number_with_precision(@setting.get_cc_mastercard_display, strip_insignificant_zeros: true, precision: 2) ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Visa % fee</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( number_with_precision(@setting.get_cc_visa_display, strip_insignificant_zeros: true, precision: 2)) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Other % fee</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( number_with_precision(@setting.get_cc_other_display, strip_insignificant_zeros: true, precision: 2) ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Intergrate with Xero Invoicing</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( translate(@setting.use_xero.class) ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Xero Consumer Key</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.xero_consumer_key ) %></li><br>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Xero Consumer Secret</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.xero_consumer_secret ) %></li>
-            <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">System Default Currency</li>
-         <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @setting.currencyDisplay ) %></li>
-      </ul>
-  </div>
-    
-    <div class ="card-panel">
-      <%= render  partial: 'currency_table' %>
-    </div>
-    
-    <div class ="card-panel">
-      <%=  form_tag({controller: "settings", action: "syncInvoices", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
-        <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-    
-    <div id="invoices" >
-      <%#= render partial: 'invoices', locals: {items: @invoices}  %>
-    </div>
-  
+<div class="section">
+  <h5 class="text-center">Choose settings to edit:</h5>
+  <ul class="list-of-actions">
+    <li>
+	    <h4>General</h4> <a href=<%= general_settings_path %>><button type="button" class="waves-effect waves-light btn right">General</button></a>
+      <p>General settings: company name, currency, etc.</p>
+    </li>
+    <div class="divider"></div>
+    <li>
+		  <h4>Integrations</h4><a href=<%= integration_settings_path %>><button type="button" class="waves-effect waves-light btn right">Integrations</button></a>
+      <p>Third party integrations: Dropbox, Xero, etc</p>
+    </li>
+    <div class="divider"></div>
+    <li>
+		  <h4>Emails & Email Triggers</h4><a href=<%= email_settings_path %>><button type="button" class="waves-effect waves-light btn right">Emails</button></a>
+      <p>Emails & Email Trigger settings</p>
+    </li>
+    <div class="divider"></div>
+    <li>
+		  <h4>Currency Overrides</h4><a href=<%= currency_settings_path %>><button type="button" class="waves-effect waves-light btn right">Currency</button></a>
+      <p>Currency overrides</p>
+    </li>
+    <div class="divider"></div>
+    <li>
+		  <h4>Operations</h4><a href=<%= operation_settings_path %>><button type="button" class="waves-effect waves-light btn right">Operations</button></a>
+      <p>Force sync integration (i.e resync all invoices with xero)</p>
+    </li>
+    <div class="divider"></div>
+  </ul>
 </div>

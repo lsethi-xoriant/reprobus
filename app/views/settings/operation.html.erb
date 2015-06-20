@@ -1,0 +1,19 @@
+<% provide(:title, 'Operational Settings') %>
+
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+
+          <%=  form_tag({controller: "settings", action: "syncInvoices", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+            <%= hidden_field_tag :redirect, '', value: "operation" %>
+            <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn" %>
+          <% end %>
+
+        
+        <div id="invoices" >
+          <%#= render partial: 'invoices', locals: {items: @invoices}  %>
+        </div>
+    
+    </div>
+  </div> 
+</div>          

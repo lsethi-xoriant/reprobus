@@ -17,7 +17,7 @@
 	    <h4>Countries</h4> 
         File should contain a header, and rows with the following fields:
         <ul>
-          <li>- <strong>Country</strong></li>
+          <li>- <strong>Country</strong> (mandatory)</li>
         </ul>
         <div class="section">   
             <%= form_tag('/import_countries', multipart: true) do %>
@@ -43,9 +43,8 @@
 	    <h4>Destinations</h4> 
         File should contain a header and rows with the following fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
-            <li>- <strong>Destination</strong></li>
-            <li>- <strong>Country</strong> (Must already exist in application. Will be linked on Country name) </li>
+            <li>- <strong>Destination</strong> (mandatory)</li>
+            <li>- <strong>Country</strong> (If existing Country present in application it will be matched by country name and linked, otherwise this field will be ignored) </li>
         </ul>
         <div class="section">   
             <%= form_tag('/import_destinations', multipart: true) do %>
@@ -80,7 +79,7 @@
             <li>- <strong>PhoneNo</strong></li>
             <li>- <strong>EmergencyPh</strong></li>
             <li>- <strong>EmailAddress</strong></li>
-            <li>- <strong>Currency</strong> (ISO three letter currency code) </li>
+            <li>- <strong>Currency</strong> (Must be a three letter currency code matching ISO country codes) </li>
         </ul>
         <div class="section">   
             <%= form_tag('/import_suppliers', multipart: true) do %>
@@ -107,11 +106,11 @@
         File should contain a header and rows with the following optional fields:
         <ul>
             <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
-            <li>- <strong>Name</strong></li>
+            <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
-            <li>- <strong>Destination</strong> (Should match to existing Destination name )</li>
-            <li>- <strong>Country</strong> (Should match to existing Country name )</li>    
-            <li>- <strong>Supplier</strong> (Should match to existing Supplier name)</li>
+            <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>
+            <li>- <strong>Country</strong>  (If existing Country present in application it will be matched by country name and linked, otherwise this field will be ignored) </li>    
+            <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
         </ul>
         <div class="section">   
             <%= form_tag('/import_products', multipart: true) do %>
