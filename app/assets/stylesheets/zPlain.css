@@ -2,6 +2,7 @@
 
 #nprogress .bar {
   background: #ec407a;
+  height: 4px;
 }
 
 /* Fancy blur effect */

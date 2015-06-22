@@ -37,7 +37,7 @@ class Setting < ActiveRecord::Base
   def dropbox_default_path=(value)
     if !value.blank?
       value = value + "/" if value[-1] != "/"
-      value = "/" + value if value[1] != "/"
+      value = "/" + value if value[0] != "/"
     end
     
     self[:dropbox_default_path] = value

@@ -6,7 +6,6 @@ class Products::ProductsController < ApplicationController
   
   def index
     @products = Product.includes(:supplier).where(type: params[:type])
-    
   end
   
   def new

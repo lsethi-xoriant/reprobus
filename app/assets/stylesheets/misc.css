@@ -3,3 +3,12 @@
 .product_image {
   max-height: 250px;
 }
+
+.toast-success {
+  background-color: #4caf50;
+}
+
+#toast-container {
+  top: 8.5%;
+  right: 1.5%;
+}

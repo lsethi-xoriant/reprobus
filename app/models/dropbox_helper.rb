@@ -26,4 +26,22 @@ class DropboxHelper
       return hash[:url]
     end
   end
+  
+  def self.db_path_exists?(path)
+    setting = Setting.find(1)
+    
+    if setting.use_dropbox && setting.dropbox_user
+      begin
+        dbsession = DropboxSession.deserialize(setting.dropbox_session)
+        client = DropboxClient.new(dbsession)
+        link = client.metadata(path)
+        if link 
+          return true;
+        end
+      rescue DropboxError
+        return false
+      end
+    end
+  end
+  
 end

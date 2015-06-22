@@ -102,6 +102,12 @@ class StaticPagesController < ApplicationController
 
   def import_products
     if !params[:file].nil? then 
+      if !params[:file].original_filename.upcase.include?(params[:type].upcase)
+        flash[:warning] = "WARNING: Filename does not match Product type being imported!"
+        render import_path      
+        return
+      end
+      
       @product_import_str = Product.import(params[:file],params[:type])
       flash[:success] = params[:type].pluralize(2) + " imported!"
       if @product_import_str
@@ -109,7 +115,7 @@ class StaticPagesController < ApplicationController
       end
       redirect_to import_path
     else
-      flash[:warning] = "No File!"
+      flash[:warning] = "No file selected!"
       redirect_to import_path
     end
     cleanTempFile
@@ -119,9 +125,9 @@ class StaticPagesController < ApplicationController
 
   
   def cleanTempFile
-    tempfile = params[:file].tempfile.path
-    if File::exists?(tempfile)
-      File::delete(tempfile)
-    end
+#    tempfile = params[:file].tempfile.path
+#    if File::exists?(tempfile)
+ #     File::delete(tempfile)
+#   end
   end
 end

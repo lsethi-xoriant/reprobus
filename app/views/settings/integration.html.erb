@@ -61,8 +61,11 @@
                   <p class="red-text"><strong>Dropbox not currently integrated</strong></p>
                   </div>
                 <% else %>
-                    <div class="input-field col s6 offset-s6">
+                    <div class="col s6 offset-s6">
                     <p class="green-text"><strong>Dropbox succesfully authorised</strong></p>
+                    <% if !DropboxHelper.db_path_exists?(@setting.dropbox_default_path) %>
+                      <p class="red-text"><strong>Warning - default path not found - check spelling</strong></p>
+                    <% end %>
                     </div>
                 <% end%>
               </div>

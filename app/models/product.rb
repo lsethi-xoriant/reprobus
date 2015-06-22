@@ -107,6 +107,8 @@ class Product < ActiveRecord::Base
       ent.name = str
       str = (row["Description"])
       ent.description = str
+      str = (row["ImageName"])
+      ent.remote_url = str
 
       ent.supplier = supp
       ent.country = count
