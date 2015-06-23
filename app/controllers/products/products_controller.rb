@@ -5,7 +5,11 @@ class Products::ProductsController < ApplicationController
   before_filter :admin_user
   
   def index
-    @products = Product.includes(:supplier).where(type: params[:type])
+    #@products = Product.includes(:supplier).where(type: params[:type])
+    respond_to do |format|
+      format.html
+      format.json { render json: ProductDatatable.new(view_context, { user: current_user, type: params[:type] }) }
+    end    
   end
   
   def new

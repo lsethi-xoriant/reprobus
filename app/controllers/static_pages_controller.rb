@@ -56,6 +56,13 @@ class StaticPagesController < ApplicationController
   
   def import_countries
     if !params[:file].nil? then 
+      
+      if !params[:file].original_filename.upcase.include?("COUNTRY")
+        flash[:warning] = "WARNING: Filename being imported does not include the word 'Country'!"
+        render import_path      
+        return
+      end
+      
       @country_import_str = Country.import(params[:file])
       flash[:success] = "Countries imported!"
       if @country_import_str
@@ -71,6 +78,13 @@ class StaticPagesController < ApplicationController
   
   def import_destinations
     if !params[:file].nil? then 
+      
+      if !params[:file].original_filename.upcase.include?("DESTINAION")
+        flash[:warning] = "WARNING: Filename being imported does not include the word 'Destination'!"
+        render import_path      
+        return
+      end
+      
       @destionation_import_str = Destination.import(params[:file])
       flash[:success] = "Destinations imported!"
       if @destionation_import_str
@@ -86,6 +100,13 @@ class StaticPagesController < ApplicationController
 
   def import_suppliers
     if !params[:file].nil? then 
+      
+      if !params[:file].original_filename.upcase.include?("SUPPLIER")
+        flash[:warning] = "WARNING: Filename being imported does not include the word 'Supplier'!"
+        render import_path      
+        return
+      end
+      
       @supplier_import_str = Customer.importSupplier(params[:file])
       flash[:success] = "Suppliers imported!"
       if @supplier_import_str

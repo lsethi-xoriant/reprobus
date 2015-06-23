@@ -10,7 +10,7 @@
   <div id="table-datatables">
    <div class="row">
       <div class="col s12 m12 l12">
-        <table id="data-table-simple" class="responsive-table display" >
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= get_product_index_path(params[:type], format: :json) %>" >
           <thead>
             <tr>
               <th>Name</th>
@@ -21,15 +21,6 @@
             </tr>
           </thead>
           <tbody>
-            <% @products.each do |product| %>
-            <tr>
-              <td><%= product.name %></td>
-              <td><%= product.destination_search %></td>
-              <td><%= product.country_search %></td>
-              <td><%= product.supplierName %></td>
-              <td><%= link_to("<i class='mdi-image-edit'></i>".html_safe, get_edit_path(product), class: "btn-floating waves-effect waves-light blue")%></td>
-            </tr>
-            <% end %>
           </tbody>
         </table>
       </div>

@@ -27,20 +27,34 @@ module ProductsHelper
     end
   end
   
-  def product_index_path(product)
+  def product_index_path(product, format)
     if product.type == 'Transfer'
-      return products_transfers_path
+      return products_transfers_path(format)
     elsif product.type == 'Tour'
-      return products_tours_path
+      return products_tours_path(format)
     elsif product.type == 'Flight'
-      return products_flights_path
+      return products_flights_path(format)
     elsif product.type == 'Cruise'
-      return products_cruises_path
+      return products_cruises_path(format)
     elsif product.type == 'Hotel'
-      return products_hotels_path
+      return products_hotels_path(format)
     end
   end
 
+  def get_product_index_path(type, format)
+    if type == 'Transfer'
+      return products_transfers_path(format)
+    elsif type == 'Tour'
+      return products_tours_path(format)
+    elsif type == 'Flight'
+      return products_flights_path(format)
+    elsif type == 'Cruise'
+      return products_cruises_path(format)
+    elsif type == 'Hotel'
+      return products_hotels_path(format)
+    end
+  end
+  
   def get_new_path(type)
     if type == 'Transfer'
       return new_products_transfer_path()
