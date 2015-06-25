@@ -70,7 +70,7 @@ class Product < ActiveRecord::Base
   end
   
   def self.import(file, type)
-    file_path_to_save = 'public/uploads/imports'
+    file_path_to_save = 'public/uploads'
     File.open(File.join(file_path_to_save,file.original_filename), "wb") { |f| f.write(file.read) }
     
     job_progress = JobProgress.new
