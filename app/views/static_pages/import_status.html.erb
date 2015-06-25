@@ -7,6 +7,7 @@
     
   <div class ="row">
     <div id="import_report">
+      <h5>Last Five Imports</h5>
       <ul class="collapsible" data-collapsible="accordion">
       <%= render partial: "file_upload_summary", collection: @last_jobs, as: :job_progress %>
       </ul>
