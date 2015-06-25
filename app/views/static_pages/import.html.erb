@@ -13,7 +13,7 @@
       <ul>
         <li>- <strong>Country</strong> (mandatory)</li>
       </ul>
-      <%= render partial: "form_import", locals: { formPath: '/import_countries', submitTag: "Import Countries" } %>
+      <%= render partial: "form_import", locals: { formPath: '/import_countries', submitTag: "Import Countries", productType: "" } %>
     </li>
     <div class="divider"></div>
     <li>
@@ -23,7 +23,7 @@
             <li>- <strong>Destination</strong> (mandatory)</li>
             <li>- <strong>Country</strong> (If existing Country present in application it will be matched by country name and linked, otherwise this field will be ignored) </li>
         </ul>
-        <%= render partial: "form_import", locals: { formPath: '/import_destinations', submitTag: "Import Destinations" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_destinations', submitTag: "Import Destinations", productType: "" } %>
     </li>
     <div class="divider"></div>
     <li>
@@ -44,7 +44,7 @@
             <li>- <strong>EmailAddress</strong></li>
             <li>- <strong>Currency</strong> (Must be a three letter currency code matching ISO country codes) </li>
         </ul>
-        <%= render partial: "form_import", locals: { formPath: '/import_suppliers', submitTag: "Import Suppliers" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_suppliers', submitTag: "Import Suppliers", productType: "" } %>
     </li>
     <div class="divider"></div>
     <h3 class="text-center">Products</h3>
@@ -63,7 +63,7 @@
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
         
-        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Transfers" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Transfers", productType: "Transfer" } %>
 
     </li>
     <div class="divider"></div>
@@ -80,7 +80,7 @@
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
         
-        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Flights" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Flights", productType: "Flight" } %>
 
     </li>
     <div class="divider"></div>
@@ -97,7 +97,7 @@
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
         
-        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Tours" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Tours", productType: "Tour" } %>
 
     </li>
     <div class="divider"></div>
@@ -114,7 +114,7 @@
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
         
-        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Hotels" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Hotels", productType: "Hotel" } %>
 
     </li>
     <div class="divider"></div>
@@ -131,7 +131,7 @@
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
         
-        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Cruises" } %>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Cruises", productType: "Cruise" } %>
 
     </li>
     <div class="divider"></div>

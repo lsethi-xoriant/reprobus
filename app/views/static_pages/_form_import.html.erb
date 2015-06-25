@@ -1,6 +1,7 @@
 
 <div class="section">   
   <%= form_tag(formPath, multipart: true) do %>
+    <%= hidden_field_tag :type, '', value: productType %>
     <%= submit_tag submitTag, class: "btn-large importBtn right" %>
     <div class="row">   
       <div class="file-field input-field">
