@@ -1,0 +1,15 @@
+ <% provide(:title, 'Import Status') %>
+
+<div class="section">
+  <div class ="row">
+    <a href=<%= import_path %>><button type="button" class="waves-effect waves-light btn right">Back to Import</button></a>
+  </div>
+    
+  <div class ="row">
+    <div id="import_report">
+      <ul class="collapsible" data-collapsible="accordion">
+      <%= render partial: "file_upload_summary", collection: @last_jobs, as: :job_progress %>
+      </ul>
+    </div>
+  </div>
+</div>     

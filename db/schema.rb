@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619071827) do
+ActiveRecord::Schema.define(version: 20150623045541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -362,6 +362,20 @@ ActiveRecord::Schema.define(version: 20150619071827) do
     t.text     "includes"
     t.text     "excludes"
     t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "job_progresses", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "total"
+    t.integer  "progress"
+    t.boolean  "complete"
+    t.boolean  "started"
+    t.text     "summary"
+    t.text     "log"
+    t.string   "file_path"
+    t.string   "file_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

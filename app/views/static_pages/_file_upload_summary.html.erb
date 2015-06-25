@@ -1,0 +1,9 @@
+
+  <li>
+      <div id="import_report_<%= job_progress.id%>" data-id="<%=job_progress.id%>" data-complete="<%=job_progress.complete%>" class="collapsible-header import_report">
+        <%= job_progress.get_display_details %> 
+      </div>
+      <div id="import_log_<%= job_progress.id%>" class="collapsible-body">
+        <%= job_progress.log.html_safe %>
+      </div>
+  </li>

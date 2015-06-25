@@ -51,6 +51,7 @@ class StaticPagesController < ApplicationController
   end
   
   def import
+    @jobs = JobProgress.in_progress
     render :layout => "application"
   end
   
@@ -122,33 +123,35 @@ class StaticPagesController < ApplicationController
 
 
   def import_products
-    if !params[:file].nil? then 
-      if !params[:file].original_filename.upcase.include?(params[:type].upcase)
-        flash[:warning] = "WARNING: Filename does not match Product type being imported!"
-        render import_path      
-        return
-      end
-      
-      @product_import_str = Product.import(params[:file],params[:type])
-      flash[:success] = params[:type].pluralize(2) + " imported!"
-      if @product_import_str
-        flash[:fileloadmsg] = @product_import_str
-      end
-      redirect_to import_path
-    else
+    if params[:file].nil? then
       flash[:warning] = "No file selected!"
-      redirect_to import_path
+      render import_path     
+      return
     end
-    cleanTempFile
+    
+    if !params[:file].original_filename.upcase.include?(params[:type].upcase)
+      flash[:warning] = "WARNING: Filename does not match Product type being imported!"
+      render import_path      
+      return
+    end
+    
+    Product.import(params[:file],params[:type])
+    flash[:success] = params[:type].pluralize(2) + " import begun!"
+    redirect_to import_status_path
   end
     
-  
-
-  
-  def cleanTempFile
-#    tempfile = params[:file].tempfile.path
-#    if File::exists?(tempfile)
- #     File::delete(tempfile)
-#   end
+  def import_status_job
+    @job_progress = JobProgress.find(params[:id])
+    respond_to do |format|
+      if @job_progress
+        format.json { render json: {id: @job_progress.id, complete: @job_progress.complete, progress: @job_progress.progress, total: @job_progress.total,
+                                  summary: @job_progress.get_display_details, log: @job_progress.log, name: @job_progress.name} }
+      end
+    end    
+  end
+    
+  def import_status
+    @last_jobs = JobProgress.last(5).reverse
+    render :layout => "application"
   end
 end

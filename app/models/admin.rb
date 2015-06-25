@@ -49,5 +49,15 @@ class Admin < ActiveRecord::Base
   else raise "Unknown file type: #{file.original_filename}"
   end
   end
-    
+
+  def self.open_spreadsheet_from_path(filepath)
+#    puts file.path
+  case File.extname(filepath)
+  when ".csv" then Roo::CSV.new(filepath)
+  when ".xls" then Roo::Excel.new(filepath, file_warning: :ignore)
+  when ".xlsx" then Roo::Excelx.new(filepath, file_warning: :ignore)
+  else raise "Unknown file type: #{filepath}"
+  end
+  end
+  
 end

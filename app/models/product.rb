@@ -70,15 +70,34 @@ class Product < ActiveRecord::Base
   end
   
   def self.import(file, type)
-    require 'roo'
+    file_path_to_save = 'public/uploads/imports'
+    File.open(File.join(file_path_to_save,file.original_filename), "wb") { |f| f.write(file.read) }
     
-    spreadsheet = Admin.open_spreadsheet(file)
+    job_progress = JobProgress.new
+    job_progress.initiate_settings(type + " Import", 0)
+    job_progress.file_name = file.original_filename
+    job_progress.file_path = file_path_to_save
+    job_progress.save
+    
+    DocumentUploadJob.perform_later(type, job_progress)
+  end
+
+  def self.importfile(type, job_progress)
+    require 'roo'
+    filename = File.join(job_progress.file_path, job_progress.file_name)
+    #file = File.open(filename,'r')
+    
+    spreadsheet = Admin.open_spreadsheet_from_path(filename)
     header = spreadsheet.row(1)
     int = 0
     skip = 0
     val = 0
     returnStr = ""
     errstr = ""
+    skipstr = ""
+
+    job_progress.initiate_settings(type + " Import"  ,spreadsheet.last_row)
+    job_progress.save
     
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
@@ -86,6 +105,7 @@ class Product < ActiveRecord::Base
       
       if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"])
         skip = skip + 1 # record alread exists with these details. skip it.
+        skipstr = skipstr + "<br>Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]}"
         next
       end
       
@@ -97,6 +117,7 @@ class Product < ActiveRecord::Base
         # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
         if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0
           skip = skip + 1 # record alread exists with these details. skip it.
+          skipstr = skipstr + "<br>Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]} | #{row["Country"]} | #{row["Destination"]} | #{row["Supplier"]}"
           next
         end
       end
@@ -120,12 +141,24 @@ class Product < ActiveRecord::Base
         next
       end
       int = int + 1
+      
+      if int % 100 == 0 
+        job_progress.progress = (int + skip)
+        job_progress.save
+      end
     end
-    
+ 
     returnStr = "<strong>#{type} Import</strong><br>" +
                 (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " created.<br>" +
                 skip.to_s + " records skipped due to record already exists<br>" +
-                val.to_s + " Validation errors:"
+                val.to_s + " Validation errors"
+                
+    job_progress.summary = returnStr
+    job_progress.log = "Validation errors:" + errstr + "<br><br> Items Skipped:<br>" + skipstr
+    job_progress.complete = true
+    job_progress.save
+        
+    File.delete(filename)
     return returnStr + errstr;
   end
   
