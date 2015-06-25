@@ -4,8 +4,6 @@ $(document).ready(function(){
 
     if ($("#import_report").length){
       setTimeout(function(){
-        
-        //console.log ('Calling get status...');
   
         $(".import_report").each(function(){
 
