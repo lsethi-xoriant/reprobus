@@ -20,11 +20,11 @@ $(document).ready(function(){
                 $("#import_report_"+data.id).text(data.summary);
                 $("#import_log_"+data.id).append("<p>" + data.log + "</p>");
                 $("#import_log_"+data.id).data("completed", "true");
-                $("#import_report_"+data.id).removeClass("light-green");
+                $("#import_report_"+data.id).removeClass("amber");
+                $("#import_report_"+data.id).addClass("light-green");
                 // end of recursive call
               }else{
-                
-                $("#import_report_"+data.id).addClass("light-green");
+
                 // update div, and set up another poll again
                 if (data.progress == 0) {
                   $("#import_report_"+data.id).text(data.summary + " - Job not started yet");

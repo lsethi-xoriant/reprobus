@@ -1,5 +1,7 @@
-<% if  !job_progress.complete %>
-<% classstr = "light-green" %>
+<% if job_progress.complete %>
+  <% classstr = "light-green" %>
+<% else %>
+  <% classstr = "amber" %>
 <% end %>
 
   <li>
