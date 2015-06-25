@@ -44,13 +44,11 @@ $(document).ready(function(){
   }
   
   if ($("#import_report").length){
-    poll_for_jobs();
+    poll_for_jobs();  // this starts polling for first time if we are on import_status page. 
   }
-  
 
-  
 });
 
 $(document).on('click', '.importBtn', function() {
-  $(".loading").show();
+  $(".loading").show();  //show spinner if uploading a file. 
 });

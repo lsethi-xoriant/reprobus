@@ -55,10 +55,6 @@ class StaticPagesController < ApplicationController
     render :layout => "application"
   end
   
-
-  
-
-  
   def import_countries
     if params[:import_file].nil? then
       flash.now[:warning] = "No file selected!"

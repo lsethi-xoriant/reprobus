@@ -6,8 +6,6 @@ class FileLoadHelper
   attr_accessor :errstr
   attr_accessor :skipstr
 
-
-
   def setdefaults
     self.int = 0
     self.skip = 0

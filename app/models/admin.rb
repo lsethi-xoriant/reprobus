@@ -91,8 +91,9 @@ class Admin < ActiveRecord::Base
     end
   end
   
+  # used in file load from admin screen - no background process 
   def self.open_spreadsheet(file)
-#    puts file.path
+#    puts file.path  
   case File.extname(file.original_filename)
   when ".csv" then Roo::CSV.new(file.path)
   when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
@@ -101,13 +102,14 @@ class Admin < ActiveRecord::Base
   end
   end
 
+# used in file load from import screen - background process
   def self.open_spreadsheet_from_job(job_progress)
 #    puts file.path
-  case File.extname(job_progress.import_file.current_path)
-  when ".csv" then Roo::CSV.new(job_progress.import_file.current_path)
-  when ".xls" then Roo::Excel.new(job_progress.import_file.current_path, file_warning: :ignore)
-  when ".xlsx" then Roo::Excelx.new(job_progress.import_file.current_path, file_warning: :ignore)
-  else raise "Unknown file type: #{job_progress.import_file.current_path}"
+  case File.extname(job_progress.import_file.url)
+  when ".csv" then Roo::CSV.new(job_progress.import_file.url)
+  when ".xls" then Roo::Excel.new(job_progress.import_file.url, file_warning: :ignore)
+  when ".xlsx" then Roo::Excelx.new(job_progress.import_file.url, file_warning: :ignore)
+  else raise "Unknown file type: #{job_progress.import_file.url}"
   end
   end
   
