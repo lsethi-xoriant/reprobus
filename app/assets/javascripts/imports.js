@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  $(".loading").hide(); 
+ 
+  var loadingStr = " loading ...";
   
   function poll_for_jobs(){
 
@@ -15,7 +18,7 @@ $(document).ready(function(){
               } else if (data.complete) {
                 
                 $("#import_report_"+data.id).text(data.summary);
-                $("#import_log_"+data.id).text(data.log);
+                $("#import_log_"+data.id).append("<p>" + data.log + "</p>");
                 $("#import_log_"+data.id).data("completed", "true");
                 $("#import_report_"+data.id).removeClass("light-green");
                 // end of recursive call
@@ -24,9 +27,10 @@ $(document).ready(function(){
                 $("#import_report_"+data.id).addClass("light-green");
                 // update div, and set up another poll again
                 if (data.progress == 0) {
-                  $("#import_report_"+data.id).text(data.name + " - Job not started yet");
+                  $("#import_report_"+data.id).text(data.summary + " - Job not started yet");
                 } else {
-                  $("#import_report_"+data.id).text(data.name + " - ...loading : " + data.progress + " out of " + data.total);
+                  loadingStr = loadingStr + ".";
+                  $("#import_report_"+data.id).text(data.name + " - " + data.progress + " out of " + data.total + loadingStr);
                 }
                 // run another poll
                 poll_for_jobs();
@@ -42,4 +46,11 @@ $(document).ready(function(){
   if ($("#import_report").length){
     poll_for_jobs();
   }
+  
+
+  
+});
+
+$(document).on('click', '.importBtn', function() {
+  $(".loading").show();
 });

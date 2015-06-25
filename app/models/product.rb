@@ -69,97 +69,51 @@ class Product < ActiveRecord::Base
     end
   end
   
-  def self.import(file, type)
-    file_path_to_save = 'public/uploads'
-    File.open(File.join(file_path_to_save,file.original_filename), "wb") { |f| f.write(file.read) }
-    
-    job_progress = JobProgress.new
-    job_progress.initiate_settings(type + " Import", 0)
-    job_progress.file_name = file.original_filename
-    job_progress.file_path = file_path_to_save
-    job_progress.save
-    
-    DocumentUploadJob.perform_later(type, job_progress)
-  end
-
-  def self.importfile(type, job_progress)
-    require 'roo'
-    filename = File.join(job_progress.file_path, job_progress.file_name)
-    #file = File.open(filename,'r')
-    
-    spreadsheet = Admin.open_spreadsheet_from_path(filename)
-    header = spreadsheet.row(1)
-    int = 0
-    skip = 0
-    val = 0
-    returnStr = ""
-    errstr = ""
-    skipstr = ""
-
-    job_progress.initiate_settings(type + " Import"  ,spreadsheet.last_row)
-    job_progress.save
-    
-    (2..spreadsheet.last_row).each do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-
-      
-      if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"])
-        skip = skip + 1 # record alread exists with these details. skip it.
-        skipstr = skipstr + "<br>Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]}"
-        next
-      end
-      
-      count = Country.find_by_name(row["Country"])
-      dest = Destination.find_by_name(row["Destination"])
-      supp = Customer.find_by_supplier_name(row["Supplier"])
-          
-      if type == "Transfer"
-        # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
-        if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0
-          skip = skip + 1 # record alread exists with these details. skip it.
-          skipstr = skipstr + "<br>Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]} | #{row["Country"]} | #{row["Destination"]} | #{row["Supplier"]}"
+  def self.handle_file_import(spreadsheet, fhelp, job_progress, type)
+      header = spreadsheet.row(1)
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+  
+        if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"])
+          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]}")
           next
         end
+        
+        count = Country.find_by_name(row["Country"])
+        dest = Destination.find_by_name(row["Destination"])
+        supp = Customer.find_by_supplier_name(row["Supplier"])
+            
+        if type == "Transfer"
+          # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
+          if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0
+            fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]} | #{row["Country"]} | #{row["Destination"]} | #{row["Supplier"]}");
+            next
+          end
+        end
+        
+        ent = new
+        ent.type = type
+        str = (row["Name"])
+        ent.name = str
+        str = (row["Description"])
+        ent.description = str
+        str = (row["ImageName"])
+        ent.remote_url = str
+  
+        ent.supplier = supp
+        ent.country = count
+        ent.destination = dest
+          
+        if !ent.save
+          fhelp.add_validation_record("#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}")
+          next
+        end
+        
+        fhelp.int = fhelp.int + 1
+        job_progress.update_progress(fhelp)
       end
       
-      ent = new
-      ent.type = type
-      str = (row["Name"])
-      ent.name = str
-      str = (row["Description"])
-      ent.description = str
-      str = (row["ImageName"])
-      ent.remote_url = str
-
-      ent.supplier = supp
-      ent.country = count
-      ent.destination = dest
-        
-      if !ent.save
-        errstr = "<br>" + "#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}" + errstr
-        val = val + 1
-        next
-      end
-      int = int + 1
-      
-      if int % 100 == 0 
-        job_progress.progress = (int + skip)
-        job_progress.save
-      end
-    end
- 
-    returnStr = "<strong>#{type} Import</strong><br>" +
-                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " created.<br>" +
-                skip.to_s + " records skipped due to record already exists<br>" +
-                val.to_s + " Validation errors"
-                
-    job_progress.summary = returnStr
-    job_progress.log = "Validation errors:" + errstr + "<br><br> Items Skipped:<br>" + skipstr
-    job_progress.complete = true
-    job_progress.save
-        
-    File.delete(filename)
-    return returnStr + errstr;
+    return fhelp;
   end
   
 end

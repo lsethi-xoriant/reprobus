@@ -174,22 +174,13 @@ class Customer < ActiveRecord::Base
   end
  
  
-  def self.importSupplier(file)
-    require 'roo'
-    
-    spreadsheet = Admin.open_spreadsheet(file)
+  def self.handle_file_import(spreadsheet, fhelp, job_progress, type)
     header = spreadsheet.row(1)
-    int = 0
-    skip = 0
-    val = 0
-    errstr = ""
-    returnStr = ""
-    
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       
       if (find_by_email(row["EmailAddress"]) || find_by_supplier_name(row["SupplierName"]))
-        skip = skip + 1 # trying to create a record that already exists with these details. skip it. 
+        fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to match on either email (#{row["EmailAddress"]}) or name (#{row["SupplierName"]})")
         next
       end
       
@@ -226,18 +217,13 @@ class Customer < ActiveRecord::Base
       curr = Currency.find_by_code(str)
       ent.currency = curr             
       if !ent.save
-        errstr = "<br>" + "Supplier: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}" + errstr 
-        val = val + 1
+        fhelp.add_validation_record("Supplier: #{ent.supplier_name} has validation errors - #{ent.errors.full_messages}")
         next
       end
-      int = int + 1
-      
+      fhelp.int = fhelp.int + 1
+      job_progress.update_progress(fhelp)
     end
-    
-    returnStr = "<strong>Supplier Import</strong><br>" + 
-                (spreadsheet.last_row - 1).to_s + " rows read.<br>" + int.to_s + " suppliers created.<br>" + 
-                skip.to_s + " records skipped due to record already exists<br>" + 
-                val.to_s + " Validation errors:"
-    return returnStr + errstr;
+
+    return fhelp;
   end     
 end

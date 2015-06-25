@@ -5,7 +5,8 @@ class DocumentUploadJob < ActiveJob::Base
     @type = type
     @jp = job_progress
     
-    @type.constantize.importfile(type, @jp)
+    #@type.constantize.importfile(type, @jp)
+    Admin.importfile(@type, @jp)
     # Do something later
   end
 end

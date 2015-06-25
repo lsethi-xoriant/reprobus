@@ -55,87 +55,77 @@ class StaticPagesController < ApplicationController
     render :layout => "application"
   end
   
+
+  
+
+  
   def import_countries
-    if !params[:file].nil? then 
-      
-      if !params[:file].original_filename.upcase.include?("COUNTRY")
-        flash[:warning] = "WARNING: Filename being imported does not include the word 'Country'!"
-        render import_path      
-        return
-      end
-      
-      @country_import_str = Country.import(params[:file])
+    if params[:import_file].nil? then
+      flash.now[:warning] = "No file selected!"
+      render "import", :layout => "application"
+      return
+    end  
+    
+    if !params[:import_file].original_filename.upcase.include?("COUNTRIES") && !params[:import_file].original_filename.upcase.include?("COUNTRY")
+      flash[:warning] = "WARNING: Filename does not include the word 'COUNTRIES'"
+      render "import", :layout => "application"  
+     else
+      Admin.import_job(params[:import_file],"Country")
       flash[:success] = "Countries imported!"
-      if @country_import_str
-        flash[:fileloadmsg] = @country_import_str
-      end        
-      redirect_to import_path
-    else
-      flash[:warning] = "No File!"
-      redirect_to import_path
+      redirect_to import_status_path
     end
-    cleanTempFile
   end
   
   def import_destinations
-    if !params[:file].nil? then 
-      
-      if !params[:file].original_filename.upcase.include?("DESTINAION")
-        flash[:warning] = "WARNING: Filename being imported does not include the word 'Destination'!"
-        render import_path      
-        return
-      end
-      
-      @destionation_import_str = Destination.import(params[:file])
-      flash[:success] = "Destinations imported!"
-      if @destionation_import_str
-        flash[:fileloadmsg] = @destionation_import_str
-      end        
-      redirect_to import_path
-    else
-      flash[:warning] = "No File!"
-      redirect_to import_path
-    end
-    cleanTempFile
+    if params[:import_file].nil? then
+      flash.now[:warning] = "No file selected!"
+      render "import", :layout => "application"
+      return
+    end  
+    
+    if !params[:import_file].original_filename.upcase.include?("DESTINATION")
+      flash[:warning] = "WARNING: Filename does not include the word 'Destination'"
+      render "import", :layout => "application"       
+      return
+    end 
+    
+    Admin.import_job(params[:import_file],"Destination")
+    flash[:success] = "Destinations imported!"
+    redirect_to import_status_path
   end  
 
   def import_suppliers
-    if !params[:file].nil? then 
-      
-      if !params[:file].original_filename.upcase.include?("SUPPLIER")
-        flash[:warning] = "WARNING: Filename being imported does not include the word 'Supplier'!"
-        render import_path      
-        return
-      end
-      
-      @supplier_import_str = Customer.importSupplier(params[:file])
-      flash[:success] = "Suppliers imported!"
-      if @supplier_import_str
-        flash[:fileloadmsg] = @supplier_import_str
-      end      
-      redirect_to import_path
-    else
-      flash[:warning] = "No File!"
-      redirect_to import_path
+    if params[:import_file].nil? then
+      flash.now[:warning] = "No file selected!"
+      render "import", :layout => "application"
+      return
+    end  
+    
+    if !params[:import_file].original_filename.upcase.include?("SUPPLIERS")
+      flash[:warning] = "WARNING: Filename does not include the word 'Suppliers'"
+      render "import", :layout => "application"        
+      return
     end
-    cleanTempFile
+    
+    Admin.import_job(params[:import_file], "Customer")
+    flash[:success] = "Suppliers import begun!"
+    redirect_to import_status_path    
   end  
 
-
   def import_products
-    if params[:file].nil? then
-      flash[:warning] = "No file selected!"
-      render import_path     
+    if params[:import_file].nil? then
+      flash.now[:warning] = "No file selected!"
+      render "import", :layout => "application"
       return
-    end
+    end  
     
-    if !params[:file].original_filename.upcase.include?(params[:type].upcase)
+    if !params[:import_file].original_filename.upcase.include?(params[:type].upcase)
       flash[:warning] = "WARNING: Filename does not match Product type being imported!"
-      render import_path      
+      render "import", :layout => "application"        
       return
     end
     
-    Product.import(params[:file],params[:type])
+    Admin.import_job(params[:import_file],params[:type])
     flash[:success] = params[:type].pluralize(2) + " import begun!"
     redirect_to import_status_path
   end

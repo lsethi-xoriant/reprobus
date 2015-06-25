@@ -1,44 +1,19 @@
 <% provide(:title, 'Import') %>
-
+<div class="loading">Loading...</div>
 <div class="section">
-  <% flash.each do |name, msg| %>
-    <%  if name == "fileloadmsg" %>
-      <%= content_tag :div, msg.html_safe, class: "card-panel blue lighten-3" %>
-    <% end %>
-  <% end %>
-  <% flash.discard(:fileloadmsg) %>
-  <% flash[:fileloadmsg] = "" %>
-  
 
-  
   <ul class="list-of-actions">
       <p><strong>Files should be imported in the order listed below.</strong> This is to allow linking of data through subsequent file loads.</p>
       <p>Imports can be either an csv or xlsx file. </p>
       <p>If a record already exists (matched by name) the import of that record will be ignored. </p>
+    <div class="divider"></div>  
     <li>
 	    <h4>Countries</h4> 
-        File should contain a header, and rows with the following fields:
-        <ul>
-          <li>- <strong>Country</strong> (mandatory)</li>
-        </ul>
-        <div class="section">   
-            <%= form_tag('/import_countries', multipart: true) do %>
-              <%= submit_tag "Import Countries", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
-         <% if @country_import_str %>
-           <p><strong><%= @country_import_str %></strong></p>
-         <% end %>
+      File should contain a header, and rows with the following fields:
+      <ul>
+        <li>- <strong>Country</strong> (mandatory)</li>
+      </ul>
+      <%= render partial: "form_import", locals: { formPath: '/import_countries', submitTag: "Import Countries" } %>
     </li>
     <div class="divider"></div>
     <li>
@@ -48,21 +23,7 @@
             <li>- <strong>Destination</strong> (mandatory)</li>
             <li>- <strong>Country</strong> (If existing Country present in application it will be matched by country name and linked, otherwise this field will be ignored) </li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_destinations', multipart: true) do %>
-              <%= submit_tag "Import Destinations", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        <%= render partial: "form_import", locals: { formPath: '/import_destinations', submitTag: "Import Destinations" } %>
     </li>
     <div class="divider"></div>
     <li>
@@ -83,21 +44,7 @@
             <li>- <strong>EmailAddress</strong></li>
             <li>- <strong>Currency</strong> (Must be a three letter currency code matching ISO country codes) </li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_suppliers', multipart: true) do %>
-              <%= submit_tag "Import Suppliers", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        <%= render partial: "form_import", locals: { formPath: '/import_suppliers', submitTag: "Import Suppliers" } %>
     </li>
     <div class="divider"></div>
     <h3 class="text-center">Products</h3>
@@ -115,22 +62,9 @@
             <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_products', multipart: true) do %>
-              <%= hidden_field_tag :type, '', value: "Transfer" %>
-              <%= submit_tag "Import Transfers", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Transfers" } %>
+
     </li>
     <div class="divider"></div>
     <li>
@@ -145,23 +79,9 @@
             <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_products', multipart: true) do %>
-              <%= hidden_field_tag :type, '', value: "Flight" %>
-            
-              <%= submit_tag "Import Flights", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Flights" } %>
+
     </li>
     <div class="divider"></div>
         <li>
@@ -176,22 +96,9 @@
             <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_products', multipart: true) do %>
-              <%= hidden_field_tag :type, '', value: "Tour" %>
-              <%= submit_tag "Import Tours", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Tours" } %>
+
     </li>
     <div class="divider"></div>
         <li>
@@ -206,23 +113,9 @@
             <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_products', multipart: true) do %>
-            <%= hidden_field_tag :type, '', value: "Hotel" %>
         
-              <%= submit_tag "Import Hotels", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Hotels" } %>
+
     </li>
     <div class="divider"></div>
         <li>
@@ -237,23 +130,9 @@
             <li>- <strong>Supplier</strong> (If existing Supplier present in application it will be matched by supplier name and linked, otherwise this field will be ignored)</li>
             <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
         </ul>
-        <div class="section">   
-            <%= form_tag('/import_products', multipart: true) do %>
-            <%= hidden_field_tag :type, '', value: "Cruise" %>
-            
-              <%= submit_tag "Import Cruises", class: "btn-large right" %>
-                  <div class="row">   
-                    <div class="file-field input-field">
-                      <div class="col s6 offset-s1">
-                        <input class="file-path validate input-field" type="text"/>
-                      </div>
-                      <div class="waves-effect waves-light btn"><span>Select File</span> 
-                      <%= file_field_tag :file, class: "file-path validate" %>
-                      </div>
-                    </div>
-                  </div>
-             <% end %>
-         </div>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Cruises" } %>
+
     </li>
     <div class="divider"></div>
   </ul>

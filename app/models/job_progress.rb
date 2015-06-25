@@ -16,6 +16,8 @@ class JobProgress < ActiveRecord::Base
   scope :in_progress, -> { where(complete: false) }
   scope :completed, -> { where(complete: false) }
   
+  mount_uploader :import_file, ImportUploader
+  
   def initiate_settings(name, total)
     self.name = name
     self.started = true
@@ -26,6 +28,13 @@ class JobProgress < ActiveRecord::Base
   end
   
   def get_display_details
-    return self.name + " - total rows : " + self.total.to_s + ", successfully imported : " + self.progress.to_s + ", uploaded on " + self.created_at.strftime("%Y-%m-%d")
+    return self.name + ": " + self.total.to_s + " total rows, " +  self.progress.to_s + " successfully imported, " + " uploaded on " + self.created_at.strftime("%Y-%m-%d")
+  end
+  
+  def update_progress(fhelp)
+    if fhelp.int % 100 == 0 
+      self.progress = (fhelp.int + fhelp.skip)
+      self.save
+    end  
   end
 end
