@@ -38,6 +38,7 @@ gem 'faker', '1.4.2'
 gem 'will_paginate', '3.0.4'
 gem 'materialize-sass', '0.96.1'
 gem 'carrierwave'
+gem "fog"
 gem 'mini_magick'   # changed from rmagick
 #gem 'rmagick'   # changed as causing issues installing gems
 #gem 'select2-rails' #installed directly in vendor folder as wanted lastest version.
