@@ -28,8 +28,8 @@
 #  phone              :string
 #
 
-class Flight < Product
+class HotelRoom < Product
   def self.sti_name
-    "Flight"
+    "HotelRoom"
   end
 end

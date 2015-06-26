@@ -13,18 +13,20 @@ class Products::ProductsController < ApplicationController
   end
   
   def new
+    @setting = Setting.find(1)
     @product = Product.new
     @product.type = params[:type]
   end
   
   def create
+    @setting = Setting.find(1)
     @product = Product.new(product_params)
     #@product.type = params[:type]
     @product.image = params[:image]
 
     if @product.save
       flash[:success] = "#{@product.name} created!"
-      redirect_to product_index_path(@product)
+      redirect_to product_index_path(@product, :html)
     else
       render 'new'
     end
@@ -36,11 +38,12 @@ class Products::ProductsController < ApplicationController
   end
   
   def update
+    @setting = Setting.find(1)
     @product = Product.find(params[:id])
-    
+   
     if @product.update_attributes(product_params)
       flash[:success] = "#{@product.name} updated!"
-      redirect_to product_index_path @product
+      redirect_to product_index_path(@product, :html)
     else
       render 'edit'
     end
@@ -49,14 +52,17 @@ class Products::ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id]).destroy
     flash[:success] = "#{@product.type} deleted."
-    redirect_to product_index_path @product
+    redirect_to product_index_path(@product, :html)
   end
   
 
 private
     def product_params
-      params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image, :image_cache,
-        :price_single, :price_double, :price_tripple, :product_type, :room_type, :rating, :default_length, :remote_url,
-        :supplier_id)
+      params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image,
+        :image_cache, :supplier_id, :address, :phone, :price_single, :price_double, :price_triple, 
+        :room_type, :rating, :default_length, :remote_url,
+        hotel_rooms_attributes: [:id, :hotel_id, :type, :name, :description, :country_id, :destination_id, :image, :image_cache,
+        :price_single, :price_double, :price_triple, :room_type, :rating, :default_length, :remote_url,
+        :supplier_id, :_destroy])
     end
 end

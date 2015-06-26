@@ -65,7 +65,6 @@ class Itinerary < ActiveRecord::Base
                             end_date: endleg,
                             country: i.product.country_name,
                             city: i.product.destination_name,
-                            product_type: i.product.type,
                             product_name: i.product.name,
                             product_description: i.product.description,
                             product_price: i.product.price_single,

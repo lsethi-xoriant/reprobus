@@ -1,7 +1,11 @@
-/* UPDATE NPROGRESS STYLE*/
+
 
 .product_image {
   max-height: 250px;
+}
+
+.product_image_mini {
+  max-height: 150px;
 }
 
 .toast-success {

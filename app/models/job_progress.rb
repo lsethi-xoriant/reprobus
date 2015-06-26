@@ -2,14 +2,17 @@
 #
 # Table name: job_progresses
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  total      :integer
-#  progress   :integer
-#  complete   :boolean
-#  started    :boolean
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  name        :string
+#  total       :integer
+#  progress    :integer
+#  complete    :boolean
+#  started     :boolean
+#  summary     :text
+#  log         :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  import_file :string
 #
 
 class JobProgress < ActiveRecord::Base

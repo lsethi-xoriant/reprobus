@@ -5,8 +5,6 @@
 #  id                 :integer          not null, primary key
 #  type               :string
 #  name               :string
-#  country_search     :string
-#  destination_search :string
 #  description        :text
 #  price_single       :decimal(12, 2)
 #  price_double       :decimal(12, 2)
@@ -22,7 +20,12 @@
 #  image              :string
 #  country_id         :integer
 #  destination_id     :integer
+#  country_search     :string
+#  destination_search :string
 #  remote_url         :string
+#  hotel_id           :integer
+#  address            :text
+#  phone              :string
 #
 
 class Product < ActiveRecord::Base
@@ -31,7 +34,10 @@ class Product < ActiveRecord::Base
   validates :type,:name, presence: true
   #validates :supplier_id,  presence: true
   
-
+  has_many :hotel_rooms, :class_name => "Product", :foreign_key => "hotel_id"
+  accepts_nested_attributes_for :hotel_rooms, allow_destroy: true; 
+  belongs_to :hotel, :class_name => "Product"
+  
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos
   belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
@@ -50,7 +56,7 @@ class Product < ActiveRecord::Base
   end
   
   def product_details
-    return self.type.upcase + " | " + self.name + " | " + self.destination_name + " | " + self.country_name
+    return "#{self.type.upcase} | #{self.name} | #{self.destination_name} | #{self.country_name}"
   end
   
   def country_name

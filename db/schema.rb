@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625054005) do
+ActiveRecord::Schema.define(version: 20150626052905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -374,8 +374,6 @@ ActiveRecord::Schema.define(version: 20150625054005) do
     t.boolean  "started"
     t.text     "summary"
     t.text     "log"
-    t.string   "file_path"
-    t.string   "file_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "import_file"
@@ -412,8 +410,7 @@ ActiveRecord::Schema.define(version: 20150625054005) do
     t.text     "description"
     t.decimal  "price_single",       precision: 12, scale: 2
     t.decimal  "price_double",       precision: 12, scale: 2
-    t.decimal  "price_tripple",      precision: 12, scale: 2
-    t.string   "product_type"
+    t.decimal  "price_triple",       precision: 12, scale: 2
     t.string   "room_type"
     t.string   "rating"
     t.string   "destination"
@@ -427,6 +424,9 @@ ActiveRecord::Schema.define(version: 20150625054005) do
     t.string   "country_search"
     t.string   "destination_search"
     t.string   "remote_url"
+    t.integer  "hotel_id"
+    t.text     "address"
+    t.string   "phone"
   end
 
   add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree

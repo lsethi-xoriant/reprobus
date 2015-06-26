@@ -33,7 +33,16 @@ class Setting < ActiveRecord::Base
   has_many :triggers, -> { order ('id ASC') }
   accepts_nested_attributes_for :triggers
  
- 
+  before_save :reset_dropbox
+
+  def reset_dropbox
+    if !self.use_dropbox
+      self.dropbox_default_path = ""
+      self.dropbox_session =  ""
+      self.dropbox_user
+    end
+  end
+  
   def dropbox_default_path=(value)
     if !value.blank?
       value = value + "/" if value[-1] != "/"
@@ -42,6 +51,7 @@ class Setting < ActiveRecord::Base
     
     self[:dropbox_default_path] = value
   end
+  
  
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")

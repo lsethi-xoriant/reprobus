@@ -17,11 +17,7 @@
   <div class ="row">
     <div class="field">
       <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
-      <%#= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
-      <div class="input-field col s5">
-        <%= f.text_field "last_name" %>
-        <%= f.label :last_name %>
-      </div>
+      <%= render partial: 'shared/material_textfield_cols5', locals: { field: "last_name", f: f } %>
     </div>
   </div>
   
@@ -43,5 +39,6 @@
       <% end %>
     </div>
   </div>
-  </div>
+  
+</div>
 </div>
