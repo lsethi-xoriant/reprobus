@@ -33,7 +33,7 @@
         <div class="field">
           <%= render partial: 'shared/material_textfield_cols6', locals: { field: "remote_url", f: f, name: name } %>
           <div class="input-field col offset-s2 s4">
-          <%= image_tag(@product.get_dropbox_image_link, :class => "product_image_mini") %>
+          <%= image_tag(f.object.get_dropbox_image_link, :class => "product_image_mini") %>
           </div>
         </div>
       </div>
