@@ -102,7 +102,7 @@ class SearchesController < ApplicationController
   end
 
   def supplier_search
-    @customers = Customer.select([:id, :supplier_name, :cust_sup, :currency_id, :num_days_payment_due]).where("cust_sup ILIKE :p", p: "Supplier" ).
+    @customers = Customer.includes(:currency).select([:id, :supplier_name, :cust_sup, :currency_id, :num_days_payment_due]).where("cust_sup ILIKE :p", p: "Supplier" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
                             order('last_name')
     

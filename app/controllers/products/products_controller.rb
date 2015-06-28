@@ -59,10 +59,10 @@ class Products::ProductsController < ApplicationController
 private
     def product_params
       params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image,
-        :image_cache, :supplier_id, :address, :phone, :price_single, :price_double, :price_triple, 
+        :image_cache, {:supplier_ids => []}, :address, :phone, :price_single, :price_double, :price_triple, 
         :room_type, :rating, :default_length, :remote_url,
-        hotel_rooms_attributes: [:id, :hotel_id, :type, :name, :description, :country_id, :destination_id, :image, :image_cache,
+        rooms_attributes: [:id, :hotel_id, :type, :name, :description, :country_id, :destination_id, :image, :image_cache,
         :price_single, :price_double, :price_triple, :room_type, :rating, :default_length, :remote_url,
-        :supplier_id, :_destroy])
+        {:supplier_ids => []}, :_destroy])
     end
 end

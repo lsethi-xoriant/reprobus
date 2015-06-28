@@ -79,7 +79,9 @@ class Customer < ActiveRecord::Base
   has_many    :bookings
   belongs_to  :currency
 
-  has_many    :products, :foreign_key => "supplier_id"
+  #has_many    :products, :foreign_key => "supplier_id"
+  has_and_belongs_to_many :products, :class_name => "Product", :join_table => "customers_products", :foreign_key => :customer_id
+    
   has_many    :template_infos, :foreign_key => "supplier_id"
   has_many    :itineraries
    

@@ -9,6 +9,7 @@
         <%= job_progress.get_display_details %> 
       </div>
       <div id="import_log_<%= job_progress.id%>" class="collapsible-body">
+        <p><%= job_progress.summary.html_safe if job_progress.summary %></p>
         <p><%= job_progress.log.html_safe %></p>
       </div>
   </li>

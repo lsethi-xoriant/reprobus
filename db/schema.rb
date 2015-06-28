@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626052905) do
+ActiveRecord::Schema.define(version: 20150627040951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,14 @@ ActiveRecord::Schema.define(version: 20150626052905) do
 
   add_index "customers_enquiries", ["customer_id"], name: "index_customers_enquiries_on_customer_id", using: :btree
   add_index "customers_enquiries", ["enquiry_id"], name: "index_customers_enquiries_on_enquiry_id", using: :btree
+
+  create_table "customers_products", id: false, force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "product_id"
+  end
+
+  add_index "customers_products", ["customer_id"], name: "index_customers_products_on_customer_id", using: :btree
+  add_index "customers_products", ["product_id"], name: "index_customers_products_on_product_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -415,7 +423,6 @@ ActiveRecord::Schema.define(version: 20150626052905) do
     t.string   "rating"
     t.string   "destination"
     t.integer  "default_length"
-    t.integer  "supplier_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
@@ -428,8 +435,6 @@ ActiveRecord::Schema.define(version: 20150626052905) do
     t.text     "address"
     t.string   "phone"
   end
-
-  add_index "products", ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "company_name",         limit: 255

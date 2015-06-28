@@ -33,6 +33,8 @@ en:
         cc_mastercard: "Mastercard % fee"
         cc_visa: "Visa % fee"
         cc_amex: "Other CC % fee"
+      product/hotel_rooms:
+        name: "Hotel Rooms room type"
     errors:
       models:
         setting:

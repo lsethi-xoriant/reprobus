@@ -34,13 +34,15 @@ class Product < ActiveRecord::Base
   validates :type,:name, presence: true
   #validates :supplier_id,  presence: true
   
-  has_many :hotel_rooms, :class_name => "Product", :foreign_key => "hotel_id"
-  accepts_nested_attributes_for :hotel_rooms, allow_destroy: true; 
+  has_many :rooms, :class_name => "Product", :foreign_key => "hotel_id"
+  accepts_nested_attributes_for :rooms, allow_destroy: true; 
   belongs_to :hotel, :class_name => "Product"
   
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos
-  belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
+  #belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
+  has_and_belongs_to_many :suppliers, :class_name => "Customer", :join_table => "customers_products", :association_foreign_key  => :customer_id
+  
   belongs_to  :country
   belongs_to  :destination
 
@@ -51,8 +53,12 @@ class Product < ActiveRecord::Base
     self.destination_search = self.destination_name
   end
 
-  def supplierName
-    return self.supplier.supplier_name if self.supplier
+  def supplierNames
+    names = ""
+    self.suppliers.each do |sup|
+      names = names + "#{sup.supplier_name}, "
+    end
+    return names.chomp(", ") 
   end
   
   def product_details
@@ -76,46 +82,74 @@ class Product < ActiveRecord::Base
   end
   
   def self.handle_file_import(spreadsheet, fhelp, job_progress, type)
+    # NOTE: 'Room' type has this method overwritten in subclass
       header = spreadsheet.row(1)
+      header = header.map(&:upcase)
+      
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-  
-        if type != "Transfer" && Product.where(type: type).find_by_name(row["Name"])
-          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]}")
-          next
-        end
+        ent = nil
+        update = false
         
-        count = Country.find_by_name(row["Country"])
-        dest = Destination.find_by_name(row["Destination"])
-        supp = Customer.find_by_supplier_name(row["Supplier"])
-            
-        if type == "Transfer"
+        count = Country.find_by_name(row["COUNTRY"])
+        dest = Destination.find_by_name(row["DESTINATION"])
+        row["SUPPLIER"] ? supp = Customer.find_by_supplier_name(row["SUPPLIER"]) : supp = nil
+        
+        if type == "Transfer" 
           # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
-          if Transfer.where(supplier_id: supp).where(country_id: count).where(destination_id: dest).where(name: row["Name"]).count > 0
-            fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to matches on: #{row["Name"]} | #{row["Country"]} | #{row["Destination"]} | #{row["Supplier"]}");
+          if Transfer.includes(:suppliers).where("customers_products.customer_id" => supp).where(country_id: count).where(destination_id: dest).where(name: row["NAME"]).count > 0
+            fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to existing match on: #{row["NAME"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]} | #{row["SUPPLIER"]}");
             next
           end
+          # if we have a transfer matching on name, country and destination, add the supplier to this one. 
+          ent = Transfer.find_by name: row["NAME"], country_id: count, destination_id: dest
+        elsif type == "Hotel"
+          if Hotel.includes(:suppliers).where("customers_products.customer_id" => supp).where(country_id: count).where(destination_id: dest).where(name: row["NAME"]).count > 0
+            fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to match on: #{row["NAME"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]} | #{row["SUPPLIER"]}");
+            next
+          end
+          # if we have a transfer matching on name, country and destination, add the supplier to this one. 
+          ent = Hotel.find_by name: row["NAME"], country_id: count, destination_id: dest
+        else
+          if Product.includes(:suppliers).where("customers_products.customer_id" => supp).where(type: type).find_by_name(row["NAME"])
+            fhelp.add_skip_record("Row " + (i-1).to_s + " skipped due to existing match on: #{row["NAME"]}")
+            next
+          end
+          ent = Product.find_by name: row["NAME"]
         end
         
-        ent = new
+        if ent
+          # we matched to existing record, it can be updated. 
+          fhelp.add_update_record("Row " + (i-1).to_s + " record updated to existing match on: #{row["NAME"]}")
+          update = true
+        else
+          ent = new
+        end
+        
         ent.type = type
-        str = (row["Name"])
+        str = (row["NAME"])
         ent.name = str
-        str = (row["Description"])
+        str = (row["DESCRIPTION"])
         ent.description = str
-        str = (row["ImageName"])
+        str = (row["IMAGENAME"])
         ent.remote_url = str
   
-        ent.supplier = supp
+        ent.suppliers << supp if supp
         ent.country = count
         ent.destination = dest
+        
+        if type == "Hotel"
+          ent.address = (row["ADDRESS"])
+          ent.phone = (row["PHONE"])
+          ent.rating  = (row["RATING"])
+        end  
           
         if !ent.save
-          fhelp.add_validation_record("#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}")
+          fhelp.add_validation_record("Row " + (i-1).to_s + " : #{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}")
           next
         end
         
-        fhelp.int = fhelp.int + 1
+        fhelp.int = fhelp.int + 1 if !update
         job_progress.update_progress(fhelp)
       end
       

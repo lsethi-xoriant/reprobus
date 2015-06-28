@@ -59,20 +59,18 @@ class Admin < ActiveRecord::Base
     fhelp = FileLoadHelper.new
     fhelp.setdefaults
 
-    job_progress.initiate_settings(type + " Import"  ,spreadsheet.last_row)
+    job_progress.initiate_settings(type + " Import"  ,(spreadsheet.last_row-1))
     job_progress.save    
     
     type.constantize.handle_file_import(spreadsheet, fhelp, job_progress, type)
     
     fhelp.returnStr = "<strong>#{type} Import</strong><br>" +
-                      (spreadsheet.last_row - 1).to_s + " rows read.<br>" + fhelp.int.to_s + " created.<br>" +
-                      fhelp.skip.to_s + " records skipped due to record already exists<br>" +
+                      (spreadsheet.last_row - 1).to_s + " rows read.<br>" + fhelp.int.to_s + " new records created.<br>" +
+                      fhelp.up.to_s + " records updated due to being matched<br>" +
+                      fhelp.skip.to_s + " records skipped due to record already existing<br>" +
                       fhelp.val.to_s + " Validation errors"
                 
-    job_progress.summary = fhelp.returnStr
-    job_progress.log = "Validation errors:" + fhelp.errstr + "<br><br> Items Skipped:<br>" + fhelp.skipstr
-    job_progress.complete = true
-    
+    job_progress.log_finish(fhelp)
     job_progress.remove_import_file! #delete file now we have uploaded it. 
     job_progress.save
   end

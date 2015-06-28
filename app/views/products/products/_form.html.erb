@@ -28,8 +28,10 @@
       
     <div class="row">
       <div class="input-field col s6">
-        <%= f.select(:supplier_id, options_for_select([[f.object.supplierName, f.object.supplier_id]],f.object.supplier_id),{},{class: "select2-suppliers browser-default"}) %>
-        <%= f.label :supplier_id, "Supplier",  class: 'active' %>
+        <%#= f.select(:supplier_ids, options_for_select([[f.object.supplierNames, f.object.supplier_ids]],f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
+        <%= f.select(:supplier_ids, options_from_collection_for_select(f.object.suppliers, :id, :supplier_name, f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
+        
+        <%= f.label :supplier_ids, "Suppliers",  class: 'active' %>
       </div>
     </div>
 
@@ -64,7 +66,7 @@
 	    
 	      <h4 class="header2">Hotel Rooms</h4>
 	      <div id="hotel_rooms">
-    	  <%= f.fields_for :hotel_rooms, :html => {:class => "col s12"}  do |c| %>
+    	  <%= f.fields_for :rooms, :html => {:class => "col s12"}  do |c| %>
     	    <div class="row">
       	    <%= render partial: 'hotel_room', locals: { f: c } %>
       	  </div>
@@ -73,7 +75,7 @@
   	    <div class="links">
     	    <div class="row">
     	      <div class="offset-s10 col s2">
-              <%= link_to_add_association  f, :hotel_rooms, {partial: 'hotel_room', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+              <%= link_to_add_association  f, :rooms, {partial: 'hotel_room', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
                 <i class="mdi-content-add"></i>
               <% end %>
             </div>

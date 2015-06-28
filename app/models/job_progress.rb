@@ -31,7 +31,16 @@ class JobProgress < ActiveRecord::Base
   end
   
   def get_display_details
-    return self.name + ": " + self.total.to_s + " total rows, " +  self.progress.to_s + " successfully imported, " + " uploaded on " + self.created_at.strftime("%Y-%m-%d")
+    return "#{self.name} : #{self.total.to_s} total rows, #{self.progress.to_s} successfully imported, uploaded on " + self.created_at.strftime('%Y-%m-%d')
+  end
+  
+  
+  def log_finish(fhelp)
+    self.summary = fhelp.returnStr
+    self.log = "Validation errors:" + fhelp.errstr + "<br><br>" if !fhelp.errstr.blank? 
+    self.log = self.log + "Items Skipped:<br>" + fhelp.skipstr + "<br><br>" if !fhelp.skipstr.blank?
+    self.log = self.log + "Records Updated:<br>" + fhelp.upstr if !fhelp.upstr.blank?
+    self.complete = true
   end
   
   def update_progress(fhelp)

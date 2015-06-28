@@ -18,7 +18,7 @@ $(document).ready(function(){
               } else if (data.complete) {
                 
                 $("#import_report_"+data.id).text(data.summary);
-                $("#import_log_"+data.id).append("<p>" + data.log + "</p>");
+                $("#import_log_"+data.id).html("<p>" + data.log + "</p>");
                 $("#import_log_"+data.id).data("completed", "true");
                 $("#import_report_"+data.id).removeClass("amber");
                 $("#import_report_"+data.id).addClass("light-green");

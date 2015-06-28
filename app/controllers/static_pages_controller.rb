@@ -122,7 +122,7 @@ class StaticPagesController < ApplicationController
     end
     
     Admin.import_job(params[:import_file],params[:type])
-    flash[:success] = params[:type].pluralize(2) + " import begun!"
+    flash[:success] = params[:type].underscore.humanize + " import begun!"
     redirect_to import_status_path
   end
     
@@ -131,7 +131,7 @@ class StaticPagesController < ApplicationController
     respond_to do |format|
       if @job_progress
         format.json { render json: {id: @job_progress.id, complete: @job_progress.complete, progress: @job_progress.progress, total: @job_progress.total,
-                                  summary: @job_progress.get_display_details, log: @job_progress.log, name: @job_progress.name} }
+                                  summary: @job_progress.get_display_details, log: "#{@job_progress.summary} #{@job_progress.log}", name: @job_progress.name} }
       end
     end    
   end

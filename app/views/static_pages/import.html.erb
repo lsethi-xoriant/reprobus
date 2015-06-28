@@ -1,7 +1,9 @@
 <% provide(:title, 'Import') %>
 <div class="loading">Loading...</div>
 <div class="section">
-
+  
+  <a href=<%= import_status_path %>><button type="button" class="waves-effect waves-light btn right">Previous Imports</button></a>
+  
   <ul class="list-of-actions">
       <p><strong>Files should be imported in the order listed below.</strong> (This will allow linking of data through subsequent file loads.)</p> 
       <p>Files <strong>must</strong> have a file name that includes the type of data being imported (for example for Tours the file could be called <em>toursample.xls</em>)</strong></p>
@@ -12,6 +14,7 @@
 	    <h4>Countries</h4> 
       File should contain a header, and rows with the following fields:
       <ul>
+        <!--<li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>-->
         <li>- <strong>Country</strong> (mandatory)</li>
       </ul>
       <%= render partial: "form_import", locals: { formPath: '/import_countries', submitTag: "Import Countries", productType: "" } %>
@@ -32,7 +35,7 @@
 	      Note: Record will be ignored if it contains the same email or name as an existing Supplier. 
         File should contain a header with optional rows of the following fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+            <!--<li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>-->
             <li>- <strong>SupplierName</strong> (mandatory)</li>
             <li>- <strong>AddressLine1</strong></li>
             <li>- <strong>AddressLine2</strong></li>
@@ -55,7 +58,6 @@
 	      Note:  Imported records will only be ignored if there is an existing match present on Name, Destination & Country (as opposed to just name as with other products)  
         File should contain a header and rows with the following optional fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
             <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
             <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>
@@ -72,7 +74,6 @@
 	    <h4>Flights</h4> 
         File should contain a header and rows with the folling fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
             <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
             <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>
@@ -89,7 +90,6 @@
 	    <h4>Tours</h4> 
         File should contain a header and rows with the folling fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
             <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
             <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>
@@ -106,7 +106,6 @@
 	    <h4>Hotels</h4> 
         File should contain a header and rows with the folling fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
             <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
             <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>
@@ -120,10 +119,27 @@
     </li>
     <div class="divider"></div>
         <li>
+	    <h4>Hotel Rooms</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+
+            <li>- <strong>Hotel</strong> (to match to existing Hotel, along with Destination, and Country)</li>
+            <li>- <strong>RoomType</strong> (mandatory)</li>
+            <li>- <strong>Description</strong></li>
+            <li>- <strong>Destination</strong> (to match to existing Hotel, along with Hotel Name, and Country)</li>
+            <li>- <strong>Country</strong>  (to match to existing Hotel, along with Destination, and Country) </li>    
+            <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
+        </ul>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Hotels", productType: "Room" } %>
+
+    </li>    
+    <div class="divider"></div>
+        <li>
 	    <h4>Cruises</h4> 
         File should contain a header and rows with the folling fields:
         <ul>
-            <li>- <strong>ID</strong> (if updating existing records - can be left blank for new records)</li>
+
             <li>- <strong>Name</strong> (mandatory)</li>
             <li>- <strong>Description</strong></li>
             <li>- <strong>Destination</strong> (If existing Destination present in application it will be matched by destination name and linked, otherwise this field will be ignored)</li>

@@ -6,13 +6,13 @@ class ProductDatatable < AjaxDatatablesRails::Base
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
-    @sortable_columns ||= %w(Product.name Product.destination_search Product.country_search Customer.supplier_name)
+    @sortable_columns ||= %w(Product.name Product.destination_search Product.country_search)
 
   end
 
   def searchable_columns
     # Declare strings in this format: ModelName.column_name
-    @searchable_columns ||= %w(Product.name Product.destination_search Product.country_search Customer.supplier_name)
+    @searchable_columns ||= %w(Product.name Product.destination_search Product.country_search)
 
   end
 
@@ -26,7 +26,7 @@ class ProductDatatable < AjaxDatatablesRails::Base
         record.name, 
         record.destination_search, 
         record.country_search, 
-        record.supplierName,
+        record.supplierNames,
         link_to("<i class='mdi-image-edit'></i>".html_safe, get_edit_path(record), class: "btn-floating waves-effect waves-light blue")
       ]
     end
@@ -34,6 +34,6 @@ class ProductDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     # insert query here
-    Product.joins(:supplier).where(type: options[:type])
+    Product.includes(:suppliers).where(type: options[:type])
   end
 end
