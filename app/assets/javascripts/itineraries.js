@@ -26,6 +26,7 @@ $(document).ready(function() {
       $(this).closest(".field").find(".select2-products").val(null).trigger("change");
     });
     
+
   }
   
     

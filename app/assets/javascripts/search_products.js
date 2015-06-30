@@ -32,7 +32,6 @@ function getCountrySearchTerm(theSelect2Element) {
 function getTypeSearchTerm(theSelect2Element) {
   var nextProdField = $(theSelect2Element).closest('.field').find(".type-itineraries");
   // materialize does funny stuff with select boxes, so return value to get right value
-  //console.log($(nextProdField)[1].value);
   return $(nextProdField)[1].value;
 }
 
@@ -68,40 +67,16 @@ function initProductSelect2() {
     templateSelection: formatProductSelection
   }).on('select2:open', function(e){ 
    theSelect2Element = e.currentTarget;});
-  /*
-  // reinit if destination field udpated with destination field set. i.e itinerary templage field. 
-  var $eventSelect = $(".select2-destinations");
+
+   
+  /* on selection of product set other fields in row - i.e the itinerary templage form */
+  var $eventSelect = $(".select2-products");
   $eventSelect.on("select2:select", function (e) {
-    destination_search_term = $(this).val();
-    // find closes select products field in the field container. 
-    var nextProdField = $(this).closest('.field').find(".select2-products");
-    // now re-init it with the destination search params set. 
-    nextProdField.select2({
-      ajax: {
-        url: "/searches/product_search",
-        dataType: 'json',
-        delay: 250,
-        data: function (params) {
-          return {
-            q: params.term, // search term
-            destination: destination_search_term,
-            page: params.page
-          };
-        },
-        processResults: function (data, page) {
-          // parse the results into the format expected by Select2.
-          // since we are using custom formatting functions we do not need to
-          // alter the remote JSON data
-          return {
-            results: data.items
-          };
-        },
-        cache: true
-      },
-      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-      minimumInputLength: 1,
-      templateResult: formatProduct,
-      templateSelection: formatProductSelection
-    });
-  });    */  
+  var nextProdField = $(this).closest('.field').find(".product_details");
+  nextProdField.val(e.params.data.type + " | "  + e.params.data.name + " | "  + e.params.data.city + " | "  + e.params.data.country);
+  nextProdField.next().addClass('active'); // set label to be active.
+  
+  // add cruises if necessary....
+  
+  });  
 }
