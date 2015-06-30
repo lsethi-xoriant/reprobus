@@ -16,8 +16,14 @@ $(document).ready(function() {
   function formatDestinationSelection (searchOb) {
     return searchOb.text;
   }
+  
+  function getCountrySearchTerm(theSelect2Element) {
+    var nextProdField = $(theSelect2Element).closest('.field').find(".select2-countries");
+    return $(nextProdField).val();
+  } 
  
   function initDestinationSelect2() {
+   var theSelect2Element = null;
    $(".select2-destinations").select2({
     ajax: {
       url: "/searches/destination_search",
@@ -26,6 +32,7 @@ $(document).ready(function() {
       data: function (params) {
         return {
           q: params.term, // search term
+          country: getCountrySearchTerm(theSelect2Element),
           page: params.page
         };
       },
@@ -43,7 +50,8 @@ $(document).ready(function() {
    // minimumInputLength: 1,
     templateResult: formatDestination,
     templateSelection: formatDestinationSelection
-   });
+   }).on('select2:open', function(e){ 
+   theSelect2Element = e.currentTarget;});
    
    
    

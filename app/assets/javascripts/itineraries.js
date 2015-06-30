@@ -20,8 +20,8 @@ $(document).ready(function() {
     });
     
     $('.select2-countries').on('change', function(e) {
-      $(this).closest(".field").find(".type-itineraries").material_select('destroy');
-      $(this).closest(".field").find(".type-itineraries").val("Type").material_select();
+    //$(this).closest(".field").find(".type-itineraries").material_select('destroy');
+    //  #$(this).closest(".field").find(".type-itineraries").val("Type").material_select();
       $(this).closest(".field").find(".select2-destinations").val(null).trigger("change");
       $(this).closest(".field").find(".select2-products").val(null).trigger("change");
     });

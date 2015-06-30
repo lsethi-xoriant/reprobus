@@ -31,8 +31,9 @@ function getCountrySearchTerm(theSelect2Element) {
 
 function getTypeSearchTerm(theSelect2Element) {
   var nextProdField = $(theSelect2Element).closest('.field').find(".type-itineraries");
-  console.log($(nextProdField));
-  return $(nextProdField).val();
+  // materialize does funny stuff with select boxes, so return value to get right value
+  //console.log($(nextProdField)[1].value);
+  return $(nextProdField)[1].value;
 }
 
 function initProductSelect2() {

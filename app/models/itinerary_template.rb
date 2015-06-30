@@ -16,6 +16,6 @@ class ItineraryTemplate < ActiveRecord::Base
   
   has_many :itineraries
   has_many :itinerary_template_infos, -> { order("position ASC")}
-  accepts_nested_attributes_for :itinerary_template_infos
+  accepts_nested_attributes_for :itinerary_template_infos, allow_destroy: true
   
 end

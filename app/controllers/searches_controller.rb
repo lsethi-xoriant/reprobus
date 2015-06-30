@@ -70,10 +70,14 @@ class SearchesController < ApplicationController
   end
 
   def destination_search
-    @entities = Destination.select([:id, :name]).
+    @entities = Destination.select([:id, :name, :country_id]).
                             where("name ILIKE :q", q: "%#{params[:q]}%").
                             order('name')
-  
+                            
+    if params[:country] != ""
+      @entities = @entities.where("country_id = :country", country: params[:country].to_i)
+    end   
+    
     resources_count = @entities.size
 
     respond_to do |format|
@@ -88,7 +92,7 @@ class SearchesController < ApplicationController
                             order('name')   
 puts "HAMISHG" + params[:type]
 
-    if params[:type] != ""
+    if params[:type] != "" && params[:type] != "Type"  
       @products = @products.where("type = :type", type: params[:type])
     end
       
