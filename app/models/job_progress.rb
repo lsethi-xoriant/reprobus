@@ -21,13 +21,15 @@ class JobProgress < ActiveRecord::Base
   
   mount_uploader :import_file, ImportUploader
   
-  def initiate_settings(name, total)
+  def initiate_settings(name, type, total)
+    self.job_type = type
     self.name = name
     self.started = true
     self.complete = false
     self.progress = 0
     self.total = total
     self.log = ""
+    self.run_live = false
   end
   
   def get_display_details

@@ -1,0 +1,18 @@
+<h4 class="header2">Cruise Legs</h4>
+<div id="cruise_days">
+  <%= f.fields_for :cruise_days, :html => {:class => "col s12"}  do |c| %>
+    <div class="row">
+	    <%= render partial: 'cruise_day', locals: { f: c } %>
+	  </div>
+  <% end %>
+  
+  <div class="links">
+    <div class="row">
+      <div class="offset-s10 col s2">
+        <%= link_to_add_association  f, :cruise_days, {partial: 'cruise_day', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+          <i class="mdi-content-add"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

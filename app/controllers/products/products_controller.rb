@@ -58,11 +58,14 @@ class Products::ProductsController < ApplicationController
 
 private
     def product_params
-      params.require(:product).permit(:type, :name, :description, :country_id, :destination_id, :image,
-        :image_cache, {:supplier_ids => []}, :address, :phone, :price_single, :price_double, :price_triple, 
-        :room_type, :rating, :default_length, :remote_url,
-        rooms_attributes: [:id, :hotel_id, :type, :name, :description, :country_id, :destination_id, :image, :image_cache,
-        :price_single, :price_double, :price_triple, :room_type, :rating, :default_length, :remote_url,
-        {:supplier_ids => []}, :_destroy])
+      params.require(:product).permit(:type, :name, :description, :country_id, :phone,
+        :destination_id, :image, :image_cache, {:supplier_ids => []}, :address, :price_single, 
+        :price_double, :price_triple,:room_type, :rating, :default_length, :remote_url,
+        rooms_attributes: [:id, :hotel_id, :type, :name, :description, :country_id, 
+        :destination_id, :image, :image_cache, :price_single, :price_double, :price_triple, 
+        :room_type, :rating, :default_length, :remote_url, {:supplier_ids => []}, :_destroy],
+        cruise_days_attributes: [:id, :cruise_id, :type, :name, :description, :country_id, 
+        :destination_id, :image, :image_cache, :price_single, :price_double, :price_triple, 
+        :room_type, :rating, :default_length, :remote_url, {:supplier_ids => []}, :_destroy])
     end
 end

@@ -1,0 +1,18 @@
+<h4 class="header2"><%=name%></h4>
+<div id="hotel_rooms">
+  <%= f.fields_for :rooms, :html => {:class => "col s12"}  do |c| %>
+    <div class="row">
+	    <%= render partial: 'hotel_room', locals: { f: c } %>
+	  </div>
+  <% end %>
+  
+  <div class="links">
+    <div class="row">
+      <div class="offset-s10 col s2">
+        <%= link_to_add_association  f, :rooms, {partial: 'hotel_room', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+          <i class="mdi-content-add"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

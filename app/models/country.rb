@@ -15,7 +15,7 @@ class Country < Admin
   
   require 'roo'
   
-  def self.handle_file_import(spreadsheet, fhelp, job_progress, type)
+  def self.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
@@ -30,7 +30,8 @@ class Country < Admin
       ent = new
       ent.name = str
       
-      if !ent.save
+      
+      if (run_live && !ent.save) || (!run_live && !ent.valid?)
         fhelp.add_validation_record("Country: #{ent.name} has validation errors - #{ent.errors.full_messages}")
         next
       end

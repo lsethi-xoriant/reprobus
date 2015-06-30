@@ -91,6 +91,7 @@ Reprobus::Application.routes.draw do
   match '/import_suppliers',   to: 'static_pages#import_suppliers' ,   via: 'post'
   get '/import_status', to: 'static_pages#import_status', as: 'import_status'
   get '/import_status_job/:id', to: 'static_pages#import_status_job', as: 'import_status_job'
+  get '/import_status_rerun/:id', to: 'static_pages#import_status_rerun', as: 'import_status_rerun'
 
   get "admin/carriers/export"
   get "admin/destinations/export"

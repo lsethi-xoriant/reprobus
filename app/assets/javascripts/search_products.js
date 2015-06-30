@@ -24,6 +24,17 @@ function getDestinationSearchTerm(theSelect2Element) {
   return $(nextProdField).val();
 }
 
+function getCountrySearchTerm(theSelect2Element) {
+  var nextProdField = $(theSelect2Element).closest('.field').find(".select2-countries");
+  return $(nextProdField).val();
+}
+
+function getTypeSearchTerm(theSelect2Element) {
+  var nextProdField = $(theSelect2Element).closest('.field').find(".type-itineraries");
+  console.log($(nextProdField));
+  return $(nextProdField).val();
+}
+
 function initProductSelect2() {
   var theSelect2Element = null;
   $(".select2-products").select2({
@@ -35,6 +46,8 @@ function initProductSelect2() {
         return {
           q: params.term, // search term
           destination: getDestinationSearchTerm(theSelect2Element),
+          country: getCountrySearchTerm(theSelect2Element),
+          type: getTypeSearchTerm(theSelect2Element),
           page: params.page
         };
       },

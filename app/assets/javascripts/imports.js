@@ -15,13 +15,24 @@ $(document).ready(function(){
               
               if (data == ""){
                 $("#import_report_"+data.id).text("No info to display... sorry something must have gone wrong here...");
-              } else if (data.complete) {
+              
                 
+              } else if (data.run) {
                 $("#import_report_"+data.id).text(data.summary);
                 $("#import_log_"+data.id).html("<p>" + data.log + "</p>");
                 $("#import_log_"+data.id).data("completed", "true");
                 $("#import_report_"+data.id).removeClass("amber");
+                $("#import_report_"+data.id).removeClass("lime");
                 $("#import_report_"+data.id).addClass("light-green");
+                
+                // end of recursive call                
+              } else if (data.complete) {
+                
+                $("#import_report_"+data.id).text(data.summary + "  -  PENDING");
+                $("#import_log_"+data.id).html("<p>" + data.log + "</p>");
+                $("#import_log_"+data.id).data("completed", "true");
+                $("#import_report_"+data.id).removeClass("amber");
+                $("#import_report_"+data.id).addClass("lime");
                 // end of recursive call
               }else{
 

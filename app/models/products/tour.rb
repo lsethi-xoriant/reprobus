@@ -8,13 +8,11 @@
 #  description        :text
 #  price_single       :decimal(12, 2)
 #  price_double       :decimal(12, 2)
-#  price_tripple      :decimal(12, 2)
-#  product_type       :string
+#  price_triple       :decimal(12, 2)
 #  room_type          :string
 #  rating             :string
 #  destination        :string
 #  default_length     :integer
-#  supplier_id        :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #  image              :string
@@ -26,6 +24,7 @@
 #  hotel_id           :integer
 #  address            :text
 #  phone              :string
+#  cruise_id          :integer
 #
 
 class Tour < Product

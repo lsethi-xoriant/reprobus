@@ -28,12 +28,27 @@ class ItineraryTemplateInfo < ActiveRecord::Base
     return self.product.name if self.product
   end
   
+  def get_product_type
+    return self.product.type.underscore.humanize if self.product
+  end
+  
   def get_product_destination_id
     return self.product.destination_id if self.product 
   end   
   
   def get_product_destination
     return self.product.destination.name if self.product && self.product.destination 
-  end     
+  end  
+
+
+  def get_product_country_id
+    return self.product.country_id if self.product 
+  end
+  
+  
+  def get_product_country
+    return self.product.country.name if self.product && self.product.country 
+  end  
+  
 end
 

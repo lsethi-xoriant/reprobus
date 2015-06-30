@@ -1,7 +1,9 @@
 $(document).ready(function() {
   
   initCountrySelect2();  // intialise select drop downs
-  
+
+});
+
   function formatCountry (searchOb) {
     if (searchOb.loading) return searchOb.text;
     var markup = "";
@@ -44,4 +46,3 @@ $(document).ready(function() {
    });
    
   }
- });

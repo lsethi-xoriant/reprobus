@@ -27,25 +27,20 @@
 #  cruise_id          :integer
 #
 
-class Room < Product
-  
+class CruiseDay < Product
   before_save  :set_from_parent
   
   def set_from_parent
-    self.country_id = self.hotel.country_id if self.hotel
-    self.destination_id = self.hotel.destination_id if self.hotel
-    self.suppliers   = self.hotel.suppliers if self.hotel
+    self.country_id = self.cruise.country_id if self.cruise
+    self.destination_id = self.cruise.destination_id if self.cruise
+    self.suppliers   = self.cruise.suppliers if self.cruise
   end
   
   def self.sti_name
-    "Room"
+    "CruiseDay"
   end
   
-  def room_type=(value)
-    self.name = value
-    super(value)
-  end
-  
+
   def self.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
       header = spreadsheet.row(1)
       header = header.map(&:upcase)
@@ -57,26 +52,26 @@ class Room < Product
         dest = Destination.find_by_name(row["DESTINATION"])
    
         
-        #hotel must exist to add room to a hotel
-        hotel = Hotel.find_by name: row["HOTEL"], destination: dest, country: count
+        #cruise must exist to add day to it
+        cruise = Cruise.find_by name: row["CRUISE"], destination: dest, country: count
         
-        if hotel.nil?
-          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped as no matching Hotel to assign rooms to : #{row["HOTEL"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]}");
+        if cruise.nil?
+          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped as no matching Cruise to assign rooms to : #{row["CRUISE"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]}");
           next 
         end
           
-        hr = Room.find_by room_type: row["ROOMTYPE"], hotel: hotel
+        cd = CruiseDay.find_by room_type: row["CRUISEDAY"], cruise: cruise
         
-        if hr
-          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped as room with this name already exists on hotel : #{row["ROOMTYPE"]} | #{row["HOTEL"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]}");
+        if cd
+          fhelp.add_skip_record("Row " + (i-1).to_s + " skipped as Cruise Leg with this name already exists on Cruise : #{row["CRUISEDAY"]} | #{row["CRUISE"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]}");
           next
         end
 
         ent = new
         
         ent.type = type
-        ent.hotel = hotel
-        ent.room_type = row["ROOMTYPE"]
+        ent.cruise = cruise
+        ent.name = row["CRUISEDAY"]
         str = (row["DESCRIPTION"])
         ent.description = str
         str = (row["IMAGENAME"])
@@ -92,5 +87,5 @@ class Room < Product
       end
       
     return fhelp;
-  end  
+  end      
 end

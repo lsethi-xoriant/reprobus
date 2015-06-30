@@ -8,13 +8,11 @@
 #  description        :text
 #  price_single       :decimal(12, 2)
 #  price_double       :decimal(12, 2)
-#  price_tripple      :decimal(12, 2)
-#  product_type       :string
+#  price_triple       :decimal(12, 2)
 #  room_type          :string
 #  rating             :string
 #  destination        :string
 #  default_length     :integer
-#  supplier_id        :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #  image              :string
@@ -26,6 +24,7 @@
 #  hotel_id           :integer
 #  address            :text
 #  phone              :string
+#  cruise_id          :integer
 #
 
 class Product < ActiveRecord::Base
@@ -38,8 +37,15 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :rooms, allow_destroy: true; 
   belongs_to :hotel, :class_name => "Product"
   
+  
+  has_many :cruise_days, :class_name => "Product", :foreign_key => "cruise_id"
+  accepts_nested_attributes_for :cruise_days, allow_destroy: true; 
+  belongs_to :cruise, :class_name => "Product"
+  
+  
   has_many    :itinerary_infos
   has_many    :itinerary_template_infos
+  
   #belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
   has_and_belongs_to_many :suppliers, :class_name => "Customer", :join_table => "customers_products", :association_foreign_key  => :customer_id
   
@@ -81,8 +87,8 @@ class Product < ActiveRecord::Base
     end
   end
   
-  def self.handle_file_import(spreadsheet, fhelp, job_progress, type)
-    # NOTE: 'Room' type has this method overwritten in subclass
+  def self.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
+    # NOTE: 'Room' & 'CruiseDay' type has this method overwritten in subclass
       header = spreadsheet.row(1)
       header = header.map(&:upcase)
       
@@ -93,7 +99,12 @@ class Product < ActiveRecord::Base
         
         count = Country.find_by_name(row["COUNTRY"])
         dest = Destination.find_by_name(row["DESTINATION"])
-        row["SUPPLIER"] ? supp = Customer.find_by_supplier_name(row["SUPPLIER"]) : supp = nil
+        
+        if row["SUPPLIER"] != ""
+          supp = Customer.find_by_supplier_name(row["SUPPLIER"]) 
+        else
+          supp = nil
+        end
         
         if type == "Transfer" 
           # have special condition where only skip if name, destination, supplier, and country match (lots with same name)
@@ -144,7 +155,7 @@ class Product < ActiveRecord::Base
           ent.rating  = (row["RATING"])
         end  
           
-        if !ent.save
+        if (run_live && !ent.save) || (!run_live && !ent.valid?)
           fhelp.add_validation_record("Row " + (i-1).to_s + " : #{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}")
           next
         end

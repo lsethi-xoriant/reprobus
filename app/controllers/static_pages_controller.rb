@@ -66,7 +66,7 @@ class StaticPagesController < ApplicationController
       flash[:warning] = "WARNING: Filename does not include the word 'COUNTRIES'"
       render "import", :layout => "application"  
      else
-      Admin.import_job(params[:import_file],"Country")
+      Admin.import_job(params[:import_file],"Country", (params[:run_live]=="true"))
       flash[:success] = "Countries imported!"
       redirect_to import_status_path
     end
@@ -85,7 +85,7 @@ class StaticPagesController < ApplicationController
       return
     end 
     
-    Admin.import_job(params[:import_file],"Destination")
+    Admin.import_job(params[:import_file],"Destination",(params[:run_live]=="true"))
     flash[:success] = "Destinations imported!"
     redirect_to import_status_path
   end  
@@ -103,7 +103,7 @@ class StaticPagesController < ApplicationController
       return
     end
     
-    Admin.import_job(params[:import_file], "Customer")
+    Admin.import_job(params[:import_file], "Customer",(params[:run_live]=="true"))
     flash[:success] = "Suppliers import begun!"
     redirect_to import_status_path    
   end  
@@ -121,7 +121,7 @@ class StaticPagesController < ApplicationController
       return
     end
     
-    Admin.import_job(params[:import_file],params[:type])
+    Admin.import_job(params[:import_file],params[:type], (params[:run_live]=="true"))
     flash[:success] = params[:type].underscore.humanize + " import begun!"
     redirect_to import_status_path
   end
@@ -130,7 +130,7 @@ class StaticPagesController < ApplicationController
     @job_progress = JobProgress.find(params[:id])
     respond_to do |format|
       if @job_progress
-        format.json { render json: {id: @job_progress.id, complete: @job_progress.complete, progress: @job_progress.progress, total: @job_progress.total,
+        format.json { render json: {id: @job_progress.id, complete: @job_progress.complete, progress: @job_progress.progress, run: @job_progress.run_live, total: @job_progress.total,
                                   summary: @job_progress.get_display_details, log: "#{@job_progress.summary} #{@job_progress.log}", name: @job_progress.name} }
       end
     end    
@@ -140,4 +140,12 @@ class StaticPagesController < ApplicationController
     @last_jobs = JobProgress.last(5).reverse
     render :layout => "application"
   end
+  
+  def import_status_rerun
+    @job_progress = JobProgress.find(params[:id])
+    Admin::import_job_rerun(@job_progress, true)
+    flash[:success] = "Live import begun!"
+    redirect_to import_status_path    
+  end 
+
 end

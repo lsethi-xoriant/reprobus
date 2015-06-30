@@ -83,15 +83,32 @@ class SearchesController < ApplicationController
   end
   
   def product_search
-    if params[:destination] == ""
-      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).
+    @products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type]).
                             where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
-                            order('name')
-    else
-      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).where("destination_id = :destination", destination: params[:destination].to_i).
-                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q", q: "%#{params[:q]}%").
-                            order('name') 
+                            order('name')   
+puts "HAMISHG" + params[:type]
+
+    if params[:type] != ""
+      @products = @products.where("type = :type", type: params[:type])
     end
+      
+    if params[:destination] != ""
+      @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)
+    end        
+
+    if params[:country] != ""
+      @products = @products.where("country_id = :country", country: params[:country].to_i)
+    end  
+    
+#    if params[:destination] == ""
+#      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).
+#                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
+#                            order('name')
+#    else
+#      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).where("destination_id = :destination", destination: params[:destination].to_i).
+#                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q", q: "%#{params[:q]}%").
+#                            order('name') 
+#    end
   
     resources_count = @products.size
 

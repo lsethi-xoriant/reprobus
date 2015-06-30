@@ -33,6 +33,9 @@
         
         <%= f.label :supplier_ids, "Suppliers",  class: 'active' %>
       </div>
+      <% if @product.type == "Hotel" || @product.type == "Cruise"  %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "rating", f: f } %>
+      <% end%>
     </div>
 
     <div class="row">
@@ -63,27 +66,14 @@
     
    
     <% if @product.type == "Hotel" %>
-	    
-	      <h4 class="header2">Hotel Rooms</h4>
-	      <div id="hotel_rooms">
-    	  <%= f.fields_for :rooms, :html => {:class => "col s12"}  do |c| %>
-    	    <div class="row">
-      	    <%= render partial: 'hotel_room', locals: { f: c } %>
-      	  </div>
-        <% end %>
-  	    
-  	    <div class="links">
-    	    <div class="row">
-    	      <div class="offset-s10 col s2">
-              <%= link_to_add_association  f, :rooms, {partial: 'hotel_room', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
-                <i class="mdi-content-add"></i>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+	    <%= render partial: 'hotel', locals: { f: f, name: "Hotel Rooms" } %>
     <% end %>
 
+    <% if @product.type == "Cruise" %>
+	    <%= render partial: 'hotel', locals: { f: f, name: "Cruise Room Types" } %>
+	   <%= render partial: 'cruise', locals: { f: f } %>
+    <% end %>
+    
     
     <div class="row">
       <div class="input-field col s12">

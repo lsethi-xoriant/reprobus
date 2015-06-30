@@ -5,6 +5,29 @@
 /* JS to initiate sortable elements   */
 
 $(document).ready(function() {
+  
+  
+  if ($('#itinerary_template_infos').length) {
+    // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
+    
+    $('.type-itineraries').on('change', function(e) {
+      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+    });
+    
+    $('.select2-destinations').on('change', function(e) {
+      $(this).closest(".field").find(".type-itineraries").val(null).trigger("change");
+      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+    });
+    
+    $('.select2-countries').on('change', function(e) {
+      $(this).closest(".field").find(".type-itineraries").material_select('destroy');
+      $(this).closest(".field").find(".type-itineraries").val("Type").material_select();
+      $(this).closest(".field").find(".select2-destinations").val(null).trigger("change");
+      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+    });
+    
+  }
+  
     
   sort_itinerary_items();  // sorts table and sets up intial pos numbers
   
@@ -20,6 +43,8 @@ $(document).ready(function() {
   $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
     initProductSelect2();  // re-init product search dropdowns as new ones have been added
     initDestinationSelect2();
+    initCountrySelect2();
+    insertedItem.find(".type-itineraries").val("Type").material_select();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_template_infos');
   });
@@ -60,7 +85,8 @@ $(document).ready(function() {
   
     // call sortable on our div with the sortable class
     $('.sortable').sortable({
-      items: '.nested-fields'
+      //items: '.nested-fields'
+       items: ':not(.nosort)'
     });
   }
  
@@ -129,8 +155,7 @@ $(document).ready(function() {
   });
  }
 
-/*JS to hook into Products seach drop down */
-
+/*JS override on date. this is to get datepicker and reseting dates working properly */
 Date.prototype.yyyymmdd = function() {         
                               
       var yyyy = this.getFullYear().toString();                                    

@@ -1,15 +1,25 @@
-<% if job_progress.complete %>
+<% if job_progress.run_live %>
   <% classstr = "light-green" %>
+<% elsif job_progress.complete %>
+  <% classstr = "lime" %>
 <% else %>
   <% classstr = "amber" %>
 <% end %>
 
   <li>
-      <div id="import_report_<%= job_progress.id%>" data-id="<%=job_progress.id%>" data-complete="<%=job_progress.complete%>" class="collapsible-header import_report <%=classstr%>">
+      <div id="import_report_<%= job_progress.id%>" data-id="<%=job_progress.id%>" data-complete="<%=job_progress.complete %>" class="collapsible-header import_report <%=classstr%>">
         <%= job_progress.get_display_details %> 
       </div>
-      <div id="import_log_<%= job_progress.id%>" class="collapsible-body">
-        <p><%= job_progress.summary.html_safe if job_progress.summary %></p>
-        <p><%= job_progress.log.html_safe %></p>
-      </div>
+      <div class="collapsible-body">
+        <% if job_progress.run_live %>
+          <p><strong>IMPORTED</strong></p>
+        <% else %>
+          <p><strong>IMPORT PENDING</strong><%= link_to "Run Live", "import_status_rerun/#{job_progress.id}", method: :get,
+                                    data: { confirm: "Are you read to push this import live?" }, class: "btn red right" %></p> 
+        <% end %>                          
+        <div id="import_log_<%= job_progress.id%>">                          
+          <p><%= job_progress.summary.html_safe if job_progress.summary %></p>
+          <p><%= job_progress.log.html_safe %></p>
+        </div>
+      </div>  
   </li>

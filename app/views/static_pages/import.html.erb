@@ -152,5 +152,21 @@
 
     </li>
     <div class="divider"></div>
+    <li>
+	    <h4>Cruise Day</h4> 
+        File should contain a header and rows with the folling fields:
+        <ul>
+            <li>- <strong>Cruise</strong> (to match to existing cruise)</li>
+            <li>- <strong>CruiseDay</strong> (mandatory)</li>
+            <li>- <strong>Description</strong></li>
+            <li>- <strong>Destination</strong> (to match to existing cruise)</li>
+            <li>- <strong>Country</strong>  (to match to existing cruise) </li>    
+            <li>- <strong>ImageName</strong> (If using Dropbox integration this field should be set with name of file in Dropbox)</li>
+        </ul>
+        
+        <%= render partial: "form_import", locals: { formPath: '/import_products', submitTag: "Import Cruise Legs", productType: "CruiseDay" } %>
+
+    </li>
+    <div class="divider"></div>    
   </ul>
 </div>
