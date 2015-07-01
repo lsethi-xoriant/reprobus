@@ -31,7 +31,7 @@
         <%#= f.select(:supplier_ids, options_for_select([[f.object.supplierNames, f.object.supplier_ids]],f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
         <%= f.select(:supplier_ids, options_from_collection_for_select(f.object.suppliers, :id, :supplier_name, f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
         
-        <%= f.label :supplier_ids, "Suppliers",  class: 'active' %>
+        <%= f.label :supplier_ids, "Suppliers" class: 'active' %>
       </div>
       <% if @product.type == "Hotel" || @product.type == "Cruise"  %>
         <%= render partial: 'shared/material_textfield_cols6', locals: { field: "rating", f: f } %>

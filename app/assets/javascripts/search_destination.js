@@ -1,30 +1,28 @@
 $(document).ready(function() {
-  
   initDestinationSelect2();  // intialise select drop downs
- 
 });
 
-  function formatDestination (searchOb) {
-    if (searchOb.loading) return searchOb.text;
-    var markup = "";
-    if (searchOb.text) {
-      markup += '<div>' + searchOb.text + '</div>';
-    }
-    return markup;
+function formatDestination (searchOb) {
+  if (searchOb.loading) return searchOb.text;
+  var markup = "";
+  if (searchOb.text) {
+    markup += '<div>' + searchOb.text + '</div>';
   }
+  return markup;
+}
 
-  function formatDestinationSelection (searchOb) {
-    return searchOb.text;
-  }
-  
-  function getCountrySearchTerm(theSelect2Element) {
-    var nextProdField = $(theSelect2Element).closest('.field').find(".select2-countries");
-    return $(nextProdField).val();
-  } 
+function formatDestinationSelection (searchOb) {
+  return searchOb.text;
+}
+
+function getCountrySearchTerm(theSelect2Element) {
+  var nextProdField = $(theSelect2Element).closest('.row').find(".select2-countries");
+  return $(nextProdField).val();
+} 
  
-  function initDestinationSelect2() {
-   var theSelect2Element = null;
-   $(".select2-destinations").select2({
+function initDestinationSelect2() {
+  var theSelect2Element = null;
+  $(".select2-destinations").select2({
     ajax: {
       url: "/searches/destination_search",
       dataType: 'json',
@@ -50,8 +48,6 @@ $(document).ready(function() {
    // minimumInputLength: 1,
     templateResult: formatDestination,
     templateSelection: formatDestinationSelection
-   }).on('select2:open', function(e){ 
-   theSelect2Element = e.currentTarget;});
-
+  }).on('select2:open', function(e){ 
+    theSelect2Element = e.currentTarget;});
 }
-

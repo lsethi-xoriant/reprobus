@@ -9,27 +9,23 @@ $(document).ready(function() {
   
   if ($('#itinerary_template_infos').length) {
     // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
-    
     $('.type-itineraries').on('change', function(e) {
-      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+      $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
     });
     
     $('.select2-destinations').on('change', function(e) {
-      $(this).closest(".field").find(".type-itineraries").val(null).trigger("change");
-      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+      $(this).closest(".row").find(".select2-products").val(null).trigger("change");
     });
     
-    $('.select2-countries').on('change', function(e) {
+    //MOVED TO search_countries.js as seems better place for code, so it works across app. 
+    //$('.select2-countries').on('change', function(e) {
     //$(this).closest(".field").find(".type-itineraries").material_select('destroy');
     //  #$(this).closest(".field").find(".type-itineraries").val("Type").material_select();
-      $(this).closest(".field").find(".select2-destinations").val(null).trigger("change");
-      $(this).closest(".field").find(".select2-products").val(null).trigger("change");
-    });
-    
-
+    //  $(this).closest(".field").find(".select2-destinations").val(null).trigger("change");
+    //  $(this).closest(".field").find(".select2-products").val(null).trigger("change");
+    //});
   }
   
-    
   sort_itinerary_items();  // sorts table and sets up intial pos numbers
   
   // set labels to active in these containers as we want the to look small

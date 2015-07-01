@@ -1,7 +1,5 @@
 $(document).ready(function() {
-  
   initCountrySelect2();  // intialise select drop downs
-
 });
 
   function formatCountry (searchOb) {
@@ -17,8 +15,8 @@ $(document).ready(function() {
     return searchOb.text;
   }
  
-  function initCountrySelect2() {
-   $(".select2-countries").select2({
+function initCountrySelect2() {
+  $(".select2-countries").select2({
     ajax: {
       url: "/searches/country_search",
       dataType: 'json',
@@ -43,6 +41,14 @@ $(document).ready(function() {
    // minimumInputLength: 1,
     templateResult: formatCountry,
     templateSelection: formatCountrySelection
-   });
-   
-  }
+  });
+}
+
+
+$(document).ready(function() {
+  $('.select2-countries').on('change', function(e) {
+    // if countries field changes clear related fields if they exist -  destinations, products....
+    $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
+    $(this).closest(".row").find(".select2-products").val(null).trigger("change");
+  });
+});

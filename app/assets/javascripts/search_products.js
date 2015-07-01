@@ -20,17 +20,17 @@ function formatProductSelection (product) {
 }
 
 function getDestinationSearchTerm(theSelect2Element) {
-  var nextProdField = $(theSelect2Element).closest('.field').find(".select2-destinations");
+  var nextProdField = $(theSelect2Element).closest('.row').find(".select2-destinations");
   return $(nextProdField).val();
 }
 
 function getCountrySearchTerm(theSelect2Element) {
-  var nextProdField = $(theSelect2Element).closest('.field').find(".select2-countries");
+  var nextProdField = $(theSelect2Element).closest('.row').find(".select2-countries");
   return $(nextProdField).val();
 }
 
 function getTypeSearchTerm(theSelect2Element) {
-  var nextProdField = $(theSelect2Element).closest('.field').find(".type-itineraries");
+  var nextProdField = $(theSelect2Element).closest('.row').find(".type-itineraries");
   // materialize does funny stuff with select boxes, so return value to get right value
   return $(nextProdField)[1].value;
 }

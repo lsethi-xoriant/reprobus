@@ -14,8 +14,9 @@
         <% if job_progress.run_live %>
           <p><strong>IMPORTED</strong></p>
         <% else %>
-          <p><strong>IMPORT PENDING</strong><%= link_to "Run Live", "import_status_rerun/#{job_progress.id}", method: :get,
-                                    data: { confirm: "Are you read to push this import live?" }, class: "btn red right" %></p> 
+          <p><strong>IMPORT PENDING</strong><span><%= link_to "Run Live", "import_status_rerun/#{job_progress.id}", method: :get,
+                                    data: { confirm: "Are you ready to push this import live?" }, class: "btn red right" %></span> 
+              <br>Note that only existing records will be checked for duplicates (there may be duplicates in file that cannot be checked until records created during Live import) </p> 
         <% end %>                          
         <div id="import_log_<%= job_progress.id%>">                          
           <p><%= job_progress.summary.html_safe if job_progress.summary %></p>

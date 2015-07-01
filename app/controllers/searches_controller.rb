@@ -74,7 +74,7 @@ class SearchesController < ApplicationController
                             where("name ILIKE :q", q: "%#{params[:q]}%").
                             order('name')
                             
-    if params[:country] != ""
+    if params[:country] != "" && params[:country] != "0"
       @entities = @entities.where("country_id = :country", country: params[:country].to_i)
     end   
     
