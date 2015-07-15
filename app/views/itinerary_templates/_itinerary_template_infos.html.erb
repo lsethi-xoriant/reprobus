@@ -3,20 +3,33 @@
     <div class="field">
       
       <div class ="row">
+        
+        <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
+        
         <div class="input-field col s1 valign-wrapper">
           <i class="mdi-editor-format-line-spacing small grey-text"></i>
           <h6 class="grey-text valign iti_postion_number"></h6>
         </div>
         
+        <!--<div class="input-field col s2">
+          <%#= select_tag(:country, options_for_select([[f.object.get_product_country, f.object.get_product_country_id]],f.object.get_product_country_id),{class: "select2-countries browser-default"}) %>
+          <label for="country" class="active">Country</label>
+        </div>-->      
+
         <div class="input-field col s2">
-          <%= select_tag(:country, options_for_select([[f.object.get_product_country, f.object.get_product_country_id]],f.object.get_product_country_id),{class: "select2-countries browser-default"}) %>
-          <label for="destination" class="active">Country</label>
-        </div>      
+          <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, f.object.get_product_country_id),{class: "select2-countries-noajax browser-default", include_blank: true}) %>
+          <label for="country" class="active">Country</label>
+        </div>  
         
         <div class="input-field col s2">
           <%= select_tag(:destination, options_for_select([[f.object.get_product_destination, f.object.get_product_destination_id]],f.object.get_product_destination_id),{class: "select2-destinations browser-default"}) %>
           <label for="destination" class="active">Destination</label>
         </div>
+                
+        <!--<div class="input-field col s2">
+          <%#= select_tag(:destination, options_from_collection_for_select(select_destinations, :id, :name, f.object.get_product_destination_id),{class: "select2-destinations-noajax browser-default", include_blank: true}) %>
+          <label for="destination" class="active">Destination</label>
+        </div>-->
         
         <div class="input-field col s2">
           <%= select_tag(:type, options_for_select(["Type", "Cruise", "Flight", "Hotel", "Tour", "Transfer"], disabled: "Type", selected: f.object.get_product_type || "Type"),{class: "type-itineraries"}) %>
@@ -28,32 +41,40 @@
           <label for="product_id" class="active">Product</label>
         </div>
         
-        <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
-  
         <div class="input-field col s1">
-            <%= f.text_field "length" %>
+            <%= f.text_field "length", class: 'itinerary-number-days' %>
             <%= f.label :length,"# Days", class: 'active' %>
         </div>
-      </div>
-<!--      
-      <div class="input-field col s1">
-          <%= f.text_field "days_from_start" %>
-          <%= f.label :days_from_start, "From start", class: 'active'  %>
-      </div>
--->   
-      <div class="row">
-        <div class="input-field col offset-s1 s10 product_details_cont">
-          <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
-          <%= f.label :product_name, "Product Details", class: "active" %>
-        </div>
-       
-       
-       
+        
         <div class="input-field col s1">
           <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
             <i class="mdi-content-clear"></i>
           <% end %>
+        </div>   
+        
+      </div>
+
+      <div class="row ">
+        <% if f.object.get_product_type == "Cruise" %>
+          <% displayStr = 'display:none;' %>
+        <% end %>  
+        
+        <div class="input-field product_details_cont col offset-s1 s8" style=<%=displayStr%> >
+          <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
+          <%= f.label :product_name, "Product Details", class: "active" %>
         </div>
+        
+        <div class="cruise-info col offset-s1 s8">
+          <% if f.object.get_product_type == "Cruise" %>
+            <% @cruise_legs = f.object.product.cruise_days %>
+            <%= render template: 'itinerary_templates/cruise_legs' %>
+          <% end %>
+        </div>
+        
+        <div class="input-field col s2">
+          <%= f.select(:supplier_id, options_from_collection_for_select(f.object.select_suppliers,:id, :supplier_name, f.object.supplier_id),{},{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
+          <label for="supplier_id" class="active">Supplier</label>
+        </div>        
       </div>
       
     </div>

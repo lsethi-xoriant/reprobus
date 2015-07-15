@@ -10,6 +10,7 @@
 #  itinerary_template_id :integer
 #  created_at            :datetime
 #  updated_at            :datetime
+#  supplier_id           :integer
 #
 
 class ItineraryTemplateInfo < ActiveRecord::Base
@@ -19,6 +20,7 @@ class ItineraryTemplateInfo < ActiveRecord::Base
     
   belongs_to  :itinerary_template
   belongs_to  :product
+  belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
 
   def get_product_details
     return self.product.product_details if self.product
@@ -45,10 +47,21 @@ class ItineraryTemplateInfo < ActiveRecord::Base
     return self.product.country_id if self.product 
   end
   
-  
   def get_product_country
     return self.product.country.name if self.product && self.product.country 
   end  
   
+  def get_supplier_name
+    return self.supplier.name if self.supplier 
+  end  
+  
+  def select_suppliers
+    # return list of potential suppliers for dropdowns
+    if self.product 
+      return self.product.suppliers
+    else
+      return []
+    end
+  end
 end
 

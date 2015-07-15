@@ -1,5 +1,7 @@
 $(document).ready(function() {
   initDestinationSelect2();  // intialise select drop downs
+  
+  //$(".select2-destinations-noajax").select2();
 });
 
 function formatDestination (searchOb) {
@@ -16,7 +18,7 @@ function formatDestinationSelection (searchOb) {
 }
 
 function getCountrySearchTerm(theSelect2Element) {
-  var nextProdField = $(theSelect2Element).closest('.row').find(".select2-countries");
+  var nextProdField = $(theSelect2Element).closest('.row').find(".select2-countries-noajax");
   return $(nextProdField).val();
 } 
  
@@ -26,7 +28,7 @@ function initDestinationSelect2() {
     ajax: {
       url: "/searches/destination_search",
       dataType: 'json',
-      delay: 250,
+      delay: 100,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -50,4 +52,10 @@ function initDestinationSelect2() {
     templateSelection: formatDestinationSelection
   }).on('select2:open', function(e){ 
     theSelect2Element = e.currentTarget;});
+    
+  $('.select2-destinations').on("select2:select", function(e) {
+    $(this).closest(".row").find(".select2-products").val(null).trigger("change");
+    $(this).closest(".row").find(".itinerary-nunber-days").val("0");
+    $(this).closest('.field').find(".cruise-info").hide();
+  });    
 }

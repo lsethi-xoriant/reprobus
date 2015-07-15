@@ -1,7 +1,6 @@
 /*This file is for the itinerary and itinerary templates pages                                   */
 /*It relies on the sortable.js plug in, Coccoon gem hooks, and the select2 search products js    */
 
-
 /* JS to initiate sortable elements   */
 
 $(document).ready(function() {
@@ -11,13 +10,12 @@ $(document).ready(function() {
     // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
     $('.type-itineraries').on('change', function(e) {
       $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
+      $(this).closest(".row").find(".itinerary-number-days").val("0");
+      $(this).closest('.field').find(".product_details").text("");
+      $(this).closest('.field').find(".cruise-info").hide();
     });
     
-    $('.select2-destinations').on('change', function(e) {
-      $(this).closest(".row").find(".select2-products").val(null).trigger("change");
-    });
-    
-    //MOVED TO search_countries.js as seems better place for code, so it works across app. 
+    //MOVED TO search_countries.js as seems better place for code, so it works across all of app. 
     //$('.select2-countries').on('change', function(e) {
     //$(this).closest(".field").find(".type-itineraries").material_select('destroy');
     //  #$(this).closest(".field").find(".type-itineraries").val("Type").material_select();
@@ -41,6 +39,7 @@ $(document).ready(function() {
     initProductSelect2();  // re-init product search dropdowns as new ones have been added
     initDestinationSelect2();
     initCountrySelect2();
+    initSupplierSelect2();
     insertedItem.find(".type-itineraries").val("Type").material_select();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_template_infos');
@@ -49,6 +48,7 @@ $(document).ready(function() {
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
     initProductSelect2();  // re-init product search dropdowns as new ones have been added
     initDestinationSelect2();
+    initSupplierSelect2();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_infos');
     

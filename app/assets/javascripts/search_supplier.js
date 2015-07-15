@@ -1,21 +1,24 @@
 $(document).ready(function() {
   
   initSupplierSelect2();  // intialise select drop downs
-  
-  function formatSupplier (searchOb) {
-    if (searchOb.loading) return searchOb.text;
-    var markup = "";
-    if (searchOb.text) {
-      markup += '<div>' + searchOb.text + '</div>';
-    }
-    return markup;
-  }
+});
 
-  function formatSupplierSelection (searchOb) {
-    return searchOb.text;
+function formatSupplier (searchOb) {
+  if (searchOb.loading) return searchOb.text;
+  var markup = "";
+  if (searchOb.text) {
+    markup += '<div>' + searchOb.text + '</div>';
   }
- 
-  function initSupplierSelect2() {
+  return markup;
+}
+
+function formatSupplierSelection (searchOb) {
+  return searchOb.text;
+}
+
+function initSupplierSelect2() {
+  $(".select2-suppliers-noajax").select2();  
+  
    $(".select2-suppliers").select2({
     ajax: {
       url: "/searches/supplier_search",
@@ -42,24 +45,23 @@ $(document).ready(function() {
     templateResult: formatSupplier,
     templateSelection: formatSupplierSelection
    });
-   
-  }
+ 
+}
 
-  $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
-    $('#supplierDefaultCurrency').val(e.params.data.currency);
-    
-    if ($('#base_date').length) {  // if we are on the supplier invoice screen and (basedate is present) then update pay date
-      if (e.params.data.numdays > 0 ) {
-        var dateComp = $('#base_date').val().split('/');
-        var changeDate = new Date(dateComp[2],dateComp[1]-1,dateComp[0]);
-        changeDate.setDate(changeDate.getDate() - e.params.data.numdays);
-        $('#final_payment_due').datepicker('update', changeDate);
-      } else {
-        var duedateComp = $('#due_date').val().split('/');
-        var dueDate = new Date(duedateComp[2],duedateComp[1]-1,duedateComp[0]);
-        $('#final_payment_due').datepicker('update', dueDate);
-      }
-      
+$(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
+  $('#supplierDefaultCurrency').val(e.params.data.currency);
+  
+  if ($('#base_date').length) {  // if we are on the supplier invoice screen and (basedate is present) then update pay date
+    if (e.params.data.numdays > 0 ) {
+      var dateComp = $('#base_date').val().split('/');
+      var changeDate = new Date(dateComp[2],dateComp[1]-1,dateComp[0]);
+      changeDate.setDate(changeDate.getDate() - e.params.data.numdays);
+      $('#final_payment_due').datepicker('update', changeDate);
+    } else {
+      var duedateComp = $('#due_date').val().split('/');
+      var dueDate = new Date(duedateComp[2],duedateComp[1]-1,duedateComp[0]);
+      $('#final_payment_due').datepicker('update', dueDate);
     }
-  })
+    
+  }
 });

@@ -9,6 +9,9 @@
 #  notes      :text
 #  created_at :datetime
 #  updated_at :datetime
+#  type       :string
+#  start_date :date
+#  end_date   :date
 #
 
 class ItineraryTemplate < ActiveRecord::Base

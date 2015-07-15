@@ -1,26 +1,31 @@
 $(document).ready(function() {
+  
   initCountrySelect2();  // intialise select drop downs
 });
 
-  function formatCountry (searchOb) {
-    if (searchOb.loading) return searchOb.text;
-    var markup = "";
-    if (searchOb.text) {
-      markup += '<div>' + searchOb.text + '</div>';
-    }
-    return markup;
+function formatCountry (searchOb) {
+  if (searchOb.loading) return searchOb.text;
+  var markup = "";
+  if (searchOb.text) {
+    markup += '<div>' + searchOb.text + '</div>';
   }
+  return markup;
+}
 
-  function formatCountrySelection (searchOb) {
-    return searchOb.text;
-  }
+function formatCountrySelection (searchOb) {
+  return searchOb.text;
+}
  
 function initCountrySelect2() {
+  // noajax version
+  $(".select2-countries-noajax").select2();   
+  
+  //ajax version
   $(".select2-countries").select2({
     ajax: {
       url: "/searches/country_search",
       dataType: 'json',
-      delay: 250,
+      delay: 100,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -42,13 +47,24 @@ function initCountrySelect2() {
     templateResult: formatCountry,
     templateSelection: formatCountrySelection
   });
-}
-
-
-$(document).ready(function() {
-  $('.select2-countries').on('change', function(e) {
+  
+  // handle items being selected - clear related fields. 
+  
+  $('.select2-countries').on("select2:select", function(e) {
     // if countries field changes clear related fields if they exist -  destinations, products....
     $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
     $(this).closest(".row").find(".select2-products").val(null).trigger("change");
-  });
-});
+    $(this).closest(".row").find(".itinerary-number-days").val("0");
+    $(this).closest('.field').find(".cruise-info").hide();
+  });  
+  
+  $('.select2-countries-noajax').on('select2:select', function(e) {
+    // if countries field changes clear related fields if they exist -  destinations, products....
+    //$(this).closest(".row").find(".select2-destinations-noajax").val(null).trigger("change");
+    $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
+    $(this).closest(".row").find(".select2-products").val(null).trigger("change");
+    $(this).closest(".row").find(".itinerary-number-days").val("0");
+    $(this).closest('.field').find(".cruise-info").hide();
+  });      
+}
+

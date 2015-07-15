@@ -59,7 +59,7 @@ class Itinerary < ActiveRecord::Base
     template.itinerary_template_infos.each do |i|
       endleg = startleg + i.length.days
       
-      info = self.itinerary_infos.build(
+    self.itinerary_infos.build(
                             name: i.product.name,
                             start_date: startleg,
                             end_date: endleg,
@@ -71,11 +71,11 @@ class Itinerary < ActiveRecord::Base
                             rating: i.product.rating,
                             room_type: i.product.room_type,
                             position: i.position,
-                            supplier_id:  i.product.supplier.id,
+                            supplier_id:  i.supplier_id,
                             product_id: i.product_id,
-                            length: i.product.length)
+                            length: i.length)
                             
-      info.supplier_id = i.product.supplier.id if i.product.supplier
+
       startleg = endleg
     end
   end

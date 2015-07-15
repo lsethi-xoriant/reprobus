@@ -1,0 +1,24 @@
+<% int = 0 %>
+
+<ul class="collapsible" data-collapsible="expandable">
+    <li>
+      <div class="collapsible-header"><i class="mdi-action-list"></i>Cruise legs</div>
+      <div class="collapsible-body">
+    
+      <% @cruise_legs.each do |leg| %>
+        <% int += 1 %>
+        
+          <div class="row">
+              <div class="col offset-s1 s1">
+                <%= text_field_tag(:position, int, class: "cruise_legs_details", :readonly => true  ) %>
+              </div>
+              <div class="col offset-s1 s8">
+                <%= text_field_tag(:cruise_leg_name, leg.name, class: "cruise_legs_details", :readonly => true  ) %>
+              </div>  
+          </div>
+        
+      <% end %>
+    
+    </div>
+</li> 
+</ul> 

@@ -77,7 +77,7 @@ class SearchesController < ApplicationController
     if params[:country] != "" && params[:country] != "0"
       @entities = @entities.where("country_id = :country", country: params[:country].to_i)
     end   
-    
+   
     resources_count = @entities.size
 
     respond_to do |format|
@@ -87,38 +87,24 @@ class SearchesController < ApplicationController
   end
   
   def product_search
-    @products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type]).
-                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
+    #@products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
+    
+    @products = Product.where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
                             where.not(type: "Room").where.not(type: "CruiseDay").order('name')   
 
-
-    if params[:type] != "" && params[:type] != "Type"  
-      @products = @products.where("type = :type", type: params[:type])
-    end
-      
-    if params[:destination] != ""
-      @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)
-    end        
-
-    if params[:country] != ""
-      @products = @products.where("country_id = :country", country: params[:country].to_i)
-    end  
-    
-#    if params[:destination] == ""
-#      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).
-#                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
-#                            order('name')
-#    else
-#      @products = Product.select([:id, :name, :country_search, :destination_search, :type]).where("destination_id = :destination", destination: params[:destination].to_i).
-#                            where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q", q: "%#{params[:q]}%").
-#                            order('name') 
-#    end
+    @products = @products.where("type = :type", type: params[:type]) if (params[:type] != "" && params[:type] != "Type")  
+    @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)  if params[:destination] != ""
+    @products = @products.where("country_id = :country", country: params[:country].to_i) if params[:country] != ""
   
     resources_count = @products.size
-
+    
     respond_to do |format|
       format.json { render json: {total: resources_count,
-                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, country: e.country_search, city: e.destination_search, type: e.type  }}}}
+                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, type: e.type, 
+                          country: e.country_search, city: e.destination_search, numdays: e.default_length,  
+                          country_id: e.country_id, destination_id: e.destination_id, 
+                          suppliers: e.suppliers.map { |s| {id: s.id, supplier_name: s.supplier_name}}  
+                    }}}}
     end
   end
 
@@ -163,6 +149,15 @@ class SearchesController < ApplicationController
       format.json { render json: {total: resources_count,
                   items: @users.map { |e| {id: e.id, text: "#{e.name}"} }} }
     end
+  end
+
+  def cruise_info_search
+    @cruise = Cruise.find(params[:product])
+    #respond_to do |format|
+    #  format.json { render json: @cruise.cruise_days.order(id: :asc) }
+    #end
+    @cruise_legs = @cruise.cruise_days.order(id: :asc)
+    render "itinerary_templates/cruise_legs", cruise_legs: @cruise_legs, layout: false
   end
 
 private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630151228) do
+ActiveRecord::Schema.define(version: 20150714074145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,6 +360,7 @@ ActiveRecord::Schema.define(version: 20150630151228) do
     t.integer  "itinerary_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "supplier_id"
   end
 
   add_index "itinerary_template_infos", ["itinerary_template_id"], name: "index_itinerary_template_infos_on_itinerary_template_id", using: :btree
@@ -372,6 +373,9 @@ ActiveRecord::Schema.define(version: 20150630151228) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "job_progresses", force: :cascade do |t|

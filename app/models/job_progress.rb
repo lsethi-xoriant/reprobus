@@ -13,6 +13,8 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  import_file :string
+#  job_type    :string
+#  run_live    :boolean
 #
 
 class JobProgress < ActiveRecord::Base

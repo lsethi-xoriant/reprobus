@@ -69,10 +69,13 @@ class Admin < ActiveRecord::Base
     
     type.constantize.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
     
+    prestr = ""
+    run_live ? prestr = "" : prestr = " will be "
+    
     fhelp.returnStr = "<strong>#{type} Import</strong><br>" +
-                      (spreadsheet.last_row - 1).to_s + " rows read.<br>" + fhelp.int.to_s + " new records created.<br>" +
-                      fhelp.up.to_s + " records updated due to being matched<br>" +
-                      fhelp.skip.to_s + " records skipped due to record already existing<br>" +
+                      (spreadsheet.last_row - 1).to_s + " rows read.<br>" + fhelp.int.to_s + " new records #{prestr}created.<br>" +
+                      fhelp.up.to_s + " records #{prestr}updated due to being matched<br>" +
+                      fhelp.skip.to_s + " records #{prestr}skipped due to record already existing<br>" +
                       fhelp.val.to_s + " Validation errors"
                 
     job_progress.log_finish(fhelp)

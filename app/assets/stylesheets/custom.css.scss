@@ -76,11 +76,13 @@
 }
 
 .select2-container--open .select2-dropdown--below {
-  top: -40px;
+  /*top: -40px;*/
+  top: 0px;
 }
 
 .select2-container--open .select2-dropdown--above {
- top: 40px;
+ /*top: 40px;   REMOVED as was causing issues when box opened as mouse click was seen as selection, and box was closing straight away */
+  top: 0px;
 }
 
 /*override some material stuff*/
