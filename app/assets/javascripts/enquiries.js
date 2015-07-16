@@ -55,6 +55,7 @@ $(document).ready(function() {
   var customer_search_email;
   var customer_search_phone;
   var customer_search_id;
+  var customer_search_data;
   
   $('#customer_search_enquiry').on('click', function(e){
      $('#cust_search_modal').closeModal();
@@ -64,15 +65,18 @@ $(document).ready(function() {
   
   $('#customers').bind('cocoon:after-insert', function(e, customer_fields) {
     if (customer_search_occured){
+
         customer_fields[0].getElementsByTagName('input')[0].value = customer_search_title;
-        customer_fields[0].getElementsByTagName('input')[1].value = customer_search_firstname;
-        customer_fields[0].getElementsByTagName('input')[2].value = customer_search_lastname;
-        customer_fields[0].getElementsByTagName('input')[3].value = customer_search_email;
-        customer_fields[0].getElementsByTagName('input')[4].value = customer_search_phone;
-        customer_fields[0].getElementsByTagName('input')[5].value = customer_search_id;
+        customer_fields[0].getElementsByTagName('input')[2].value = customer_search_firstname;
+        customer_fields[0].getElementsByTagName('input')[3].value = customer_search_lastname;
+        customer_fields[0].getElementsByTagName('input')[4].value = customer_search_email;
+        customer_fields[0].getElementsByTagName('input')[5].value = customer_search_phone;
+        customer_fields[0].getElementsByTagName('input')[6].value = customer_search_id;
+        
+        
         
       //  customer_fields[0].getElementsByTagName('input').prop('readonly', true);
-        customer_fields.find(':input').prop('readonly', true);
+        customer_fields.find(':input').prop('readonly', true); // set all to readonly - probably as nested fields would go crazy if we changed things. 
         customer_fields.find('label').addClass('active');
 
         customer_search_occured = false;
@@ -90,6 +94,8 @@ $(document).ready(function() {
     customer_search_email = e.params.data.email;
     customer_search_phone = e.params.data.phone;
     customer_search_id = e.params.data.id;
+    customer_search_data = e.params.data;
+  
   });
     
   $('.lead-customer-check').on('change', function() {

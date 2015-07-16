@@ -77,7 +77,7 @@
       </div>
   
       <div class="row">
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder" } %>
+        <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder", value: @enquiry.reminder } %>
         
         <div class="input-field col s6">
           <%= f.select :stage, options_for_select(["New Enquiry", "Open", "In Progress", "Closed"], @enquiry.stage ) %>

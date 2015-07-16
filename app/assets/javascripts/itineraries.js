@@ -43,6 +43,7 @@ $(document).ready(function() {
     insertedItem.find(".type-itineraries").val("Type").material_select();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_template_infos');
+    $('.modal-trigger').leanModal();
   });
   
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
@@ -51,7 +52,7 @@ $(document).ready(function() {
     initSupplierSelect2();
     sort_itinerary_items();
     reset_material_active_labels('#itinerary_infos');
-    
+    $('.modal-trigger').leanModal();
 
     // redo Pikadate datepicker
     $('.datepicker .start').pickadate({

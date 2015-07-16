@@ -1,0 +1,46 @@
+  <div class ="row">
+    
+    <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
+    
+    <div class="input-field col s1 valign-wrapper">
+      <i class="mdi-editor-format-line-spacing small grey-text"></i>
+      <h6 class="grey-text valign iti_postion_number"></h6>
+    </div>
+    
+    <!--<div class="input-field col s2">
+      <%#= select_tag(:country, options_for_select([[f.object.get_product_country, f.object.get_product_country_id]],f.object.get_product_country_id),{class: "select2-countries browser-default"}) %>
+      <label for="country" class="active">Country</label>
+    </div>-->      
+
+    <div class="input-field col s2">
+      <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, f.object.get_product_country_id),{class: "select2-countries-noajax browser-default", include_blank: true}) %>
+      <label for="country" class="active">Country</label>
+    </div>  
+    
+    <div class="input-field col s2">
+      <%= select_tag(:destination, options_for_select([[f.object.get_product_destination, f.object.get_product_destination_id]],f.object.get_product_destination_id),{class: "select2-destinations browser-default"}) %>
+      <label for="destination" class="active">Destination</label>
+    </div>
+    
+    <div class="input-field col s2">
+      <%= select_tag(:type, options_for_select(["Type", "Cruise", "Flight", "Hotel", "Tour", "Transfer"], disabled: "Type", selected: f.object.get_product_type || "Type"),{class: "type-itineraries"}) %>
+      <label for="type">Type</label>
+    </div>   
+    
+    <div class="input-field col s3">
+      <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
+      <label for="product_id" class="active">Product</label>
+    </div>
+    
+    <div class="input-field col s1">
+        <%= f.text_field "length", class: 'itinerary-number-days center-align' %>
+        <%= f.label :length,"# Days", class: 'active center-align' %>
+    </div>
+    
+    <div class="input-field col s1">
+      <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
+        <i class="mdi-content-clear"></i>
+      <% end %>
+    </div>   
+    
+  </div>

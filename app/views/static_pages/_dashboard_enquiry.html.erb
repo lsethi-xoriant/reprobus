@@ -15,7 +15,7 @@
 <!-- Start card -->
 <div class="col s4">
 <div class="card-panel">
-  <a href=<%= enquiry_path enquiry %> >
+  <a href=<%= edit_enquiry_path enquiry %> >
   <button class="btn btn-info pull-right"  data-toggle="modal"> <i class="fa fa-cog"></i> </button></a>
   <h6><%= enquiry.dasboard_customer_name %></h6>
   <p> <span><i class="fa fa-envelope"></i></span><span class="body"> <%= mail_to(enquiry.first_customer.email, enquiry.first_customer.email, bcc: enquiry.first_customer.create_email_link) unless enquiry.first_customer.nil? %> </span></p>

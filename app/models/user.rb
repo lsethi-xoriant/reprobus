@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   def getRemindersDueCount
     int = 0
     self.assigned_enquiries.active.each  do |enq|
-      if !enq.reminder.nil? && enq.reminder.past?
+      if !enq.reminder.nil? && (enq.reminder.past? || enq.reminder.today?)
         int = int + 1
       end
     end
