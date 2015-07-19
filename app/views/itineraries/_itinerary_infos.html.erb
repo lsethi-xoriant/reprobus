@@ -12,13 +12,18 @@
         </div>            
   
         <div class="input-field col s2">
-            <%= f.date_field :start_date, class:"datepicker start", :"data-value" =>  f.object.start_date %>
+            <%#= f.date_field :start_date, class:"datepicker start", :"data-value" =>  f.object.start_date %>
+            <%= f.date_field :start_date, class:"start-date_field", :"data-value" =>  f.object.start_date, readonly: true %>
             <%= f.label :start_date, class: 'active' %>
         </div>
         
         <div class="input-field col s2">
             <%= f.date_field :end_date, class:"end-date_field", :"data-value" =>  f.object.end_date, readonly: true %>
             <%= f.label :end_date, class: 'active' %>
+        </div>
+        
+        <div class="input-field col s2">
+          
         </div>
         
         <%= render partial: 'itinerary_templates/comments', locals: {f: f, info: f.object} %>
@@ -29,14 +34,14 @@
           <% displayCruiseDetails = 'display:none;' %>
         <% end %>  
         
-        <div class="input-field product_details_cont col s2" style=<%=displayProductDetails%> >
+        <div class="input-field product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>
             <% @info = f.object %>
             <%= render template: 'itinerary_templates/product_info' %>
           <% end %>        
         </div>        
         
-        <div class="cruise-info input-field col s2" style=<%=displayCruiseDetails%>>
+        <div class="cruise-info input-field col s1 center-align" style=<%=displayCruiseDetails%>>
           <% if f.object.get_product_type == "Cruise" %>
             <% @cruise_legs = f.object.product.cruise_days %>
             <% @cruise = f.object.product %>

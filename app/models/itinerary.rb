@@ -72,61 +72,66 @@ class Itinerary < ActiveRecord::Base
     end
   end
   
-  def insert_template(template_id, position)
+  def insert_template(template_id, pos)
     newTemplate = ItineraryTemplate.find(template_id)
     int = 0;
+    offset = 0;
+    startleg = self.start_date
+    current_infos = self.itinerary_infos
+    
+puts "HAMISH current_infos start = " +  current_infos.count.to_s
+puts "HAMISH position start = " +  pos.to_s
+
+    # push out info position to allow new ones to be inserted at front. 
+    offset = newTemplate.itinerary_template_infos.count
+    current_infos.each do |info|
+      if info.position > pos
+        
+        info.position = info.position + offset   # is past insert, so bump position
+puts "HAMISH update existing to  = " +  info.position.to_s            
+      else
+        startleg = info.start_date    # will update to latest date up to insert pos 
+        info.save
+      end
+    end
+
+    # set insert pos
+    int = pos #this can be set to anything starting from zero.
+      
+    #insert new infos from template infos from pos,  
+    newTemplate.itinerary_template_infos.each do |i|
+      int = int + 1
+      endleg = startleg + i.length.days
+      info = self.add_info_from_template_info(i,startleg,endleg,int)
+puts "HAMISH creating new to  = " +  int.to_s       
+      startleg = endleg  
+      info.save
+    end
+     
+puts "HAMISH current_infos end = " +  self.itinerary_infos.count.to_s    
+puts "HAMISH int end = " +  int.to_s
+    # now wizz through all infos, update pos and dates to make sure all correct. 
+    int = 0
     startleg = self.start_date
     
-    if position == 0 
-      #if inserting at start, insert new template infos, update existing infos, then return 
-      newTemplate.itinerary_template_infos.each do |i|
-        int = int + 1
-        endleg = startleg + i.length.days
-        self.add_info_from_template_info(i,startleg,endleg,int)
-        startleg = endleg      
-      end
-      
-      self.itinerary_infos.each do |info|
-        # now upate all existing infos pos and dates
-        startleg = info.start_date
+    self.itinerary_infos.order("position ASC").each do |info|
+#      if info.position > pos
+        # if past insert position, we need to update dates
         endleg = startleg + info.length.days
         int = int + 1
         # update attributes
+puts "HAMISH updating existing before  = " +  info.position.to_s +  "  date before " + startleg.to_s          
         info.position = int
+puts "HAMISH updating existing to  = " +  int.to_s  +  "  date after " + startleg.to_s
         info.start_date = startleg
         info.end_date = endleg     
-      end
-    else
-      # position over 0 so must be inserting in middle, iterate through current infos, 
-      # insert new template and then update remaining infos.  
-      self.itinerary_infos.each do |info|
-        startleg = info.start_date
-        endleg = startleg + info.length.days
-        int = int + 1
         
-        if position == int 
-          # if we are at insert position add new itineary infos. 
-          newTemplate.itinerary_template_infos.each do |i|
-            int = int + 1
-            endleg = startleg + i.length.days
-            self.add_info_from_template_info(i,startleg,endleg,int)
-            startleg = endleg
-          end
-        end
-        
-        if position > int 
-            # above template will have been inserted, now we can update 
-            # remaining infos positions and dates etc 
-            info.position = int
-            info.start_date = startleg
-            info.end_date = endleg
-        end
-      end
-      
+        startleg = endleg  
+#      end
     end
   end
   
-  def add_info_from_template_info(info_template, startleg, endleg, position)
+  def add_info_from_template_info(info_template, startleg, endleg, pos)
     self.itinerary_infos.build(
           name: info_template.product.name,
           start_date: startleg,
@@ -138,7 +143,7 @@ class Itinerary < ActiveRecord::Base
           product_price: info_template.product.price_single,
           rating: info_template.product.rating,
           room_type: info_template.product.room_type,
-          position: position,
+          position: pos,
           supplier_id:  info_template.supplier_id,
           product_id: info_template.product_id,
           length: info_template.length

@@ -51,7 +51,6 @@ $(document).ready(function() {
   });
 
   $('#itinerary_infos').on('cocoon:after-remove', function() {   // this container is on itinerary new form
-console.log("doing remove");  
     set_sort_positions_and_dates();
   });
   
@@ -104,10 +103,10 @@ console.log("doing remove");
     var template = $("#insert_template_container").find('.select2-itinerary_templates').val();
     var postition = $("#insert_template_container").find('.position-insert-itineraries').find("option:selected").text();
     
-//console.log("pos= " + postition + "  temp= " + template) ;   
+console.log("pos= " + postition + "  temp= " + template) ;   
     if ($.isNumeric(template) && $.isNumeric(postition)){
       //submit form
-      toastr.info("Please wait will template is inserted");
+      toastr.info("Please wait while template is inserted");
       $('.itinerary_submit_btn').click();
       $(".loading").show();  //show spinner if uploading a file.
     } else {
@@ -157,14 +156,17 @@ function set_sort_positions_and_dates(){
     var current_date = new Date(yearStr,monStr,dayStr);
     int = 0;
 
-    $('#itinerary_infos').find('.datepicker').each(function(i){
+    //$('#itinerary_infos').find('.datepicker').each(function(i){ //removed to make readonly
+    $('#itinerary_infos').find('.start-date_field').each(function(i){
+    
 //int ++;
 //console.log('hamish current_date in loop  ' + int + " " + current_date);
 
       // only do for visible elements (hidden element will have been marked for deletion)
       if ($(this).closest('.nested-fields').is(":visible")){  
-        var picker = $(this).pickadate().pickadate('picker');
-        picker.set('select', current_date);
+        //var picker = $(this).pickadate().pickadate('picker'); //removed to make readonly
+        //picker.set('select', current_date);                   //removed to make readonly
+        $(this).val(current_date.yyyymmdd());                   //added to make readonly
         
         var num_days = $(this).closest(".field").find(".itinerary-number-days").val();
        

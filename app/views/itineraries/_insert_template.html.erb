@@ -1,9 +1,11 @@
 <div class="input-field insert_template_cont input-field col s6" >
-<a class="waves-effect waves-light btn right deep-purple darken-1 modal-trigger" href="#insert_modal_<%=f.object.id%>">Insert Template</a> 
+<a class="waves-effect waves-light btn right deep-purple darken-1 modal-trigger tooltipped insertTemplateBtn" 
+data-position="bottom" data-delay="50" data-tooltip="Insert a new template" 
+href="#insert_modal_<%=f.object.id%>">Insert Template</a> 
 </div>
  
   <!-- Modal Structure -->
-  <div id="insert_modal_<%=f.object.id%>" class="modal">
+  <div id="insert_modal_<%=f.object.id%>" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4><i class="mdi-image-add-to-photos"></i>  Insert Template</h4>
 
