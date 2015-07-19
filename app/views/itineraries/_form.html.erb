@@ -1,12 +1,13 @@
-
+<div class="loading" style="display:none;">Loading...</div>
 <div class="section">
   <div class="card-panel">
-  <%= form_for @itinerary, :html => {:multipart => true, :class => "col s12"} do |f| %>
+  <%= form_for @itinerary, :html => {:multipart => true, :class => "itinerary_form col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :user_id %>
 	  <%= f.hidden_field :status %>
 	  <%= f.hidden_field :enquiry_id %>
-	  <%= f.hidden_field :status %>
+	  
+	  <%= render partial: 'enquiry'%>
 
     <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
     <div class="row">
@@ -14,31 +15,34 @@
       <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
     </div>
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
-    <div class="row"><%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %></div>
-    
-    
+    <div class="row">
+      <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
+      <%= render partial: 'insert_template', locals: {f: f} %>
+    </div>
+   
     
       <h4 class="header2">Trip Details</h4>
-      
+      <% itf = f %>
       <div id="itinerary_infos">
         <div class="sortable">
       	  <%= f.fields_for :itinerary_infos, :html => {:class => "form-horizontal"}  do |i| %>
-        	    <%= render partial: 'itinerary_infos', locals: { f: i } %>
+        	    <%= render partial: 'itineraries/itinerary_infos', locals: {f: i } %>
           <% end %>
-  
+          
+          <div id="addNestedAboveHere"></div>
+          
           <div class="links input-field col s1">
-            <%= link_to_add_association  f, :itinerary_infos, {partial: 'itinerary_infos', class: "btn-floating btn-small waves-effect waves-light green"} do %>
+            <%= link_to_add_association  f, :itinerary_infos, partial: 'itinerary_infos', 
+                class: "btn-floating btn-small waves-effect waves-light green" do %>
               <i class="mdi-content-add"></i>
             <% end %>
           </div>
         </div>
       </div>
       
-
-
       <div class="row">
         <div class="input-field col s12">
-         <%= f.submit buttontxt, class: "btn right" %>
+         <%= f.submit buttontxt, class: "btn itinerary_submit_btn right" %>
         </div>
       </div>
     

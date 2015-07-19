@@ -21,18 +21,22 @@
             <%= f.label :end_date, class: 'active' %>
         </div>
         
+        <%= render partial: 'itinerary_templates/comments', locals: {f: f, info: f.object} %>
+ 
         <% if f.object.get_product_type == "Cruise" %>
           <% displayProductDetails = 'display:none;' %>
         <% else %>
           <% displayCruiseDetails = 'display:none;' %>
         <% end %>  
         
-        <div class="input-field product_details_cont col s4" style=<%=displayProductDetails%> >
-          <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
-          <%= f.label :product_name, "Product Details", class: "active" %>
-        </div>
+        <div class="input-field product_details_cont col s2" style=<%=displayProductDetails%> >
+          <% if f.object.get_product_type != "Cruise" %>
+            <% @info = f.object %>
+            <%= render template: 'itinerary_templates/product_info' %>
+          <% end %>        
+        </div>        
         
-        <div class="cruise-info input-field col s4" style=<%=displayCruiseDetails%>>
+        <div class="cruise-info input-field col s2" style=<%=displayCruiseDetails%>>
           <% if f.object.get_product_type == "Cruise" %>
             <% @cruise_legs = f.object.product.cruise_days %>
             <% @cruise = f.object.product %>
@@ -40,8 +44,13 @@
           <% end %>
         </div>
         
-       
-        
+        <div class="input-field col s1">
+          <a class="insertItineraryBtn tooltipped btn-floating btn-small right waves-effect waves-light blue" 
+             data-position="bottom" data-delay="50" data-tooltip="Insert below">
+            <i class="mdi-hardware-keyboard-return"></i>
+          </a>
+        </div>
+
       </div>  
     
     </div>

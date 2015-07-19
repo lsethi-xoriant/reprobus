@@ -18,8 +18,10 @@
         <% end %>  
         
         <div class="input-field product_details_cont col s8" style=<%=displayProductDetails%> >
-          <%= text_field_tag(:product_name, f.object.get_product_details, class: "product_details", :readonly => true  ) %>
-          <%= f.label :product_name, "Product Details", class: "active" %>
+          <% if f.object.get_product_type != "Cruise" %>
+            <% @info = f.object %>
+            <%= render template: 'itinerary_templates/product_info' %>
+          <% end %>        
         </div>
         
         <div class="cruise-info input-field col s8" style=<%=displayCruiseDetails%>>
@@ -29,6 +31,13 @@
             <%= render template: 'itinerary_templates/cruise_legs' %>
           <% end %>
         </div>
+        
+        <div class="input-field col s1">
+          <a class="insertItineraryBtn tooltipped btn-floating btn-small right waves-effect waves-light blue" 
+             data-position="bottom" data-delay="50" data-tooltip="Insert below">
+            <i class="mdi-hardware-keyboard-return"></i>
+          </a>
+        </div>        
         
       </div>
 

@@ -100,6 +100,10 @@ class Customer < ActiveRecord::Base
   def fullname
     return "#{self.first_name} #{self.last_name}"
   end
+
+  def fullname_with_title
+    return "#{self.title} #{self.first_name} #{self.last_name}".strip
+  end
   
   def dashboard_name
     "#{self.last_name}, #{self.first_name}"

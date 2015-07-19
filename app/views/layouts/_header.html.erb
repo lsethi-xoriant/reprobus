@@ -1,16 +1,16 @@
 <header id="header" class="page-topbar">
 <div class="navbar-fixed">
 
-  <ul id="dropdown1" class="dropdown-content">
+  <ul id="dropdown1" class="dropdown-content adminHeaderDropdown">
     <li>
-    <a href=<%= user_path(current_user) %>><i class="mdi-action-face-unlock"></i> Profile</a>
+    <a href=<%= user_path(current_user) %>><i class="mdi-action-face-unlock adminHeaderDropdown"></i> Profile</a>
     </li>
     <li
-    ><a href=<%= edit_user_path(current_user) %>><i class="mdi-action-settings"></i> Settings</a>
+    ><a href=<%= edit_user_path(current_user) %>><i class="mdi-action-settings adminHeaderDropdown"></i> Settings</a>
     </li>
     <li class="divider"></li>
     <li>
-    <%= link_to signout_path, method: :delete do %><i class="mdi-hardware-keyboard-tab"></i> Logout<%end%>
+    <%= link_to signout_path, method: :delete do %><i class="mdi-hardware-keyboard-tab adminHeaderDropdown"></i> Logout<%end%>
     </li>
   </ul>
           

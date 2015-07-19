@@ -1,0 +1,15 @@
+<div class="col s12">
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <i class="mdi-action-account-circle circle"></i>
+      <span class="title">Enquiry Details:</span>
+      <p><i class="mdi-communication-email"></i>  <%= @enquiry.name %>
+      <br><i class="mdi-action-account-circle"></i>  <%= @enquiry.lead_customer.fullname_with_title %>
+        
+        <% if @enquiry.agent %>
+          <br><i class="mdi-action-account-child"></i>  <%= @enquiry.name %>
+        <% end %>
+      </p>
+    </li>
+  </ul>
+</div>	 

@@ -1,7 +1,7 @@
 
 <div class="section">
   <div class="card-panel">
-  <%= form_for @template, :html => {:multipart => true, :class => "col s12"} do |f| %>
+  <%= form_for @template, :html => {:multipart => true, :class => "itinerary_form col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     
 
@@ -18,15 +18,15 @@
         <div class="sortable">
         
       	  <%= f.fields_for :itinerary_template_infos, :html => {:class => "form-horizontal"}  do |i| %>
-        	    <%= render partial: 'itinerary_template_infos', locals: { f: i } %>
+        	    <%= render partial: 'itinerary_template_infos', locals: { f: i, parentf: f } %>
           <% end %>
+          
+           <div id="addNestedAboveHere"></div>
 
           <div class="links input-field col s1">
-          <!--<div class="fixed-action-btn" style="bottom: 45px; right: 44px;"> -->
             <%= link_to_add_association  f, :itinerary_template_infos, {partial: 'itinerary_template_infos', class: "btn-floating btn-small waves-effect waves-light green"} do %>
               <i class="mdi-content-add"></i>
             <% end %>
-          <!--</div> -->
           </div>
         </div>
       </div>

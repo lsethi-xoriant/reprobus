@@ -1,0 +1,13 @@
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :status %>
+  <%= f.hidden_field :enquiry_id %>
+
+  <%= render partial: 'enquiry'%>
+  
+  
+  <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
+  <div class="row">
+    <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %>
+    <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_passengers", f: f, name: "num_passengers"} %>
+  </div>

@@ -89,7 +89,7 @@ class SearchesController < ApplicationController
   def product_search
     #@products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
     
-    @products = Product.where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
+    @products = Product.includes(:suppliers).where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
                             where.not(type: "Room").where.not(type: "CruiseDay").order('name')   
 
     @products = @products.where("type = :type", type: params[:type]) if (params[:type] != "" && params[:type] != "Type")  

@@ -5,7 +5,7 @@ class ItinerariesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: ItineraryDatatable.new(view_context, { user: current_user }) }
+      format.json { render json: ItineraryDatatable.new(view_context) }
     end
   end
   
@@ -24,10 +24,12 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
+    @enquiry = @itinerary.enquiry
   end
   
   def edit
-    @itinerary = Itinerary.find(params[:id])
+    @itinerary = Itinerary.includes(:itinerary_infos).find(params[:id])
+    @enquiry = @itinerary.enquiry
   end
   
   def create
@@ -46,9 +48,20 @@ class ItinerariesController < ApplicationController
   end
 
   def update
-     @itinerary = Itinerary.find(params[:id])
-     
+
+    @itinerary = Itinerary.find(params[:id])
+    
     if @itinerary.update_attributes(itinerary_params)
+      
+      if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 
+        @itinerary.insert_template(params[:itinerary_template_insert].to_i, params[:insert_position].to_i)
+        if !@itinerary.save
+          flash[:warning] = "Problem inserting template"
+          render 'edit'
+          return
+        end
+      end 
+      
       flash[:success] = "Itinerary updated"
       redirect_to edit_itinerary_path(@itinerary)
     else
@@ -65,9 +78,10 @@ class ItinerariesController < ApplicationController
 private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
-      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, :user_id,
-      itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, :country, :length,
-      :status, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,  :_destroy ])
+      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, 
+      :user_id, itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, 
+      :country, :length, :status, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
+      :comment_for_customer, :comment_for_supplier, :_destroy ])
     end
 end
  

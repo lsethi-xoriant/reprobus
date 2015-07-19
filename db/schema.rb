@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714074145) do
+ActiveRecord::Schema.define(version: 20150717225715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -316,8 +316,8 @@ ActiveRecord::Schema.define(version: 20150714074145) do
     t.string   "product_price"
     t.string   "rating"
     t.string   "room_type"
-    t.decimal  "price_per_person",    precision: 12, scale: 2
-    t.decimal  "price_total",         precision: 12, scale: 2
+    t.decimal  "price_per_person",     precision: 12, scale: 2
+    t.decimal  "price_total",          precision: 12, scale: 2
     t.integer  "position"
     t.integer  "supplier_id"
     t.integer  "itinerary_id"
@@ -325,6 +325,8 @@ ActiveRecord::Schema.define(version: 20150714074145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "length"
+    t.text     "comment_for_supplier"
+    t.text     "comment_for_customer"
   end
 
   add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree
@@ -442,6 +444,9 @@ ActiveRecord::Schema.define(version: 20150714074145) do
     t.string   "phone"
     t.integer  "cruise_id"
   end
+
+  add_index "products", ["cruise_id"], name: "index_products_on_cruise_id", using: :btree
+  add_index "products", ["hotel_id"], name: "index_products_on_hotel_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "company_name",         limit: 255

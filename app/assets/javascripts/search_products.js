@@ -40,7 +40,7 @@ function initProductSelect2() {
     ajax: {
       url: "/searches/product_search",
       dataType: 'json',
-      delay: 100,
+      delay: 200,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -125,7 +125,7 @@ function initProductSelect2() {
         nextCruiseContainer.html(data);
         nextCruiseContainer.show();
         nextProductContainer.hide();
-        $('.collapsible').collapsible({accordion : false });     // make new container collapisable   
+        $('.modal-trigger').leanModal(); // cruise info in a modal. initialise it
       });
     } else {
       // display any additional details in product details field. 

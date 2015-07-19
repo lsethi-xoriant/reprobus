@@ -36,7 +36,9 @@ class ItineraryDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     # insert query here
-    Itinerary.joins(:enquiry, :user).all
+    Itinerary.joins(
+      {enquiry: :itinerary},
+      {user: :itineraries}).distinct
     #Itinerary.all
   end
 

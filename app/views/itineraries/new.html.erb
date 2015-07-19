@@ -1,24 +1,30 @@
 <% provide(:title, "Itinerary") %>
 
-
 <div class="section">
   <div class="card-panel">
   <%= form_for @itinerary, :html => {:multipart => true, :class => "col s12"} do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-	  <%= f.hidden_field :enquiry_id, :value => @enquiry.id %>
 
-    <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
-    <div class="row">
-      <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %>
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_passengers", f: f, name: "num_passengers"} %>
-    </div>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :status %>
+  <%= f.hidden_field :enquiry_id %>
 
-    <h5 class="header">Choose a Template</h5>
+  <%= render partial: 'enquiry'%>
+  
+  
+  <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
+  <div class="row">
+    <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %>
+    <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_passengers", f: f, name: "num_passengers"} %>
+  </div>
+  
+    
+  <h5 class="header">Choose a Template</h5>
       
     <div class="row">
       <div class="input-field col s12">
         <%= f.select(:itinerary_template_id, options_for_select([[f.object.template_name, f.object.itinerary_template_id]],f.object.itinerary_template_id),{},{class: "select2-itinerary_templates browser-default"}) %>
-        <%= f.label :itinerary_template_id, "Itinerary Template",  class: 'active' %>
+        <%#= f.label :itinerary_template_id, "Itinerary Template",  class: 'active' %>
       </div>
     </div>
 
