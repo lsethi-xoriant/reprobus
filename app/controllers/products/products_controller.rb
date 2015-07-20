@@ -43,7 +43,7 @@ class Products::ProductsController < ApplicationController
    
     if @product.update_attributes(product_params)
       flash[:success] = "#{@product.name} updated!"
-      redirect_to product_index_path(@product, :html)
+      redirect_to get_edit_path(@product, :html)
     else
       render 'edit'
     end

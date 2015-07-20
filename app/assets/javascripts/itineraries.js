@@ -1,7 +1,9 @@
 /*This file is for the itinerary and itinerary templates pages                                   */
 /*It relies on the sortable.js plug in, Coccoon gem hooks, and the select2 search products js    */
 $(document).ready(function() {
-
+  
+  $(".select2-room-types-noajax").select2();  
+  
   // set up insert function on both pages, so can insert rows where we decide
   $("#itinerary_infos a.add_fields").
     data("association-insertion-method", 'before').
@@ -26,6 +28,7 @@ $(document).ready(function() {
       $(this).closest('.field').find(".product_details").text("");
       $(this).closest('.field').find(".cruise-info").hide();
       $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
+      $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
     });
     
     //$('.select2-countries').on('change', function(e) {
@@ -190,6 +193,7 @@ function initialise_common_itineary_elements(insertedItem){
   initDestinationSelect2();
   initCountrySelect2();
   initSupplierSelect2();
+  $(".select2-room-types-noajax").select2();    
   insertedItem.find(".type-itineraries").val("Type").material_select();
   sort_itinerary_items();
   reset_material_active_labels('#itinerary_infos');
@@ -203,6 +207,7 @@ function initialise_common_itineary_elements(insertedItem){
     $(this).closest('.field').find(".product_details").text("");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
+    $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });   
   
   $('.itinerary-number-days').on('change', function(e, insertedItem) { 

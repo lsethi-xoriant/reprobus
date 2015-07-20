@@ -60,7 +60,7 @@ class CruiseDay < Product
           next 
         end
           
-        cd = CruiseDay.find_by room_type: row["CRUISEDAY"], cruise: cruise
+        cd = CruiseDay.find_by name: row["CRUISEDAY"], cruise: cruise
         
         if cd
           fhelp.add_skip_record("Row " + (i-1).to_s + " skipped as Cruise Leg with this name already exists on Cruise : #{row["CRUISEDAY"]} | #{row["CRUISE"]} | #{row["COUNTRY"]} | #{row["DESTINATION"]}");

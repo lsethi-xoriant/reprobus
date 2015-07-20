@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717225715) do
+ActiveRecord::Schema.define(version: 20150720012952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -315,7 +315,6 @@ ActiveRecord::Schema.define(version: 20150717225715) do
     t.string   "product_description"
     t.string   "product_price"
     t.string   "rating"
-    t.string   "room_type"
     t.decimal  "price_per_person",     precision: 12, scale: 2
     t.decimal  "price_total",          precision: 12, scale: 2
     t.integer  "position"
@@ -327,6 +326,7 @@ ActiveRecord::Schema.define(version: 20150717225715) do
     t.integer  "length"
     t.text     "comment_for_supplier"
     t.text     "comment_for_customer"
+    t.integer  "room_type"
   end
 
   add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree

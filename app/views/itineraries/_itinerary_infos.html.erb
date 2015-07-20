@@ -1,9 +1,18 @@
+<% if f.object.get_product_type == "Cruise" %>
+  <% displayProductDetails = 'display:none;' %>
+<% else %>
+  <% displayCruiseDetails = 'display:none;' %>
+<% end %>  
+<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
+  <% displayRoomDetails = 'display:none;' %>
+<% end %>
+
 <div class="nested-fields">
   <div class ="card-panel itinerary-infos">
     <div class="field">
     
       <%= render partial: 'itinerary_templates/itinerary_info_top_row', locals: { f: f } %>
-
+        
       <div class="row ">
         
         <div class="input-field col s2 offset-s1">
@@ -23,16 +32,13 @@
         </div>
         
         <div class="input-field col s2">
-          
-        </div>
+          <div class="room_type_cont" style=<%= displayRoomDetails %> >
+          <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
+          <label for="room_type" class="active">Room Type</label>
+          </div>
+        </div>                
         
         <%= render partial: 'itinerary_templates/comments', locals: {f: f, info: f.object} %>
- 
-        <% if f.object.get_product_type == "Cruise" %>
-          <% displayProductDetails = 'display:none;' %>
-        <% else %>
-          <% displayCruiseDetails = 'display:none;' %>
-        <% end %>  
         
         <div class="input-field product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>

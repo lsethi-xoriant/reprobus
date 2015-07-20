@@ -58,5 +58,6 @@ function initDestinationSelect2() {
     $(this).closest(".row").find(".itinerary-number-days").val("0");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
+    $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });    
 }

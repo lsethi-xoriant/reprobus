@@ -85,6 +85,7 @@ function initProductSelect2() {
     var nextCountField = $(this).closest(".row").find(".select2-countries-noajax");
     var nextNumDaysField = $(this).closest(".row").find(".itinerary-number-days");
     var nextSuppField = $(this).closest(".field").find(".select2-suppliers-noajax");
+    var nextRoomTypeField =  $(this).closest('.field').find(".select2-room-types-noajax");
     
     // update associated fields for a product selection 
     if (nextTypeField.find("option:selected").text() != data.type){
@@ -100,15 +101,39 @@ function initProductSelect2() {
     
     if (nextNumDaysField.val() != data.numdays) {nextNumDaysField.val(data.numdays);}
 
-    // populate supplier dropdown
-    var optionStr = "";
-    $.each(data.suppliers,function(i, item){
-      optionStr = optionStr + '<option value="'+item.id+'">'+item.supplier_name+'</option>';
-    });
-    var selectedVal;
-    if (data.suppliers.length == 1){selectedVal = data.suppliers[0].id;}
-    nextSuppField.empty().append(optionStr).val(selectedVal).trigger("change");
-    
+    // do ajax call to get supplier and room type info to populate dropdowns. 
+    $.ajax({
+        url: "/searches/product_info_search",
+        //dataType: 'json',
+        data: {
+              product: productId
+              }
+      }).done(function(data) {
+console.log(data);
+        // populate supplier dropdown, and room type dropdown
+        var optionStr = "";
+        var selectedVal;
+        $.each(data.suppliers,function(i, item){
+          optionStr = optionStr + '<option value="'+item.id+'">'+item.supplier_name+'</option>';
+        });
+        if (data.suppliers.length == 1){selectedVal = data.suppliers[0].id;}
+        nextSuppField.empty().append(optionStr).val(selectedVal).trigger("change");
+        
+        optionStr = "";
+        selectedVal = 0;
+        $.each(data.roomtypes,function(i, item){
+          optionStr = optionStr + '<option value="'+item.id+'">'+item.room_type+'</option>';
+        });    
+        if (data.roomtypes.length == 1){selectedVal = data.roomtypes[0].id;}
+        nextRoomTypeField.empty().append(optionStr).val(selectedVal).trigger("change");
+        
+        if (data.type == "Cruise" || data.type == "Hotel") {
+          $(nextRoomTypeField).closest('.field').find(".room_type_cont").show();
+        } else {
+          $(nextRoomTypeField).closest('.field').find(".room_type_cont").hide();
+        }  
+      });
+
     // handle specialy, need to add all cruise legs... do ajax search and get cruise legs. 
     //if (nextTypeField.find("option:selected").text() == "Cruise") {
     if (e.params.data.type == "Cruise") {
@@ -116,16 +141,13 @@ function initProductSelect2() {
         url: "/searches/cruise_info_search",
         //dataType: 'json',
         data: {
-              destination: getDestinationSearchTerm($(this)),
-              country: getCountrySearchTerm($(this)),
-              type: getTypeSearchTerm($(this)),
               product: productId
               }
       }).done(function(data) {
         nextCruiseContainer.html(data);
         nextCruiseContainer.show();
         nextProductContainer.hide();
-        $('.modal-trigger').leanModal(); // cruise info in a modal. initialise it
+        $('.modal-trigger').leanModal(); // cruise info put into a modal. it will need initialising
       });
     } else {
       // display any additional details in product details field. 
