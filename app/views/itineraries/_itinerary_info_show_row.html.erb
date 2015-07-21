@@ -9,12 +9,16 @@
 <% if !show %>
   <% hideRowStr = 'display:none;' %>
 <% end %>
-
+<% if @itinerary.isLocked? %>
+  <% icon = "mdi-action-view-day" %>
+<% else %>  
+  <% icon = "mdi-editor-format-line-spacing" %>
+<% end %>
 
 <div class ="row itinerary_top_row_show" style=<%= hideRowStr %>> 
 
   <div class="col s1 valign-wrapper">
-    <i class="mdi-editor-format-line-spacing small grey-text"></i>
+    <i class="<%= icon %> small grey-text"></i>
     <h6 class="grey-text valign iti_postion_number_show"></h6>
   </div>
   
