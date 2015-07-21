@@ -20,6 +20,31 @@ $(document).ready(function() {
     $('.add_fields').click();
   });
   
+  $("#lockItineraryBtn").on('click', function(e) {
+    $(".loading").show();  //show spinner
+    $("#itinerary_status").val("Locked");
+    $("#itinerary_complete").val("true");
+    $('.itinerary_submit_btn').click();
+  });
+  
+  $("#unlockItineraryBtn").on('click', function(e) {
+    $(".loading").show();  //show spinner
+    $("#itinerary_status").val("Unlocked");
+    $("#itinerary_complete").val("false");
+    $('.itinerary_submit_btn').click();
+  });  
+  
+  $("#toggleShowEditItinerary").on('click', function(e) {
+    $('.itinerary_top_row_show').toggle();
+    $('.itinerary_info_top_row_edit').toggle();
+    $('.itinerary_info_bottom_row_edit').toggle();
+  });
+  
+  $("#saveItineraryFabBtn").on('click', function(e) {
+    $(".loading").show();  //show spinner
+    $('.itinerary_submit_btn').click();
+  }); 
+  
   if ($('#itinerary_template_infos').length || $('#itinerary_infos').length) {
     // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
     $('.type-itineraries').on('change', function(e) {
@@ -46,7 +71,6 @@ $(document).ready(function() {
     set_sort_positions_and_dates();   // set positions if any resort occurs.
   });
   
-     
   /* JS hooks to update sortable elements   */
   
   $('#itinerary_template_infos').on('cocoon:after-remove', function() {   // this container is on itinerary new form
@@ -138,6 +162,10 @@ function set_sort_positions_and_dates(){
   });
   int = 0;
   $('.iti_postion_number').each(function(i){
+    if ($(this).closest('.nested-fields').is(":visible")){int++; $(this).text(int);} //non visible will be marked for deletion
+  });
+  int = 0;
+  $('.iti_postion_number_show').each(function(i){
     if ($(this).closest('.nested-fields').is(":visible")){int++; $(this).text(int);} //non visible will be marked for deletion
   });
   

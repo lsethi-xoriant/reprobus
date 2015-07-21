@@ -1,4 +1,5 @@
-  <div class ="row">
+  
+  <div class ="row itinerary_info_top_row_edit">
     
     <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
     
@@ -38,9 +39,10 @@
     </div>
     
     <div class="input-field col s1">
-      <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
-        <i class="mdi-content-clear"></i>
+      <% if !@itinerary || !@itinerary.isLocked? %>
+        <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
+          <i class="mdi-content-clear"></i>
+        <% end %>
       <% end %>
     </div>   
-    
   </div>

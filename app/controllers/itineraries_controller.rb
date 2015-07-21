@@ -79,8 +79,8 @@ private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, 
-      :user_id, itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, 
-      :country, :length, :status, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
+      :user_id, :status,  itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, 
+      :country, :length, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
       :comment_for_customer, :comment_for_supplier, :_destroy ])
     end
 end

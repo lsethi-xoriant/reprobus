@@ -1,0 +1,89 @@
+<% if f.object.get_product_type == "Cruise" %>
+  <% displayProductDetails = 'display:none;' %>
+<% else %>
+  <% displayCruiseDetails = 'display:none;' %>
+<% end %>  
+<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
+  <% displayRoomDetails = 'display:none;' %>
+<% end %>
+<% if !show %>
+  <% hideRowStr = 'display:none;' %>
+<% end %>
+
+
+<div class ="row itinerary_top_row_show" style=<%= hideRowStr %>> 
+
+  <div class="col s1 valign-wrapper">
+    <i class="mdi-editor-format-line-spacing small grey-text"></i>
+    <h6 class="grey-text valign iti_postion_number_show"></h6>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.get_product_country %>
+    <label for="show_country" class="active">Country</label>
+  </div>  
+  
+  <div class="input-field col s2">
+    <%= f.object.get_product_destination %>
+    <label for="show_destination" class="active">Destination</label>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.get_product_type %>
+    <label for="show_type" class="active">Type</label>
+  </div>   
+  
+  <div class="input-field col s2">
+    <%= f.object.get_product_name %>
+    <label for="show_product_id" class="active">Product</label>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.length %>
+    <label for="show_length" class="active"># Days</label>
+  </div>
+
+  <div class="input-field col s1">
+    <%= f.object.supplier_name %>
+    <label for="show_supplier_id" class="active">Supplier</label>
+  </div>            
+  
+  <div class="input-field col s1">
+    <%= f.object.start_date.strftime("%d/%m/%y") if f.object.start_date %>
+    <label for="show_startdate" class="active">Start</label>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.end_date.strftime("%d/%m/%y") if f.object.end_date  %>
+    <label for="show_enddate" class="active">End</label>
+  </div>
+        
+  <div class="input-field col s1">
+    <div class="room_type_cont_show" style=<%= displayRoomDetails %> >
+      <%= f.object.room_type_name %>
+      <label for="show_room_type" class="active">Room Type</label>
+    </div>
+  </div>                
+        
+  <%#= render partial: 'itinerary_templates/comments', locals: {f: f, info: f.object} %>
+  
+  
+<!--  IF PUT THESE IN NEED TO SORT OUT NEW MODAL IDS, as these ones overright the ones on the edit forms
+  <div class="input-field product_details_cont col s1 center-align" style=<%#=displayProductDetails%> >
+    <%# if f.object.get_product_type != "Cruise" %>
+      <%# @info = f.object %>
+      <%#= render template: 'itinerary_templates/product_info' %>
+    <%# end %>        
+  </div>        
+        
+  <div class="cruise-info input-field col s1 center-align" style=<%#=displayCruiseDetails%>>
+    <%# if f.object.get_product_type == "Cruise" %>
+      <%# @cruise_legs = f.object.product.cruise_days %>
+      <%# @cruise = f.object.product %>
+      <%#= render template: 'itinerary_templates/cruise_legs' %>
+    <%# end %>
+  </div>
+-->  
+
+
+</div>  

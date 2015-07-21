@@ -13,7 +13,6 @@
 #  product_description  :string
 #  product_price        :string
 #  rating               :string
-#  room_type            :string
 #  price_per_person     :decimal(12, 2)
 #  price_total          :decimal(12, 2)
 #  position             :integer
@@ -25,6 +24,7 @@
 #  length               :integer
 #  comment_for_supplier :text
 #  comment_for_customer :text
+#  room_type            :integer
 #
 
 class ItineraryInfo < ActiveRecord::Base
@@ -40,6 +40,10 @@ class ItineraryInfo < ActiveRecord::Base
   
   def supplier_name
     return self.supplier.supplier_name if self.supplier
+  end
+  
+  def room_type_name
+    return self.product.rooms.find(self.room_type).name if self.room_type
   end
   
   def get_product_details

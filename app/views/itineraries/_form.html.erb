@@ -1,50 +1,101 @@
 <div class="loading" style="display:none;">Loading...</div>
 <div class="section">
   <div class="card-panel">
+  <% if @itinerary.isLocked? %>
+    <div class="card-panel teal">
+      <span class="white-text">This Itinerary is Locked. Any changes to the itineary legs will not be saved  </span>
+    </div>
+  <% end %> 
+    
+    
   <%= form_for @itinerary, :html => {:multipart => true, :class => "itinerary_form col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :user_id %>
 	  <%= f.hidden_field :status %>
 	  <%= f.hidden_field :enquiry_id %>
+	  <%= f.hidden_field :complete %>
 	  
 	  <%= render partial: 'enquiry'%>
 
     <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
+    
     <div class="row">
       <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "500"} %>
       <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
     </div>
+    
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
+    
     <div class="row">
       <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
-      <%= render partial: 'insert_template', locals: {f: f} %>
+      <% if !@itinerary.isLocked? %>
+        <%= render partial: 'insert_template', locals: {f: f} %>
+      <% else %>  
+        <div class="input-field input-field col s3" >
+        <a id="addPricingButton" class="waves-effect waves-light btn right deep-purple darken-1 modal-trigger tooltipped" 
+          data-position="bottom" data-delay="50" data-tooltip="Add pricing" 
+          href="#">Add Pricing</a> 
+        </div>    
+      <% end %> 
+      <div class="input-field insert_template_cont input-field col s3" >
+        <% if !@itinerary.isLocked? %>
+          <a id="lockItineraryBtn" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped" 
+          data-position="bottom" data-delay="50" data-tooltip="Lock Itinerary (will also save any changes)" 
+          href="#">Lock Itinerary</a> 
+        <% else %>  
+          <a id="unlockItineraryBtn" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped unlockItineraryBtn" 
+          data-position="bottom" data-delay="50" data-tooltip="Unlock Itinerary" 
+          href="#">Unlock Itinerary</a> 
+        <% end %>  
+      </div>      
     </div>
    
-    
       <h4 class="header2">Trip Details</h4>
-      <% itf = f %>
+
       <div id="itinerary_infos">
         <div class="sortable">
       	  <%= f.fields_for :itinerary_infos, :html => {:class => "form-horizontal"}  do |i| %>
+          	<% if @itinerary.isLocked? %>
+              <%= render partial: 'itineraries/itinerary_locked_rows', locals: {f: i } %>
+            <% else %>
         	    <%= render partial: 'itineraries/itinerary_infos', locals: {f: i } %>
+        	  <% end %>
           <% end %>
           
           <div id="addNestedAboveHere"></div>
           
           <div class="links input-field col s1">
-            <%= link_to_add_association  f, :itinerary_infos, partial: 'itinerary_infos', 
-                class: "btn-floating btn-small waves-effect waves-light green" do %>
-              <i class="mdi-content-add"></i>
+            <% if !@itinerary.isLocked? %>
+              <%= link_to_add_association  f, :itinerary_infos, partial: 'itinerary_infos', 
+                  class: "btn-floating btn-small waves-effect waves-light green" do %>
+                <i class="mdi-content-add"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
       </div>
       
+      
+     <div class="fixed-action-btn" style="bottom: 45px; right: 45px;">
+        <a id="saveItineraryFabBtn" class="btn-floating btn-large waves-effect green tooltipped" 
+        data-position="left" data-delay="50" data-tooltip="Save" >
+          <i class="large mdi-action-backup"></i>
+        </a>
+        <ul>
+          <% if !@itinerary.isLocked? %>
+          <li><a id="toggleShowEditItinerary" class="btn-floating waves-effect blue tooltipped"
+          data-position="left" data-delay="50" data-tooltip="Toggle more/less" 
+          ><i class="mdi-navigation-unfold-less"></i></a></li>
+          <% end %>
+        </ul>
+      </div>      
+
       <div class="row">
-        <div class="input-field col s12">
-         <%= f.submit buttontxt, class: "btn itinerary_submit_btn right" %>
+        <div class="input-field col s12" style="display:none" >
+          <%= f.submit buttontxt, class: "btn itinerary_submit_btn right"%>
         </div>
       </div>
+
     
   <% end %>
   </div>

@@ -49,6 +49,10 @@ class Itinerary < ActiveRecord::Base
     end
   end  
   
+  def isLocked?
+    return self.complete 
+  end
+  
   def template_name
     return self.itinerary_template.name if self.itinerary_template
   end
@@ -78,17 +82,12 @@ class Itinerary < ActiveRecord::Base
     offset = 0;
     startleg = self.start_date
     current_infos = self.itinerary_infos
-    
-puts "HAMISH current_infos start = " +  current_infos.count.to_s
-puts "HAMISH position start = " +  pos.to_s
 
     # push out info position to allow new ones to be inserted at front. 
     offset = newTemplate.itinerary_template_infos.count
     current_infos.each do |info|
       if info.position > pos
-        
         info.position = info.position + offset   # is past insert, so bump position
-puts "HAMISH update existing to  = " +  info.position.to_s            
       else
         startleg = info.start_date    # will update to latest date up to insert pos 
         info.save
@@ -103,13 +102,10 @@ puts "HAMISH update existing to  = " +  info.position.to_s
       int = int + 1
       endleg = startleg + i.length.days
       info = self.add_info_from_template_info(i,startleg,endleg,int)
-puts "HAMISH creating new to  = " +  int.to_s       
       startleg = endleg  
       info.save
     end
-     
-puts "HAMISH current_infos end = " +  self.itinerary_infos.count.to_s    
-puts "HAMISH int end = " +  int.to_s
+
     # now wizz through all infos, update pos and dates to make sure all correct. 
     int = 0
     startleg = self.start_date
@@ -120,9 +116,7 @@ puts "HAMISH int end = " +  int.to_s
         endleg = startleg + info.length.days
         int = int + 1
         # update attributes
-puts "HAMISH updating existing before  = " +  info.position.to_s +  "  date before " + startleg.to_s          
         info.position = int
-puts "HAMISH updating existing to  = " +  int.to_s  +  "  date after " + startleg.to_s
         info.start_date = startleg
         info.end_date = endleg     
         

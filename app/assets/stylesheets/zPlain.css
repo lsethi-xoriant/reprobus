@@ -56,7 +56,7 @@
 
 /* steve override */
 .btn, .btn-large, .btn-flat {
-  padding: 0 1rem !important;
+/*  padding: 0 1rem !important;*/
 }
 
 /* spinner for imports screen */
