@@ -101,7 +101,7 @@ class Itinerary < ActiveRecord::Base
     newTemplate.itinerary_template_infos.each do |i|
       int = int + 1
       endleg = startleg + i.length.days
-      info = self.add_info_from_template_info(i,startleg,endleg,int)
+      info = self.add_info_from_template_info(i,startleg,endleg,int) if i.product
       startleg = endleg  
       info.save
     end
