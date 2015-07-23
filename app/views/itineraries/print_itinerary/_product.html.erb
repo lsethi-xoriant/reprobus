@@ -5,11 +5,9 @@
 </div>
 
 <div class="row">
-   <div class="card-panel blue lighten-5">
-     
+   <div>
       <div class="col s12"><strong><%= "#{info.start_date.strftime('%d%b%Y')} - #{info.end_date.strftime('%d%b%Y')}, #{info.get_product_destination}, #{info.get_product_country}" %></strong></div>    
       <div class="col s8"><%= "#{info.get_product_description}"%></div>
       <div class="col s4"><%= image_tag(info.product.get_dropbox_image_link, :class => "product_image") %></div>
-
   </div>
 </div>
