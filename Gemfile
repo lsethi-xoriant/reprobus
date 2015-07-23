@@ -10,11 +10,16 @@ group :development, :test do
   gem 'meta_request'
   gem "better_errors"
   gem 'web-console', '~> 2.0'
+  gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
 end
 
 group :production do
   gem 'rails_12factor', '0.0.2'
 end
+
+group :staging, :production do
+  gem 'wkhtmltopdf-heroku'
+end 
 
 group :test do
 # old way, decided to use minitest
@@ -49,7 +54,8 @@ gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+#gem 'wkhtmltopdf-binary', # removed as having issues accessing https resourses from older gem - replaced above with another similiar one. 
+
 gem 'pxpay'
 gem 'money'
 gem 'google_currency'

@@ -9,7 +9,7 @@ class ItinerariesController < ApplicationController
 
     respond_to do |format|
       format.pdf do
-        render :pdf => "itinerary_no_ " + @itinerary.id.to_s.rjust(8, '0')
+        render :pdf => "Itinerary_no_" + @itinerary.id.to_s.rjust(8, '0')
       end
       format.html { render layout: false }
     end    
