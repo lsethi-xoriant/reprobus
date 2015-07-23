@@ -126,7 +126,7 @@ $(document).ready(function() {
     }
   });
   
-  $('#insert_template_OK').on('click', function(e) { 
+  $('.insert_template_OK').on('click', function(e) { 
     var template = $("#insert_template_container").find('.select2-itinerary_templates').val();
     var postition = $("#insert_template_container").find('.position-insert-itineraries').find("option:selected").text();
     

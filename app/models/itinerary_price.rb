@@ -10,5 +10,6 @@
 
 class ItineraryPrice < ActiveRecord::Base
   has_many      :itinerary_price_items
+  accepts_nested_attributes_for :itinerary_price_items, allow_destroy: true
   
 end

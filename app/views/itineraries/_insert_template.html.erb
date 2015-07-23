@@ -5,7 +5,7 @@ href="#insert_modal_<%=f.object.id%>">Insert Template</a>
 </div>
  
   <!-- Modal Structure -->
-  <div id="insert_modal_<%=f.object.id%>" class="modal modal-fixed-footer">
+  <div id="insert_modal_<%=f.object.id%>" class="modal modal-fixed-footer white">
     <div class="modal-content">
       <h4><i class="mdi-image-add-to-photos"></i>  Insert Template</h4>
 
@@ -27,7 +27,10 @@ href="#insert_modal_<%=f.object.id%>">Insert Template</a>
                   <%= f.label :itinerary_template_insert, "Itinerary Template",  class: 'active' %>
                 </div> 
               </div>  
-
+               
+              <% f.object.itinerary_infos.count.times do %>
+              <p><br></p>
+              <% end %>
             </div>  
           </div>
         </li> 
@@ -36,7 +39,7 @@ href="#insert_modal_<%=f.object.id%>">Insert Template</a>
     </div>
 
     <div class="modal-footer">
-      <a href="#!" id="insert_template_OK" class=" modal-action modal-close waves-effect waves-green  green lighten-1 btn-flat">Insert</a>
+      <a href="#" id="insert_template_OKk" class="insert_template_OK modal-action modal-close waves-effect waves-green  green lighten-1 btn-flat">Insert</a>
     </div>
   </div>
               

@@ -1,0 +1,21 @@
+<h4><strong>Itinerary:</strong>		<%= @itinerary.name %></h4><br>
+<strong>Lead Customer:</strong>		<%= @itinerary.enquiry.lead_customer.fullname_with_title %><br>
+<% @enquiry.customers.each do |cust| %>
+    <% if cust != @enquiry.lead_customer %>
+    <strong>Other Customer/s:</strong>		<%= cust.fullname_with_title %><br>
+    <% end %>
+<% end %>
+
+<h5>Trip Summary</h5> 
+<ul>
+    <% @itinerary.itinerary_infos.each do |info| %>
+    <li><%= "#{info.start_date.strftime('%d%b%Y')} - #{info.name}" %></li>
+    <% end %>
+</ul>
+
+<h5>Trip Details</h5>
+<% leg_count = 0 %>
+<% @itinerary.itinerary_infos.each do |info| %>
+<% leg_count = leg_count + 1 %>
+<%= render partial: 'itineraries/print_itinerary/product', formats: [:html], locals: {info: info, leg_count: leg_count}  %>
+<% end %>

@@ -45,7 +45,13 @@
         <%= f.label :description %>
       </div>
     </div>
-    
+  
+    <% if @product.type == "Hotel" %>
+      <div class="row">
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "address", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f  } %>
+      </div>
+    <% end%>
     
     <% if @setting.use_dropbox %>
       <% @setting.dropbox_default_path ? name = "Dropbox File Name (default path: #{@setting.dropbox_default_path} )" : name = "Dropbox File Name" %>

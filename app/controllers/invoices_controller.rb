@@ -140,7 +140,7 @@ class InvoicesController < ApplicationController
     end
   end
  
-   def pdfDeposit
+  def pdfDeposit
     @setting = Setting.find(1)
     @invoice = Invoice.find(params[:id])
     @booking = @invoice.booking

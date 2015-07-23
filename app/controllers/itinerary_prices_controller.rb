@@ -1,21 +1,10 @@
-class ItinerariesController < ApplicationController
+class ItineraryPricesController < ApplicationController
+#HALFWAY SET UP - might not need it... 
+
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
-
-  def printItinerary
-    @setting = Setting.find(1)
-    @itinerary = Itinerary.find(params[:itinerary_id])
-    @enquiry = @itinerary.enquiry
-
-    respond_to do |format|
-      format.pdf do
-        render :pdf => "itinerary_no_ " + @itinerary.id.to_s.rjust(8, '0')
-      end
-      format.html
-    end    
-  end
-
   
+ 
   def index
     respond_to do |format|
       format.html
@@ -90,12 +79,19 @@ class ItinerariesController < ApplicationController
   end
   
 private
-    def itinerary_params
-      params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
-      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, 
-      :user_id, :status,  itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, 
-      :country, :length, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
-      :comment_for_customer, :comment_for_supplier, :_destroy ])
-    end
+  def itinerary_params
+    params.require(:itinerary).permit(:itinerary_id,  itinerary_price_items_attributes: [:id, :booking_ref, :description, :price_total, 
+    :supplier_id, :itinerary_price_id, 
+    :country, :length, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
+    :comment_for_customer, :comment_for_supplier, :_destroy ])
+  end  
+  
+#  id                 :integer          not null, primary key
+#  booking_ref        :string
+#  description        :string
+#  price_total        :decimal(12, 2)   default("0.0")
+#  supplier_id        :integer
+#  itinerary_price_id :integer
+#  created_at         :datetime
+#  updated_at         :datetime
 end
- 

@@ -29,7 +29,12 @@ Reprobus::Application.routes.draw do
   
   resources :email_templates
   resources :itinerary_templates
-  resources :itineraries
+  resources :itineraries do
+    get 'printItinerary'
+  end
+  
+  
+  #resources :itinerary_prices
     
   resources :suppliers
   resources :agents

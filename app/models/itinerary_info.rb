@@ -53,6 +53,10 @@ class ItineraryInfo < ActiveRecord::Base
   def get_product_name
     return self.product.name if self.product
   end
+
+  def get_product_description
+    return self.product.description if self.product
+  end
   
   def get_product_type
     return self.product.type.underscore.humanize if self.product
