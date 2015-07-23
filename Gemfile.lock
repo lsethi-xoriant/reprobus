@@ -399,6 +399,7 @@ GEM
     will_paginate (3.0.4)
     win32console (1.3.2-x86-mingw32)
     wkhtmltopdf-binary-edge (0.12.2.1)
+    wkhtmltopdf-heroku (2.12.2.1)
     xeroizer (2.15.6)
       activesupport
       builder (>= 2.1.2)
@@ -456,4 +457,5 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (= 3.0.4)
   wkhtmltopdf-binary-edge (~> 0.12.2.1)
+  wkhtmltopdf-heroku
   xeroizer (~> 2.15.6)
