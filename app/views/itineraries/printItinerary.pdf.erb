@@ -1,3 +1,10 @@
+<!-- Compiled and minified CSS -->
+<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" %>
+<%= javascript_include_tag "https://code.jquery.com/jquery-1.11.3.min.js" %>  
+<!-- Compiled and minified JavaScript -->
+<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js" %>
+
+
 <style type="text/css"> .ReadMsgBody {width: 100%; background-color: #ffffff;} .ExternalClass {width: 100%; background-color: #ffffff;} body { width: 100%; background-color: #9CBA5F; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; font-family: Georgia, Times, serif } table {border-collapse: collapse;} @media only screen and (max-width: 640px) { body[yahoo] .deviceWidth {width:440px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } @media only screen and (max-width: 479px) { body[yahoo] .deviceWidth {width:280px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } </style>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="font-family: Georgia, Times, serif"> 
@@ -17,7 +24,6 @@
 </tr> 
 <tr> 
 <td style="font-size: 13px; color: #4B4B4B; font-weight: normal; text-align: left; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; padding: 10px 8px 10px 8px" bgcolor="#FCFCFA">
-
 
 <%= render partial: 'itineraries/print_itinerary/printItineraryDetails', formats: [:html]  %>
 

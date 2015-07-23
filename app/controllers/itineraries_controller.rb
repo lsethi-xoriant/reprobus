@@ -11,7 +11,7 @@ class ItinerariesController < ApplicationController
       format.pdf do
         render :pdf => "itinerary_no_ " + @itinerary.id.to_s.rjust(8, '0')
       end
-      format.html
+      format.html { render layout: false }
     end    
   end
 

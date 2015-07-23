@@ -53,7 +53,7 @@
                 <% if @setting.dropbox_user.blank? %>
                   <div class="input-field col s6 offset-s6">
                   <%= link_to "Authorise Dropbox Connection", dropbox_authorize_path, {:class => " btn dropbox-connect disabled"} %>
-                  <p class="blue-text"><strong>Add Dropbox user before authorising connection</strong></p>
+                  <p class="blue-text"><strong>Save Dropbox user before authorising connection</strong></p>
                   </div>
                 <% elsif @setting.dropbox_session.blank? %>
                   <div class="input-field col s6 offset-s6">

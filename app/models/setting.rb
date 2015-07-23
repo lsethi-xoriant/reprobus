@@ -39,7 +39,7 @@ class Setting < ActiveRecord::Base
     if !self.use_dropbox
       self.dropbox_default_path = ""
       self.dropbox_session =  ""
-      self.dropbox_user
+      self.dropbox_user = ""
     end
   end
   
