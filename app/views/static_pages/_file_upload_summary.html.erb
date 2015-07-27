@@ -12,9 +12,9 @@
       </div>
       <div class="collapsible-body">
         <% if job_progress.run_live %>
-          <p><strong>IMPORTED</strong></p>
+          <p><strong>IMPORT COMPLETED</strong></p>
         <% elsif job_progress.complete %>
-          <p><strong>IMPORT VALIDATION COMPLETED </strong>
+          <p><strong>VALIDATION COMPLETED </strong>
               <span id="run_live_btn"><%= link_to "Run Live", "import_status_rerun/#{job_progress.id}", method: :get,
                     data: { confirm: "Are you ready to push this import live?" }, class: "btn red right" %></span> 
               <br>Note that only existing records will be checked for duplicates (there may be duplicates in file that cannot be checked until records created during Live import) </p> 

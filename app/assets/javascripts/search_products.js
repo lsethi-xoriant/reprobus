@@ -47,21 +47,31 @@ function initProductSelect2() {
           destination: getDestinationSearchTerm(theSelect2Element),
           country: getCountrySearchTerm(theSelect2Element),
           type: getTypeSearchTerm(theSelect2Element),
-          page: params.page
+          page: params.page,
         };
       },
-      processResults: function (data, page) {
+      processResults: function (data, params) {
         // parse the results into the format expected by Select2.
         // since we are using custom formatting functions we do not need to
         // alter the remote JSON data
+        params.page = params.page || 1;
+        
+console.log("processResults page = ");
+console.log(params);
+console.log("processResults data = ");
+console.log(data);
+
         return {
-          results: data.items
+          results: data.items,
+          pagination: {
+            more: (params.page * 30) < data.total
+          }
         };
       },
       cache: true
     },
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-    minimumInputLength: 1,
+    //minimumInputLength: 1,
     templateResult: formatProduct,
     templateSelection: formatProductSelection
 

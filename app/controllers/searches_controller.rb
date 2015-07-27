@@ -87,6 +87,8 @@ class SearchesController < ApplicationController
   end
   
   def product_search
+puts "HAMISH page for product search"
+puts params[:page]
     @products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
                       where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
                       where.not(type: "Room").where.not(type: "CruiseDay").order('name')   
@@ -95,7 +97,17 @@ class SearchesController < ApplicationController
     @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)  if params[:destination] != ""
     @products = @products.where("country_id = :country", country: params[:country].to_i) if params[:country] != ""
   
-    resources_count = @products.size
+ resources_count = @products.size
+  
+    if params[:page]
+      @products = @products.paginate(page: params[:page], per_page: 30)  
+    else
+      @products = @products.paginate(page: 1, per_page: 30)
+    end
+    
+   
+    
+    #@products = @products.limit(30)
     
     respond_to do |format|
       format.json { render json: {total: resources_count,

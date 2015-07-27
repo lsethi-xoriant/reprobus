@@ -40,7 +40,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '2.1.1'
 gem 'sprockets', '2.11.0'
 gem 'faker', '1.4.2'
-gem 'will_paginate', '3.0.4'
+gem 'will_paginate', '3.0.5'
 gem 'materialize-sass', '0.96.1'
 gem 'carrierwave'
 gem "fog"
