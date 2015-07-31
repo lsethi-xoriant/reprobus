@@ -1,7 +1,7 @@
 class ProductDatatable < AjaxDatatablesRails::Base
   def_delegators :@view, :link_to, :h, :product_path, :edit_product_path, :get_edit_path
 
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
 
 
   def sortable_columns

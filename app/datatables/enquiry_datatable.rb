@@ -1,7 +1,7 @@
 class EnquiryDatatable < AjaxDatatablesRails::Base
   def_delegators :@view, :link_to, :h, :enquiry_path, :edit_enquiry_path, :get_status_color
 
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name

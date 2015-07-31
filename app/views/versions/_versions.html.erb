@@ -1,5 +1,5 @@
 <div id="versions">
-  <% versions = object.versions.paginate(:page => 1, :per_page => 20) %>
+  <% versions = object.versions.page(1).per(20) %>
   <% if !versions.nil? && !versions.empty? %>
   <h4>History</h4>
   <% end %>
@@ -7,6 +7,6 @@
       <div class="list">
         <%= render :partial => "versions/version", :collection => versions %>
       </div>
-      <%= paginate( collection: versions, id: 'versions_pagination', params: { action: 'versions' } ) %>
+      <%#= paginate( collection: versions, id: 'versions_pagination', params: { action: 'versions' } ) %>
     </div>
 </div>

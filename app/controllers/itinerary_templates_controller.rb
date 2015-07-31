@@ -3,7 +3,7 @@ class ItineraryTemplatesController < ApplicationController
   before_filter :admin_user, only: :destroy
   
   def index
-    @templates = ItineraryTemplate.paginate(page: params[:page])
+    @templates = ItineraryTemplate.page(params[:page])
   end
   
   def new

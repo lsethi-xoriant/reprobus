@@ -4,7 +4,7 @@ class BookingsController < ApplicationController
 
 
   def index
-    @bookings = Booking.includes(:customer).paginate(page: params[:page])
+    @bookings = Booking.includes(:customer).page(params[:page])
   end
   
   def new

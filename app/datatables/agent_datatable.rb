@@ -1,7 +1,7 @@
 class AgentDatatable < AjaxDatatablesRails::Base
   def_delegators :@view, :link_to, :h, :agent_path, :edit_agent_path
 
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
 
 
   def sortable_columns

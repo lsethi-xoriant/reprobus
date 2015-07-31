@@ -100,8 +100,8 @@ class InvoicesController < ApplicationController
   
  def index
    @booking = Booking.find(params[:booking_id])
-   @customer_invoices = @booking.customer_invoices.paginate(page: params[:page])
-   @supplier_invoices = @booking.supplier_invoices.paginate(page: params[:page])
+   @customer_invoices = @booking.customer_invoices.page(params[:page])
+   @supplier_invoices = @booking.supplier_invoices.page(params[:page])
   end
   
   def new

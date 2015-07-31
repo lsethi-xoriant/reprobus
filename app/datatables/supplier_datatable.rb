@@ -1,7 +1,7 @@
 class SupplierDatatable < AjaxDatatablesRails::Base
   def_delegators :@view, :link_to, :h, :supplier_path, :edit_supplier_path
 
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
 
 
   def sortable_columns

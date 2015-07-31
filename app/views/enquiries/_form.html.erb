@@ -110,7 +110,7 @@
       <% if @enquiry.persisted? %>
         <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
           <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
-          <%= button_tag( "Create Itinerary", :class => "btn waves-effect waves-light right") %>
+          <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light right") %>
         <% end %>
       <% end %>
     </div>

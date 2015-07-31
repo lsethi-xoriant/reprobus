@@ -97,15 +97,15 @@ puts params[:page]
     @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)  if params[:destination] != ""
     @products = @products.where("country_id = :country", country: params[:country].to_i) if params[:country] != ""
   
- resources_count = @products.size
+ 
   
     if params[:page]
-      @products = @products.paginate(page: params[:page], per_page: 30)  
+      @products = @products.page(params[:page])  
     else
-      @products = @products.paginate(page: 1, per_page: 30)
+      @products = @products.page(1)
     end
     
-   
+ resources_count = @products.total_count  
     
     #@products = @products.limit(30)
     

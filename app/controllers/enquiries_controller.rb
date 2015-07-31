@@ -42,7 +42,7 @@ class EnquiriesController < ApplicationController
   end
   
   def index
-    #@enquiries = Enquiry.includes(:customers).active.paginate(page: params[:page])
+    #@enquiries = Enquiry.includes(:customers).active.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: EnquiryDatatable.new(view_context, { user: current_user }) }
@@ -50,7 +50,7 @@ class EnquiriesController < ApplicationController
   end
   
   def index_bookings
-    @bookings = Enquiry.bookings.paginate(page: params[:page])
+    @bookings = Enquiry.bookings.page(params[:page])
   end
   
   def new

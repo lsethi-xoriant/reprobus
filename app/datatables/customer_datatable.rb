@@ -2,9 +2,7 @@ class CustomerDatatable < AjaxDatatablesRails::Base
   #def_delegator :@view, :link_to, :edit_customer_path
   def_delegators :@view, :link_to, :h, :customer_path, :edit_customer_path
 
-  
-  #include AjaxDatatablesRails::Extensions::Kaminari
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name

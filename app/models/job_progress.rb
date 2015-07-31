@@ -35,7 +35,11 @@ class JobProgress < ActiveRecord::Base
   end
   
   def get_display_details
-    return "#{self.name} : #{self.total.to_s} total rows, #{self.progress.to_s} successfully imported, uploaded on " + self.created_at.strftime('%Y-%m-%d')
+    if self.run_live
+      return "#{self.name} : #{self.total.to_s} total rows, #{self.progress.to_s} successfully imported, run on " + self.updated_at.strftime('%Y-%m-%d')
+    else
+      return "#{self.name} : #{self.total.to_s} total rows, #{self.progress.to_s} validated, file load on " + self.created_at.strftime('%Y-%m-%d')
+    end
   end
   
   

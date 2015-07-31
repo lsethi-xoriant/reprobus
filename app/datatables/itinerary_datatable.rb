@@ -1,7 +1,7 @@
 class ItineraryDatatable < AjaxDatatablesRails::Base
   def_delegators :@view, :link_to, :h, :itinerary_path, :edit_itinerary_path, :get_status_color
   
-  include AjaxDatatablesRails::Extensions::WillPaginate
+  include AjaxDatatablesRails::Extensions::Kaminari
   
   
   def sortable_columns

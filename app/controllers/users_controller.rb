@@ -4,12 +4,12 @@ class UsersController < ApplicationController
   before_filter :admin_user, only: :destroy
   
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.page(params[:page])
   end
   
   def show
     @user = User.find(params[:id])
-    @assigned_enquiries = @user.assigned_enquiries.active.paginate(page: params[:page])
+    @assigned_enquiries = @user.assigned_enquiries.active.page(params[:page])
     respond_to do |format|
       format.html
       format.json { render json: {name: @user.name, id: @user.id  }}

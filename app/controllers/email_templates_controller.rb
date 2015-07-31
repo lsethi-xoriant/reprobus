@@ -10,7 +10,7 @@ class EmailTemplatesController < ApplicationController
   end
 
   def index
-    @email_templates = EmailTemplate.all.paginate(page: params[:page])
+    @email_templates = EmailTemplate.page(params[:page])
   end
 
   def new
