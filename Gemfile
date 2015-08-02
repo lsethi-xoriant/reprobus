@@ -11,6 +11,7 @@ group :development, :test do
   gem "better_errors"
   gem 'web-console', '~> 2.0'
   gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
+#gem "therubyracer" only need this for local chromebook dev
 end
 
 group :production do
@@ -19,7 +20,7 @@ end
 
 group :staging, :production do
   gem 'wkhtmltopdf-heroku'
-end 
+end
 
 group :test do
 # old way, decided to use minitest
@@ -55,7 +56,7 @@ gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
-#gem 'wkhtmltopdf-binary', # removed as having issues accessing https resourses from older gem - replaced above with another similiar one. 
+#gem 'wkhtmltopdf-binary', # removed as having issues accessing https resourses from older gem - replaced above with another similiar one.
 
 gem 'pxpay'
 gem 'money'

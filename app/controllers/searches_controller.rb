@@ -76,7 +76,7 @@ class SearchesController < ApplicationController
                             
     if params[:country] != "" && params[:country] != "0"
       @entities = @entities.where("country_id = :country", country: params[:country].to_i)
-    end   
+    end
    
     resources_count = @entities.size
 
@@ -87,32 +87,28 @@ class SearchesController < ApplicationController
   end
   
   def product_search
-puts "HAMISH page for product search"
-puts params[:page]
+    # this method used by search_products.js for ajax select boxes.
     @products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
                       where("name ILIKE :q OR country_search ILIKE :q OR destination_search ILIKE :q OR type ILIKE :q", q: "%#{params[:q]}%").
-                      where.not(type: "Room").where.not(type: "CruiseDay").order('name')   
+                      where.not(type: "Room").where.not(type: "CruiseDay").order('name')
 
-    @products = @products.where("type = :type", type: params[:type]) if (params[:type] != "" && params[:type] != "Type")  
+    @products = @products.where("type = :type", type: params[:type]) if (params[:type] != "" && params[:type] != "Type")
     @products = @products.where("destination_id = :destination", destination: params[:destination].to_i)  if params[:destination] != ""
     @products = @products.where("country_id = :country", country: params[:country].to_i) if params[:country] != ""
   
- 
-  
     if params[:page]
-      @products = @products.page(params[:page])  
+      # per number needs to match what is in JS call.
+      @products = @products.page(params[:page]).per(30)
     else
-      @products = @products.page(1)
+      @products = @products.page(1).per(30)
     end
     
- resources_count = @products.total_count  
-    
-    #@products = @products.limit(30)
+    resources_count = @products.total_count
     
     respond_to do |format|
       format.json { render json: {total: resources_count,
-                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, type: e.type, 
-                          country: e.country_search, city: e.destination_search, numdays: e.default_length,  
+                    items: @products.map { |e| {id: e.id, name: e.name, text: e.name, type: e.type,
+                          country: e.country_search, city: e.destination_search, numdays: e.default_length,
                           country_id: e.country_id, destination_id: e.destination_id
                     }}}}
     end
@@ -173,13 +169,13 @@ puts params[:page]
   def product_info_search
     #@products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
     
-    e = Product.find(params[:product])  
+    e = Product.find(params[:product])
     
     respond_to do |format|
       format.json { render json: {
-                    id: e.id, name: e.name, text: e.name, type: e.type, 
-                          country: e.country_search, city: e.destination_search, numdays: e.default_length,  
-                          country_id: e.country_id, destination_id: e.destination_id, 
+                    id: e.id, name: e.name, text: e.name, type: e.type,
+                          country: e.country_search, city: e.destination_search, numdays: e.default_length,
+                          country_id: e.country_id, destination_id: e.destination_id,
                           suppliers: e.suppliers.map { |s| {id: s.id, supplier_name: s.supplier_name}},
                           roomtypes: e.rooms.map { |s| {id: s.id, room_type: s.name}}
                     }}

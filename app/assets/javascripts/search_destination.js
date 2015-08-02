@@ -20,7 +20,7 @@ function formatDestinationSelection (searchOb) {
 function getCountrySearchTerm(theSelect2Element) {
   var nextProdField = $(theSelect2Element).closest('.row').find(".select2-countries-noajax");
   return $(nextProdField).val();
-} 
+}
  
 function initDestinationSelect2() {
   var theSelect2Element = null;
@@ -28,7 +28,7 @@ function initDestinationSelect2() {
     ajax: {
       url: "/searches/destination_search",
       dataType: 'json',
-      delay: 100,
+      delay: 150,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -50,7 +50,7 @@ function initDestinationSelect2() {
    // minimumInputLength: 1,
     templateResult: formatDestination,
     templateSelection: formatDestinationSelection
-  }).on('select2:open', function(e){ 
+  }).on('select2:open', function(e){
     theSelect2Element = e.currentTarget;});
     
   $('.select2-destinations').on("select2:select", function(e) {
@@ -59,5 +59,5 @@ function initDestinationSelect2() {
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
-  });    
+  });
 }

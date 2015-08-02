@@ -55,11 +55,6 @@ function initProductSelect2() {
         // since we are using custom formatting functions we do not need to
         // alter the remote JSON data
         params.page = params.page || 1;
-        
-console.log("processResults page = ");
-console.log(params);
-console.log("processResults data = ");
-console.log(data);
 
         return {
           results: data.items,
@@ -75,17 +70,17 @@ console.log(data);
     templateResult: formatProduct,
     templateSelection: formatProductSelection
 
-  }).on('select2:open', function(e){ 
+  }).on('select2:open', function(e){
    theSelect2Element = e.currentTarget;});
 
    
   /* on selection of product set other fields in row - i.e the itinerary templage form */
   var $eventSelect = $(".select2-products");
   $eventSelect.on("select2:select", function (e) {
-    // data is returned data for selection 
+    // data is returned data for selection
     var data = e.params.data;
-//console.log(data);    
-    // get all the elements we will need to manipulate. 
+//console.log(data);
+    // get all the elements we will need to manipulate.
     var productId = $(this).val();
     var nextTypeField = $(this).closest('.row').find(".type-itineraries");
     var nextProductContainer = $(this).closest('.field').find(".product_details_cont");
@@ -97,9 +92,9 @@ console.log(data);
     var nextSuppField = $(this).closest(".field").find(".select2-suppliers-noajax");
     var nextRoomTypeField =  $(this).closest('.field').find(".select2-room-types-noajax");
     
-    // update associated fields for a product selection 
+    // update associated fields for a product selection
     if (nextTypeField.find("option:selected").text() != data.type){
-      nextTypeField.material_select('destroy'); 
+      nextTypeField.material_select('destroy');
       nextTypeField.val(data.type).material_select();
     }
     if (nextCountField.find("option:selected").val() != data.country_id){
@@ -111,7 +106,7 @@ console.log(data);
     
     if (nextNumDaysField.val() != data.numdays) {nextNumDaysField.val(data.numdays);}
 
-    // do ajax call to get supplier and room type info to populate dropdowns. 
+    // do ajax call to get supplier and room type info to populate dropdowns.
     $.ajax({
         url: "/searches/product_info_search",
         //dataType: 'json',
@@ -119,7 +114,7 @@ console.log(data);
               product: productId
               }
       }).done(function(data) {
-console.log(data);
+//console.log(data);
         // populate supplier dropdown, and room type dropdown
         var optionStr = "";
         var selectedVal;
@@ -133,7 +128,7 @@ console.log(data);
         selectedVal = 0;
         $.each(data.roomtypes,function(i, item){
           optionStr = optionStr + '<option value="'+item.id+'">'+item.room_type+'</option>';
-        });    
+        });
         if (data.roomtypes.length == 1){selectedVal = data.roomtypes[0].id;}
         nextRoomTypeField.empty().append(optionStr).val(selectedVal).trigger("change");
         
@@ -141,10 +136,10 @@ console.log(data);
           $(nextRoomTypeField).closest('.field').find(".room_type_cont").show();
         } else {
           $(nextRoomTypeField).closest('.field').find(".room_type_cont").hide();
-        }  
+        }
       });
 
-    // handle specialy, need to add all cruise legs... do ajax search and get cruise legs. 
+    // handle specialy, need to add all cruise legs... do ajax search and get cruise legs.
     //if (nextTypeField.find("option:selected").text() == "Cruise") {
     if (e.params.data.type == "Cruise") {
       $.ajax({
@@ -160,7 +155,7 @@ console.log(data);
         $('.modal-trigger').leanModal(); // cruise info put into a modal. it will need initialising
       });
     } else {
-      // display any additional details in product details field. 
+      // display any additional details in product details field.
       nextProdDetailsField.val(e.params.data.type + " | "  + e.params.data.name + " | "  + e.params.data.city + " | "  + e.params.data.country);
       nextProdDetailsField.next().addClass('active'); // set label to be active.
       nextCruiseContainer.hide();
@@ -170,5 +165,5 @@ console.log(data);
     //now populate the supplier field.
     
     
-  });  
+  });
 }
