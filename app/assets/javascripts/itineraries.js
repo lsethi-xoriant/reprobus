@@ -222,7 +222,7 @@ int ++;
           $(this).val(latest_date.yyyymmdd());                   //added to make readonly
           current_date = new Date(latest_date.getTime()); 
         } else {
-          current_date.setDate(current_date.getDate() - parseInt(offset_days));
+          current_date.setDate(latest_date.getDate() - parseInt(offset_days));
           $(this).val(current_date.yyyymmdd());                   //added to make readonly
         }
        

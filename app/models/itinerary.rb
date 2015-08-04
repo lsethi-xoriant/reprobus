@@ -79,7 +79,7 @@ class Itinerary < ActiveRecord::Base
       if i.offset.abs == 0 
         startleg = latestDate
       else
-        startleg = startleg - i.offset
+        startleg = latestDate - i.offset
       end
       
       # set end date
@@ -134,7 +134,7 @@ class Itinerary < ActiveRecord::Base
       if info.offset.abs == 0 
         startleg = latestDate
       else
-        startleg = startleg - info.offset
+        startleg = latestDate - info.offset
       end
       
       # set end date
