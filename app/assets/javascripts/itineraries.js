@@ -99,13 +99,17 @@ $(document).ready(function() {
     });
   });
   
-  $('#itinerary_start_date').on('change', function(e, insertedItem) { 
+  $('#itinerary_start_date').on('change', function(e) { 
     set_sort_positions_and_dates();
   });
   
-  $('.itinerary-number-days').on('change', function(e, insertedItem) { 
+  $('.itinerary-number-days').on('change', function(e) { 
     set_sort_positions_and_dates();
   });
+  
+  $('.itinerary-offset-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });  
   
   $(".itinerary_form").submit(function(e) {
     var valerror = false;
@@ -130,7 +134,6 @@ $(document).ready(function() {
     var template = $("#insert_template_container").find('.select2-itinerary_templates').val();
     var postition = $("#insert_template_container").find('.position-insert-itineraries').find("option:selected").text();
     
-console.log("pos= " + postition + "  temp= " + template) ;   
     if ($.isNumeric(template) && $.isNumeric(postition)){
       //submit form
       toastr.info("Please wait while template is inserted");
@@ -185,31 +188,54 @@ function set_sort_positions_and_dates(){
 
     
     var current_date = new Date(yearStr,monStr,dayStr);
+    var latest_date = new Date(yearStr,monStr,dayStr); // keep track of the latest date while iterating
+    
     int = 0;
 
     //$('#itinerary_infos').find('.datepicker').each(function(i){ //removed to make readonly
+    
     $('#itinerary_infos').find('.start-date_field').each(function(i){
     
-//int ++;
+int ++;
 //console.log('hamish current_date in loop  ' + int + " " + current_date);
 
       // only do for visible elements (hidden element will have been marked for deletion)
       if ($(this).closest('.nested-fields').is(":visible")){  
+//console.log('hamish checking latest_date  ' + int + " " + latest_date);
+//console.log('hamish checking current_date  ' + int + " " + current_date);
+
+        if (current_date.getTime() > latest_date.getTime()) {
+          latest_date = new Date(current_date.getTime()); 
+//console.log('latest UPDATED');       
+        } 
+      
+        var num_days = $(this).closest(".field").find(".itinerary-number-days").val();
+        var offset_days = $(this).closest(".field").find(".itinerary-offset-days").val();
+        offset_days = Math.abs(offset_days);
+        //num_days = num_days - offset_days;
+
+        // SET START DATE
         //var picker = $(this).pickadate().pickadate('picker'); //removed to make readonly
         //picker.set('select', current_date);                   //removed to make readonly
-        $(this).val(current_date.yyyymmdd());                   //added to make readonly
         
-        var num_days = $(this).closest(".field").find(".itinerary-number-days").val();
+        if (offset_days == 0){
+          $(this).val(latest_date.yyyymmdd());                   //added to make readonly
+          current_date = new Date(latest_date.getTime()); 
+        } else {
+          current_date.setDate(current_date.getDate() - parseInt(offset_days));
+          $(this).val(current_date.yyyymmdd());                   //added to make readonly
+        }
        
+        // SET END DATE
         if (num_days > 0){
-//   console.log('hamish num days  ' + int + " " + num_days)
+//console.log('hamish num days  ' + int + " " + num_days);
           current_date.setDate(current_date.getDate() + parseInt(num_days));
         }
         
-//   console.log('hamish  new current date ' + int + " " + current_date);
+//console.log('hamish  new current date ' + int + " " + current_date);
         var formatEndDateStr  = current_date.yyyymmdd();
         
-//  console.log('hamish  formatEndDateStr date ' + int + " " + formatEndDateStr);      
+//console.log('hamish  formatEndDateStr date ' + int + " " + formatEndDateStr);      
         $(this).closest(".field").find(".end-date_field").val(formatEndDateStr);
       }
     });
@@ -238,9 +264,12 @@ function initialise_common_itineary_elements(insertedItem){
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });   
   
-  $('.itinerary-number-days').on('change', function(e, insertedItem) { 
+  $('.itinerary-number-days').on('change', function(e) { 
     set_sort_positions_and_dates();
-  });      
+  }); 
+  $('.itinerary-offset-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });   
 }
 
 function reset_material_active_labels(container_id) {

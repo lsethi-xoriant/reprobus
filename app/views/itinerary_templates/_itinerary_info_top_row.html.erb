@@ -23,7 +23,7 @@
       <label for="destination" class="active">Destination</label>
     </div>
     
-    <div class="input-field col s2">
+    <div class="input-field col s1">
       <%= select_tag(:type, options_for_select(["Type", "Cruise", "Flight", "Hotel", "Tour", "Transfer"], disabled: "Type", selected: f.object.get_product_type || "Type"),{class: "type-itineraries"}) %>
       <label for="type">Type</label>
     </div>   
@@ -35,7 +35,12 @@
     
     <div class="input-field col s1">
         <%= f.text_field "length", class: 'itinerary-number-days center-align' %>
-        <%= f.label :length,"# Days", class: 'active center-align' %>
+        <%= f.label :length,"Duration", class: 'active center-align' %>
+    </div>
+ 
+    <div class="input-field col s1">
+        <%= f.text_field "offset", class: 'itinerary-offset-days center-align' %>
+        <%= f.label :offset,"Offset  (-)", class: 'active center-align' %>
     </div>
     
     <div class="input-field col s1">

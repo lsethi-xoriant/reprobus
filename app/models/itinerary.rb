@@ -48,7 +48,7 @@ class Itinerary < ActiveRecord::Base
       errors.add(:start_date, "can't be in the past")
     end
   end  
-  
+    
   def isLocked?
     return self.complete 
   end
@@ -68,9 +68,23 @@ class Itinerary < ActiveRecord::Base
     self.notes = template.notes
     
     startleg = self.start_date
+    latestDate = self.start_date
     
     template.itinerary_template_infos.each do |i|
+      if startleg > latestDate
+        latestDate = startleg  
+      end
+      
+      # set start date
+      if i.offset.abs == 0 
+        startleg = latestDate
+      else
+        startleg = startleg - i.offset
+      end
+      
+      # set end date
       endleg = startleg + i.length.days
+      
       self.add_info_from_template_info(i,startleg,endleg,i.position) if i.product
       startleg = endleg
     end
@@ -89,8 +103,8 @@ class Itinerary < ActiveRecord::Base
       if info.position > pos
         info.position = info.position + offset   # is past insert, so bump position
       else
-        startleg = info.start_date    # will update to latest date up to insert pos 
-        info.save
+        startleg = info.start_date    # update this as we iterate through to find latest date prior to insert pos 
+#        info.save
       end
     end
 
@@ -109,19 +123,30 @@ class Itinerary < ActiveRecord::Base
     # now wizz through all infos, update pos and dates to make sure all correct. 
     int = 0
     startleg = self.start_date
+    latestDate = self.start_date
     
     self.itinerary_infos.order("position ASC").each do |info|
-#      if info.position > pos
-        # if past insert position, we need to update dates
-        endleg = startleg + info.length.days
-        int = int + 1
-        # update attributes
-        info.position = int
-        info.start_date = startleg
-        info.end_date = endleg     
-        
-        startleg = endleg  
-#      end
+      if startleg > latestDate
+        latestDate = startleg  
+      end
+      
+      # set start date
+      if info.offset.abs == 0 
+        startleg = latestDate
+      else
+        startleg = startleg - info.offset
+      end
+      
+      # set end date
+      endleg = startleg + info.length.days
+      
+      int = int + 1
+      # update attributes
+      info.position = int
+      info.start_date = startleg
+      info.end_date = endleg     
+      
+      startleg = endleg  
     end
   end
   
@@ -140,7 +165,8 @@ class Itinerary < ActiveRecord::Base
           position: pos,
           supplier_id:  info_template.supplier_id,
           product_id: info_template.product_id,
-          length: info_template.length
+          length: info_template.length,
+          offset: info_template.offset
           )    
   end
 end

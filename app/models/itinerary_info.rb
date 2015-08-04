@@ -25,14 +25,20 @@
 #  comment_for_supplier :text
 #  comment_for_customer :text
 #  room_type            :integer
+#  offset               :integer          default("0")
 #
 
 class ItineraryInfo < ActiveRecord::Base
-
+  validates :offset, :numericality => {:allow_blank => true}
+  validates :length, :numericality => {:allow_blank => true}
  
   belongs_to  :itinerary
   belongs_to  :product
   belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
+
+  def offset=(value)
+    write_attribute(:offset, value.to_i.abs)
+  end
   
   def get_product_name
     return self.product.name if self.product

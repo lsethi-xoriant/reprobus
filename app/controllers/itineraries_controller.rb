@@ -95,7 +95,7 @@ private
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, 
       :user_id, :status,  itinerary_infos_attributes: [:id, :position, :name, :product_id, :start_date, :end_date, 
       :country, :length, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
-      :comment_for_customer, :comment_for_supplier, :_destroy ])
+      :comment_for_customer, :comment_for_supplier, :offset,  :_destroy ])
     end
 end
  
