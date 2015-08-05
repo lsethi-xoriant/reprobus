@@ -105,12 +105,14 @@
   
     <% end %>
     
-    <!--
+<% if @itinerary.isLocked? %>
 <div class="row">
 <div class="input-field col s12" >
-<a href="<%#= itinerary_printItinerary_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn right deep-purple darken-1" target="_blank" >View Itinerary Pdf</a>
+<a href="<%= itinerary_printItinerary_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn right deep-purple darken-1" target="_blank" >View Itinerary Pdf</a>
 </div>
 </div>
-  -->
+<% end %>
+
+
   </div>
 </div>

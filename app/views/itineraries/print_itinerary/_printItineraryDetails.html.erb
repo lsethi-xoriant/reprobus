@@ -9,13 +9,27 @@
 <h5>Trip Summary</h5> 
 <ul>
     <% @itinerary.itinerary_infos.each do |info| %>
-    <li><%= "#{info.start_date.strftime('%d%b%Y')} - #{info.name}" %></li>
+    <li><%= "#{info.start_date.strftime('%d %b %Y')} - #{info.name}" %></li>
     <% end %>
 </ul>
 
 <h5>Trip Details</h5>
 <% leg_count = 0 %>
-<% @itinerary.itinerary_infos.each do |info| %>
-<% leg_count = leg_count + 1 %>
-<%= render partial: 'itineraries/print_itinerary/product', formats: [:html], locals: {info: info, leg_count: leg_count}  %>
+<% @itinerary.start_date.upto(@itinerary.get_end_date) do |date|  %>
+    <div class="print_itinerary_leg">
+        <% leg_count = leg_count + 1 %>
+        <% dayInfos = ItineraryInfosDay.new %>
+        <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
+        <%= render partial: 'itineraries/print_itinerary/startrow', formats: [:html], locals: {infoday: dayInfos, leg_count: leg_count, date: date}  %>
+        
+        <% if dayInfos.leaving_hotel %>
+            <%= render partial: 'itineraries/print_itinerary/leaving_hotel', formats: [:html], locals: {info: dayInfos.leaving_hotel, leg_count: leg_count}  %>
+        <% end %>
+        
+        <%= render partial: 'itineraries/print_itinerary/product', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {leg_count: leg_count}  %>
+        
+        <% if dayInfos.hotel %>
+            <%= render partial: 'itineraries/print_itinerary/hotel', formats: [:html], locals: {info: dayInfos.hotel}  %>
+        <% end %>    
+    </div>    
 <% end %>

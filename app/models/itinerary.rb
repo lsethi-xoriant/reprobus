@@ -23,6 +23,7 @@
 #  itinerary_template_id :integer
 #  enquiry_id            :integer
 #  status                :string
+#  end_date              :date
 #
 
 class Itinerary < ActiveRecord::Base
@@ -169,4 +170,40 @@ class Itinerary < ActiveRecord::Base
           offset: info_template.offset
           )    
   end
+  
+  def get_end_date
+    if !self.itinerary_infos.empty?
+      lastdate = self.itinerary_infos.first.end_date
+      
+      self.itinerary_infos.each do |info|
+        lastdate = info.end_date if lastdate < info.end_date
+      end
+    end
+    return lastdate
+  end
+  
+  def get_infos_for_date(date)
+    products = self.itinerary_infos.where("start_date <= :date AND end_date >= :date", date: date)
+    return products  
+  end
+  
+  def set_up_print_count
+    @countme = self.itinerary_infos.count
+  end
+    
+  def set_up_print
+    self.start_date.upto(self.get_end_date) do |date| 
+      @leg_count = @leg_count + 1 
+      @infos = @itinerary.get_infos_for_date(date) 
+      
+      @infos.order('start_date').each do |info|    
+        if info.product.type == "Hotel" 
+          if info.end_date == date
+              # then dont use this as locations 
+          end       
+        end
+      end
+    end
+  end
+  
 end

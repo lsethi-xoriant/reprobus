@@ -1,14 +1,13 @@
-<div class="row">
-  <div>
-    <h6><%= "Leg #{leg_count} - #{info.get_product_name}, #{info.get_product_destination} " %></h6>
-  </div>
-</div>
 
-<div class="row">
-   <div>
-      <div class="col s12"><strong><%= "#{info.start_date.strftime('%d%b%Y')} - #{info.end_date.strftime('%d%b%Y')}, #{info.get_product_destination}, #{info.get_product_country}" %></strong></div>    
-      <div class="col s8"><%= "#{info.get_product_description}"%></div>
-      <div class="col s4"><img src=<%=info.product.get_dropbox_image_link%> class="product_image_mini"></div>
-      
+  <div class="row">
+     <div>
+        <div class="col s12"><h6><strong><%= "#{info.get_product_name} - #{info.get_product_destination}, #{info.get_product_country}" %></strong></h6></div>  
+        
+        <table>
+          <td style="width: 70%;"><p><%= "#{info.get_product_description}"%></p></td>
+          <% if !info.product.remote_url.blank? %>
+            <td style="width: 30%;"><img src=<%=info.product.get_dropbox_image_link%> class="product_image_mini"></td>
+          <% end %>
+        </table>
+      </div>
   </div>
-</div>
