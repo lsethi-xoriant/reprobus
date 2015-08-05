@@ -17,7 +17,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id])
-    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per_page(5)
+    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(5)
     respond_to do |format|
       format.html
       format.json { render json: {name: @customer.fullname, id: @customer.id  }}
@@ -26,7 +26,7 @@ class CustomersController < ApplicationController
   
   def edit
     @customer = Customer.find(params[:id])
-    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per_page(5)
+    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(5)
   end
   
   def create

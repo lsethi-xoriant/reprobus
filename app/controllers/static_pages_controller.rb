@@ -13,7 +13,7 @@ class StaticPagesController < ApplicationController
     @user = current_user
     
     if params[:remindersOnly] == "y"
-      @assigned_enquiries = @user.assigned_enquiries.active.where("enquiries.reminder <= ?", Time.now).page(params[:page]).per_page(9)
+      @assigned_enquiries = @user.assigned_enquiries.active.where("enquiries.reminder <= ?", Time.now).page(params[:page]).per(9)
     else
       @assigned_enquiries = @user.assigned_enquiries.active.page(params[:page]).per(9)
     end

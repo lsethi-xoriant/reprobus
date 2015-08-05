@@ -63,7 +63,7 @@ class EnquiriesController < ApplicationController
 
   def show
     @enquiry = Enquiry.find(params[:id])
-    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per_page(5)
+    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per(5)
   end
 
   def edit
