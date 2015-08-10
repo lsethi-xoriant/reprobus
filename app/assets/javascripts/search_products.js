@@ -104,7 +104,7 @@ function initProductSelect2() {
       nextDestField.empty().append('<option value="'+data.destination_id+'">'+data.city+'</option>').val(data.destination_id).trigger("change");
     }
     
-    if (nextNumDaysField.val() != data.numdays) {nextNumDaysField.val(data.numdays);}
+    if (nextNumDaysField.val() != data.numdays && data.numdays) {nextNumDaysField.val(data.numdays);}
 
     // do ajax call to get supplier and room type info to populate dropdowns.
     $.ajax({

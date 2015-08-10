@@ -1,6 +1,6 @@
 /*This file is for the itinerary and itinerary templates pages                                   */
 /*It relies on the sortable.js plug in, Coccoon gem hooks, and the select2 search products js    */
-$(document).ready(function() {
+/*$(document).ready(function() {
   
   $(".select2-room-types-noajax").select2();  
   
@@ -50,7 +50,6 @@ $(document).ready(function() {
     $('.type-itineraries').on('change', function(e) {
       $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
       $(this).closest(".row").find(".itinerary-number-days").val("0");
-      $(this).closest(".row").find(".itinerary-days-from-start").val("0");
       $(this).closest('.field').find(".product_details").text("");
       $(this).closest('.field').find(".cruise-info").hide();
       $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
@@ -71,10 +70,11 @@ $(document).ready(function() {
   $('.sortable').sortable().bind('sortupdate', function(e, ui) {
     set_sort_positions_and_dates();   // set positions if any resort occurs.
   });
-  
+  */
+
   /* JS hooks to update sortable elements   */
   
-  $('#itinerary_template_infos').on('cocoon:after-remove', function() {   // this container is on itinerary new form
+/*  $('#itinerary_template_infos').on('cocoon:after-remove', function() {   // this container is on itinerary new form
     set_sort_positions_and_dates();
   });
 
@@ -83,14 +83,14 @@ $(document).ready(function() {
   });
   
   $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-    itineraryForm_initialise_elements_after_insert(insertedItem);
+    initialise_common_itineary_elements(insertedItem);
   });
   
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-    itineraryForm_initialise_elements_after_insert(insertedItem);
+    initialise_common_itineary_elements(insertedItem);
 
     // reinit Pikadate datepicker
-    $('.start_leg_itinerary').pickadate({
+    $('.datepicker .start').pickadate({
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 5, // Creates a dropdown of 15 years to control year
       formatSubmit: 'yyyy-mm-dd',
@@ -114,37 +114,20 @@ $(document).ready(function() {
   
   $(".itinerary_form").submit(function(e) {
     var valerror = false;
-//    var valmsg = "";
-    var valmessages = [];
-    var i = 0;
-    
+    var valmsg = "";
     $(".itinerary-number-days").each(function() {
-      i = i + 1;
       var numdays = $(this).val();
       $(this).removeClass("invalid");
       if (!$.isNumeric(numdays) || parseInt(numdays) < 0) {
         valerror = true;
-        valmessages.push("Itinerary leg " + i + " must have number of days entered (or set to zero)");
-        $(this).addClass("invalid");
-      }
-    });
-    
-    $(".itinerary-days-from-start").each(function() {
-      i = i + 1;
-      var numdays = $(this).val();
-      $(this).removeClass("invalid");
-      if (!$.isNumeric(numdays) || parseInt(numdays) < 0) {
-        valerror = true;
-        valmessages.push("Itinerary leg " + i + " must have a days from start entered (or set to zero)");
+        valmsg = "All Itinerary legs must have number of days entered (or set to zero)";
         $(this).addClass("invalid");
       }
     });
     
     if (valerror){
-      $.each(valmessages, function(index, value) {
-      toastr.warning(value);
+      toastr.warning(valmsg);
       e.preventDefault();
-      });
     }
   });
   
@@ -162,10 +145,11 @@ $(document).ready(function() {
     }
   });   
 });
+*/
 
 /* JS hooks to update sortable elements   */
 
-function sort_itinerary_items(){
+/*function sort_itinerary_items(){
   set_sort_positions_and_dates();
 
   // call sortable on our div with the sortable class
@@ -190,75 +174,9 @@ function set_sort_positions_and_dates(){
     if ($(this).closest('.nested-fields').is(":visible")){int++; $(this).text(int);} //non visible will be marked for deletion
   });
   
-  recalcDates(); // does nothing at moment, as recalc dates switched off. 
-  
-
-}
-
-function itineraryForm_initialise_elements_after_insert(insertedItem){
-  initProductSelect2();  // re-init product search dropdowns as new ones have been added
-  initDestinationSelect2();
-  initCountrySelect2();
-  initSupplierSelect2();
-  $(".select2-room-types-noajax").select2();    
-  insertedItem.find(".type-itineraries").val("Type").material_select();
-  sort_itinerary_items();
-  reset_material_active_labels('#itinerary_infos');
-  reset_material_active_labels('#itinerary_template_infos');
-  $('.modal-trigger').leanModal();
-  $('.tooltipped').tooltip({delay: 50}); 
-
-  insertedItem.find(".itinerary-number-days").val("0");
-    
-  insertedItem.find(".type-itineraries").on('change', function(e) {
-    $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
-    $(this).closest(".row").find(".itinerary-number-days").val("0");
-    $(this).closest(".row").find(".itinerary-days-from-start").val("0");
-    $(this).closest('.field').find(".product_details").text("");
-    $(this).closest('.field').find(".cruise-info").hide();
-    $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
-    $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
-  });   
-  
-  $('.itinerary-number-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  }); 
-  $('.itinerary-offset-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });  
-  
-  var prev_value = insertedItem.prev().find(".itinerary-days-from-start").val();
-  insertedItem.find(".itinerary-days-from-start").val(prev_value);
-}
-
-function reset_material_active_labels(container_id) {
-  // resets lables to active 
-  // sometimes the materilize labels do not get set to active, plus we want them to be small on the itinerary forms
-  $(container_id + " input").each(function() {
-    //if ($(this).val() !== ""){
-      var fieldId = $(this).attr("id");
-      $("label[for='"+fieldId+"']").addClass('active');
-    //}
-  });
-}
-
-/*JS override on date. this is to get datepicker and calculating dates working properly */
-Date.prototype.yyyymmdd = function() {         
-  var yyyy = this.getFullYear().toString();                                    
-  var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
-  var dd  = this.getDate().toString();             
-                      
-  return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
-}; 
-
-function recalcDates(){
-    // if on itinerary page, need to recalc dates.
+  // if on itinerary page, need to recalc dates.
   if ($('#itinerary_start_date').length) {
-  // NOT DOING THIS ANYMORE - no recalc of dates... is manual  
-  if (true) {
-    return;
-  }
-console.log('NOOOOOOOOOOOOOOOOOO!!! - shouldnt be doing this ');  
+
     var start_$input = $('#itinerary_start_date').pickadate(),
          start_picker = start_$input.pickadate('picker');
          
@@ -268,20 +186,25 @@ console.log('NOOOOOOOOOOOOOOOOOO!!! - shouldnt be doing this ');
     var monStr = parseInt(dateStr.substring(5,7));
     var dayStr = parseInt(dateStr.substring(8,10));
     monStr = monStr-1;  // minus one as months are 0-11
+//console.log('hamish get date  '  + " " + start_picker.get());
 
+    
     var current_date = new Date(yearStr,monStr,dayStr);
     var latest_date = new Date(yearStr,monStr,dayStr); // keep track of the latest date while iterating
     
-    //int = 0;
+    int = 0;
 
     //$('#itinerary_infos').find('.datepicker').each(function(i){ //removed to make readonly
+    
     $('#itinerary_infos').find('.start-date_field').each(function(i){
     
-//int ++;
+int ++;
 //console.log('hamish current_date in loop  ' + int + " " + current_date);
 
       // only do for visible elements (hidden element will have been marked for deletion)
       if ($(this).closest('.nested-fields').is(":visible")){  
+//console.log('hamish checking latest_date  ' + int + " " + latest_date);
+//console.log('hamish checking current_date  ' + int + " " + current_date);
 
         if (current_date.getTime() > latest_date.getTime()) {
           latest_date = new Date(current_date.getTime()); 
@@ -307,16 +230,71 @@ console.log('NOOOOOOOOOOOOOOOOOO!!! - shouldnt be doing this ');
        
         // SET END DATE
         if (num_days > 0){
+//console.log('hamish num days  ' + int + " " + num_days);
           current_date.setDate(current_date.getDate() + parseInt(num_days));
         }
-
+        
+//console.log('hamish  new current date ' + int + " " + current_date);
         var formatEndDateStr  = current_date.yyyymmdd();
+        
 //console.log('hamish  formatEndDateStr date ' + int + " " + formatEndDateStr);      
         $(this).closest(".field").find(".end-date_field").val(formatEndDateStr);
       }
     });
-  }  
+  }
 }
+
+function initialise_common_itineary_elements(insertedItem){
+  initProductSelect2();  // re-init product search dropdowns as new ones have been added
+  initDestinationSelect2();
+  initCountrySelect2();
+  initSupplierSelect2();
+  $(".select2-room-types-noajax").select2();    
+  insertedItem.find(".type-itineraries").val("Type").material_select();
+  sort_itinerary_items();
+  reset_material_active_labels('#itinerary_infos');
+  reset_material_active_labels('#itinerary_template_infos');
+  $('.modal-trigger').leanModal();
+  $('.tooltipped').tooltip({delay: 50}); 
+  
+  insertedItem.find(".type-itineraries").on('change', function(e) {
+    $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
+    $(this).closest(".row").find(".itinerary-number-days").val("0");
+    $(this).closest('.field').find(".product_details").text("");
+    $(this).closest('.field').find(".cruise-info").hide();
+    $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
+    $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
+  });   
+  
+  $('.itinerary-number-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  }); 
+  $('.itinerary-offset-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });   
+}
+
+function reset_material_active_labels(container_id) {
+  // resets lables to active 
+  // sometimes the materilize labels do not get set to active, plus we want them to be small on the itinerary forms
+  $(container_id + " input").each(function() {
+    //if ($(this).val() !== ""){
+      var fieldId = $(this).attr("id");
+      $("label[for='"+fieldId+"']").addClass('active');
+    //}
+  });
+}
+*/
+
+/*JS override on date. this is to get datepicker and calculating dates working properly */
+
+/*Date.prototype.yyyymmdd = function() {         
+  var yyyy = this.getFullYear().toString();                                    
+  var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+  var dd  = this.getDate().toString();             
+                      
+  return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+}; */
 
 
  

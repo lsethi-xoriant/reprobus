@@ -69,5 +69,14 @@ class ItineraryTemplateInfo < ActiveRecord::Base
       return []
     end
   end
+  
+  def select_room_types
+    # return list of potential room types for dropdowns
+    if self.product 
+      return self.product.rooms
+    else
+      return []
+    end
+  end   
 end
 

@@ -8,16 +8,20 @@
       <h6 class="grey-text valign iti_postion_number"></h6>
     </div>
     
-    <div class="input-field col s1">
-        <%= f.text_field :days_from_start, class: 'itinerary-days-from-start center-align' %>
-        <%= f.label :days_from_start,"Days from start", class: 'active center-align' %>
-    </div>  
     
     <div class="input-field col s1">
-        <%= f.text_field :length, class: 'itinerary-number-days center-align' %>
-        <%= f.label :length,"# Nights", class: 'active center-align' %>
+        <%= f.date_field :start_date, class:"datepicker start_leg_itinerary", :"data-value" =>  f.object.start_date %>
+        <%#= f.date_field :start_date, class:"start-date_field", :"data-value" =>  f.object.start_date, readonly: true %>
+        <%= f.label :start_date, class: 'active' %>
     </div>
     
+    <div class="input-field col s1">
+        <%= f.date_field :end_date, class:"datepicker end_leg_itinerary", :"data-value" =>  f.object.end_date %>
+        <%#= f.date_field :end_date, class:"end-date_field", :"data-value" =>  f.object.end_date, readonly: true %>
+        <%= f.label :end_date, class: 'active' %>
+    </div>
+        
+        
     <!--<div class="input-field col s2">
       <%#= select_tag(:country, options_for_select([[f.object.get_product_country, f.object.get_product_country_id]],f.object.get_product_country_id),{class: "select2-countries browser-default"}) %>
       <label for="country" class="active">Country</label>

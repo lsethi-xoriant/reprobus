@@ -16,8 +16,8 @@ href="#insert_modal_<%=f.object.id%>">Insert Template</a>
 
               <div class="row">
                 <div class="input-field col s2">
-                  <%= select_tag(:insert_position, options_for_select(Array(0..f.object.itinerary_infos.count)),{class: "position-insert-itineraries"}) %>
-                  <label for="insert_position">Insert Position</label>
+                  <%= select_tag(:insert_position, options_for_select(Array(0..f.object.itinerary_infos.count)),{class: "position-insert-itineraries browser-default"}) %>
+                  <label for="insert_position" class='active'>Insert Position</label>
                 </div>   
               </div>
               

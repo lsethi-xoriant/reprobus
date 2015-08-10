@@ -1,8 +1,17 @@
+<% if f.object.get_product_type == "Cruise" %>
+  <% displayProductDetails = 'display:none;' %>
+<% else %>
+  <% displayCruiseDetails = 'display:none;' %>
+<% end %>  
+<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
+  <% displayRoomDetails = 'display:none;' %>
+<% end %>
+
 <div class="nested-fields">
   <div class ="card-panel itinerary-infos">
     <div class="field">
       
-      <%= render partial: 'itinerary_templates/itinerary_info_top_row', locals: { f: f } %>
+      <%= render partial: 'itinerary_templates/itinerary_info_top_row', locals: { f: f} %>
 
       <div class="row ">
         
@@ -11,20 +20,21 @@
           <label for="supplier_id" class="active">Supplier</label>
         </div>
         
-        <% if f.object.get_product_type == "Cruise" %>
-          <% displayProductDetails = 'display:none;' %>
-        <% else %>
-          <% displayCruiseDetails = 'display:none;' %>
-        <% end %>
+        <div class="input-field col s2">
+          <div class="room_type_cont" style=<%= displayRoomDetails %> >
+          <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
+          <label for="room_type" class="active">Room Type</label>
+          </div>
+        </div>           
         
-        <div class="input-field product_details_cont col s1 offset-s7" style=<%=displayProductDetails%> >
+        <div class="input-field product_details_cont col s1 offset-s5" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>
             <% @info = f.object %>
             <%= render template: 'itinerary_templates/product_info' %>
           <% end %>
         </div>
         
-        <div class="cruise-info input-field col s1 offset-s7" style=<%=displayCruiseDetails%>>
+        <div class="cruise-info input-field col s1 offset-s5" style=<%=displayCruiseDetails%>>
           <% if f.object.get_product_type == "Cruise" %>
             <% @cruise_legs = f.object.product.cruise_days %>
             <% @cruise = f.object.product %>

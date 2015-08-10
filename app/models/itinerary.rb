@@ -67,66 +67,63 @@ class Itinerary < ActiveRecord::Base
     self.includes = template.includes
     self.excludes = template.excludes
     self.notes = template.notes
-    
+     
     startleg = self.start_date
-    latestDate = self.start_date
+    itinerary_start = self.start_date
     
     template.itinerary_template_infos.each do |i|
-      if startleg > latestDate
-        latestDate = startleg  
-      end
-      
-      # set start date
-      if i.offset.abs == 0 
-        startleg = latestDate
-      else
-        startleg = latestDate - i.offset
-      end
-      
-      # set end date
+      startleg = itinerary_start + i.days_from_start.days
       endleg = startleg + i.length.days
       
       self.add_info_from_template_info(i,startleg,endleg,i.position) if i.product
-      startleg = endleg
     end
   end
+
   
   def insert_template(template_id, pos)
     newTemplate = ItineraryTemplate.find(template_id)
-    int = 0;
-    offset = 0;
-    startleg = self.start_date
-    current_infos = self.itinerary_infos
-
-    # push out info position to allow new ones to be inserted at front. 
-    offset = newTemplate.itinerary_template_infos.count
-    current_infos.each do |info|
+    
+    # find date where we are inserting. 
+    if pos == 0 
+      # start date will be start of itineary. 
+      startleg = self.start_date
+    else
+      # start date will be day after insert position. 
+      insertAfterInfo = self.itinerary_infos.find_by_position(pos)
+      startleg = insertAfterInfo.end_date
+    end
+    
+    # push out info position of existing infos, to allow new ones to be inserted at front.  
+    # Also bump dates by total days from start on new template 
+    offset = newTemplate.itinerary_template_infos.count   # get count of new template infos
+    bumpDates = newTemplate.itinerary_template_infos.last.days_from_start   # should be the total number of days on template (if set up right...)
+    self.itinerary_infos.each do |info|
       if info.position > pos
-        info.position = info.position + offset   # is past insert, so bump position
-      else
-        startleg = info.start_date    # update this as we iterate through to find latest date prior to insert pos 
-#        info.save
-      end
+        info.position = info.position + offset 
+        info.start_date = info.start_date + bumpDates.days
+        info.end_date = info.end_date + bumpDates.days
+      end 
     end
 
-    # set insert pos
-    int = pos #this can be set to anything starting from zero.
+    insertPos = pos  # set start position for insert. 
+    itinerary_start = startleg
       
-    #insert new infos from template infos from pos,  
+    #insert new infos from template using new insert pos,  
     newTemplate.itinerary_template_infos.each do |i|
-      int = int + 1
+      insertPos = insertPos + 1
+      startleg = itinerary_start + i.days_from_start.days
       endleg = startleg + i.length.days
-      info = self.add_info_from_template_info(i,startleg,endleg,int) if i.product
-      startleg = endleg  
-      info.save
+      self.add_info_from_template_info(i,startleg,endleg,insertPos) if i.product   
     end
-
+    
+=begin
     # now wizz through all infos, update pos and dates to make sure all correct. 
     int = 0
     startleg = self.start_date
     latestDate = self.start_date
     
     self.itinerary_infos.order("position ASC").each do |info|
+
       if startleg > latestDate
         latestDate = startleg  
       end
@@ -149,6 +146,7 @@ class Itinerary < ActiveRecord::Base
       
       startleg = endleg  
     end
+=end
   end
   
   def add_info_from_template_info(info_template, startleg, endleg, pos)
@@ -206,4 +204,98 @@ class Itinerary < ActiveRecord::Base
     end
   end
   
+  
+  
+  def copy_templateOLD(template)
+    if !template
+      return
+    end
+    
+    # populates itinerary from a template
+    self.includes = template.includes
+    self.excludes = template.excludes
+    self.notes = template.notes
+    
+    startleg = self.start_date
+    latestDate = self.start_date
+    
+    template.itinerary_template_infos.each do |i|
+      if startleg > latestDate
+        latestDate = startleg  
+      end
+      
+      # set start date
+      if i.offset.abs == 0 
+        startleg = latestDate
+      else
+        startleg = latestDate - i.offset
+      end
+      
+      # set end date
+      endleg = startleg + i.length.days
+      
+      self.add_info_from_template_info(i,startleg,endleg,i.position) if i.product
+      startleg = endleg
+    end
+  end  
+  
+  def insert_templateOLD(template_id, pos)
+    newTemplate = ItineraryTemplate.find(template_id)
+    int = 0;
+    offset = 0;
+    startleg = self.start_date
+    current_infos = self.itinerary_infos
+
+    # push out info position to allow new ones to be inserted at front. 
+    offset = newTemplate.itinerary_template_infos.count
+    current_infos.each do |info|
+      if info.position > pos
+        info.position = info.position + offset   # is past insert, so bump position
+      else
+        startleg = info.start_date    # update this as we iterate through to find latest date prior to insert pos 
+#        info.save
+      end
+    end
+
+    # set insert pos
+    int = pos #this can be set to anything starting from zero.
+      
+    #insert new infos from template infos from pos,  
+    newTemplate.itinerary_template_infos.each do |i|
+      int = int + 1
+      endleg = startleg + i.length.days
+      info = self.add_info_from_template_info(i,startleg,endleg,int) if i.product
+      startleg = endleg  
+      info.save
+    end
+
+    # now wizz through all infos, update pos and dates to make sure all correct. 
+    int = 0
+    startleg = self.start_date
+    latestDate = self.start_date
+    
+    self.itinerary_infos.order("position ASC").each do |info|
+      if startleg > latestDate
+        latestDate = startleg  
+      end
+      
+      # set start date
+      if info.offset.abs == 0 
+        startleg = latestDate
+      else
+        startleg = latestDate - info.offset
+      end
+      
+      # set end date
+      endleg = startleg + info.length.days
+      
+      int = int + 1
+      # update attributes
+      info.position = int
+      info.start_date = startleg
+      info.end_date = endleg     
+      
+      startleg = endleg  
+    end
+  end  
 end

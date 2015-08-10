@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804063408) do
+ActiveRecord::Schema.define(version: 20150807065310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -328,6 +328,7 @@ ActiveRecord::Schema.define(version: 20150804063408) do
     t.text     "comment_for_customer"
     t.integer  "room_type"
     t.integer  "offset",                                        default: 0
+    t.integer  "days_from_start"
   end
 
   add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree
@@ -365,6 +366,7 @@ ActiveRecord::Schema.define(version: 20150804063408) do
     t.datetime "updated_at"
     t.integer  "supplier_id"
     t.integer  "offset",                default: 0
+    t.integer  "room_type"
   end
 
   add_index "itinerary_template_infos", ["itinerary_template_id"], name: "index_itinerary_template_infos_on_itinerary_template_id", using: :btree
