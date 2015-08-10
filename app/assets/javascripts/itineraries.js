@@ -20,11 +20,47 @@ $(document).ready(function() {
     $('.add_fields').click();
   });
   
+  $("#bump_dates_modal_button").on('click',function(){
+    var bumpNumDays = $("#bump_days").val();
+console.log("bumping days by " + bumpNumDays);    
+
+    if (isNaN(bumpNumDays)){toastr.warning("Value entered is not a valid number!"); return;}
+    $(".muli-select-itinerary").each(function(){
+      if ($(this).is(":checked")) {
+      // start date  
+      var start_$input = $(this).closest('.field').find(".start_leg_itinerary").pickadate(),
+           start_picker = start_$input.pickadate('picker');
+           
+      var dateStr = start_picker.get();
+      // month is minus one as months are 0-11
+      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
+      current_date.setDate(current_date.getDate() + parseInt(bumpNumDays));
+      // SET START DATE
+      start_picker.set('select', current_date);                   //removed to make readonly      
+      
+      // now do end date
+      var end_$input = $(this).closest('.field').find(".end_leg_itinerary").pickadate(),
+           end_picker = end_$input.pickadate('picker');
+           
+      var dateStr = end_picker.get();
+      // month is minus one as months are 0-11
+      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
+      current_date.setDate(current_date.getDate() + parseInt(bumpNumDays));
+      // SET START DATE
+      end_picker.set('select', current_date);                   //removed to make readonly          
+      }
+    });
+    
+    $(".loading").show();  //show spinner
+    $('.itinerary_submit_btn').click();
+  });
+  
   $("#lockItineraryBtn").on('click', function(e) {
     $(".loading").show();  //show spinner
     $("#itinerary_status").val("Locked");
     $("#itinerary_complete").val("true");
     $('.itinerary_submit_btn').click();
+    
   });
   
   $("#unlockItineraryBtn").on('click', function(e) {
@@ -38,6 +74,7 @@ $(document).ready(function() {
     $('.itinerary_top_row_show').toggle();
     $('.itinerary_info_top_row_edit').toggle();
     $('.itinerary_info_bottom_row_edit').toggle();
+ //   $(".sortable-placeholder").toggleClass("miniplaceholder");    - this doesnt work - need to find a way to update the DOM object as it is added. 
   });
   
   $("#saveItineraryFabBtn").on('click', function(e) {
@@ -170,7 +207,7 @@ function sort_itinerary_items(){
 
   // call sortable on our div with the sortable class
   $('.sortable').sortable({
-    items: '.nested-fields'
+    items: '.sortable-item'
     // items: ':not(.nosort)'  - this was for testing grouping items. 
   });
 }
@@ -191,7 +228,6 @@ function set_sort_positions_and_dates(){
   });
   
   recalcDates(); // does nothing at moment, as recalc dates switched off. 
-  
 
 }
 

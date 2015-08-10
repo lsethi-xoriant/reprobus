@@ -21,6 +21,21 @@
     <i class="<%= icon %> small grey-text"></i>
     <h6 class="grey-text valign iti_postion_number_show"></h6>
   </div>
+
+  <div class="input-field col s1">
+    <%= f.object.start_date.strftime("%d/%m/%y") if f.object.start_date %>
+    <label for="show_startdate" class="active">Start</label>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.end_date.strftime("%d/%m/%y") if f.object.end_date  %>
+    <label for="show_enddate" class="active">End</label>
+  </div>
+  
+  <div class="input-field col s1">
+    <%= f.object.length %>
+    <label for="show_length" class="active"># Days</label>
+  </div>  
   
   <div class="input-field col s1">
     <%= f.object.get_product_country %>
@@ -41,26 +56,11 @@
     <%= f.object.get_product_name %>
     <label for="show_product_id" class="active">Product</label>
   </div>
-  
-  <div class="input-field col s1">
-    <%= f.object.length %>
-    <label for="show_length" class="active"># Days</label>
-  </div>
 
   <div class="input-field col s1">
     <%= f.object.supplier_name %>
     <label for="show_supplier_id" class="active">Supplier</label>
   </div>            
-  
-  <div class="input-field col s1">
-    <%= f.object.start_date.strftime("%d/%m/%y") if f.object.start_date %>
-    <label for="show_startdate" class="active">Start</label>
-  </div>
-  
-  <div class="input-field col s1">
-    <%= f.object.end_date.strftime("%d/%m/%y") if f.object.end_date  %>
-    <label for="show_enddate" class="active">End</label>
-  </div>
         
   <div class="input-field col s1">
     <div class="room_type_cont_show" style=<%= displayRoomDetails %> >
