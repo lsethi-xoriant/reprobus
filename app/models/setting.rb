@@ -20,6 +20,9 @@
 #  dropbox_session      :text
 #  use_dropbox          :boolean
 #  dropbox_default_path :string
+#  itinerary_includes   :text
+#  itinerary_excludes   :text
+#  itinerary_notes      :text
 #
 
 class Setting < ActiveRecord::Base
@@ -52,6 +55,9 @@ class Setting < ActiveRecord::Base
     self[:dropbox_default_path] = value
   end
   
+  def self.global_settings
+    return Setting.find(1); # current only one of these, will have to work out a way to make this multi tenancy. 
+  end
  
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")

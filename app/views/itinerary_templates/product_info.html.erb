@@ -1,11 +1,11 @@
-<a class="waves-effect waves-light btn grey modal-trigger tooltipped" href="#product_info_<%=@info.id%>"
+<a class="waves-effect waves-light btn grey modal-trigger tooltipped" href="#product_info_<%=@info.id || @cruise.object_id%>"
 data-position="bottom" data-delay="50" data-tooltip="Product Info" >
   <i class="mdi-action-info-outline"></i>
 </a> 
 
 <% int = 0 %>
   <!-- Modal Structure -->
-  <div id="product_info_<%=@info.id%>" class="modal">
+  <div id="product_info_<%=@info.id || @cruise.object_id%>" class="modal">
     <div class="modal-content">
       <h4><i class="mdi-action-list"></i>  Product Info</h4>
 
@@ -22,6 +22,6 @@ data-position="bottom" data-delay="50" data-tooltip="Product Info" >
     </div>
 
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Close</a>
     </div>
   </div>

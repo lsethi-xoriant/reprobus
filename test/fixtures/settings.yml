@@ -20,6 +20,9 @@
 #  dropbox_session      :text
 #  use_dropbox          :boolean
 #  dropbox_default_path :string
+#  itinerary_includes   :text
+#  itinerary_excludes   :text
+#  itinerary_notes      :text
 #
 
 firstcompany:

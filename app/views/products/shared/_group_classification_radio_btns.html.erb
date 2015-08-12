@@ -1,0 +1,25 @@
+<% if product == "Transfer" || product == "Tour" %> 
+
+<% else %>
+  <% hidestr = "display:none" %>
+<% end %>
+
+  <div class="row group_classification_container" style=<%=hidestr%>>
+    <br>
+    <div class="col s3">  
+    <%= label :group_classification_main, 'Group Classification:' %>
+    <br>
+    </div>
+    <div class="col s3">
+    <%= f.radio_button :group_classification, 'None', checked: true, id: "group_classification_None_#{id}", class: "radio_group_class_None" %> 
+    <label for="group_classification_None_<%=id%>">None</label>
+    </div>
+    <div class="col s3">
+    <%= f.radio_button :group_classification, 'Private', id: "group_classification_Private_#{id}", class: "radio_group_class_Private" %>
+    <label for="group_classification_Private_<%=id%>">Private</label>
+    </div>
+    <div class="col s3">
+    <%= f.radio_button :group_classification, 'Shared', id: "group_classification_Shared_#{id}", class: "radio_group_class_Shared" %>
+    <label for="group_classification_Shared_<%=id%>">Shared</label>
+    </div>
+  </div>

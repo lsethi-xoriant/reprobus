@@ -98,7 +98,8 @@ class SettingsController < ApplicationController
   def integration
   end
   
-  
+  def itinerary
+  end  
   
   def db_authorize
     require 'dropbox_sdk'
@@ -134,9 +135,9 @@ class SettingsController < ApplicationController
 private
   def settings_params
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
-    :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id,
-    :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user,
-    :dropbox_session, :use_dropbox, :dropbox_default_path,
+    :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :itinerary_notes,
+    :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user, :itinerary_excludes,
+    :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes,
     triggers_attributes: [:id, :email_template_id, :num_days])
   end
 end

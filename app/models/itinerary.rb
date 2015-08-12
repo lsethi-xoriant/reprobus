@@ -23,7 +23,6 @@
 #  itinerary_template_id :integer
 #  enquiry_id            :integer
 #  status                :string
-#  end_date              :date
 #
 
 class Itinerary < ActiveRecord::Base
@@ -64,10 +63,10 @@ class Itinerary < ActiveRecord::Base
     end
     
     # populates itinerary from a template
-    self.includes = template.includes
-    self.excludes = template.excludes
-    self.notes = template.notes
-     
+    self.includes = template.includes.presence || Setting.global_settings.itinerary_includes
+    self.excludes = template.excludes.presence || Setting.global_settings.itinerary_excludes
+    self.notes = template.notes.presence || Setting.global_settings.itinerary_notes
+    
     startleg = self.start_date
     itinerary_start = self.start_date
     
@@ -115,38 +114,6 @@ class Itinerary < ActiveRecord::Base
       endleg = startleg + i.length.days
       self.add_info_from_template_info(i,startleg,endleg,insertPos) if i.product   
     end
-    
-=begin
-    # now wizz through all infos, update pos and dates to make sure all correct. 
-    int = 0
-    startleg = self.start_date
-    latestDate = self.start_date
-    
-    self.itinerary_infos.order("position ASC").each do |info|
-
-      if startleg > latestDate
-        latestDate = startleg  
-      end
-      
-      # set start date
-      if info.offset.abs == 0 
-        startleg = latestDate
-      else
-        startleg = latestDate - info.offset
-      end
-      
-      # set end date
-      endleg = startleg + info.length.days
-      
-      int = int + 1
-      # update attributes
-      info.position = int
-      info.start_date = startleg
-      info.end_date = endleg     
-      
-      startleg = endleg  
-    end
-=end
   end
   
   def add_info_from_template_info(info_template, startleg, endleg, pos)
@@ -165,7 +132,11 @@ class Itinerary < ActiveRecord::Base
           supplier_id:  info_template.supplier_id,
           product_id: info_template.product_id,
           length: info_template.length,
-          offset: info_template.offset
+          offset: info_template.offset,
+          group_classification: info_template.product.group_classification,
+          includes_lunch: info_template.product.includes_lunch,
+          includes_dinner: info_template.product.includes_dinner,
+          includes_breakfast: info_template.product.includes_breakfast,
           )    
   end
   
@@ -206,6 +177,10 @@ class Itinerary < ActiveRecord::Base
   
   
   
+  
+  
+  
+  #OLD CODE BELOW - keepeing for a wee while to see if i might reuse some of it. 
   def copy_templateOLD(template)
     if !template
       return

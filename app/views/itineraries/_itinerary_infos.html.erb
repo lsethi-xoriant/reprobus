@@ -34,8 +34,8 @@
         
         <div class="col s4">
           <p>
-            <input type="checkbox" class="filled-in muli-select-itinerary" id="muli-select-<%=f.object.id%>" />
-            <label for="muli-select-<%=f.object.id%>">Bulk Adj. Dates</label>
+            <input type="checkbox" class="filled-in muli-select-itinerary" id="muli-select-<%=f.object.id  || f.object.object_id %>" />
+            <label for="muli-select-<%=f.object.id|| f.object.object_id %>">Bulk Adj. Dates</label>
           </p>          
         </div>
         

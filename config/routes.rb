@@ -18,6 +18,7 @@ Reprobus::Application.routes.draw do
       get 'email'
       get 'currency'
       get 'operation'
+      get 'itinerary'
     end
   end
 

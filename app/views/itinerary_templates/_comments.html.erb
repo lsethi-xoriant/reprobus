@@ -1,35 +1,31 @@
 <div class="input-field comments_cont col s1 center-align" >
-<a class="waves-effect waves-light btn grey lighten-5 modal-trigger circle tooltipped" href="#comment_info_<%=info.id%>"
+<a class="waves-effect waves-light btn grey lighten-5 modal-trigger circle tooltipped" href="#comment_info_<%=info.id || info.object_id%>"
 data-position="bottom" data-delay="50" data-tooltip="Add Comments" >
   <i class="mdi-communication-chat grey darken-2"></i>
 </a>
-
-
 </div>
  
 
   <!-- Modal Structure -->
-  <div id="comment_info_<%=info.id%>" class="modal">
+  <div id="comment_info_<%=info.id || info.object_id%>" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h4><i class="mdi-editor-insert-comment"></i>  Add Comments</h4>
+      <h5><i class="mdi-editor-insert-comment"></i>  Additional settings </h5>
+      <p class="product_details" ><%= info.get_product_details %></p>
 
-      <ul>
-        <li>
-          <div class="row">
-            <div class="col s12">
-              <p class="product_details" ><%= info.get_product_details %></p>
-              
-              <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "comment_for_customer", f: f, length: "500"} %></div>
-              <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "comment_for_supplier", f: f, length: "500"} %></div>
-              <p><em>Please note: you will need to save the Itinerary form for these comments to be saved.</em></p>
-            </div>
-          </div>
-        </li>
-      </ul>
-      
+      <%= render partial: 'products/shared/group_classification_radio_btns', locals: { product: info.get_product_type, id: info.id || info.object_id, f: f } %>
+      <%= render partial: 'products/shared/meal_inclusions_checkbox', locals: { product: info.get_product_type, id: info.id || info.object_id, f: f } %>
+
+      <div class="row">
+        <div class="col s12">
+          
+          <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "comment_for_customer", f: f, length: "500"} %></div>
+          <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "comment_for_supplier", f: f, length: "500"} %></div>
+        </div>
+      </div>
     </div>
 
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+      <p class="col s10"><em>Please note: you will need to save the Itinerary Form for these comments to be saved.</em></p>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-lighten-3 green btn-flat">OK</a>
     </div>
   </div>

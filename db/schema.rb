@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807065310) do
+ActiveRecord::Schema.define(version: 20150810235721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -329,6 +329,10 @@ ActiveRecord::Schema.define(version: 20150807065310) do
     t.integer  "room_type"
     t.integer  "offset",                                        default: 0
     t.integer  "days_from_start"
+    t.boolean  "includes_breakfast"
+    t.boolean  "includes_lunch"
+    t.boolean  "includes_dinner"
+    t.string   "group_classification"
   end
 
   add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree
@@ -428,9 +432,9 @@ ActiveRecord::Schema.define(version: 20150807065310) do
     t.string   "type"
     t.string   "name"
     t.text     "description"
-    t.decimal  "price_single",       precision: 12, scale: 2
-    t.decimal  "price_double",       precision: 12, scale: 2
-    t.decimal  "price_triple",       precision: 12, scale: 2
+    t.decimal  "price_single",         precision: 12, scale: 2
+    t.decimal  "price_double",         precision: 12, scale: 2
+    t.decimal  "price_triple",         precision: 12, scale: 2
     t.string   "room_type"
     t.string   "rating"
     t.string   "destination"
@@ -447,6 +451,10 @@ ActiveRecord::Schema.define(version: 20150807065310) do
     t.text     "address"
     t.string   "phone"
     t.integer  "cruise_id"
+    t.string   "group_classification"
+    t.boolean  "includes_breakfast"
+    t.boolean  "includes_lunch"
+    t.boolean  "includes_dinner"
   end
 
   add_index "products", ["cruise_id"], name: "index_products_on_cruise_id", using: :btree
@@ -470,6 +478,9 @@ ActiveRecord::Schema.define(version: 20150807065310) do
     t.text     "dropbox_session"
     t.boolean  "use_dropbox"
     t.string   "dropbox_default_path"
+    t.text     "itinerary_includes"
+    t.text     "itinerary_excludes"
+    t.text     "itinerary_notes"
   end
 
   create_table "stopovers", force: :cascade do |t|

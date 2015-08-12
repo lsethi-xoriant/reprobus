@@ -26,6 +26,11 @@
 #  comment_for_customer :text
 #  room_type            :integer
 #  offset               :integer          default("0")
+#  days_from_start      :integer
+#  includes_breakfast   :boolean
+#  includes_lunch       :boolean
+#  includes_dinner      :boolean
+#  group_classification :string
 #
 
 class ItineraryInfo < ActiveRecord::Base

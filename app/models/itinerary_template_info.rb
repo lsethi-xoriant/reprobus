@@ -12,6 +12,7 @@
 #  updated_at            :datetime
 #  supplier_id           :integer
 #  offset                :integer          default("0")
+#  room_type             :integer
 #
 
 class ItineraryTemplateInfo < ActiveRecord::Base

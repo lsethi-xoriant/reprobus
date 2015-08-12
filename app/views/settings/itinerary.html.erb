@@ -1,0 +1,31 @@
+<% provide(:title, 'Itinerary Settings') %>
+
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+
+        <%= form_for @setting, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+         <%= render 'shared/error_messages', object: f.object %>
+         <%= hidden_field_tag :redirect, '', value: "itinerary" %>
+
+          <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_includes", f: f, name: "Default Itinerary Includes", length: "1000" } %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_excludes", f: f, name: "Default Itinerary Excludes", length: "1000"  } %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_notes", f: f, name: "Default Itinerary Notes", length: "1000"  } %>
+
+          <div class="row"><div class="col s6">
+          <%#= f.submit "Save changes", class: "btn " %>
+              <%= button_tag( :class => "btn waves-effect waves-light right") do %>
+                Save Changes
+              <% end %>
+          </div></div>
+        <% end %>
+    
+    </div>
+  </div> 
+</div> 
+

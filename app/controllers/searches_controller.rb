@@ -167,17 +167,17 @@ class SearchesController < ApplicationController
   end
 
   def product_info_search
-    #@products = Product.select([:id, :name, :destination_id, :country_id, :country_search, :destination_search, :type, :default_length]).
-    
     e = Product.find(params[:product])
     
     respond_to do |format|
       format.json { render json: {
                     id: e.id, name: e.name, text: e.name, type: e.type,
-                          country: e.country_search, city: e.destination_search, numdays: e.default_length,
-                          country_id: e.country_id, destination_id: e.destination_id,
-                          suppliers: e.suppliers.map { |s| {id: s.id, supplier_name: s.supplier_name}},
-                          roomtypes: e.rooms.map { |s| {id: s.id, room_type: s.name}}
+                    country: e.country_search, city: e.destination_search, 
+                    country_id: e.country_id, destination_id: e.destination_id, 
+                    grouptype: e.group_classification, numdays: e.default_length,
+                    breakfast: e.includes_breakfast, dinner: e.includes_dinner, lunch: e.includes_lunch,
+                    suppliers: e.suppliers.map { |s| {id: s.id, supplier_name: s.supplier_name}},
+                    roomtypes: e.rooms.map { |s| {id: s.id, room_type: s.name}}
                     }}
     end
   end

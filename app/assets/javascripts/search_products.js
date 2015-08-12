@@ -137,6 +137,28 @@ function initProductSelect2() {
         } else {
           $(nextRoomTypeField).closest('.field').find(".room_type_cont").hide();
         }
+        
+        if (data.type == "Transfer" || data.type == "Tour") {
+          $(nextProductContainer).closest('.field').find('.radio_group_class_' + data.grouptype).prop('checked', true);
+          $(nextProductContainer).closest('.field').find('.group_classification_container').show();
+        }else{
+          $(nextProductContainer).closest('.field').find('.group_classification_container').hide();
+        } 
+        
+        if (data.type == "Hotel" || data.type == "Tour" || data.type == "Cruise") {
+          $(nextProductContainer).closest('.field').find('.include_breakfast').prop('checked', data.breakfast);
+          $(nextProductContainer).closest('.field').find('.meal_inclusions_container').show();
+          if (data.type == "Tour" || data.type == "Cruise") {
+            $(nextProductContainer).closest('.field').find('.include_lunch').prop('checked', data.lunch);
+            $(nextProductContainer).closest('.field').find('.include_dinner').prop('checked', data.dinner);
+            $(nextProductContainer).closest('.field').find('.meal_lunch_and_dinner_container').show();   
+          }else{
+            $(nextProductContainer).closest('.field').find('.meal_inclusions_container').hide();  
+          }
+        }else{
+          $(nextProductContainer).closest('.field').find('.meal_inclusions_container').hide();
+        } 
+        
       });
 
     // handle specialy, need to add all cruise legs... do ajax search and get cruise legs.

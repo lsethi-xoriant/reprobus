@@ -22,7 +22,6 @@ $(document).ready(function() {
   
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
-console.log("bumping days by " + bumpNumDays);    
 
     if (isNaN(bumpNumDays)){toastr.warning("Value entered is not a valid number!"); return;}
     $(".muli-select-itinerary").each(function(){
@@ -30,30 +29,26 @@ console.log("bumping days by " + bumpNumDays);
       // start date  
       var start_$input = $(this).closest('.field').find(".start_leg_itinerary").pickadate(),
            start_picker = start_$input.pickadate('picker');
-           
-      var dateStr = start_picker.get();
-      // month is minus one as months are 0-11
-      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
-      current_date.setDate(current_date.getDate() + parseInt(bumpNumDays));
-      // SET START DATE
-      start_picker.set('select', current_date);                   //removed to make readonly      
+      bump_pickadate_date_to_new_date(start_picker,bumpNumDays,start_picker.get());     
       
       // now do end date
       var end_$input = $(this).closest('.field').find(".end_leg_itinerary").pickadate(),
            end_picker = end_$input.pickadate('picker');
-           
-      var dateStr = end_picker.get();
-      // month is minus one as months are 0-11
-      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
-      current_date.setDate(current_date.getDate() + parseInt(bumpNumDays));
-      // SET START DATE
-      end_picker.set('select', current_date);                   //removed to make readonly          
+      bump_pickadate_date_to_new_date(end_picker,bumpNumDays,end_picker.get());     
       }
     });
     
     $(".loading").show();  //show spinner
     $('.itinerary_submit_btn').click();
   });
+  
+  function bump_pickadate_date_to_new_date(picker,numdays, dateStr){
+      // month is minus one as months are 0-11
+      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
+      current_date.setDate(current_date.getDate() + parseInt(numdays));
+      picker.set('select', current_date);  
+  }
+  
   
   $("#lockItineraryBtn").on('click', function(e) {
     $(".loading").show();  //show spinner
@@ -127,7 +122,7 @@ console.log("bumping days by " + bumpNumDays);
     itineraryForm_initialise_elements_after_insert(insertedItem);
 
     // reinit Pikadate datepicker
-    $('.start_leg_itinerary').pickadate({
+    $(insertedItem).find('.start_leg_itinerary').pickadate({
       selectMonths: true, // Creates a dropdown to control month
       selectYears: 5, // Creates a dropdown of 15 years to control year
       formatSubmit: 'yyyy-mm-dd',
@@ -135,8 +130,27 @@ console.log("bumping days by " + bumpNumDays);
       min: new Date(),
       hiddenSuffix: ''
     });
+    $(insertedItem).find('.end_leg_itinerary').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 5, // Creates a dropdown of 15 years to control year
+      formatSubmit: 'yyyy-mm-dd',
+      format: 'yyyy-mm-dd',
+      min: new Date(),
+      hiddenSuffix: ''
+    });  
+    
+    // get last date from previous element 
+    var prev_$input = insertedItem.prev().find('.end_leg_itinerary').pickadate(),
+        prev_picker = prev_$input.pickadate('picker');
+    var start_$input = insertedItem.find('.start_leg_itinerary').pickadate(),
+        start_picker = start_$input.pickadate('picker');   
+    var end_$input = insertedItem.find('.end_leg_itinerary').pickadate(),
+        end_picker = end_$input.pickadate('picker');        
+//console.log(prev_picker.get());        
+    bump_pickadate_date_to_new_date(start_picker,0,prev_picker.get());
+    bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
   });
-  
+
   $('#itinerary_start_date').on('change', function(e) { 
     set_sort_positions_and_dates();
   });
@@ -185,7 +199,7 @@ console.log("bumping days by " + bumpNumDays);
     }
   });
   
-  $('.insert_template_OK').on('click', function(e) { 
+  $('#insert_template_OK').on('click', function(e) { 
     var template = $("#insert_template_container").find('.select2-itinerary_templates').val();
     var postition = $("#insert_template_container").find('.position-insert-itineraries').find("option:selected").text();
     
