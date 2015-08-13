@@ -9,6 +9,10 @@ class StaticPagesController < ApplicationController
   def about
   end
   
+  def timed_out
+    render :layout => "application"
+  end
+  
   def dashboard
     @user = current_user
     

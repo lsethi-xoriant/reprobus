@@ -1,6 +1,9 @@
 Reprobus::Application.routes.draw do
   root  'static_pages#home'
   
+  match '/timed_out', to: 'static_pages#timed_out', as: :timed_out, via: :get
+  
+  get "password_resets/new"
   get "password_resets/new"
   post "versions/:id/revert" => "versions#revert", as:
        "revert_version"

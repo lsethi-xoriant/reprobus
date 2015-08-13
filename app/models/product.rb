@@ -55,10 +55,17 @@ class Product < ActiveRecord::Base
   belongs_to  :destination
 
   before_save  :set_search_terms
-
+  after_initialize :set_defaults_on_init
+  
   def set_search_terms
     self.country_search = self.country_name
     self.destination_search = self.destination_name
+  end
+  
+  def set_defaults_on_init
+    if self.type == "Hotel" && self.new_record?
+      self.includes_breakfast = true
+    end
   end
 
   def supplierNames

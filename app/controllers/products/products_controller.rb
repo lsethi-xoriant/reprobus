@@ -14,8 +14,9 @@ class Products::ProductsController < ApplicationController
   
   def new
     @setting = Setting.find(1)
-    @product = Product.new
-    @product.type = params[:type]
+    @product = params[:type].constantize.new
+    #@product = Product.new
+    #@product.type = params[:type]
   end
   
   def create
