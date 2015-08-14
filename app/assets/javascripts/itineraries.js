@@ -92,6 +92,9 @@ $(document).ready(function() {
     //$('.select2-countries').on('change', function(e) {
       //MOVED TO search_countries.js as seems better place for code, so it works across all of app. 
     //});
+    $('.itinerary-days-from-start').on('change', function(e) { 
+      check_days_from_start_seq();
+    });     
   }
   
   sort_itinerary_items();  // sorts table and sets up intial pos numbers
@@ -243,6 +246,7 @@ function set_sort_positions_and_dates(){
   
   recalcDates(); // does nothing at moment, as recalc dates switched off. 
 
+  check_days_from_start_seq();
 }
 
 function itineraryForm_initialise_elements_after_insert(insertedItem){
@@ -269,7 +273,11 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });   
+
   
+  $('.itinerary-days-from-start').on('change', function(e) { 
+    check_days_from_start_seq();
+  }); 
   $('.itinerary-number-days').on('change', function(e) { 
     set_sort_positions_and_dates();
   }); 
@@ -289,6 +297,29 @@ function reset_material_active_labels(container_id) {
       var fieldId = $(this).attr("id");
       $("label[for='"+fieldId+"']").addClass('active');
     //}
+  });
+}
+
+
+function check_dates_are_in_seq(){ 
+  var prevSeq = 0;
+  var isOutOfSeq = false;
+  $('.itinerary-days-from-start').each(function(){
+    $(this).removeClass("invalid");
+    if ((prevSeq+1) < $(this).val()){isOutOfSeq = true;}
+    if (isOutOfSeq) {$(this).addClass("invalid");}
+    prevSeq = $(this).val();
+  });
+}
+
+function check_days_from_start_seq(){ 
+  var prevSeq = 0;
+  var isOutOfSeq = false;
+  $('.itinerary-days-from-start').each(function(){
+    $(this).removeClass("invalid");
+    if (parseInt($(this).val()) > (prevSeq+1)){isOutOfSeq = true;}
+    if (isOutOfSeq) {$(this).addClass("invalid");}
+    prevSeq = parseInt($(this).val());
   });
 }
 
