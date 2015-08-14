@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   
   rescue_from ActionController::InvalidAuthenticityToken, :with => :timed_out
-  
-  def refresh
+
+private
+  def timed_out
+    redirect_to timed_out_url
   end
 end
