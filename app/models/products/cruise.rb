@@ -35,4 +35,15 @@ class Cruise < Product
   def self.sti_name
     "Cruise"
   end
+  
+  def getCruiseDay(numDay)
+    int = 0;
+    self.cruise_days.each do |prod|
+      int = int + 1
+      if int == numDay
+        return prod
+      end 
+    end 
+    return nil
+  end
 end

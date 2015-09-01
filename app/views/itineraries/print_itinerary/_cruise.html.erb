@@ -1,0 +1,15 @@
+<% if info %>
+  <div class="row">
+     <div>
+       
+        <div class="col s12"><strong><%= "#{info.name} - #{info.destination.name}, #{info.country.name}" %></strong></div>  
+        
+        <table>
+          <td style="width: 70%;"><p><%= "#{info.description}"%></p></td>
+          <% if !info.remote_url.blank? %>
+            <td style="width: 30%;"><img src=<%=info.get_dropbox_image_link%> class="product_image_mini"></td>
+          <% end %>
+        </table>
+      </div>
+  </div>
+<% end %>

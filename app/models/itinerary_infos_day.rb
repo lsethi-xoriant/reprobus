@@ -1,5 +1,5 @@
 class ItineraryInfosDay
-  attr_accessor :all_infos, :standard_infos, :leaving_hotel, :hotel, :transfer, 
+  attr_accessor :all_infos, :standard_infos, :leaving_hotel, :hotel, :transfer, :cruise, 
                 :leg_count, :destination, :country
   
   def set_up_day(itinerary, date, leg_count)
@@ -16,8 +16,10 @@ class ItineraryInfosDay
         else
           @hotel = info
         end     
-      #elsif info.product.type == "transfer"
-      #  @transfer = info
+      elsif info.product.type == "Transfer"
+        @transfer = info
+      elsif info.product.type == "Cruise"
+        @cruise = info        
       else
          @standard_infos << info
          # set country and destination - this should be main dest/count - not if motel departure. 
