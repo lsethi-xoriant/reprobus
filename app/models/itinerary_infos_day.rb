@@ -20,6 +20,8 @@ class ItineraryInfosDay
         @transfer = info
       elsif info.product.type == "Cruise"
         @cruise = info        
+        @destination = info.get_product_destination if !@destination 
+        @country = info.get_product_country if !@country         
       else
          @standard_infos << info
          # set country and destination - this should be main dest/count - not if motel departure. 
