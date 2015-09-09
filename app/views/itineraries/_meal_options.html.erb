@@ -9,23 +9,23 @@
 <div class="meal_options_itinerary" style=<%=hidestr%>>
   <br>
   <div class="">  
-  <%= label :meal_inclusions, 'Meal Inclusions:' class="active" %>
+  <%= label :meal_inclusions, 'Meal Inclusions:', class: "active" %>
   </div>
 
-  <div class="">
+  <div class="col s1">
     <%= f.check_box :includes_breakfast, class: "filled-in include_breakfast" %>
-    <%= f.label :includes_breakfast, "B"  %>        
+    <%= f.label :includes_breakfast, 'B', class: "meal-inclusions-itinerary"  %>        
   </div>
   
   <div class="meal_lunch_and_dinner_container" style=<%=showBreakOnly%>>
   
-    <div class="">
+    <div class="col s1">
       <%= f.check_box :includes_lunch, class: "filled-in include_lunch" %>
-      <%= f.label :includes_lunch, "L"  %>        
+      <%= f.label :includes_lunch, "L", class: "meal-inclusions-itinerary"  %>        
     </div>
-    <div class="col s3">
+    <div class="col s1">
       <%= f.check_box :includes_dinner, class: "filled-in include_dinner" %>
-      <%= f.label :includes_dinner, "D"  %>        
+      <%= f.label :includes_dinner, "D", class: "meal-inclusions-itinerary"  %>        
     </div>   
   
   </div>

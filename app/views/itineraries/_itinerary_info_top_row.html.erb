@@ -68,7 +68,7 @@
     </div>     
     
     <div class="input-field col s1">
-      <%= render partial: 'products/shared/meal_inclusions_checkbox', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
+      <%= render partial: 'meal_options', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
     </div>
     
     <div class="input-field col s1">
