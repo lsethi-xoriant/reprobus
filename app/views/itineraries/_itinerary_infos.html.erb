@@ -16,21 +16,7 @@
         
       <%= render partial: 'itinerary_info_show_row', locals: { f: f, show: false } %>  
       
-        
-      <div class="row itinerary_info_bottom_row_edit">
-        <div class="input-field col s2 offset-s1">
-          <%= f.select(:supplier_id, options_from_collection_for_select(f.object.select_suppliers,:id, :supplier_name, f.object.supplier_id),{},{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
-          <label for="supplier_id" class="active">Supplier</label>
-        </div>            
-  
-
-        
-        <div class="input-field col s2">
-          <div class="room_type_cont" style=<%= displayRoomDetails %> >
-          <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
-          <label for="room_type" class="active">Room Type</label>
-          </div>
-        </div>                
+      <div class="row itinerary_info_bottom_row_edit" style="display:none">
         
         <div class="col s4">
           <p>

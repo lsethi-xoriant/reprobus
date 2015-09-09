@@ -1,4 +1,12 @@
-  
+<% if f.object.get_product_type == "Cruise" %>
+  <% displayProductDetails = 'display:none;' %>
+<% else %>
+  <% displayCruiseDetails = 'display:none;' %>
+<% end %>  
+<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
+  <% displayRoomDetails = 'display:none;' %>
+<% end %>
+
   <div class ="row itinerary_info_top_row_edit">
     
     <%= f.hidden_field :position, :value => f.object.position, class: "iti_position_field" %>
@@ -27,12 +35,12 @@
       <label for="country" class="active">Country</label>
     </div>-->      
 
-    <div class="input-field col s2">
+    <div class="input-field col s1">
       <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, f.object.get_product_country_id),{class: "select2-countries-noajax browser-default", include_blank: true}) %>
       <label for="country" class="active">Country</label>
     </div>  
     
-    <div class="input-field col s2">
+    <div class="input-field col s1">
       <%= select_tag(:destination, options_for_select([[f.object.get_product_destination, f.object.get_product_destination_id]],f.object.get_product_destination_id),{class: "select2-destinations browser-default"}) %>
       <label for="destination" class="active">Destination</label>
     </div>
@@ -42,9 +50,25 @@
       <label for="type">Type</label>
     </div>   
     
-    <div class="input-field col s3">
+    <div class="input-field col s2">
       <%= f.select(:product_id, options_for_select([[f.object.get_product_name, f.object.product_id]],f.object.product_id),{},{class: "select2-products browser-default"}) %>
       <label for="product_id" class="active">Product</label>
+    </div>
+    
+    <div class="input-field col s1">
+      <%= f.select(:supplier_id, options_from_collection_for_select(f.object.select_suppliers,:id, :supplier_name, f.object.supplier_id),{},{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
+      <label for="supplier_id" class="active">Supplier</label>
+    </div>            
+        
+    <div class="input-field col s1">
+      <div class="room_type_cont" style=<%= displayRoomDetails %> >
+        <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
+        <label for="room_type" class="active">Room Type</label>
+      </div>
+    </div>     
+    
+    <div class="input-field col s1">
+      <%= render partial: 'products/shared/meal_inclusions_checkbox', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
     </div>
     
     <div class="input-field col s1">
