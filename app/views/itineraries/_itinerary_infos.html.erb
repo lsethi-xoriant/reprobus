@@ -18,7 +18,7 @@
       
       <div class="row itinerary_info_bottom_row_edit" style="display:none">
         
-        <div class="col s4">
+        <div class="col s2 offset-s1">
           <p>
             <input type="checkbox" class="filled-in muli-select-itinerary" id="muli-select-<%=f.object.id  || f.object.object_id %>" />
             <label for="muli-select-<%=f.object.id|| f.object.object_id %>">Bulk Adj. Dates</label>
@@ -42,13 +42,12 @@
           <% end %>
         </div>
         
-        <div class="input-field col s1">
-          <% if !@itinerary.isLocked? %>
-            <a class="insertItineraryBtn tooltipped btn-floating btn-small left waves-effect waves-light blue" 
-               data-position="bottom" data-delay="50" data-tooltip="Insert below">
-              <i class="mdi-hardware-keyboard-return"></i>
-            </a>
-          <% end %>  
+        <div class="input-field col s1 offset-s6">
+          <% if !@itinerary || !@itinerary.isLocked? %>
+            <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
+              <i class="mdi-content-clear"></i>
+            <% end %>
+          <% end %>
         </div>
 
       </div>  

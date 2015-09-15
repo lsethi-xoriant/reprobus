@@ -16,7 +16,6 @@
       <h6 class="grey-text valign iti_postion_number"></h6>
     </div>
     
-    
     <div class="input-field col s1">
         <%= f.date_field :start_date, class:"datepicker start_leg_itinerary", :"data-value" =>  f.object.start_date %>
         <%#= f.date_field :start_date, class:"start-date_field", :"data-value" =>  f.object.start_date, readonly: true %>
@@ -28,7 +27,6 @@
         <%#= f.date_field :end_date, class:"end-date_field", :"data-value" =>  f.object.end_date, readonly: true %>
         <%= f.label :end_date, class: 'active' %>
     </div>
-        
         
     <!--<div class="input-field col s2">
       <%#= select_tag(:country, options_for_select([[f.object.get_product_country, f.object.get_product_country_id]],f.object.get_product_country_id),{class: "select2-countries browser-default"}) %>
@@ -72,10 +70,17 @@
     </div>
     
     <div class="input-field col s1">
-      <% if !@itinerary || !@itinerary.isLocked? %>
-        <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red left"} do %>
-          <i class="mdi-content-clear"></i>
-        <% end %>
+      <% if !@itinerary.isLocked? %>
+        <a class="insertItineraryBtn tooltipped btn-floating btn-small left waves-effect waves-light blue" 
+            data-position="bottom" data-delay="50" data-tooltip="Insert below">
+          <i class="mdi-hardware-keyboard-return"></i>
+        </a>
+      <% end %>  
+          
+      <% if !@itinerary.isLocked? %>
+        <a class="btn-floating btn-small waves-effect waves-light indigo right itinerary-show-hide-btn" >
+          <i class="mdi-navigation-unfold-less"></i>
+        </a>
       <% end %>
     </div>   
   </div>

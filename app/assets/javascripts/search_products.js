@@ -146,14 +146,15 @@ function initProductSelect2() {
         } 
         
         if (data.type == "Hotel" || data.type == "Tour" || data.type == "Cruise") {
-          $(nextProductContainer).closest('.field').find('.include_breakfast').prop('checked', data.breakfast);
-          $(nextProductContainer).closest('.field').find('.meal_inclusions_container').show();
+          $(nextTypeField).closest('.field').find('.include_breakfast').prop('checked', data.breakfast);
+          $(nextTypeField).closest('.field').find('.meal_inclusions_container').show();
+
           if (data.type == "Tour" || data.type == "Cruise") {
             $(nextProductContainer).closest('.field').find('.include_lunch').prop('checked', data.lunch);
             $(nextProductContainer).closest('.field').find('.include_dinner').prop('checked', data.dinner);
             $(nextProductContainer).closest('.field').find('.meal_lunch_and_dinner_container').show();   
           }else{
-            $(nextProductContainer).closest('.field').find('.meal_inclusions_container').hide();  
+            $(nextProductContainer).closest('.field').find('.meal_lunch_and_dinner_container').hide();  
           }
         }else{
           $(nextProductContainer).closest('.field').find('.meal_inclusions_container').hide();

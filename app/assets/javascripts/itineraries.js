@@ -20,6 +20,10 @@ $(document).ready(function() {
     $('.add_fields').click();
   });
   
+  $('.itinerary-show-hide-btn').on('click', function(){
+    $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
+  });
+  
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
 
@@ -66,8 +70,8 @@ $(document).ready(function() {
   });  
   
   $("#toggleShowEditItinerary").on('click', function(e) {
-    $('.itinerary_top_row_show').toggle();
-    $('.itinerary_info_top_row_edit').toggle();
+    //$('.itinerary_top_row_show').toggle();
+    //$('.itinerary_info_top_row_edit').toggle();
     $('.itinerary_info_bottom_row_edit').toggle();
  //   $(".sortable-placeholder").toggleClass("miniplaceholder");    - this doesnt work - need to find a way to update the DOM object as it is added. 
   });
