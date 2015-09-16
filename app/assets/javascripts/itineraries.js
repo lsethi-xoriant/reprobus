@@ -3,6 +3,7 @@
 $(document).ready(function() {
   
   itinerary_common_controls_init();  
+
   
   $(".select2-room-types-noajax").select2();  
   
@@ -242,7 +243,7 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
   initDestinationSelect2();
   initCountrySelect2();
   initSupplierSelect2();
-  $(".select2-room-types-noajax").select2();    
+  insertedItem.find(".select2-room-types-noajax").select2();    
   insertedItem.find(".type-itineraries").val("Type").material_select();
   sort_itinerary_items();
   reset_material_active_labels('#itinerary_infos');
@@ -262,13 +263,28 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });   
   
-  itinerary_common_controls_init();  
+  insertedItem.find('.itinerary-show-hide-btn').on('click', function(){
+    $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
+  });    
+ 
+  insertedItem.find('.itinerary-days-from-start').on('change', function(e) { 
+    check_days_from_start_seq();
+  });    
+  
+  insertedItem.find('.itinerary-number-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });
+  
+  insertedItem.find('.itinerary-offset-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });    
   
   var prev_value = insertedItem.prev().find(".itinerary-days-from-start").val();
   insertedItem.find(".itinerary-days-from-start").val(prev_value);
 }
 
 function itinerary_common_controls_init(){
+
   $('.itinerary-show-hide-btn').on('click', function(){
     $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
   });  
