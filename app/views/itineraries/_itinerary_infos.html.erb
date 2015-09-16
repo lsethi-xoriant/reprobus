@@ -27,14 +27,14 @@
         
         <%= render partial: 'itineraries/controls/comments', locals: {f: f, info: f.object} %>
         
-        <div class="input-field product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
+        <div class="product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>
             <% @info = f.object %>
             <%= render template: 'itinerary_templates/product_info' %>
           <% end %>        
         </div>        
         
-        <div class="cruise-info input-field col s1 center-align" style=<%=displayCruiseDetails%>>
+        <div class="cruise-info col s1 center-align" style=<%=displayCruiseDetails%>>
           <% if f.object.get_product_type == "Cruise" %>
             <% @cruise_legs = f.object.product.cruise_days %>
             <% @cruise = f.object.product %>
