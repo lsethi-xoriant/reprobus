@@ -25,7 +25,7 @@
           </p>          
         </div>
         
-        <%= render partial: 'itinerary_templates/comments', locals: {f: f, info: f.object} %>
+        <%= render partial: 'itineraries/controls/comments', locals: {f: f, info: f.object} %>
         
         <div class="input-field product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>

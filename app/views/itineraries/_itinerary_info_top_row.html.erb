@@ -3,9 +3,7 @@
 <% else %>
   <% displayCruiseDetails = 'display:none;' %>
 <% end %>  
-<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
-  <% displayRoomDetails = 'display:none;' %>
-<% end %>
+
 
   <div class ="row itinerary_info_top_row_edit">
     
@@ -59,14 +57,12 @@
     </div>            
         
     <div class="input-field col s1">
-      <div class="room_type_cont" style=<%= displayRoomDetails %> >
-        <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
-        <label for="room_type" class="active">Room Type</label>
-      </div>
+      <%= render partial: 'itineraries/controls/room_type', locals: { f: f } %>  
+      <%= render partial: 'itineraries/controls/group_classification_radio_btns', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>      
     </div>     
     
     <div class="input-field col s1">
-      <%= render partial: 'meal_options', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
+      <%= render partial: 'itineraries/controls/meal_options', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
     </div>
     
     <div class="input-field col s1">

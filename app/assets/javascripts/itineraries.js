@@ -2,6 +2,8 @@
 /*It relies on the sortable.js plug in, Coccoon gem hooks, and the select2 search products js    */
 $(document).ready(function() {
   
+  itinerary_common_controls_init();  
+  
   $(".select2-room-types-noajax").select2();  
   
   // set up insert function on both pages, so can insert rows where we decide
@@ -19,11 +21,8 @@ $(document).ready(function() {
     $(this).closest(".nested-fields").after($("#addNestedAboveHere").detach());
     $('.add_fields').click();
   });
-  
-  $('.itinerary-show-hide-btn').on('click', function(){
-    $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
-  });
-  
+
+    
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
 
@@ -96,9 +95,6 @@ $(document).ready(function() {
     //$('.select2-countries').on('change', function(e) {
       //MOVED TO search_countries.js as seems better place for code, so it works across all of app. 
     //});
-    $('.itinerary-days-from-start').on('change', function(e) { 
-      check_days_from_start_seq();
-    });     
   }
   
   sort_itinerary_items();  // sorts table and sets up intial pos numbers
@@ -157,18 +153,6 @@ $(document).ready(function() {
     bump_pickadate_date_to_new_date(start_picker,0,prev_picker.get());
     bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
   });
-
-  $('#itinerary_start_date').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });
-  
-  $('.itinerary-number-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });
-  
-  $('.itinerary-offset-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });  
   
   $(".itinerary_form").submit(function(e) {
     var valerror = false;
@@ -277,21 +261,35 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
   });   
-
   
-  $('.itinerary-days-from-start').on('change', function(e) { 
-    check_days_from_start_seq();
-  }); 
-  $('.itinerary-number-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  }); 
-  $('.itinerary-offset-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });  
+  itinerary_common_controls_init();  
   
   var prev_value = insertedItem.prev().find(".itinerary-days-from-start").val();
   insertedItem.find(".itinerary-days-from-start").val(prev_value);
 }
+
+function itinerary_common_controls_init(){
+  $('.itinerary-show-hide-btn').on('click', function(){
+    $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
+  });  
+  
+  $('.itinerary-days-from-start').on('change', function(e) { 
+    check_days_from_start_seq();
+  });    
+
+  $('#itinerary_start_date').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });
+  
+  $('.itinerary-number-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });
+  
+  $('.itinerary-offset-days').on('change', function(e) { 
+    set_sort_positions_and_dates();
+  });  
+};
+
 
 function reset_material_active_labels(container_id) {
   // resets lables to active 
@@ -303,7 +301,6 @@ function reset_material_active_labels(container_id) {
     //}
   });
 }
-
 
 function check_dates_are_in_seq(){ 
   var prevSeq = 0;

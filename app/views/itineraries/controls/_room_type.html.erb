@@ -1,0 +1,8 @@
+<% if f.object.get_product_type != "Cruise" && f.object.get_product_type != "Hotel" %>
+  <% displayRoomDetails = 'display:none;' %>
+<% end %>  
+  
+<div class="room_type_cont" style=<%= displayRoomDetails %> >
+  <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
+  <label for="room_type" class="active">Room Type</label>
+</div>

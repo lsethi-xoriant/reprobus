@@ -1,0 +1,32 @@
+<% if product == "Hotel" || product == "Tour" || product == "Cruise"%>
+  <% if product == "Hotel" %>
+  <% showBreakOnly = "display:none" %>
+  <% end %>
+<% else %>
+  <% hidestr = "display:none" %>
+<% end %>
+    
+<div class="meal_inclusions_container" style=<%=hidestr%>>
+  <br>
+  <div class="">  
+  <%= label :meal_inclusions, 'Meal Inclusions:', class: "active" %>
+  </div>
+
+  <div class="col s1">
+    <%= f.check_box :includes_breakfast, class: "filled-in include_breakfast" %>
+    <%= f.label :includes_breakfast, 'B', class: "meal-inclusions-itinerary"  %>        
+  </div>
+  
+  <div class="meal_lunch_and_dinner_container" style=<%=showBreakOnly%>>
+  
+    <div class="col s1">
+      <%= f.check_box :includes_lunch, class: "filled-in include_lunch" %>
+      <%= f.label :includes_lunch, "L", class: "meal-inclusions-itinerary"  %>        
+    </div>
+    <div class="col s1">
+      <%= f.check_box :includes_dinner, class: "filled-in include_dinner" %>
+      <%= f.label :includes_dinner, "D", class: "meal-inclusions-itinerary"  %>        
+    </div>   
+  
+  </div>
+</div>
