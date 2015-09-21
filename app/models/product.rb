@@ -41,7 +41,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :rooms, allow_destroy: true; 
   belongs_to :hotel, :class_name => "Product"
   
-  has_many :cruise_days, :class_name => "Product", :foreign_key => "cruise_id"
+  has_many :cruise_days, -> { order(:created_at)},  :class_name => "Product", :foreign_key => "cruise_id"
   accepts_nested_attributes_for :cruise_days, allow_destroy: true; 
   belongs_to :cruise, :class_name => "Product"
   
