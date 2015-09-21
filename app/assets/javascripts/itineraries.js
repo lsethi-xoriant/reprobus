@@ -330,13 +330,16 @@ function check_dates_are_in_seq(){
 }
 
 function check_days_from_start_seq(){ 
-  var prevSeq = 0;
   var isOutOfSeq = false;
+  var prevNumNights = 0, prevDaysFromStart = 0, days_from_start = 0;
   $('.itinerary-days-from-start').each(function(){
     $(this).removeClass("invalid");
-    if (parseInt($(this).val()) > (prevSeq+1)){isOutOfSeq = true;}
+    isOutOfSeq = false;
+    days_from_start = $(this).val();
+    if (parseInt(prevDaysFromStart) + parseInt(prevNumNights) != parseInt(days_from_start)){isOutOfSeq = true;}
     if (isOutOfSeq) {$(this).addClass("invalid");}
-    prevSeq = parseInt($(this).val());
+    prevNumNights = parseInt($(this).closest(".field").find(".itinerary-number-days").val());
+    prevDaysFromStart = days_from_start;        
   });
 }
 
