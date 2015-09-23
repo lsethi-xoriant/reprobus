@@ -76,6 +76,22 @@ class Product < ActiveRecord::Base
     return names.chomp(", ") 
   end
   
+  def get_product_name 
+    return self.name
+  end 
+  
+  def get_product_destination
+    return self.destination_name
+  end 
+  
+  def get_product_country
+    return self.country_name
+  end   
+  
+  def get_product_description
+    return self.description
+  end 
+    
   def product_details
     return "#{self.type.upcase} | #{self.name} | #{self.destination_name} | #{self.country_name}"
   end

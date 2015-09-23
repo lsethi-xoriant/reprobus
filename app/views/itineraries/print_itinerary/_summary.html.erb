@@ -1,0 +1,15 @@
+<p class="bigBigtitle4">Confirmation of services</p>
+<div class="border"></div>
+<div class="clear75"></div>
+<p class="bigBigtitle2">Trip Summary</p>
+<ul class="listing"> 
+  <% @itinerary.itinerary_infos.each do |info| %>
+      <% if info.start_date == info.end_date || info.end_date.blank? %> 
+         <li><%= "#{info.start_date.strftime('%d %b %Y')} - #{info.name}" %></li>
+       <% else %>
+         <li><%= "#{info.start_date.strftime('%d %b %Y')} to #{info.end_date.strftime('%d %b %Y')} - #{info.get_product_name}, #{info.get_product_destination}" %></li>
+      <% end %>
+  <% end %>
+</ul>
+<div class="clear90"></div>
+

@@ -1,0 +1,12 @@
+<div class="header">
+    	<img src="http://www.humandesignltd.co.nz/itinerary/img/main-image-plain.jpg" alt="banner">
+    	<a class="logo" href="#"><img src="http://www.humandesignltd.co.nz/itinerary/img/logo.png" alt="logo"></a>
+</div>
+
+<div class="clear100"></div>
+<p class="bigBigtitle1"><%= @itinerary.name %></p>
+<div class="clear50"></div>
+<p class="bigBigtitle2"><%= "#{@itinerary.start_date.strftime('%d %b %Y')}  #{@itinerary.enquiry.lead_customer.fullname_with_title}" %></p>
+<div class="clear155"></div>
+<p class="bigBigtitle3"><%= "Prepared by #{@itinerary.user.name}" %> </p>
+<div class="clear90"></div>
