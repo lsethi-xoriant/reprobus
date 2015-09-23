@@ -40,7 +40,7 @@
           <% currCruise = nil %>
         <% end %>
         
-        <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {prefix: ""}  %>        
+        <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: ""}  %>        
         
       <% if dayInfos.hotel %>
           <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel}  %>
