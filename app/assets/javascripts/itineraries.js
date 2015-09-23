@@ -281,6 +281,13 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
   
   var prev_value = insertedItem.prev().find(".itinerary-days-from-start").val();
   insertedItem.find(".itinerary-days-from-start").val(prev_value);
+  
+  // when click insert button, call cocoon insert btn.  
+  insertedItem.find('.insertItineraryBtn').on('click', function(e) {
+    // move div placeholder that determines where insert happens, then call click. 
+    $(this).closest(".nested-fields").after($("#addNestedAboveHere").detach());
+    $('.add_fields').click();
+  });  
 }
 
 function itinerary_common_controls_init(){
