@@ -66,7 +66,8 @@ class ItinerariesController < ApplicationController
   def update
 
     @itinerary = Itinerary.find(params[:id])
-    
+    @enquiry = @itinerary.enquiry
+     
     if @itinerary.update_attributes(itinerary_params)
       
       if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 
