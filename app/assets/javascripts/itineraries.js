@@ -131,7 +131,7 @@ $(document).ready(function() {
       selectYears: 5, // Creates a dropdown of 15 years to control year
       formatSubmit: 'yyyy-mm-dd',
       format: 'yyyy-mm-dd',
-      min: new Date(),
+//      min: new Date(),
       hiddenSuffix: ''
     });
     $(insertedItem).find('.end_leg_itinerary').pickadate({
@@ -139,7 +139,7 @@ $(document).ready(function() {
       selectYears: 5, // Creates a dropdown of 15 years to control year
       formatSubmit: 'yyyy-mm-dd',
       format: 'yyyy-mm-dd',
-      min: new Date(),
+//      min: new Date(),
       hiddenSuffix: ''
     });  
     

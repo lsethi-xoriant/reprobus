@@ -20,7 +20,7 @@
 #  destination_id       :integer
 #  country_search       :string
 #  destination_search   :string
-#  remote_url           :string
+#  image_remote_url     :string
 #  hotel_id             :integer
 #  address              :text
 #  phone                :string

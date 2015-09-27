@@ -5,12 +5,6 @@ class SettingsController < ApplicationController
   
   before_action :setCompanySettings
   
-  def setCompanySettings
-    @setting = Setting.find(1)
-    @triggers = @setting.triggers
-  end
-  
-  
   def show
   end
   
@@ -51,7 +45,10 @@ class SettingsController < ApplicationController
   end
 
   def update
+ 
     if @setting.update_attributes(settings_params)
+      
+      
       flash[:success] = "Settings updated"
       
       if params[:redirect] == "integration"
@@ -138,6 +135,8 @@ private
     :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :itinerary_notes,
     :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user, :itinerary_excludes,
     :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes,
-    triggers_attributes: [:id, :email_template_id, :num_days])
+    triggers_attributes: [:id, :email_template_id, :num_days],
+    company_logo_attributes: [:id, :image_local, :image_remote_url],
+    itinerary_default_image_attributes: [:id, :image_local, :image_remote_url])
   end
 end

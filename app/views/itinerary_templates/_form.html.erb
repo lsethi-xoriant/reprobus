@@ -12,6 +12,11 @@
     </div>
     <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
     
+    <%= f.fields_for :itinerary_default_image, @template.itinerary_default_image do |t| %>
+      <%= render partial: 'shared/image_field', locals: { imageHolder: @template.itinerary_default_image, f: t, title: "Default Itinerary Image (recomended size 880px x 880px):" } %>
+    <% end %>
+          
+    
       <h5 class="header">Add Products:</h5>
       
       <div id="itinerary_template_infos">

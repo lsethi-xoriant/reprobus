@@ -1,0 +1,17 @@
+<div class="detailsbox">
+
+<% if info.product &&  !info.product.image_remote_url.blank?  %>
+  <div class="imgdetails"><img src=<%= info.product.get_dropbox_image_link %> alt="" /></div>
+<% end %>
+
+<%if info%>
+<div class="contdetails">
+<p class="title"><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
+<p class="address"><strong><%= "#{info.get_product_address}" %></strong></p>
+<p class="phone"><strong><%= "#{info.get_product_phone}" %></strong></p>
+<p class="caption"><%= "#{info.get_product_description}"%></p>
+<div class="clear50"></div>
+</div>
+<%end%>
+
+</div>

@@ -2,27 +2,28 @@
 #
 # Table name: itineraries
 #
-#  id                    :integer          not null, primary key
-#  name                  :string
-#  start_date            :date
-#  num_passengers        :integer
-#  complete              :boolean
-#  sent                  :boolean
-#  quality_check         :boolean
-#  price_per_person      :decimal(12, 2)
-#  price_total           :decimal(12, 2)
-#  bed                   :string
-#  includes              :text
-#  excludes              :text
-#  notes                 :text
-#  flight_reference      :string
-#  user_id               :integer
-#  customer_id           :integer
-#  created_at            :datetime
-#  updated_at            :datetime
-#  itinerary_template_id :integer
-#  enquiry_id            :integer
-#  status                :string
+#  id                         :integer          not null, primary key
+#  name                       :string
+#  start_date                 :date
+#  num_passengers             :integer
+#  complete                   :boolean
+#  sent                       :boolean
+#  quality_check              :boolean
+#  price_per_person           :decimal(12, 2)
+#  price_total                :decimal(12, 2)
+#  bed                        :string
+#  includes                   :text
+#  excludes                   :text
+#  notes                      :text
+#  flight_reference           :string
+#  user_id                    :integer
+#  customer_id                :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  itinerary_template_id      :integer
+#  enquiry_id                 :integer
+#  status                     :string
+#  itinerary_default_image_id :integer
 #
 
 class Itinerary < ActiveRecord::Base
@@ -36,6 +37,9 @@ class Itinerary < ActiveRecord::Base
   has_one       :itinerary_price
   belongs_to    :itinerary_template
   belongs_to    :enquiry
+  belongs_to  :itinerary_default_image, :class_name => "ImageHolder", :foreign_key => :itinerary_default_image_id
+  accepts_nested_attributes_for :itinerary_default_image, allow_destroy: true
+
   
   has_many :itinerary_infos, -> { order("position ASC")}
   accepts_nested_attributes_for :itinerary_infos, allow_destroy: true
@@ -55,6 +59,14 @@ class Itinerary < ActiveRecord::Base
   
   def template_name
     return self.itinerary_template.name if self.itinerary_template
+  end
+  
+  def get_itinerary_image_link
+    if self.itinerary_template and self.itinerary_template.itinerary_default_image then 
+      return self.itinerary_template.itinerary_default_image.get_image_link()
+    else
+      return Setting.global_settings.itinerary_default_image.get_image_link()
+    end
   end
   
   def copy_template(template)

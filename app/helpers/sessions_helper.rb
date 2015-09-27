@@ -78,6 +78,11 @@ module SessionsHelper
     message.chomp('<br>')
   end
   
+  def setCompanySettings
+    @setting = Setting.find(1)
+    @triggers = @setting.triggers
+  end  
+  
 private
 	  def admin_user
       redirect_to(noaccess_url) unless current_user.admin?

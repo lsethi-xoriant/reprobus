@@ -20,7 +20,7 @@
 #  destination_id       :integer
 #  country_search       :string
 #  destination_search   :string
-#  remote_url           :string
+#  image_remote_url     :string
 #  hotel_id             :integer
 #  address              :text
 #  phone                :string
@@ -84,7 +84,7 @@ class Room < Product
         str = (row["DESCRIPTION"])
         ent.description = str
         str = (row["IMAGENAME"])
-        ent.remote_url = str
+        ent.image_remote_url = str
   
         if (run_live && !ent.save) || (!run_live && !ent.valid?)
           fhelp.add_validation_record("#{type}: #{ent.name} has validation errors - #{ent.errors.full_messages}")

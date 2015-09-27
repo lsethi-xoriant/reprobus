@@ -87,7 +87,41 @@ class ItineraryInfo < ActiveRecord::Base
   
   def get_product_country
     return self.product.country.name if self.product && self.product.country 
+  end 
+  
+  def get_product_address
+    return self.product.address if self.product
   end   
+  
+  def get_product_phone
+    return self.product.phone if self.product
+  end   
+  
+  
+  def get_group_classification
+    if (self.get_product_type == "Transfer" || self.get_product_type == "Tour") && self.group_classification != "none" 
+      return self.group_classification
+    else
+      return ""
+    end
+  end
+  
+  def get_itinerary_header_details(prefix)
+    group = self.get_group_classification
+    group += " " if group
+    prefix += " - " if prefix 
+    str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
+    return str
+  end
+
+  def get_meal_inclusions
+    breakfast = "Includes Breakfast   " if self.includes_breakfast
+    lunch = "Includes Lunch   " if self.includes_lunch
+    dinner = "Includes Dinner   " if self.includes_dinner
+    
+    meals = "#{breakfast}#{lunch}#{dinner}"
+    return meals
+  end
   
   def select_suppliers
     # return list of potential suppliers for dropdowns

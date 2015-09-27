@@ -56,7 +56,7 @@
     
     <% if @setting.use_dropbox %>
       <% @setting.dropbox_default_path ? name = "Dropbox File Name (default path: #{@setting.dropbox_default_path} )" : name = "Dropbox File Name" %>
-      <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "remote_url", f: f, name: name } %></div>
+      <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "image_remote_url", f: f, name: name } %></div>
       
       <%= image_tag(@product.get_dropbox_image_link, :class => "product_image") %>
 

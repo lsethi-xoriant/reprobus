@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810235721) do
+ActiveRecord::Schema.define(version: 20150926032244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,13 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.datetime "updated_at"
   end
 
+  create_table "image_holders", force: :cascade do |t|
+    t.string   "image_local"
+    t.string   "image_remote_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.integer  "booking_id"
     t.string   "status",              limit: 255
@@ -283,8 +290,8 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.boolean  "complete"
     t.boolean  "sent"
     t.boolean  "quality_check"
-    t.decimal  "price_per_person",      precision: 12, scale: 2
-    t.decimal  "price_total",           precision: 12, scale: 2
+    t.decimal  "price_per_person",           precision: 12, scale: 2
+    t.decimal  "price_total",                precision: 12, scale: 2
     t.string   "bed"
     t.text     "includes"
     t.text     "excludes"
@@ -297,6 +304,7 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.integer  "itinerary_template_id"
     t.integer  "enquiry_id"
     t.string   "status"
+    t.integer  "itinerary_default_image_id"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree
@@ -386,6 +394,7 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.string   "type"
     t.date     "start_date"
     t.date     "end_date"
+    t.integer  "itinerary_default_image_id"
   end
 
   create_table "job_progresses", force: :cascade do |t|
@@ -446,7 +455,7 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.integer  "destination_id"
     t.string   "country_search"
     t.string   "destination_search"
-    t.string   "remote_url"
+    t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
     t.string   "phone"
@@ -461,19 +470,19 @@ ActiveRecord::Schema.define(version: 20150810235721) do
   add_index "products", ["hotel_id"], name: "index_products_on_hotel_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.string   "company_name",         limit: 255
-    t.string   "pxpay_user_id",        limit: 255
-    t.string   "pxpay_key",            limit: 255
+    t.string   "company_name",               limit: 255
+    t.string   "pxpay_user_id",              limit: 255
+    t.string   "pxpay_key",                  limit: 255
     t.boolean  "use_xero"
-    t.string   "xero_consumer_key",    limit: 255
-    t.string   "xero_consumer_secret", limit: 255
+    t.string   "xero_consumer_key",          limit: 255
+    t.string   "xero_consumer_secret",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "currency_id"
-    t.string   "payment_gateway",      limit: 255
-    t.decimal  "cc_mastercard",                    precision: 5, scale: 4
-    t.decimal  "cc_visa",                          precision: 5, scale: 4
-    t.decimal  "cc_amex",                          precision: 5, scale: 4
+    t.string   "payment_gateway",            limit: 255
+    t.decimal  "cc_mastercard",                          precision: 5, scale: 4
+    t.decimal  "cc_visa",                                precision: 5, scale: 4
+    t.decimal  "cc_amex",                                precision: 5, scale: 4
     t.string   "dropbox_user"
     t.text     "dropbox_session"
     t.boolean  "use_dropbox"
@@ -481,6 +490,8 @@ ActiveRecord::Schema.define(version: 20150810235721) do
     t.text     "itinerary_includes"
     t.text     "itinerary_excludes"
     t.text     "itinerary_notes"
+    t.integer  "itinerary_default_image_id"
+    t.integer  "company_logo_id"
   end
 
   create_table "stopovers", force: :cascade do |t|

@@ -11,6 +11,11 @@
           <div class="row">
             <%= render partial: 'shared/material_textfield_cols6', locals: { field: "company_name", f: f } %>
           </div>
+          
+          <%= f.fields_for :company_logo, @setting.company_logo do |t| %>
+            <%= render partial: 'shared/image_field', locals: { imageHolder: @setting.company_logo, f: t, title: "Company Logo (recommended width 400px): " } %>
+          <% end %>
+          
           <div class="row">
             <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_mastercard", f: f, value: @setting.get_cc_mastercard_display, name: "Mastercard % Fee"} %>
           </div>

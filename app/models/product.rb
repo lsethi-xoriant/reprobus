@@ -20,7 +20,7 @@
 #  destination_id       :integer
 #  country_search       :string
 #  destination_search   :string
-#  remote_url           :string
+#  image_remote_url     :string
 #  hotel_id             :integer
 #  address              :text
 #  phone                :string
@@ -91,6 +91,31 @@ class Product < ActiveRecord::Base
   def get_product_description
     return self.description
   end 
+  
+  def get_product_address
+    return self.address 
+  end   
+  
+  def get_product_phone
+    return self.phone
+  end   
+    
+  
+  def get_group_classification
+    if (self.type = "Transfer" || self.type = "Tour") && self.group_classification != "none" 
+      return self.group_classification
+    else
+      return ""
+    end
+  end
+    
+  def get_itinerary_header_details(prefix)
+    group = self.get_group_classification
+    group += " " if group
+    prefix += " - " if prefix 
+    str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
+    return str
+  end
     
   def product_details
     return "#{self.type.upcase} | #{self.name} | #{self.destination_name} | #{self.country_name}"
@@ -105,8 +130,8 @@ class Product < ActiveRecord::Base
   end
   
   def get_dropbox_image_link
-    if !self.remote_url.blank?
-      return DropboxHelper.get_db_image_link_url(self.remote_url)
+    if !self.image_remote_url.blank?
+      return DropboxHelper.get_db_image_link_url(self.image_remote_url)
     else
       return ActionController::Base.helpers.image_path('noImage.jpg')
     end
@@ -168,7 +193,7 @@ class Product < ActiveRecord::Base
         str = (row["DESCRIPTION"])
         ent.description = str
         str = (row["IMAGENAME"])
-        ent.remote_url = str
+        ent.image_remote_url = str
   
         ent.suppliers << supp if supp
         ent.country = count

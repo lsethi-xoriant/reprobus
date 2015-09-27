@@ -28,7 +28,7 @@
       <% !@setting.dropbox_default_path.blank? ? name = "Dropbox File Name (default path: #{@setting.dropbox_default_path} )" : name = "Dropbox File Name" %>
       <div class="row">
         <div class="field">
-          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "remote_url", f: f, name: name } %>
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: "image_remote_url", f: f, name: name } %>
           <div class="input-field col offset-s2 s4">
           <%= image_tag(f.object.get_dropbox_image_link, :class => "product_image_mini") %>
           </div>
