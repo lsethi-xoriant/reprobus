@@ -31,7 +31,7 @@ class Itinerary < ActiveRecord::Base
   validates :user_id, presence: true
   validates :enquiry_id, presence: true
   validates :start_date, presence: true
-  validate  :start_date_cannot_be_in_the_past
+  #validate  :start_date_cannot_be_in_the_past
   
   belongs_to    :user
   has_one       :itinerary_price
