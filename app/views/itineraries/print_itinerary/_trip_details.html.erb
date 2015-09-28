@@ -14,14 +14,34 @@
   <% leg_count = leg_count + 1 %>
   <% dayInfos = ItineraryInfosDay.new %>
   <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
+  
+  <% if dayInfos.cruise %>
+    <% if currCruise == dayInfos.cruise %>
+      <% cruiseDay = cruiseDay + 1 %>
+    <% else %>
+      <% currCruise = dayInfos.cruise %>
+      <% cruiseDay = 1 %>    
+    <% end %> 
+  <% else %>  
+    <% currCruise = nil %>
+  <% end %>
+       
+        
         
   <div class="detailsbox">
   	<p class="headdetails"><%= date %><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
     
     <% if dayInfos.hotel &&  !dayInfos.hotel.product.image_remote_url.blank?  %>
       <div class="imgdetails"><img src=<%= dayInfos.hotel.product.get_dropbox_image_link %> alt="" /></div>
-    <% elsif dayInfos.cruise && !dayInfos.cruise.product.image_remote_url.blank? %>  
-      <div class="imgdetails"><img src=<%= dayInfos.cruise.product.get_dropbox_image_link %> alt="" /></div>
+    <% elsif dayInfos.cruise %>
+      <% cruiseProduct = dayInfos.cruise.product.getCruiseDay(cruiseDay) %>
+      <% if cruiseProduct && cruiseProduct.get_dropbox_image_link %>
+        <div class="imgdetails"><img src=<%= cruiseProduct.get_dropbox_image_link %> alt="" /></div>
+      <% else %>
+        <% if !dayInfos.cruise.product.image_remote_url.blank? %>  
+          <div class="imgdetails"><img src=<%= dayInfos.cruise.product.get_dropbox_image_link %> alt="" /></div>
+        <% end %>
+      <% end %>
     <% end %>
     
   	<div class="contdetails">
@@ -31,15 +51,7 @@
         <% end %>
         
         <% if dayInfos.cruise %>
-          <% if currCruise == dayInfos.cruise %>
-            <% cruiseDay = cruiseDay + 1 %>
-          <% else %>
-            <% currCruise = dayInfos.cruise %>
-            <% cruiseDay = 1 %>    
-          <% end %> 
           <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "Cruise:", info: dayInfos.cruise.product.getCruiseDay(cruiseDay)}  %>
-        <% else %>  
-          <% currCruise = nil %>
         <% end %>
         
         <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: ""}  %>        

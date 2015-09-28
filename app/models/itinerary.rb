@@ -62,7 +62,9 @@ class Itinerary < ActiveRecord::Base
   end
   
   def get_itinerary_image_link
-    if self.itinerary_template and self.itinerary_template.itinerary_default_image then 
+    if self.itinerary_default_image and self.itinerary_default_image.hasImage? then 
+      return self.itinerary_default_image.get_image_link()
+    elsif self.itinerary_template and self.itinerary_template.itinerary_default_image  and self.itinerary_template.itinerary_default_image.hasImage?  then 
       return self.itinerary_template.itinerary_default_image.get_image_link()
     else
       return Setting.global_settings.itinerary_default_image.get_image_link() if Setting.global_settings.itinerary_default_image

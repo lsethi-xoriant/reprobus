@@ -36,6 +36,7 @@ class ItinerariesController < ApplicationController
     @itinerary.user = current_user
     @itinerary.status = "New Itinerary"
     @itinerary.enquiry = @enquiry
+    @itinerary.itinerary_default_image = ImageHolder.new if !@itinerary.itinerary_default_image
   end
 
   def show
@@ -46,6 +47,7 @@ class ItinerariesController < ApplicationController
   def edit
     @itinerary = Itinerary.includes(:itinerary_infos).find(params[:id])
     @enquiry = @itinerary.enquiry
+    @itinerary.itinerary_default_image = ImageHolder.new if !@itinerary.itinerary_default_image
   end
   
   def create

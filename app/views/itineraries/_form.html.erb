@@ -25,7 +25,15 @@
         <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500"} %>
       </div>
       
-      <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %></div>
+      <div class="row">
+        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, length: "500"} %>
+      </div>
+      
+      <div class="row">
+      <%= f.fields_for :itinerary_default_image, @itinerary.itinerary_default_image do |t| %>
+        <%= render partial: 'shared/image_field', locals: { imageHolder: @itinerary.itinerary_default_image, f: t, title: "Default Itinerary Image (recomended size 880px x 880px):" } %>
+      <% end %>
+      </div>
       
       <% if !@itinerary.isLocked? %>
         <div class="row">
