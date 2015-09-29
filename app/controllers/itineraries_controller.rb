@@ -36,6 +36,9 @@ class ItinerariesController < ApplicationController
     @itinerary.user = current_user
     @itinerary.status = "New Itinerary"
     @itinerary.enquiry = @enquiry
+    @itinerary.num_passengers = @enquiry.num_people
+    @itinerary.start_date = @enquiry.est_date
+    @itinerary.name = @enquiry.name
     @itinerary.itinerary_default_image = ImageHolder.new if !@itinerary.itinerary_default_image
   end
 
@@ -52,7 +55,8 @@ class ItinerariesController < ApplicationController
   
   def create
     @itinerary = Itinerary.new(itinerary_params)
-
+    @enquiry = Enquiry.find(params[:itinerary][:enquiry_id])
+     
     @itinerary.copy_template(@itinerary.itinerary_template)
      
     if @itinerary.save
