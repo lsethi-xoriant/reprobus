@@ -48,8 +48,8 @@ $(document).ready(function() {
   
   function bump_pickadate_date_to_new_date(picker,numdays, dateStr){
       // month is minus one as months are 0-11
-      var current_date = new Date(parseInt(dateStr.substring(0,4)),parseInt(dateStr.substring(5,7))-1,parseInt(dateStr.substring(8,10)));   
-      current_date.setDate(current_date.getDate() + parseInt(numdays));
+      var current_date = new Date(parseInt(dateStr.substring(0,4),10),parseInt(dateStr.substring(5,7),10)-1,parseInt(dateStr.substring(8,10),10));   
+      current_date.setDate(current_date.getDate() + parseInt(numdays,10));
       picker.set('select', current_date);  
   }
   
@@ -85,8 +85,8 @@ $(document).ready(function() {
     // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
     $('.type-itineraries').on('change', function(e) {
       $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
-      $(this).closest(".row").find(".itinerary-number-days").val("0");
-      $(this).closest(".row").find(".itinerary-days-from-start").val("0");
+//      $(this).closest(".row").find(".itinerary-number-days").val("0");
+//      $(this).closest(".row").find(".itinerary-days-from-start").val("0");
       $(this).closest('.field').find(".product_details").text("");
       $(this).closest('.field').find(".cruise-info").hide();
       $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
@@ -119,7 +119,21 @@ $(document).ready(function() {
   });
   
   $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+    var prev_value = parseInt(insertedItem.prev().find(".itinerary-days-from-start").val(),10);
+    prev_value += parseInt(insertedItem.prev().find(".itinerary-number-days").val(),10);
+    insertedItem.find(".itinerary-days-from-start").val(prev_value);    
+
     itineraryForm_initialise_elements_after_insert(insertedItem);
+    
+    insertedItem.find('.itinerary-days-from-start').on('change', function(e) { 
+      check_days_from_start_seq();
+    });    
+    
+    insertedItem.find('.itinerary-number-days').on('change', function(e) { 
+      set_sort_positions_and_dates();
+    });
+    
+    $(insertedItem).find(".itinerary-days-from-start").focus();
   });
   
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
@@ -155,6 +169,7 @@ $(document).ready(function() {
     bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
   });
   
+
   $(".itinerary_form").submit(function(e) {
     var valerror = false;
 //    var valmsg = "";
@@ -255,8 +270,8 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     
   insertedItem.find(".type-itineraries").on('change', function(e) {
     $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
-    $(this).closest(".row").find(".itinerary-number-days").val("0");
-    $(this).closest(".row").find(".itinerary-days-from-start").val("0");
+    //$(this).closest(".row").find(".itinerary-number-days").val("0");
+    //$(this).closest(".row").find(".itinerary-days-from-start").val("0");
     $(this).closest('.field').find(".product_details").text("");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
@@ -266,21 +281,6 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
   insertedItem.find('.itinerary-show-hide-btn').on('click', function(){
     $(this).closest(".field").find('.itinerary_info_bottom_row_edit').toggle();
   });    
- 
-  insertedItem.find('.itinerary-days-from-start').on('change', function(e) { 
-    check_days_from_start_seq();
-  });    
-  
-  insertedItem.find('.itinerary-number-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });
-  
-  insertedItem.find('.itinerary-offset-days').on('change', function(e) { 
-    set_sort_positions_and_dates();
-  });    
-  
-  var prev_value = insertedItem.prev().find(".itinerary-days-from-start").val();
-  insertedItem.find(".itinerary-days-from-start").val(prev_value);
   
   // when click insert button, call cocoon insert btn.  
   insertedItem.find('.insertItineraryBtn').on('click', function(e) {

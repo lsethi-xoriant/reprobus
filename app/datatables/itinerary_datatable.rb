@@ -6,13 +6,13 @@ class ItineraryDatatable < AjaxDatatablesRails::Base
   
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
-    @sortable_columns ||= %w(Itinerary.name Enquiry.lead_customer_name Itinerary.created_at Itinerary.updated_at User.name)
+    @sortable_columns ||= %w(Itinerary.name Enquiry.lead_customer_name Itinerary.created_at Itinerary.updated_at User.name Itinerary.status)
 
   end
 
   def searchable_columns
     # Declare strings in this format: ModelName.column_name
-    @searchable_columns ||= %w(Itinerary.name Enquiry.lead_customer_name Itinerary.created_at Itinerary.updated_at User.name)
+    @searchable_columns ||= %w(Itinerary.name Enquiry.lead_customer_name Itinerary.created_at Itinerary.updated_at User.name Itinerary.status)
   end
 
   private
@@ -27,8 +27,8 @@ class ItineraryDatatable < AjaxDatatablesRails::Base
         record.created_at.strftime("%d/%m/%Y"),
         record.updated_at.strftime("%d/%m/%Y"),
         record.user.name,
-        record.itinerary_infos.count,
         "<span class='" + get_status_color(record.status) + "'>" + record.status.upcase + "</span>",
+        record.itinerary_infos.count,
         link_to("<i class='mdi-image-edit small'></i>".html_safe, edit_itinerary_path(record), class: "btn-floating waves-effect waves-light green")
       ]
     end
@@ -36,10 +36,12 @@ class ItineraryDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     # insert query here
-    Itinerary.joins(
-      {enquiry: :itinerary},
-      {user: :itineraries}).distinct
+    Itinerary.joins(:enquiry,:user)
     #Itinerary.all
+    
+    #Itinerary.joins(
+    #  {enquiry: :itinerary},
+    #  {user: :itineraries}).distinct    
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

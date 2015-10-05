@@ -4,3 +4,5 @@
   height: 27px !important;
   margin-bottom: -10px !important;  
 }
+
+.sort_itinerary_item_col{ cursor: pointer; cursor: hand; }

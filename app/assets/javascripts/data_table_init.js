@@ -47,8 +47,9 @@ jQuery(document).ready(function() {
     responsive: true,
     "ajax": $('#ajax-data-table-simple').data('source'),
     "pagingType": "full_numbers",
-    "aoColumnDefs": [
-          { 'bSortable': false, 'aTargets': [ -1 ] }
+    "columnDefs": [
+      {"targets"  : 'no-sort',
+      "orderable": false}
        ]
     // optional, if you want full pagination controls.
     // Check dataTables documentation to learn more about

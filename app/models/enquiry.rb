@@ -54,7 +54,7 @@ class Enquiry < ActiveRecord::Base
   scope :open, -> { where(stage: 'Open') }
   scope :in_progress, -> { where(stage: 'In Progress') }
   scope :bookings, -> { where(stage: 'Booking') }
-  scope :itinerary, -> { where(stage: 'Itinerary') }
+  scope :is_itinerary, -> { where(stage: 'Itinerary') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
  # scope :notClosed, -> {where('stage != "Closed"') }
   

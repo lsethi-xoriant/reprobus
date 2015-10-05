@@ -4,12 +4,15 @@ class ItineraryTemplatesController < ApplicationController
   before_action :setCompanySettings
   
   def index
-    @templates = ItineraryTemplate.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: ItineraryTemplateDatatable.new(view_context) }
+    end
   end
   
   def new
     @template = ItineraryTemplate.new
-    @template.itinerary_default_image.new
+    @template.itinerary_default_image = ImageHolder.new if !@template.itinerary_default_image
   end
 
   def show

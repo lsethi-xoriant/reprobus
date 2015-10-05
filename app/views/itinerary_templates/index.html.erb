@@ -10,24 +10,17 @@
   <div id="table-datatables">
    <div class="row">
       <div class="col s12 m12 l12">
-        <table id="data-table-simple" class="responsive-table display" >
+        <table id="ajax-data-table-simple" class="responsive-table display", data-source="<%= itinerary_templates_path(format: :json) %>" >
           <thead>
             <tr>
               <th>Name</th>
-              <th>Number Products</th>
               <th>Created</th>
               <th>Updated</th>
+              <th class="no-sort">Number Products</th>
+              <th class="no-sort" >Edit</th>
             </tr>
           </thead>
           <tbody>
-            <% @templates.each do |temp| %>
-            <tr>
-              <td><a href=<%=edit_itinerary_template_path(temp)%>><%= temp.name %></a></td>
-              <td><%= temp.itinerary_template_infos.count %></td>
-              <td><%= temp.created_at.strftime("%d/%m/%Y") %></td>
-              <td><%= temp.updated_at.strftime("%d/%m/%Y") %></td>
-            </tr>
-            <% end %>
           </tbody>
         </table>
       </div>
