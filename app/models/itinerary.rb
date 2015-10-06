@@ -67,8 +67,16 @@ class Itinerary < ActiveRecord::Base
     elsif self.itinerary_template and self.itinerary_template.itinerary_default_image  and self.itinerary_template.itinerary_default_image.hasImage?  then 
       return self.itinerary_template.itinerary_default_image.get_image_link()
     else
-      return Setting.global_settings.itinerary_default_image.get_image_link() if Setting.global_settings.itinerary_default_image
+      return Setting.global_settings.get_itinerary_default_image_link()
     end
+  end
+  
+  def get_company_logo_image_link
+    if self.enquiry.agent then 
+      return self.enquiry.agent.get_company_logo_image_link()
+    else
+      Setting.global_settings.get_company_logo_image_link()
+    end 
   end
   
   def copy_template(template)

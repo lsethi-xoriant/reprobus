@@ -71,6 +71,9 @@ class Customer < ActiveRecord::Base
   has_and_belongs_to_many :enquiries
   accepts_nested_attributes_for :enquiries, allow_destroy: true;
   
+  belongs_to  :company_logo, :class_name => "ImageHolder", :foreign_key => :company_logo_id
+  accepts_nested_attributes_for :company_logo, allow_destroy: true;   
+  
   has_one    :address, :as => :addressable
   accepts_nested_attributes_for :address
   
@@ -179,7 +182,15 @@ class Customer < ActiveRecord::Base
     end
   end
  
- 
+  def get_company_logo_image_link
+    #for agent. 
+    if self.company_logo  then 
+      return self.company_logo.get_image_link()
+    else
+      return ActionController::Base.helpers.image_path('noImage.jpg')
+    end
+  end  
+  
   def self.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|

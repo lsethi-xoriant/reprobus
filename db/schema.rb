@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926032244) do
+ActiveRecord::Schema.define(version: 20151006190501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150926032244) do
     t.integer  "currency_id"
     t.integer  "num_days_payment_due"
     t.string   "after_hours_phone",    limit: 255
+    t.integer  "company_logo_id"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree

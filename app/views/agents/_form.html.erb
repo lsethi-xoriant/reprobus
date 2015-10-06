@@ -6,9 +6,13 @@
 	    <%= render 'shared/error_messages', object: f.object %>
 	    
 	    <div class="row">
-      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "supplier_name", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "supplier_name", f: f, name: "Agent" } %>
       </div>
 
+      <%= f.fields_for :company_logo, @customer.company_logo do |t| %>
+        <%= render partial: 'shared/image_field', locals: { imageHolder: @customer.company_logo, f: t, title: "Company Logo (recommended width 400px): " } %>
+      <% end %>
+      
       <div class="row"><div class="col s12">
         <h6>Contact details</h6>
       </div></div>

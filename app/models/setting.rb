@@ -66,7 +66,7 @@ class Setting < ActiveRecord::Base
     return Setting.find(1); # current only one of these, will have to work out a way to make this multi tenancy. 
   end
   
-  def get_company_logo_link
+  def get_company_logo_image_link
     if self.company_logo  then 
       return self.company_logo.get_image_link()
     else
@@ -74,6 +74,14 @@ class Setting < ActiveRecord::Base
     end
   end  
  
+  def get_itinerary_default_image_link
+    if self.itinerary_default_image  then 
+      return self.itinerary_default_image.get_image_link()
+    else
+      return ActionController::Base.helpers.image_path('noImage.jpg')
+    end
+  end 
+  
   def getDefaultCurrency
     self.currency ? self.currency : Currency.find_by_code("USD")
   end

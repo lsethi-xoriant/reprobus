@@ -1,6 +1,7 @@
 class CustomersController < ApplicationController
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
+  before_action :setCompanySettings
   
   def index
 #  @customers = Customer.where(cust_sup: "Customer")
@@ -57,11 +58,11 @@ class CustomersController < ApplicationController
     if @customer.update_attributes(customer_params)
       flash[:success] = "Customer updated"
       if @customer.isSupplier?
-        redirect_to supplier_path @customer
+        redirect_to edit_supplier_path @customer
       elsif @customer.isAgent?
-       redirect_to agent_path @customer
+       redirect_to edit_agent_path @customer
       else
-        redirect_to @customer
+        redirect_to edit_customer_patch @customer
       end
     else
       render 'edit'
@@ -97,7 +98,8 @@ private
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
-        trigger_attributes: [:email_template_id], address_attributes: [:street1, :street2, :city, :state, 
+        trigger_attributes: [:email_template_id], company_logo_attributes: [:id, :image_local, :image_remote_url],
+        address_attributes: [:street1, :street2, :city, :state, 
         :zipcode, :country, :full_address, :address_type, :addressable_type, :addressable_id])
     end
 end

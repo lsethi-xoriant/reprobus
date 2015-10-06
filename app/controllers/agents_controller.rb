@@ -10,6 +10,7 @@ class AgentsController < CustomersController
   
   def new
     super
+    @customer.company_logo =ImageHolder.new if !@customer.company_logo;
   end
 
   def show
