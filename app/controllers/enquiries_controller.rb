@@ -159,7 +159,7 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.new()
     @enquiry.name = "Web Enq - " + params[:firstname] + " " + params[:surname]
     @enquiry.source = "Web"
-    @enquiry.stage = "Open"
+    @enquiry.stage = "New Enquiry"
     @enquiry.user_id = User.find_by_name("System").id
     @enquiry.background_info = params[:enquiry_detail]
     @cust = Customer.find_by_email(params[:email]) unless params[:email].nil?
@@ -169,12 +169,14 @@ class EnquiriesController < ApplicationController
     @cust.first_name = params[:firstname]
     @cust.last_name = params[:surname]
     @cust.email = params[:email]
-    @cust.mobile = params[:phone]
+    @cust.phone = params[:phone]
     
     @cust.save
+    @enquiry.lead_customer = @cust
     
     if @enquiry.save
       @enquiry.add_customer(@cust)
+      
       flash.now[:success] = "Thank you, enquiry submitted."
       render 'confirmation'
     end

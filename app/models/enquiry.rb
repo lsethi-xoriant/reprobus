@@ -137,7 +137,10 @@ class Enquiry < ActiveRecord::Base
     self.assignee.name if self.assignee
   end
 
-
+  def assigned_to_id
+    self.assignee.id if self.assignee
+  end
+  
   def customer_name_and_title
     str = ""
     if self.lead_customer

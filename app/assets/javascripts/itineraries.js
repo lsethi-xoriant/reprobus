@@ -228,7 +228,7 @@ function sort_itinerary_items(){
 
   // call sortable on our div with the sortable class
   $('.sortable').sortable({
-    items: '.sortable-item'
+    items: '.sortable-item',
     // items: ':not(.nosort)'  - this was for testing grouping items. 
   });
 }

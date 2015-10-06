@@ -37,7 +37,8 @@ class EnquiryDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     # insert query here
-    Enquiry.joins(:lead_customer, :assignee).active
+    #Enquiry.joins(:lead_customer, :assignee).active  #needed to add left join below incase no user assigned. can do same thing for lead cust etc. 
+    Enquiry.joins(:lead_customer).joins("LEFT OUTER JOIN users ON users.id = enquiries.assigned_to").active
   end
 
   # ==== Insert 'presenter'-like methods below if necessary
