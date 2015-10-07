@@ -114,7 +114,7 @@ function initProductSelect2() {
               product: productId
               }
       }).done(function(data) {
-//console.log(data);
+console.log(data);
         // populate supplier dropdown, and room type dropdown
         var optionStr = "";
         var selectedVal;
@@ -139,10 +139,11 @@ function initProductSelect2() {
         }
         
         if (data.type == "Transfer" || data.type == "Tour") {
-          $(nextProductContainer).closest('.field').find('.radio_group_class_' + data.grouptype).prop('checked', true);
-          $(nextProductContainer).closest('.field').find('.group_classification_container').show();
+          $(nextDestField).closest('.field').find('.radio_group_class_' + data.grouptype).prop('checked', true);
+          $(nextDestField).closest('.field').find('.group_classification_container').show();
+console.log("show cont")          ;
         }else{
-          $(nextProductContainer).closest('.field').find('.group_classification_container').hide();
+          $(nextDestField).closest('.field').find('.group_classification_container').hide();
         } 
         
         if (data.type == "Hotel" || data.type == "Tour" || data.type == "Cruise") {
@@ -150,14 +151,14 @@ function initProductSelect2() {
           $(nextTypeField).closest('.field').find('.meal_inclusions_container').show();
 
           if (data.type == "Tour" || data.type == "Cruise") {
-            $(nextProductContainer).closest('.field').find('.include_lunch').prop('checked', data.lunch);
-            $(nextProductContainer).closest('.field').find('.include_dinner').prop('checked', data.dinner);
-            $(nextProductContainer).closest('.field').find('.meal_lunch_and_dinner_container').show();   
+            $(nextDestField).closest('.field').find('.include_lunch').prop('checked', data.lunch);
+            $(nextDestField).closest('.field').find('.include_dinner').prop('checked', data.dinner);
+            $(nextDestField).closest('.field').find('.meal_lunch_and_dinner_container').show();   
           }else{
-            $(nextProductContainer).closest('.field').find('.meal_lunch_and_dinner_container').hide();  
+            $(nextDestField).closest('.field').find('.meal_lunch_and_dinner_container').hide();  
           }
         }else{
-          $(nextProductContainer).closest('.field').find('.meal_inclusions_container').hide();
+          $(nextDestField).closest('.field').find('.meal_inclusions_container').hide();
         } 
         
       });

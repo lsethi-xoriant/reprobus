@@ -58,28 +58,41 @@
       <label for="supplier_id" class="active">Supplier</label>
     </div>
     
+    
     <div class="input-field col s1">
-      <div class="room_type_cont" style=<%= displayRoomDetails %> >
-      <%= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
+      <%= render partial: 'itineraries/controls/room_type', locals: { f: f } %>  
+      <%= render partial: 'itineraries/controls/group_classification_radio_btns', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>      
+    </div>     
+    
+    <div class="input-field col s1">
+      <%= render partial: 'itineraries/controls/meal_options', locals: { product: f.object.get_product_type, id: f.object.id || f.object.object_id, f: f } %>
+    </div>
+    
+<!--    
+    <div class="input-field col s1">
+      <div class="room_type_cont" style=<%#= displayRoomDetails %> >
+      <%#= f.select(:room_type, options_from_collection_for_select(f.object.select_room_types,:id, :name, f.object.room_type),{},{class: "select2-room-types-noajax browser-default", include_blank: true}) %>
       <label for="room_type" class="active">Room Type</label>
       </div>
     </div>           
+-->    
     
-    <div class="input-field product_details_cont col s1" style=<%=displayProductDetails%> >
-      <% if f.object.get_product_type != "Cruise" %>
-        <% @info = f.object %>
-        <%= render template: 'itinerary_templates/product_info' %>
-      <% end %>
+<!-- Removed to create room for meals and classification    
+    <div class="input-field product_details_cont col s1" style=<%#=displayProductDetails%> >
+      <%# if f.object.get_product_type != "Cruise" %>
+        <%# @info = f.object %>
+        <%#= render template: 'itinerary_templates/product_info' %>
+      <%# end %>
     </div>
     
-    <div class="cruise-info input-field col s1" style=<%=displayCruiseDetails%>>
-      <% if f.object.get_product_type == "Cruise" %>
-        <% @cruise_legs = f.object.product.cruise_days %>
-        <% @cruise = f.object.product %>
-        <%= render template: 'itinerary_templates/cruise_legs' %>
-      <% end %>
+    <div class="cruise-info input-field col s1" style=<%#=displayCruiseDetails%>>
+      <%# if f.object.get_product_type == "Cruise" %>
+        <%# @cruise_legs = f.object.product.cruise_days %>
+        <%# @cruise = f.object.product %>
+        <%#= render template: 'itinerary_templates/cruise_legs' %>
+      <%# end %>
     </div> 
-    
+-->    
     
     <div class="input-field col s1">
         <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red left"} do %>

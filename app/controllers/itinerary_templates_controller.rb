@@ -58,8 +58,10 @@ class ItineraryTemplatesController < ApplicationController
   
 private
     def template_params
-      params.require(:itinerary_template).permit(:name, :includes, :excludes, :notes,
-      itinerary_template_infos_attributes: [:id, :product_id, :supplier_id, :position, :length, :room_type, :days_from_start, :_destroy ],
+      params.require(:itinerary_template).permit(:name, :includes, :excludes, :notes, 
+      itinerary_template_infos_attributes: [:id, :product_id, :supplier_id, :position, 
+      :includes_breakfast, :includes_lunch, :includes_dinner, :group_classification,
+      :length, :room_type, :days_from_start, :_destroy ],
       itinerary_default_image_attributes: [:id, :image_local, :image_remote_url])
     end
 end

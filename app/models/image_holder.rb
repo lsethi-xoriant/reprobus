@@ -2,14 +2,11 @@
 #
 # Table name: image_holders
 #
-#  id                    :integer          not null, primary key
-#  image_local           :string
-#  image_remote_url      :string
-#  setting_id            :integer
-#  itinerary_id          :integer
-#  itinerary_template_id :integer
-#  created_at            :datetime
-#  updated_at            :datetime
+#  id               :integer          not null, primary key
+#  image_local      :string
+#  image_remote_url :string
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 class ImageHolder < ActiveRecord::Base

@@ -115,9 +115,9 @@ class ItineraryInfo < ActiveRecord::Base
   end
 
   def get_meal_inclusions
-    breakfast = "Includes Breakfast   " if self.includes_breakfast
-    lunch = "Includes Lunch   " if self.includes_lunch
-    dinner = "Includes Dinner   " if self.includes_dinner
+    breakfast = "Breakfast   " if self.includes_breakfast
+    lunch = "Lunch   " if self.includes_lunch
+    dinner = "Dinner   " if self.includes_dinner
     
     meals = "#{breakfast}#{lunch}#{dinner}"
     return meals

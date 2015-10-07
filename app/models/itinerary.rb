@@ -155,10 +155,10 @@ class Itinerary < ActiveRecord::Base
           product_id: info_template.product_id,
           length: info_template.length,
           offset: info_template.offset,
-          group_classification: info_template.product.group_classification,
-          includes_lunch: info_template.product.includes_lunch,
-          includes_dinner: info_template.product.includes_dinner,
-          includes_breakfast: info_template.product.includes_breakfast,
+          group_classification: info_template.group_classification,
+          includes_lunch: info_template.includes_lunch,
+          includes_dinner: info_template.includes_dinner,
+          includes_breakfast: info_template.includes_breakfast,
           )    
   end
   

@@ -40,6 +40,7 @@
 #  currency_id          :integer
 #  num_days_payment_due :integer
 #  after_hours_phone    :string(255)
+#  company_logo_id      :integer
 #
 
 class Customer < ActiveRecord::Base

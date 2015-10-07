@@ -13,6 +13,10 @@
 #  supplier_id           :integer
 #  offset                :integer          default("0")
 #  room_type             :integer
+#  includes_breakfast    :boolean
+#  includes_lunch        :boolean
+#  includes_dinner       :boolean
+#  group_classification  :string
 #
 
 class ItineraryTemplateInfo < ActiveRecord::Base

@@ -1,15 +1,19 @@
-<div class="col s12">
-  <ul class="collection">
-    <li class="collection-item avatar">
-      <i class="mdi-action-account-circle circle"></i>
-      <span class="title">Enquiry Details:</span>
-      <p><i class="mdi-communication-email"></i>  <%= @enquiry.name %>
-      <br><i class="mdi-action-account-circle"></i>  <%= @enquiry.lead_customer.fullname_with_title %>
-        
-        <% if @enquiry.agent %>
-          <br><i class="mdi-action-account-child"></i>  <%= @enquiry.name %>
-        <% end %>
-      </p>
-    </li>
-  </ul>
-</div>	 
+<div class="card-panel">
+  <div class="row">
+    <div class="col s1">
+      <i class="mdi-action-account-circle circle medium blue"></i>
+    </div>
+    <div class="col s11">  
+      <h6 class="title">Enquiry Details:</h6>
+
+      <i class="mdi-communication-email"></i>&nbsp;&nbsp; Enquiry: <%= @enquiry.name %></br>
+      <% if @itinerary.itinerary_template %>
+        <i class="mdi-action-list"></i>&nbsp;&nbsp; Based on Template: <%=  @itinerary.itinerary_template.name %></br>
+      <% end %>      
+      <i class="mdi-action-account-circle"></i>&nbsp;&nbsp; Customer: <%= @enquiry.lead_customer.fullname_with_title %></br>
+      <% if @enquiry.agent %>
+        <i class="mdi-action-account-child"></i >&nbsp;&nbsp; Agent: <%= @enquiry.agent.supplier_name %></br>
+      <% end %>
+    </div>  
+  </div>	 
+</div>	   

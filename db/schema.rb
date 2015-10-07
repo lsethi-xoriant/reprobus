@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006190501) do
+ActiveRecord::Schema.define(version: 20151007094721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -380,6 +380,10 @@ ActiveRecord::Schema.define(version: 20151006190501) do
     t.integer  "supplier_id"
     t.integer  "offset",                default: 0
     t.integer  "room_type"
+    t.boolean  "includes_breakfast"
+    t.boolean  "includes_lunch"
+    t.boolean  "includes_dinner"
+    t.string   "group_classification"
   end
 
   add_index "itinerary_template_infos", ["itinerary_template_id"], name: "index_itinerary_template_infos_on_itinerary_template_id", using: :btree
