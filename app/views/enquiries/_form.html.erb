@@ -2,6 +2,8 @@
 
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
+	  <%= render partial: 'shared/error_messages', collection: f.object.customers, as: :object %>
+	  
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
 
 	  <div class ="card-panel">

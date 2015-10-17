@@ -150,6 +150,7 @@ class EnquiriesController < ApplicationController
       flash[:success] = "Enquiry updated.  #{undo_link}"
       redirect_to edit_enquiry_path(@enquiry)
     else
+      @enquiry.removeInvalidCustomerError
       render 'edit'
     end
   end

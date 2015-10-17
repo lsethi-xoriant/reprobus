@@ -43,6 +43,7 @@ class Enquiry < ActiveRecord::Base
 #  validates :probability, presence: true, :inclusion => { :in => (1..100) , :message => "Must be in range of 1-100" }
   validates :user_id, presence: true
 #  validates :percent, presence: true, :inclusion => { :in => (0..100) , :message => "Must be in range of 0-100" }
+#  validate :check_lead_customer_has_phone_email
 
   has_and_belongs_to_many  :carriers
   has_and_belongs_to_many  :destinations
@@ -64,8 +65,8 @@ class Enquiry < ActiveRecord::Base
 #  has_many    :customers_enquiries
  # has_many    :customers, -> { order("customers.id ASC") }, through: :customers_enquiries
   has_and_belongs_to_many :customers
- 
   accepts_nested_attributes_for :customers, allow_destroy: true;
+  validates_associated :customers
   
   has_many    :activities,  dependent: :destroy
   has_one     :booking
@@ -73,9 +74,16 @@ class Enquiry < ActiveRecord::Base
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
   
+  
   after_save  :set_lead
 
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
+
+  #def check_lead_customer_has_phone_email
+  #  if self.lead_customer && (self.lead_customer.phone.blank? && self.lead_customer.email.blank?) then  
+  #    errors.add(:lead_customer, "must have phone or email")
+  #  end
+  #end
 
   def isActive
     return stage == "Open" || stage == "In Progress"
@@ -102,6 +110,19 @@ class Enquiry < ActiveRecord::Base
     
     self.lead_customer ? self.update_column(:lead_customer_name, self.lead_customer.fullname) : self.update_column(:lead_customer_name, "")
   end
+  
+  def removeInvalidCustomerError 
+    
+    if self.errors && self.errors.messages[:customers] 
+      self.errors.messages.delete(:customers)
+    end 
+    
+    if self.errors && self.errors.messages[:"customers.lead_customer"] 
+      self.errors.messages.delete(:"customers.lead_customer")
+    end
+    
+  end
+  
   
   def created_by_name
     self.user.name

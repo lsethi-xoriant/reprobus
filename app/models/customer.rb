@@ -63,7 +63,7 @@ class Customer < ActiveRecord::Base
   validates :num_days_payment_due, numericality: true,  allow_blank: true
   
   validates :supplier_name, uniqueness: { case_sensitive: false },allow_blank: true
-  
+  validate :check_lead_customer_has_phone_email
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
@@ -78,7 +78,6 @@ class Customer < ActiveRecord::Base
   has_one    :address, :as => :addressable
   accepts_nested_attributes_for :address
   
-  
   has_many    :activities,  dependent: :destroy
   has_many    :bookings
   belongs_to  :currency
@@ -92,6 +91,12 @@ class Customer < ActiveRecord::Base
   has_paper_trail :ignore => [:created_at, :updated_at]
    
   before_save :default_values
+  
+  def check_lead_customer_has_phone_email 
+    if self.lead_customer && (self.phone.blank? && self.email.blank?) 
+        errors.add(:lead_customer, "must have phone or email")
+    end
+  end
   
   def default_values
     self.cust_sup ||= 'Customer'  # default to customer.
