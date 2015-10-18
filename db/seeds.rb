@@ -6,8 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-    Setting.create!(company_name: 'demo company')
-     user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )
+    setting = Setting.create!(company_name: 'demo company')
+    setting.turn_emails_off = true;
+    setting.save
+    
+    user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )
 
     Currency.create!(:code => 'AED' , :currency => 'United Arab Emirates Dirham' )
     Currency.create!(:code => 'AFN' , :currency => 'Afghanistan Afghani' )
