@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   #
   def password_reset(user)
     @user = user
-    if !send_emails_turned_off
+    if !Setting.global_settings.send_emails_turned_off
       mail :to => user.email, :subject => "Password Reset", from: "donotreply@superapp.com"
     end 
   end
@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
  
   def welcome_email(user)
     @user = user
-    if !send_emails_turned_off
+    if !Setting.global_settings.send_emails_turned_off
       mail(to: @user.email, subject: "Welcome!", from: "donotreply@superapp.com")
     end
   end
