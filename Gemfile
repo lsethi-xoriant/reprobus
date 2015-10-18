@@ -11,7 +11,7 @@ group :development, :test do
   gem "better_errors"
   gem 'web-console', '~> 2.0'
   gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
-#gem "therubyracer" only need this for local chromebook dev
+#gem "therubyracer" #only need this for local dev enviroments if no js installed
 end
 
 group :production do
