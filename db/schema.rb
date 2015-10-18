@@ -445,6 +445,8 @@ ActiveRecord::Schema.define(version: 20151007094721) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -458,8 +460,6 @@ ActiveRecord::Schema.define(version: 20151007094721) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"

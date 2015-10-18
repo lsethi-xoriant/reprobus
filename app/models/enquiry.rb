@@ -74,13 +74,12 @@ class Enquiry < ActiveRecord::Base
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
   
-  
   after_save  :set_lead
 
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names}
 
   #def check_lead_customer_has_phone_email
-  #  if self.lead_customer && (self.lead_customer.phone.blank? && self.lead_customer.email.blank?) then  
+  #  if self.lead_customer && (self.lead_customer.phone.blank? && self.lead_customer.email.blank?) then
   #    errors.add(:lead_customer, "must have phone or email")
   #  end
   #end
@@ -90,7 +89,7 @@ class Enquiry < ActiveRecord::Base
   end
   
   def is_customer_lead(customer)
-    return self.lead_customer == customer
+    return (self.lead_customer == customer) || (customer.lead_customer == 'true')
   end
   
   def add_customer(customer)
@@ -103,7 +102,7 @@ class Enquiry < ActiveRecord::Base
       self.update_column(:lead_customer_id, c.id) if c.lead_customer
     end
     
-    if !self.lead_customer 
+    if !self.lead_customer
       # if lead customer not set default to first customer
       self.update_column(:lead_customer_id,self.customers.first.id) if self.customers.first
     end
@@ -111,13 +110,13 @@ class Enquiry < ActiveRecord::Base
     self.lead_customer ? self.update_column(:lead_customer_name, self.lead_customer.fullname) : self.update_column(:lead_customer_name, "")
   end
   
-  def removeInvalidCustomerError 
+  def removeInvalidCustomerError
     
-    if self.errors && self.errors.messages[:customers] 
+    if self.errors && self.errors.messages[:customers]
       self.errors.messages.delete(:customers)
-    end 
+    end
     
-    if self.errors && self.errors.messages[:"customers.lead_customer"] 
+    if self.errors && self.errors.messages[:"customers.lead_customer"]
       self.errors.messages.delete(:"customers.lead_customer")
     end
     

@@ -59,6 +59,8 @@ class EnquiriesController < ApplicationController
     @enquiry.customers.first.build_address
     @enquiry.stage = "New Enquiry"
     @enquiry.assignee = current_user
+    @enquiry.lead_customer = @enquiry.customers.first
+    @enquiry.customers.first.lead_customer = true
   end
 
   def show
@@ -148,7 +150,12 @@ class EnquiriesController < ApplicationController
       revert_version_path(@enquiry.versions.last), :method => :post)
       
       flash[:success] = "Enquiry updated.  #{undo_link}"
-      redirect_to edit_enquiry_path(@enquiry)
+      
+      if @enquiry.itinerary
+        redirect_to edit_itinerary_path(@enquiry.itinerary)
+      else
+        redirect_to edit_enquiry_path(@enquiry)
+      end
     else
       @enquiry.removeInvalidCustomerError
       render 'edit'

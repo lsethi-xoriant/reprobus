@@ -1,3 +1,6 @@
+<% itinerary_has_been_created = !@enquiry.itinerary.nil? %>
+
+
 <div class="row">
 
   <%= form_for @enquiry, :html => {:multipart => true, :class => "col s12"} do |f| %>
@@ -78,12 +81,15 @@
         </div>
       </div>
   
+  
       <div class="row">
         <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder", value: @enquiry.reminder } %>
         
-        <div class="input-field col s6">
-          <%= f.select :stage, options_for_select(["New Enquiry", "Open", "In Progress", "Closed"], @enquiry.stage ) %>
-        </div>
+        <% if !itinerary_has_been_created %>
+          <div class="input-field col s6">
+            <%= f.select :stage, options_for_select(["New Enquiry", "Open", "In Progress", "Closed"], @enquiry.stage ) %>
+          </div>
+        <% end %>
       </div>
 
     
@@ -93,30 +99,33 @@
  
       <div class="row">
         <div class="input-field col s6">
-          <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
-          <%= f.label :assigned_to, "Assign To",  class: 'active' %>
+          <% if !itinerary_has_been_created %>
+            <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
+            <%= f.label :assigned_to, "Assign To",  class: 'active' %>
+          <% end %>
         </div>
       </div>
-    </div>  
-    
-      <div class="input-field col s6">
-          <%= button_tag( :class => "btn cyan waves-effect waves-light right") do %>
-            <%= buttontxt %><i class="mdi-content-send right"></i>
-          <% end %>
-      </div>
+    </div>
 
+  <div class="row">
+    <div class="input-field col s12">
+        <%= button_tag( :class => "btn waves-effect waves-light right") do %>
+          <%= buttontxt %><i class="mdi-content-send right"></i>
+        <% end %>
+    </div>
+  </div>
    
   <% end %>
-    
-    <div class="input-field col s6">
-      <% if @enquiry.persisted? %>
-        <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
-          <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
-          <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light right") %>
-        <% end %>
+
+
+  <div class="input-field col s12">
+    <% if @enquiry.persisted? && !itinerary_has_been_created %>
+      <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
+        <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
+        <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light right purple") %>
       <% end %>
-    </div>
-  
+    <% end %>
+  </div>
      
   <div id="cust_search_modal" class="modal">
     <div class="modal-content">

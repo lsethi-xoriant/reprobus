@@ -76,7 +76,7 @@ $(document).ready(function() {
         
         
       //  customer_fields[0].getElementsByTagName('input').prop('readonly', true);
-        customer_fields.find(':input').prop('readonly', true); // set all to readonly - probably as nested fields would go crazy if we changed things. 
+        customer_fields.find(':input').prop('readonly', true); // set all to readonly - probably as nested fields would go crazy if we changed things.
         customer_fields.find('label').addClass('active');
 
         customer_search_occured = false;
