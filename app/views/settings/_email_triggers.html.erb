@@ -1,25 +1,29 @@
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+    
+
+
 
 <div class="row">
-<br>
-<div class="col-sm-2 col-md-offset-1">
-<a href=<%= new_email_template_path %> ><button type="button" class="btn btn-primary btn-sm">New Email Templates</button></a>
+  <div class="col s6 m6 l6">
+    <a href=<%= email_templates_path %> ><button type="button" class="btn btn-primary btn-sm">View Email Templates</button></a>
+  </div>
+  <div class="col s6 m6 l6">
+    <a href=<%= new_email_template_path %> ><button type="button" class="btn btn-primary right btn-sm">New Email Templates</button></a>
+  </div>
 </div>
-<div class="col-sm-2 col-md-offset-2">
-<a href=<%= email_templates_path %> ><button type="button" class="btn btn-primary btn-sm">View Email Templates</button></a>
-</div>
-</div>
-<br><br>
 
+
+<div class="row">
+<div class="col s12">
 <%=  form_for @setting, url: {action: "addEmailTriggers"}, html: {method: "post", class: "form-horizontal"} do |f| %>
 <%= f.hidden_field :id %>
 <%= render 'shared/error_messages', object: f.object %>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Email Triggers
-  </div>
-  <!-- /.panel-heading -->
-  <div class="panel-body">
+  <br>
+  <h5>Email Triggers</h5>
+  <br>
+  
     <table class="table table-striped table-bordered table-hover" >
       <thead>
         <tr>
@@ -38,9 +42,10 @@
         <% end %>
       </tbody>
     </table>
-  </div>
- </div>
+  
 
  <%= f.submit "Save Triggers", class: "btn btn-primary" %>
 
 <% end %>
+</div>
+</div>

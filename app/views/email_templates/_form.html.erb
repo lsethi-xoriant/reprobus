@@ -1,31 +1,31 @@
 
 <div class="row">
-  <div class="span6 offset3">
+    <div class="card-panel">
+    
     <%= form_for @email_template, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "name", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "from_email", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "from_name", f: f } %>
-      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "subject", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "from_email", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "from_name", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "subject", f: f } %>
       
-      <div class="form-group">
-      <%= f.label :body, "Email Body" %>
-        <div class="col-sm-6">
-        <%= f.text_area :body, rows: 10, class: "form-control", placeholder: "Enter email body"  %>
-        </div>
-      </div>
-
+      <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "body", f: f, name: "Email Body" } %>
       
-      <div class="form-group">
-        <%= f.label :copy_assigned_user, "Copy in Assigned User", class: "col-sm-3 control-label"  %>
-        <div class="col-sm-2">
-          <%= f.check_box :copy_assigned_user, class: "form-control" %>
-        </div>
-      </div>
+      
       <div class="row">
-      <div class="col-sm-6 col-md-offset-3">
-      <%= f.submit buttontxt, class: "btn btn-large btn-primary" %>
+      <div class="col s12 input-field">
+      <p>
+        <%= f.check_box :copy_assigned_user, class: "filled-in" %>
+        <%= f.label :copy_assigned_user, "Copy in Assigned User"  %>
+      </p>
+      </div>
+      </div>
+      
+
+      <div class="row">
+      <div class="col s12">
+      <%= f.submit buttontxt, class: "btn right btn-primary" %>
       </div>
       </div>
     <% end %>

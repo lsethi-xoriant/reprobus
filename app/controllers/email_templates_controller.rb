@@ -22,7 +22,7 @@ class EmailTemplatesController < ApplicationController
 
     if @email_template.save
       flash[:success] = "#{@email_template.name} created!"
-      redirect_to @email_template
+      redirect_to edit_email_template_path @email_template
     else
       render 'new'
     end
@@ -33,7 +33,7 @@ class EmailTemplatesController < ApplicationController
 
     if @email_template.update_attributes(email_template_params)
       flash[:success] = "#{@email_template.name} updated"
-      redirect_to @email_template
+      redirect_to edit_email_template_path @email_template
     else
       render 'edit'
     end
