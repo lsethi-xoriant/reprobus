@@ -1,0 +1,3 @@
+<% provide(:title, 'Copy a ' + @product.type) %>
+
+<%= render  partial: 'form', locals: { buttontxt: "Create " + @product.type, formpath: products_path(@product)} %>

@@ -139,6 +139,7 @@ Reprobus::Application.routes.draw do
 
   namespace :products do
     get '', to: 'dashboard#index', as: '/'
+    get '/:type/:original_product_id/copy' => 'products#copy'
     resources :tours, :controller => "products", :type => "Tour"
     resources :cruises, :controller => "products", :type => "Cruise"
     resources :transfers, :controller => "products", :type => "Transfer", :as => :transfers

@@ -5,6 +5,7 @@
   <%= form_for @product.becomes(Product), :url => formpath, :html => {:multipart => true, :class => "col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <%= f.hidden_field :type, :value => f.object.type  %>
+    <%= f.hidden_field :original_product_id, :value => @original_product_id  %>
   
     <div class="row">
       <%= render partial: 'shared/material_textfield_cols4', locals: { field: "name", f: f } %>
@@ -16,6 +17,7 @@
         
       <div class="input-field col s4">
         <%= f.select(:destination_id, options_for_select([[f.object.destination_name, f.object.destination_id]],f.object.destination_id),{},{class: "select2-destinations browser-default"}) %>
+
         <%= f.label :destination_id, "Destination",  class: 'active' %>
       </div>
     </div>
@@ -30,12 +32,12 @@
     <div class="row">
       <div class="input-field col s6">
         <%#= f.select(:supplier_ids, options_for_select([[f.object.supplierNames, f.object.supplier_ids]],f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
-        <%= f.select(:supplier_ids, options_from_collection_for_select(f.object.suppliers, :id, :supplier_name, f.object.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
+        <%# below line had to use @product as copy was not working with f.object %>
+        <%= f.select(:supplier_ids, options_from_collection_for_select(@product.suppliers, :id, :supplier_name, @product.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
         <%= f.label :supplier_ids, "Suppliers", class: 'active' %>
       </div>      
     </div>
     
-
     <%= render partial: 'products/shared/meal_inclusions_checkbox', locals: { product: @product.type, id: @product.id,  f: f} %>
 
     <%= render partial: 'products/shared/group_classification_radio_btns', locals: { product: @product.type, id: @product.id,  f: f  } %>
@@ -84,16 +86,30 @@
     
     
     <div class="row">
-      <div class="input-field col s10">
-       <%= f.submit buttontxt, class: "btn" %>
+      <div class="input-field col s8">
       </div>
-      <% if !@product.new_record? %>
-        <div class="input-field col s2 right">
-          <%= link_to "Delete", get_show_path(@product), method: :delete,
-                data: { confirm: "You sure you want to DELETE this #{@product.type}?"}, class: "btn red" %>
-        </div>
-      <% end %>      
+      
+      <div class="input-field col s1">
+        <% if !@product.new_record? %>
+            <%= link_to "Delete", get_show_path(@product), method: :delete,
+                  data: { confirm: "You sure you want to DELETE this #{@product.type}?"}, class: "btn red" %>
+        <% end %>   
+      </div>
+      
+      <div class="input-field col s1">
+         <% if !@product.new_record? && params[:type] %>
+           <%= link_to "Copy", {:controller => :products, :action => :copy, :type => params[:type].downcase, :original_product_id => @product.id},
+               {class: "btn grey lighten-5", style: 'color: #37474f'} %>
+         <% end %>      
+      </div>
+      
+      <div class="input-field col s2">
+        <%= f.submit buttontxt, class: "btn right" %>
+      </div>
+      
     </div>
+    
   <% end %>
+  
   </div>
 </div>

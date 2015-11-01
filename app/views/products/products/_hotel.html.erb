@@ -1,6 +1,6 @@
 <h4 class="header2"><%=name%></h4>
 <div id="hotel_rooms">
-  <%= f.fields_for :rooms, :html => {:class => "col s12"}  do |c| %>
+  <%= f.fields_for :rooms, @product.rooms, :html => {:class => "col s12"}  do |c| %>
     <div class="row">
 	    <%= render partial: 'hotel_room', locals: { f: c } %>
 	  </div>

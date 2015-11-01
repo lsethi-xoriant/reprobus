@@ -107,10 +107,11 @@ class ItineraryInfo < ActiveRecord::Base
   end
   
   def get_itinerary_header_details(prefix)
-    group = self.get_group_classification
-    group += " " if !group.blank?
+    #group = self.get_group_classification
+    #group += " " if !group.blank?
     prefix += " - " if !prefix.blank? 
-    str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
+    #str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
+    str = "#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
     return str
   end
 

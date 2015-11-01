@@ -14,17 +14,36 @@ class Products::ProductsController < ApplicationController
   
   def new
     @setting = Setting.find(1)
-    @product = params[:type].constantize.new
+    
+    @product = params[:type].constantize.new()
+
     #@product = Product.new
     #@product.type = params[:type]
   end
   
+  def copy
+    @setting = Setting.find(1)
+    
+    original_product = Product.where(id: params[:original_product_id]).first
+    
+    @product = original_product.deep_clone include: [:rooms, :suppliers]
+  
+    @product.name = original_product.name + ' COPY'
+    @product.destination = original_product.destination
+    @product.country_id = original_product.country_id
+    @product.supplier_ids = original_product.supplier_ids
+    
+    @original_product_id = params[:original_product_id]
+  end
+  
   def create
     @setting = Setting.find(1)
+    
     @product = Product.new(product_params)
+    
     #@product.type = params[:type]
     @product.image = params[:image]
-
+    
     if @product.save
       flash[:success] = "#{@product.name} created!"
       redirect_to product_index_path(@product, :html)
@@ -59,7 +78,7 @@ class Products::ProductsController < ApplicationController
 
 private
     def product_params
-      params.require(:product).permit(:type, :name, :description, :country_id, :phone,
+      params.require(:product).permit(:original_product_id, :type, :name, :description, :country_id, :phone,
         :destination_id, :image, :image_cache, {:supplier_ids => []}, :address, :price_single, 
         :price_double, :price_triple,:room_type, :rating, :default_length, :image_remote_url,
         :group_classification, :includes_breakfast, :includes_lunch, :includes_dinner,

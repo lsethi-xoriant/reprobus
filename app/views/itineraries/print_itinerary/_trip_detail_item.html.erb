@@ -1,5 +1,6 @@
-<%if info%>
-<p class="title"><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
-<p class="caption"><%= "#{info.get_product_description}"%></p>
-<div class="clear50"></div>
+<%if info %>
+
+  <p class="title"><% if !info.get_group_classification.blank? %><span class="changecolor"><%= "#{info.get_group_classification} "%></span><% end %><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
+  <p class="caption"><%= "#{info.get_product_description}"%></p>
+  <div class="clear50"></div>
 <%end%>

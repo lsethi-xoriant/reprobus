@@ -16,8 +16,10 @@ class CustomerMailer < ActionMailer::Base
       cc = ""
     end
     
-    mail(to: to_email, subject: @email_template.subject, reply_to: @email_template.from_email,
+    if !Setting.global_settings.send_emails_turned_off
+      mail(to: to_email, subject: @email_template.subject, reply_to: @email_template.from_email,
          from: from_name, cc: cc)
+    end
   end
 
 end

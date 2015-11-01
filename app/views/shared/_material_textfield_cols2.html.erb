@@ -2,7 +2,9 @@
   <% if local_assigns.has_key? :icon %>
    <i class="<%= icon %>"></i>
   <% end %>
+  
   <%= f.text_field field.to_sym %>
+  
   <% if local_assigns.has_key? :name %>
     <%= f.label name %>
   <% else %>

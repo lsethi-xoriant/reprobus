@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018074458) do
+ActiveRecord::Schema.define(version: 20151029051042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -445,8 +445,6 @@ ActiveRecord::Schema.define(version: 20151018074458) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -460,6 +458,8 @@ ActiveRecord::Schema.define(version: 20151018074458) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
@@ -498,6 +498,8 @@ ActiveRecord::Schema.define(version: 20151018074458) do
     t.integer  "itinerary_default_image_id"
     t.integer  "company_logo_id"
     t.boolean  "send_emails_turned_off"
+    t.text     "quote_introduction"
+    t.text     "confirmed_introduction"
   end
 
   create_table "stopovers", force: :cascade do |t|

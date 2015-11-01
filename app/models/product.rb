@@ -32,6 +32,8 @@
 #
 
 class Product < ActiveRecord::Base
+  attr_accessor :original_product_id
+
   mount_uploader :image, ImageUploader
   
   validates :type,:name, presence: true

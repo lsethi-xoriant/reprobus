@@ -17,6 +17,7 @@
 .bigBigtitle2 { color:#414143; font-size:34px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
 .bigBigtitle3 { color:#404042; font-size:28px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
 .bigBigtitle4 { color:#9cbd52; font-size:40px; line-height:30px; font-family: 'Raleway'; font-weight: 400; padding-bottom:30px;}
+.changecolor { color:#404042;}
 
 .border { border-top:1px solid #000; padding-top: 12px; text-align: right;}
 .detailsbox { margin:40px 0;} .headdetails { color:#414143; font-size:28px; font-weight:800; margin-bottom:40px; page-break-inside: avoid;}
@@ -35,8 +36,10 @@
 <body> 
 <div class="bodyWrap">
 <%= render partial: 'itineraries/print_itinerary/header', formats: [:html]  %>
+<%= render partial: 'itineraries/print_itinerary/introduction', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/summary', formats: [:html]  %>
-<%= render partial: 'itineraries/print_itinerary/trip_details', formats: [:html] %>
+<%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>
+<%= render partial: 'itineraries/print_itinerary/pricing', formats: [:html] %>
 
 </div>
 </body>

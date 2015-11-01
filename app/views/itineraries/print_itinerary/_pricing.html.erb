@@ -1,0 +1,26 @@
+<p class="bigBigtitle4">Pricing</p>
+<div class="border"></div>
+<div class="clear75"></div>
+<p class="bigBigtitle2">Price Summary</p>
+<div class="clear50"></div>
+<p class="caption">$$$ 99999.99 </p>
+
+<div class="clear75"></div>
+<p class="bigBigtitle2">Inclusions / Exclusions / Notes</p>
+<div class="clear75"></div>
+<p class="bigBigtitle3">Inclusions</p>
+<div class="clear50"></div>
+<p class="caption"><%= (h @itinerary.includes).gsub("\n", "<br />").html_safe %></p>
+
+
+<div class="clear75"></div>
+<p class="bigBigtitle3">Exclusions</p>
+<div class="clear50"></div>
+<p class="caption"><%= (h @itinerary.excludes).gsub("\n", "<br />").html_safe %></p>
+
+<div class="clear75"></div>
+<p class="bigBigtitle3">Notes</p>
+<div class="clear50"></div>
+<p class="caption"><%= (h @itinerary.notes).gsub("\n", "<br />").html_safe %></p>
+
+

@@ -12,6 +12,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
 #gem "therubyracer" #only need this for local dev enviroments if no js installed
+  gem 'byebug'
 end
 
 group :production do
@@ -90,3 +91,6 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+
+gem 'deep_cloneable', '~> 2.1.1'

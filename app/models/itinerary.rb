@@ -173,6 +173,14 @@ class Itinerary < ActiveRecord::Base
     return lastdate
   end
   
+  def get_trip_date_range
+    str = self.start_date.strftime('%d %b %Y')
+    if self.get_end_date
+      str += " - #{self.get_end_date.strftime('%d %b %Y')}"
+    end 
+    return str
+  end
+  
   def get_infos_for_date(date)
     products = self.itinerary_infos.where("start_date <= :date AND end_date >= :date", date: date)
     return products  
@@ -196,10 +204,6 @@ class Itinerary < ActiveRecord::Base
       end
     end
   end
-  
-  
-  
-  
   
   
   #OLD CODE BELOW - keepeing for a wee while to see if i might reuse some of it. 

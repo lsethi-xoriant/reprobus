@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
     setting = Setting.create!(company_name: 'demo company')
-    setting.turn_emails_off = true;
+    setting.send_emails_turned_off = true;
     setting.save
     
     user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )

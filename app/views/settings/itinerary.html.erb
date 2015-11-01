@@ -20,6 +20,14 @@
             <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_notes", f: f, name: "Default Itinerary Notes", length: "1000"  } %>
           </div>
       
+          <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "quote_introduction", f: f, length: "1000"  } %>
+          </div>      
+          
+          <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "confirmed_introduction", f: f, name: "Confirmed Itinerary Introduction", length: "1000"  } %>
+          </div>      
+      
           <%= f.fields_for :itinerary_default_image, @setting.itinerary_default_image do |t| %>
             <%= render partial: 'shared/image_field', locals: { imageHolder: @setting.itinerary_default_image, f: t, title: "Default Itinerary Image (recomended size 880px x 880px):" } %>
           <% end %>

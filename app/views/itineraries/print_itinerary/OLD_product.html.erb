@@ -1,0 +1,14 @@
+
+  <div class="row">
+     <div>
+       
+        <div class="col s12"><strong><%= "#{info.get_product_name} - #{info.get_product_destination}, #{info.get_product_country}" %></strong></div>  
+        
+        <table>
+          <td style="width: 70%;"><p><%= "#{info.get_product_description}"%></p></td>
+          <% if !info.product.image_remote_url.blank? %>
+            <td style="width: 30%;"><img src=<%=info.product.get_dropbox_image_link%> class="product_image_mini"></td>
+          <% end %>
+        </table>
+      </div>
+  </div>

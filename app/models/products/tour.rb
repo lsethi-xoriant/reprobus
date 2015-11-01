@@ -32,6 +32,7 @@
 #
 
 class Tour < Product
+  
   def self.sti_name
     "Tour"
   end
