@@ -5,7 +5,7 @@
 <ul class="listing"> 
   <% @itinerary.itinerary_infos.each do |info| %>
       <% if info.start_date == info.end_date || info.end_date.blank? %> 
-         <li><%= "#{info.start_date.strftime('%d %b %Y')} - #{info.name}" %></li>
+         <li><%= "#{info.start_date.strftime('%d %b %Y')} - #{info.get_product_name}" %></li>
        <% else %>
          <li><%= "#{info.start_date.strftime('%d %b %Y')} to #{info.end_date.strftime('%d %b %Y')} - #{info.get_product_name}, #{info.get_product_destination}" %></li>
       <% end %>

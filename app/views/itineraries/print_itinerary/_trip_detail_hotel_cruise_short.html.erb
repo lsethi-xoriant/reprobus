@@ -1,5 +1,7 @@
 <%if info%>
-<p class="title"><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
-<p><strong><%= "#{info.get_meal_inclusions}" %></strong></p>
+<p class="title"><%= "#{info.get_itinerary_header_details_cruiseday(preFix)}" %></p>
+<% if info.has_meal_inclusions %>
+  <p><strong><%= "Includes: #{info.get_meal_inclusions}" %></strong></p>
+<% end %>  
 <div class="clear50"></div>
 <%end%>

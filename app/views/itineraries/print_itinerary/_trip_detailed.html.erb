@@ -47,7 +47,7 @@
     
   	<div class="contdetails">
   	  
-        <% if dayInfos.transfer %>
+        <% if dayInfos.transfer && dayInfos.last_end_date != dayInfos.transfer.start_date %>
             <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
         <% end %>
         
@@ -57,13 +57,17 @@
         
         <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: ""}  %>        
         
-      <% if dayInfos.hotel %>
-          <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
-          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel}  %>
-      <% elsif dayInfos.cruise %>
-          <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
-          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise}  %>
-      <% end %>
+        <% if dayInfos.transfer && dayInfos.last_end_date == dayInfos.transfer.start_date %>
+            <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
+        <% end %>
+        
+        <% if dayInfos.hotel %>
+            <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
+            <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel}  %>
+        <% elsif dayInfos.cruise %>
+            <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
+            <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise}  %>
+        <% end %>
       
       </div>
   	<div class="clear"></div>

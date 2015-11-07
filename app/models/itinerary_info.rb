@@ -115,6 +115,18 @@ class ItineraryInfo < ActiveRecord::Base
     return str
   end
 
+  def get_itinerary_header_details_cruiseday(prefix)
+    prefix += " - " if !prefix.blank? 
+    #str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
+    roomtype = " - #{self.room_type_name}" if !self.room_type_name.blank?
+    str = "#{prefix}#{self.get_product_name} - #{self.get_product_name}#{roomtype}"
+    return str
+  end
+
+  def has_meal_inclusions
+      return (self.includes_breakfast or self.includes_lunch or self.includes_dinner)
+  end
+
   def get_meal_inclusions
     breakfast = "Breakfast   " if self.includes_breakfast
     lunch = "Lunch   " if self.includes_lunch
