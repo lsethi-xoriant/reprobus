@@ -32,7 +32,9 @@
     
   	<p class="headdetails"><%= date.strftime("#{date.day.ordinalize} %b %Y") %><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
     
-    <% if dayInfos.hotel &&  !dayInfos.hotel.product.image_remote_url.blank?  %>
+    <% if dayInfos.standard_infos.first %>
+      <div class="imgdetails"><img src=<%= dayInfos.standard_infos.first.product.get_dropbox_image_link %> alt="" /></div>
+    <% elsif dayInfos.hotel &&  !dayInfos.hotel.product.image_remote_url.blank?  %>
       <div class="imgdetails"><img src=<%= dayInfos.hotel.product.get_dropbox_image_link %> alt="" /></div>
     <% elsif dayInfos.cruise %>
       <% cruiseProduct = dayInfos.cruise.product.getCruiseDay(cruiseDay) %>
@@ -46,8 +48,9 @@
     <% end %>
     
   	<div class="contdetails">
-  	  
-        <% if dayInfos.transfer && dayInfos.last_end_date != dayInfos.transfer.start_date %>
+
+        <% if dayInfos.transfer && dayInfos.first_start_date == dayInfos.transfer.start_date #arriving transfer %>
+<% puts "hAMISH #{date.strftime("#{date.day.ordinalize} %b %Y")} - transfer start date= #{dayInfos.transfer.start_date} - daysinfo last date=  #{dayInfos.last_end_date}" %>
             <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
         <% end %>
         
@@ -57,7 +60,7 @@
         
         <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: ""}  %>        
         
-        <% if dayInfos.transfer && dayInfos.last_end_date == dayInfos.transfer.start_date %>
+        <% if dayInfos.transfer && dayInfos.first_start_date != dayInfos.transfer.start_date  # departing transfer e.g. to hotel %>
             <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
         <% end %>
         
