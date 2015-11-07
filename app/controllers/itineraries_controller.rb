@@ -10,12 +10,11 @@ class ItinerariesController < ApplicationController
     respond_to do |format|
       format.pdf do
         render pdf: "Itinerary_no_" + @itinerary.id.to_s.rjust(8, '0'),
-               show_as_html: params.key?('debug')
-        
-        #,
-               #footer:  {   html: {   template:'itineraries/print_itinerary/footer.pdf.erb',
-               #                       layout: false
-               #}}
+               show_as_html: params.key?('debug'),
+               margin:  { :bottom => 20 },
+               footer:  {   html: {   template:'itineraries/print_itinerary/footer.pdf.erb',
+                                      layout: false
+               }}
       end
       format.html { render layout: false }
     end    
