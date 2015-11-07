@@ -119,7 +119,7 @@ class ItineraryInfo < ActiveRecord::Base
     prefix += " - " if !prefix.blank? 
     #str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
     roomtype = " - #{self.room_type_name}" if !self.room_type_name.blank?
-    str = "#{prefix}#{self.get_product_name} - #{self.get_product_name}#{roomtype}"
+    str = "#{prefix}#{self.get_product_name}#{roomtype}"
     return str
   end
 
