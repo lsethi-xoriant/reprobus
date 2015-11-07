@@ -99,10 +99,8 @@
  
       <div class="row">
         <div class="input-field col s6">
-          <% if !itinerary_has_been_created %>
-            <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
-            <%= f.label :assigned_to, "Assign To",  class: 'active' %>
-          <% end %>
+          <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
+          <%= f.label :assigned_to, "Assign To",  class: 'active' %>
         </div>
       </div>
     </div>
