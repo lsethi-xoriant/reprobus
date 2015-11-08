@@ -11,7 +11,6 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #  supplier_id           :integer
-#  offset                :integer          default("0")
 #  room_type             :integer
 #  includes_breakfast    :boolean
 #  includes_lunch        :boolean

@@ -9,9 +9,6 @@
 #  complete                   :boolean
 #  sent                       :boolean
 #  quality_check              :boolean
-#  price_per_person           :decimal(12, 2)
-#  price_total                :decimal(12, 2)
-#  bed                        :string
 #  includes                   :text
 #  excludes                   :text
 #  notes                      :text

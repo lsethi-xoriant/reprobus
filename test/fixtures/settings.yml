@@ -25,6 +25,9 @@
 #  itinerary_notes            :text
 #  itinerary_default_image_id :integer
 #  company_logo_id            :integer
+#  send_emails_turned_off     :boolean
+#  quote_introduction         :text
+#  confirmed_introduction     :text
 #
 
 firstcompany:

@@ -3,18 +3,8 @@
 # Table name: itinerary_infos
 #
 #  id                   :integer          not null, primary key
-#  name                 :string
 #  start_date           :date
 #  end_date             :date
-#  country              :string
-#  city                 :string
-#  product_type         :string
-#  product_name         :string
-#  product_description  :string
-#  product_price        :string
-#  rating               :string
-#  price_per_person     :decimal(12, 2)
-#  price_total          :decimal(12, 2)
 #  position             :integer
 #  supplier_id          :integer
 #  itinerary_id         :integer
@@ -25,8 +15,6 @@
 #  comment_for_supplier :text
 #  comment_for_customer :text
 #  room_type            :integer
-#  offset               :integer          default("0")
-#  days_from_start      :integer
 #  includes_breakfast   :boolean
 #  includes_lunch       :boolean
 #  includes_dinner      :boolean

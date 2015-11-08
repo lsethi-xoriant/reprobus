@@ -12,6 +12,9 @@
     <div class="input-field col s1 valign-wrapper sort_itinerary_item_col">
       <i class="mdi-editor-format-line-spacing small grey-text"></i>
       <h6 class="grey-text valign iti_postion_number"></h6>
+      <% if !f.object.comment_for_customer.blank? %>
+        <i class="mdi-communication-chat itineraryCommentNotification green-text"></i>
+      <% end %>
     </div>
     
     <div class="input-field col s1">
