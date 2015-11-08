@@ -24,6 +24,7 @@
 .imgdetails { float:left; margin-right:40px; width:260px;} .contdetails { float:left; width:65%;} .clear { clear:both;}
 .imgdetails img{width:100%;}
 .title { color:#97bd4e; font-size:20px; line-height:30px; font-weight: 800;}
+.title2 { color:#97bd4e; font-size:18px; line-height:30px; font-weight: 800;}
 .caption { color:#424043; font-size:18px; line-height:28px; font-weight: 400;}
 .page-break { display:block; clear:both; page-break-after:always; }
 </style>
@@ -35,7 +36,7 @@
 
 <body> 
 <div class="bodyWrap">
-<%= render partial: 'itineraries/print_itinerary/header', formats: [:html]  %>
+<%= render partial: 'itineraries/print_itinerary/title', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/introduction', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/summary', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>

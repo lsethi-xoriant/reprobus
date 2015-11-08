@@ -11,7 +11,7 @@ class ItinerariesController < ApplicationController
       format.pdf do
         render pdf: "Itinerary_no_" + @itinerary.id.to_s.rjust(8, '0'),
                show_as_html: params.key?('debug'),
-               margin:  { :bottom => 20 },
+               margin:  { :bottom => 15 },
                footer:  {   html: {   template:'itineraries/print_itinerary/footer.pdf.erb',
                                       layout: false
                }}

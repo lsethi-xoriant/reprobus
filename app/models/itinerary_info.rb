@@ -53,9 +53,13 @@ class ItineraryInfo < ActiveRecord::Base
     return self.supplier.supplier_name if self.supplier
   end
   
-  def room_type_name
+  def get_room_type_name
     return self.product.rooms.find(self.room_type).name if self.room_type
   end
+  
+  def get_room_type
+    return self.product.rooms.find(self.room_type) if self.room_type
+  end  
   
   def get_product_details
     return self.product.product_details if self.product
@@ -118,7 +122,7 @@ class ItineraryInfo < ActiveRecord::Base
   def get_itinerary_header_details_cruiseday(prefix)
     prefix += " - " if !prefix.blank? 
     #str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
-    roomtype = " - #{self.room_type_name}" if !self.room_type_name.blank?
+    roomtype = " - #{self.get_room_type_name}" if !self.get_room_type_name.blank?
     str = "#{prefix}#{self.get_product_name}#{roomtype}"
     return str
   end
