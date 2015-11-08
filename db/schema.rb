@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108102754) do
+ActiveRecord::Schema.define(version: 20151108120617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -350,6 +350,10 @@ ActiveRecord::Schema.define(version: 20151108102754) do
     t.integer  "itinerary_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "deposit_due"
+    t.date     "invoice_date"
+    t.date     "balance_due"
+    t.date     "final_balance_due"
   end
 
   add_index "itinerary_prices", ["itinerary_id"], name: "index_itinerary_prices_on_itinerary_id", using: :btree
