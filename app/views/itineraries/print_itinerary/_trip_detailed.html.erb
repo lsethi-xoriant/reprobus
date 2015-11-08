@@ -31,7 +31,7 @@
        
   <div class="detailsbox">
     
-  	<p class="headdetails"><%= date.strftime("#{date.day.ordinalize} %b %Y") %><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
+  	<p class="headdetails"><%= date.strftime("#{date.day.ordinalize} %b %Y") %><%= " : Day #{leg_count} - #{dayInfos.get_product_country}, #{dayInfos.get_product_destination}" %></p>
     
     <% if dayInfos.standard_infos.first %>
       <div class="imgdetails"><img src=<%= dayInfos.standard_infos.first.product.get_dropbox_image_link %> alt="" /></div>

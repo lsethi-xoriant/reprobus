@@ -82,7 +82,7 @@ private
   def itinerary_params
     params.require(:itinerary).permit(:itinerary_id,  itinerary_price_items_attributes: [:id, :booking_ref, :description, :price_total, 
     :supplier_id, :itinerary_price_id, 
-    :country, :length, :city, :product_type, :product_name, :rating, :room_type, :supplier_id,
+    :country, :length, :city, :product_type, :rating, :room_type, :supplier_id,
     :comment_for_customer, :comment_for_supplier, :_destroy ])
   end  
   

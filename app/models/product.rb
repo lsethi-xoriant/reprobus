@@ -127,6 +127,10 @@ class Product < ActiveRecord::Base
     return self.country.name if self.country
   end
   
+  def comment_for_customer 
+    return false
+  end
+  
   def destination_name
     return self.destination.name if self.destination
   end

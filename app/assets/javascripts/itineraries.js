@@ -4,7 +4,6 @@ $(document).ready(function() {
   
   itinerary_common_controls_init();  
 
-  
   $(".select2-room-types-noajax").select2();  
   
   // set up insert function on both pages, so can insert rows where we decide

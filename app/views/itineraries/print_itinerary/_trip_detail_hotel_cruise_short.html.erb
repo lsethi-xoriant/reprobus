@@ -3,5 +3,8 @@
 <% if info.has_meal_inclusions %>
   <p><strong><%= "Includes: #{info.get_meal_inclusions}" %></strong></p>
 <% end %>  
+<% if info.comment_for_customer %>
+  <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
+<% end %>  
 <div class="clear50"></div>
 <%end%>

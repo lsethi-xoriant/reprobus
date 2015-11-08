@@ -1,6 +1,6 @@
 <div class="detailsbox">
 
-  <% if info.product &&  !info.product.image_remote_url.blank?  %>
+  <% if info.product && !info.product.image_remote_url.blank?  %>
     <div class="imgdetails"><img src=<%= info.product.get_dropbox_image_link %> alt="" /></div>
   <% else %>  
     <div class="imgdetails">&nbsp;</div>
@@ -13,9 +13,6 @@
       <p class="phone"><strong><%= "#{info.get_product_phone}" %></strong></p>
       <br>
       <p class="caption"><%= "#{info.get_product_description}"%></p>
-      <% if info.comment_for_customer %>
-        <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
-      <% end %>      
     </div>
   <%end%>
   

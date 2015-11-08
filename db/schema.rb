@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029051042) do
+ActiveRecord::Schema.define(version: 20151108102754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,9 +291,6 @@ ActiveRecord::Schema.define(version: 20151029051042) do
     t.boolean  "complete"
     t.boolean  "sent"
     t.boolean  "quality_check"
-    t.decimal  "price_per_person",           precision: 12, scale: 2
-    t.decimal  "price_total",                precision: 12, scale: 2
-    t.string   "bed"
     t.text     "includes"
     t.text     "excludes"
     t.text     "notes"
@@ -314,18 +311,8 @@ ActiveRecord::Schema.define(version: 20151029051042) do
   add_index "itineraries", ["user_id"], name: "index_itineraries_on_user_id", using: :btree
 
   create_table "itinerary_infos", force: :cascade do |t|
-    t.string   "name"
     t.date     "start_date"
     t.date     "end_date"
-    t.string   "country"
-    t.string   "city"
-    t.string   "product_type"
-    t.string   "product_name"
-    t.string   "product_description"
-    t.string   "product_price"
-    t.string   "rating"
-    t.decimal  "price_per_person",     precision: 12, scale: 2
-    t.decimal  "price_total",          precision: 12, scale: 2
     t.integer  "position"
     t.integer  "supplier_id"
     t.integer  "itinerary_id"
@@ -336,8 +323,6 @@ ActiveRecord::Schema.define(version: 20151029051042) do
     t.text     "comment_for_supplier"
     t.text     "comment_for_customer"
     t.integer  "room_type"
-    t.integer  "offset",                                        default: 0
-    t.integer  "days_from_start"
     t.boolean  "includes_breakfast"
     t.boolean  "includes_lunch"
     t.boolean  "includes_dinner"
@@ -378,7 +363,6 @@ ActiveRecord::Schema.define(version: 20151029051042) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "supplier_id"
-    t.integer  "offset",                default: 0
     t.integer  "room_type"
     t.boolean  "includes_breakfast"
     t.boolean  "includes_lunch"

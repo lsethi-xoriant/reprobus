@@ -114,7 +114,7 @@ function initProductSelect2() {
               product: productId
               }
       }).done(function(data) {
-console.log(data);
+
         // populate supplier dropdown, and room type dropdown
         var optionStr = "";
         var selectedVal;
@@ -141,7 +141,7 @@ console.log(data);
         if (data.type == "Transfer" || data.type == "Tour") {
           $(nextDestField).closest('.field').find('.radio_group_class_' + data.grouptype).prop('checked', true);
           $(nextDestField).closest('.field').find('.group_classification_container').show();
-console.log("show cont")          ;
+
         }else{
           $(nextDestField).closest('.field').find('.group_classification_container').hide();
         } 
