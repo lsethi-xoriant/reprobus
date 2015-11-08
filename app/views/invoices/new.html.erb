@@ -5,7 +5,7 @@
 <% if !@invoice.deposit_due.blank? %>
   <% depositDay =  @invoice.deposit_due %>
 <% end %>
-<% @invoice.currency ? currency = @invoice.getCurrencySelect2 : currency = Setting.find(1).getCurrencySelect2 %>
+<%# @invoice.currency ? currency = @invoice.getCurrencySelect2 : currency = Setting.find(1).getCurrencySelect2 %>
 
 <% provide(:title, 'Create Invoice') %>
 <h1 class="page-header">Create Invoice</h1>
