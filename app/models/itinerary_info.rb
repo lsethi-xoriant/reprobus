@@ -41,7 +41,7 @@ class ItineraryInfo < ActiveRecord::Base
   end
   
   def get_room_type
-    return self.product.rooms.find(self.room_type) if self.room_type
+    return self.product.rooms.find(self.room_type) if self.product.rooms.find(self.room_type)
   end  
   
   def get_product_details
