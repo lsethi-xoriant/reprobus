@@ -37,8 +37,7 @@ Reprobus::Application.routes.draw do
     get 'printItinerary'
   end
   
-  
-  #resources :itinerary_prices
+  resources :itinerary_prices, only: [:new, :edit, :update, :create]
     
   resources :suppliers
   resources :agents

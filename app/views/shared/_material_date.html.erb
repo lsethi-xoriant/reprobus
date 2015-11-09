@@ -1,0 +1,14 @@
+<div class="input-field col <%=col%>">
+  <% if local_assigns.has_key? :value %>
+    <%= f.date_field field.to_sym, class:"datepicker", :"data-value" => value %>
+    <% active = " active" if value %>
+  <% else %>
+    <%= f.date_field field.to_sym, class:"datepicker" %>
+  <% end %>
+  
+  <% if local_assigns.has_key? :name %>
+    <%= f.label field.to_sym, name, class: "active" %>
+  <% else %>
+   <%= f.label field.to_sym, class: "active" %>
+  <% end %>
+</div>

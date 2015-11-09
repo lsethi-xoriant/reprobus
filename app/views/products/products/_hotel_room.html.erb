@@ -5,7 +5,7 @@
 
   <div class ="row">
     <div class="field">
-      <%= render partial: 'shared/material_textfield_cols5', locals: { field: "room_type", f: f } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s5", field: "room_type", f: f } %>
     </div>
     <div class="input-field col s1 offset-s6">
       <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>

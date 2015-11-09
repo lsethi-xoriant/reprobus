@@ -49,9 +49,6 @@
         <div class="row">
           <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
           <div class="input-field input-field col s3" >
-          <a id="addPricingButton" class="waves-effect waves-light btn right deep-purple darken-1 modal-trigger tooltipped" 
-            data-position="bottom" data-delay="50" data-tooltip="Add pricing" 
-            href="#">Add Pricing</a> 
           </div>  
           <div class="input-field insert_template_cont input-field col s3" >
             <a id="unlockItineraryBtn" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped unlockItineraryBtn" 
@@ -118,9 +115,13 @@
     
 <%# if @itinerary.isLocked? %>
 <div class="row">
-<div class="input-field col s12 offset-s2" >
-<a href="<%= itinerary_printItinerary_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn left deep-purple darken-1" target="_blank" >View Itinerary Pdf</a>
-</div>
+  <div class="input-field col s3 offset-s1" >
+  <a href="<%= itinerary_printItinerary_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn left deep-purple darken-1" target="_blank" >View Itinerary Pdf</a>
+  </div>
+  
+  <div class="input-field col s3 offset-s4" >
+    <%= render partial: 'pricingBtn'%>
+  </div>               
 </div>
 <%# end %>
   

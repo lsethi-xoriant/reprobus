@@ -8,7 +8,7 @@
     <%= f.hidden_field :original_product_id, :value => @original_product_id  %>
   
     <div class="row">
-      <%= render partial: 'shared/material_textfield_cols4', locals: { field: "name", f: f } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s4", field: "name", f: f } %>
       
       <div class="input-field col s4">
         <%= f.select(:country_id, options_from_collection_for_select(select_countries,:id, :name, f.object.country_id),{},{class: "select2-countries-noajax browser-default",include_blank: true}) %>
@@ -24,8 +24,8 @@
     
     <div class="row">
       <% if @product.type == "Hotel" || @product.type == "Cruise"  %>
-        <%= render partial: 'shared/material_textfield_cols4', locals: { field: "rating", f: f } %>
-        <%= render partial: 'shared/material_textfield_cols2', locals: { field: "default_length", f: f, name: "Default # Days" } %>
+        <%= render partial: 'shared/material_textfield', locals: { col: "s4", field: "rating", f: f } %>
+        <%= render partial: 'shared/material_textfield', locals: { col: "s2", field: "default_length", f: f, name: "Default # Days" } %>
       <% end%>
     </div>
     

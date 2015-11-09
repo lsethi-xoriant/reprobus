@@ -1,0 +1,67 @@
+
+<div class="row">
+
+  <%= form_for @itinerary_price, :html => {:multipart => true, :class => "col s12"} do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+	  <%= f.hidden_field :itinerary_id %>
+
+    <%= render partial: 'itinerary_details' %>
+
+	  <div class ="card-panel">
+	    <h5 class="teal-text"><i class="mdi-action-shopping-cart Tiny"></i> QUOTE DETAILS</h5>
+	    
+	    <div class="row">
+	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Travel Agent", value: @itinerary_price.get_agent_display } %>
+	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Consultant", value: @itinerary_price.get_consultant_display } %>
+	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Currency", value: "TBB" } %>
+	    </div>
+	    
+      <div class="row">
+        <%= render partial: 'shared/material_date', locals: { col: "s4", field: "invoice_date", f: f, name: "Invoice Date", value: @itinerary_price.invoice_date } %>
+        <%= render partial: 'shared/material_date', locals: { col: "s4", field: "deposit_due", f: f, name: "Deposit Due Date", value: @itinerary_price.deposit_due } %>
+        <%= render partial: 'shared/material_date', locals: { col: "s4", field: "final_balance_due", f: f, name: "Final Balance Due Date", value: @itinerary_price.final_balance_due } %>
+      </div>
+      
+	  </div>
+	  
+	  
+	  <div class ="card-panel">
+	    <h5 class="teal-text"><i class="mdi-maps-local-offer Tiny"></i> CLIENT COSTS</h5>
+	    
+       <div id="itinerary_price_items">
+         
+      	  <%= f.fields_for :itinerary_price_items, :html => {:class => "col s12"}  do |c| %>
+      	    <div class="row">
+        	    <%= render partial: 'itinerary_price_items', locals: { f: c } %>
+        	  </div>
+          <% end %>
+    	    
+    	    <div class="links">
+      	    <div class="row">
+      	      <div class="offset-s10 col s2">
+                <%= link_to_add_association  f, :itinerary_price_items, {partial: 'itinerary_price_items', class: "btn teal waves-effect waves-light"} do %>
+                  <i class="mdi-content-add-circle left"></i>Add a Line Item
+                <% end %>
+              </div>
+            </div>
+          </div>
+          
+        </div>	    
+	    
+	  </div>
+	  
+	  
+	  <div class ="card-panel">
+	    <h5 class="teal-text"><i class="mdi-action-add-shopping-cart Tiny"></i> SUPPLIER COSTS</h5>
+	    
+	  </div>
+	  
+	  
+    <div class="row">
+      <div class="input-field col s12" >
+        <%= f.submit buttontxt, class: "btn right"%>
+      </div>
+    </div> 
+  <% end %>
+	 
+</div>	 

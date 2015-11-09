@@ -1,4 +1,4 @@
-<div class="input-field col s6">
+<div class="input-field col <%=col%>">
   <% if local_assigns.has_key? :icon %>
    <i class="<%= icon %>"></i>
   <% end %>
@@ -9,4 +9,3 @@
    <%= f.label field.to_sym %>
   <% end %>
 </div>
-

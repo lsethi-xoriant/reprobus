@@ -1,0 +1,11 @@
+<div class ="card-panel">
+  <h5 class="teal-text"><i class="mdi-editor-insert-invitation Tiny"></i> ITINERARY DETAILS</h5>
+  <div class="row">
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Client", value: @itinerary_price.itinerary.enquiry.lead_customer.fullname_with_title } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Reference", value: "???" } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Tour Name", value: @itinerary_price.itinerary.name } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Start Date", value: @itinerary_price.itinerary.start_date_display } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "End Date", value: @itinerary_price.itinerary.end_date_display } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Value", value: @itinerary_price.get_total_customer_price } %>	      
+  </div>
+</div> 
