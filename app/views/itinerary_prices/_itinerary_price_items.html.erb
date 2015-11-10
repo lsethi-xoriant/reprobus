@@ -1,7 +1,16 @@
-<div class="nested-fields">
-  <div class="field">
-    <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "description", f: f } %>
-    <div class="input-field col s6"></div>
-    <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "price_total", f: f } %>
+<div class="row"> 
+  <div class="nested-fields">
+    <div class="field  col s12">
+      <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "description", f: f } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s2", field: "quantity", f: f } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s2", field: "item_price", f: f } %>
+      <%= render partial: 'shared/material_percentfield', locals: { col: "s2 center-align", field: "deposit", f: f, name: "Deposit %", value: f.object.deposit } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s2", field: "price_total", f: f } %>
+      <div class="input-field col s1 center-align">
+        <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
+          <i class="mdi-content-clear"></i>
+        <% end %>
+      </div>      
+    </div>
   </div>
 </div>

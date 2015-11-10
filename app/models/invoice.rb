@@ -46,6 +46,8 @@ class Invoice < ActiveRecord::Base
   has_many   :payments, dependent: :destroy
   has_one    :x_invoice
   
+  has_many :itinerary_price_items
+  
   validate do |invoice|
     int = 0;
     invoice.line_items.each do |li|

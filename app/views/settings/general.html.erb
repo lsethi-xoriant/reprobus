@@ -17,13 +17,13 @@
           <% end %>
           
           <div class="row">
-            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_mastercard", f: f, value: @setting.get_cc_mastercard_display, name: "Mastercard % Fee"} %>
+            <%= render partial: 'shared/material_percentfield', locals: { col: "s6", field: "cc_mastercard", f: f, value: @setting.get_cc_mastercard_display, name: "Mastercard % Fee"} %>
           </div>
           <div class="row">
-            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_visa", f: f, value: @setting.get_cc_visa_display, name: "Visa % Fee"} %>
+            <%= render partial: 'shared/material_percentfield', locals: { col: "s6", field: "cc_visa", f: f, value: @setting.get_cc_visa_display, name: "Visa % Fee"} %>
           </div>
           <div class="row">
-            <%= render partial: 'shared/material_percentfield_cols6', locals: { field: "cc_amex", f: f, value: @setting.get_cc_other_display, name: "Other CC % Fee"} %>
+            <%= render partial: 'shared/material_percentfield', locals: { col: "s6", field: "cc_amex", f: f, value: @setting.get_cc_other_display, name: "Other CC % Fee"} %>
           </div>
           
           <div class="row">
