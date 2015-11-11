@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110111328) do
+ActiveRecord::Schema.define(version: 20151111082737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,40 +90,41 @@ ActiveRecord::Schema.define(version: 20151110111328) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",           limit: 64,  default: "",    null: false
-    t.string   "last_name",            limit: 64,  default: "",    null: false
-    t.string   "title",                limit: 64
-    t.string   "source",               limit: 32
-    t.string   "email",                limit: 64
-    t.string   "alt_email",            limit: 64
-    t.string   "phone",                limit: 255
-    t.string   "mobile",               limit: 32
-    t.string   "fax",                  limit: 32
-    t.string   "blog",                 limit: 128
-    t.string   "linkedin",             limit: 128
-    t.string   "facebook",             limit: 128
-    t.string   "twitter",              limit: 128
+    t.string   "first_name",                 limit: 64,  default: "",    null: false
+    t.string   "last_name",                  limit: 64,  default: "",    null: false
+    t.string   "title",                      limit: 64
+    t.string   "source",                     limit: 32
+    t.string   "email",                      limit: 64
+    t.string   "alt_email",                  limit: 64
+    t.string   "phone",                      limit: 255
+    t.string   "mobile",                     limit: 32
+    t.string   "fax",                        limit: 32
+    t.string   "blog",                       limit: 128
+    t.string   "linkedin",                   limit: 128
+    t.string   "facebook",                   limit: 128
+    t.string   "twitter",                    limit: 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                      default: false, null: false
+    t.boolean  "do_not_call",                            default: false, null: false
     t.datetime "deleted_at"
-    t.string   "background_info",      limit: 255
-    t.string   "skype",                limit: 128
+    t.string   "background_info",            limit: 255
+    t.string   "skype",                      limit: 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "issue_date"
     t.date     "expiry_date"
-    t.string   "place_of_issue",       limit: 255
-    t.string   "passport_num",         limit: 255
-    t.string   "insurance",            limit: 255
-    t.string   "gender",               limit: 255
-    t.string   "emailID",              limit: 255
-    t.string   "xero_id",              limit: 255
-    t.string   "cust_sup",             limit: 255
-    t.string   "supplier_name",        limit: 255
+    t.string   "place_of_issue",             limit: 255
+    t.string   "passport_num",               limit: 255
+    t.string   "insurance",                  limit: 255
+    t.string   "gender",                     limit: 255
+    t.string   "emailID",                    limit: 255
+    t.string   "xero_id",                    limit: 255
+    t.string   "cust_sup",                   limit: 255
+    t.string   "supplier_name",              limit: 255
     t.integer  "currency_id"
     t.integer  "num_days_payment_due"
-    t.string   "after_hours_phone",    limit: 255
+    t.string   "after_hours_phone",          limit: 255
     t.integer  "company_logo_id"
+    t.integer  "agent_commision_percentage",             default: 0
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -348,6 +349,11 @@ ActiveRecord::Schema.define(version: 20151110111328) do
     t.integer  "quantity",                                             default: 0
     t.decimal  "item_price",                  precision: 12, scale: 2, default: 0.0
     t.integer  "deposit",                                              default: 0
+    t.date     "start_date"
+    t.integer  "currency_id"
+    t.integer  "markup_percentage"
+    t.date     "end_date"
+    t.decimal  "sell_currency_rate",          precision: 12, scale: 2, default: 0.0
   end
 
   add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree
@@ -361,6 +367,7 @@ ActiveRecord::Schema.define(version: 20151110111328) do
     t.date     "invoice_date"
     t.date     "balance_due"
     t.date     "final_balance_due"
+    t.boolean  "locked",            default: false
   end
 
   add_index "itinerary_prices", ["itinerary_id"], name: "index_itinerary_prices_on_itinerary_id", using: :btree
@@ -495,6 +502,9 @@ ActiveRecord::Schema.define(version: 20151110111328) do
     t.boolean  "send_emails_turned_off"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
+    t.integer  "num_days_balance_due",                                           default: 95
+    t.integer  "num_days_deposit_due",                                           default: 7
+    t.integer  "deposit_percentage",                                             default: 0
   end
 
   create_table "stopovers", force: :cascade do |t|

@@ -135,7 +135,8 @@ private
     :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :itinerary_notes,
     :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user, :itinerary_excludes,
     :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes,
-    :quote_introduction, :confirmed_introduction,
+    :quote_introduction, :confirmed_introduction, :num_days_balance_due, :num_days_deposit_due,
+    :deposit_percentage,
     triggers_attributes: [:id, :email_template_id, :num_days],
     company_logo_attributes: [:id, :image_local, :image_remote_url],
     itinerary_default_image_attributes: [:id, :image_local, :image_remote_url])

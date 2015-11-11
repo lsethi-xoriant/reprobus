@@ -25,6 +25,15 @@
           <div class="row">
             <%= render partial: 'shared/material_percentfield', locals: { col: "s6", field: "cc_amex", f: f, value: @setting.get_cc_other_display, name: "Other CC % Fee"} %>
           </div>
+          <div class="row">
+            <%= render partial: 'shared/material_percentfield', locals: { col: "s6", field: "deposit_percentage", f: f, value: @setting.deposit_percentage, name: "Default Deposit %"} %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_numberfield', locals: { col: "s6", field: "num_days_balance_due", f: f, value: @setting.num_days_balance_due, name: "Balance due # days before trip"} %>
+          </div>
+          <div class="row">
+            <%= render partial: 'shared/material_numberfield', locals: { col: "s6", field: "num_days_deposit_due", f: f, value: @setting.num_days_deposit_due, name: "Deposit due # days from quote generation"} %>
+          </div>          
           
           <div class="row">
             <div class="input-field col s6">

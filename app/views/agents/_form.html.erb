@@ -13,6 +13,10 @@
         <%= render partial: 'shared/image_field', locals: { imageHolder: @customer.company_logo, f: t, title: "Company Logo (recommended width 400px): " } %>
       <% end %>
       
+      <div class="row">
+        <%= render partial: 'shared/material_numberfield', locals: { col: "s6", field: "agent_commision_percentage", f: f, value: @customer.agent_commision_percentage, name: "Agent Commision %"} %>
+      </div> 
+          
       <div class="row"><div class="col s12">
         <h6>Contact details</h6>
       </div></div>
