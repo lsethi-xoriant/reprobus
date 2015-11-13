@@ -51,7 +51,7 @@ class ItineraryPricesController < ApplicationController
 private
   def itinerary_price_params
     params.require(:itinerary_price).permit(:itinerary_id, :deposit_due, 
-    :invoice_date, :balance_due, :final_balance_due,
+    :invoice_date, :balance_due, :final_balance_due, :currency_id, 
     itinerary_price_items_attributes: [:id, :booking_ref, :description, 
     :price_total, :supplier_id, :itinerary_price_id,  :deposit,
     :item_price, :quantity, :_destroy ],

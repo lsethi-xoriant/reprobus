@@ -24,6 +24,7 @@ class ItineraryPrice < ActiveRecord::Base
   has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
   
   belongs_to :itinerary
+  belongs_to :currency
  
  
   def get_agent_display
@@ -34,6 +35,10 @@ class ItineraryPrice < ActiveRecord::Base
     end
   end
   
+  def get_currency_display
+    return self.currency.displayName if self.currency
+  end
+    
   def get_consultant_display
     return  self.itinerary.enquiry.assigned_to_name
   end  
@@ -48,6 +53,9 @@ class ItineraryPrice < ActiveRecord::Base
   
   def new_setup
     setting = Setting.global_settings
+    
+    self.currency_id = setting.getDefaultCurrency.id
+    
     supArray = []
     
     setting.suppliers.each do |sup|

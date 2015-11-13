@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112070508) do
+ActiveRecord::Schema.define(version: 20151113115341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,6 +369,7 @@ ActiveRecord::Schema.define(version: 20151112070508) do
     t.date     "balance_due"
     t.date     "final_balance_due"
     t.boolean  "locked",            default: false
+    t.integer  "currency_id"
   end
 
   add_index "itinerary_prices", ["itinerary_id"], name: "index_itinerary_prices_on_itinerary_id", using: :btree

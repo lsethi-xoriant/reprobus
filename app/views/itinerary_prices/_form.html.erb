@@ -13,7 +13,9 @@
 	    <div class="row">
 	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Travel Agent", value: @itinerary_price.get_agent_display } %>
 	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Consultant", value: @itinerary_price.get_consultant_display } %>
-	      <%= render partial: 'shared/material_readonly', locals: { col: "s4", label: "Currency", value: "TBB" } %>
+	      <div class="input-field  col s4">
+	        <%= f.select(:currency_id, options_for_select([[f.object.get_currency_display, f.object.currency_id]],f.object.currency_id),{},{class: "select2-currencies browser-default"}) %>
+	      </div>
 	    </div>
 	    
       <div class="row">
