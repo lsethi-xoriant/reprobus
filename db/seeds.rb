@@ -11,7 +11,7 @@
     setting.save
     
     user = User.create!( :email => 'hamish@writecode.com.au', :name => 'System', :password => 'password', :password_confirmation => 'password' )
-
+    
     Currency.create!(:code => 'AED' , :currency => 'United Arab Emirates Dirham' )
     Currency.create!(:code => 'AFN' , :currency => 'Afghanistan Afghani' )
     Currency.create!(:code => 'ALL' , :currency => 'Albania Lek' )

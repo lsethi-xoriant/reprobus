@@ -28,6 +28,9 @@
 #  send_emails_turned_off     :boolean
 #  quote_introduction         :text
 #  confirmed_introduction     :text
+#  num_days_balance_due       :integer          default("95")
+#  num_days_deposit_due       :integer          default("7")
+#  deposit_percentage         :integer          default("0")
 #
 
 class Setting < ActiveRecord::Base
@@ -43,6 +46,9 @@ class Setting < ActiveRecord::Base
   
   belongs_to :currency
   has_many :exchange_rates
+  has_many :suppliers, :class_name => "Customer"
+  accepts_nested_attributes_for :suppliers
+  
   has_many :triggers, -> { order ('id ASC') }
   accepts_nested_attributes_for :triggers
  

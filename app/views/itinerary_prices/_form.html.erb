@@ -48,19 +48,20 @@
       </div>	    
 	  </div>
 	  
-	  
 	  <div class ="card-panel">
 	    <h5 class="teal-text"><i class="mdi-action-add-shopping-cart Tiny"></i> SUPPLIER COSTS</h5>
        <div id="supplier_itinerary_price_items">
          
       	  <%= f.fields_for :supplier_itinerary_price_items, :html => {:class => ""}  do |c| %>
-        	  <%= render partial: 'itinerary_price_items', locals: { f: c } %>
+      	    <div class="row"> 
+        	  <%= render partial: 'supplier_itinerary_price_items', locals: { f: c } %>
+        	  </div> 
           <% end %>
     	    
     	    <div class="links">
     	      <div class="row">
       	      <div class="col s12">
-                <%= link_to_add_association  f, :supplier_itinerary_price_items, {partial: 'itinerary_price_items', class: "btn grey waves-effect waves-light"} do %>
+                <%= link_to_add_association  f, :supplier_itinerary_price_items, {partial: 'supplier_itinerary_price_items', class: "btn grey waves-effect waves-light"} do %>
                   <i class="mdi-content-add-circle left"></i>Add a Line Item
                 <% end %>
               </div>
@@ -70,9 +71,11 @@
         </div>	    
 	  </div>
 	  
-	  
     <div class="row">
-      <div class="input-field col s12" >
+      <div class="input-field col s6" >
+        <a href="<%= edit_itinerary_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Back to Itinerary</a>
+      </div>      
+      <div class="input-field col s6" >
         <%= f.submit buttontxt, class: "btn right green"%>
       </div>
     </div> 

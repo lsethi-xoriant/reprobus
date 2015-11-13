@@ -11,16 +11,20 @@ class ItineraryPricesController < ApplicationController
     end
     
     @itinerary_price = ItineraryPrice.new
-    @itinerary_price.itinerary = @itinerary
+    @itinerary_price.itinerary = @itinerary   
+    @itinerary_price.new_setup()
+   
   end
   
   def edit
     @itinerary_price = ItineraryPrice.includes(:itinerary_price_items).find(params[:id])
+    @itinerary = @itinerary_price.itinerary
   end
   
   def create
     @itinerary_price = ItineraryPrice.new(itinerary_price_params)
-
+    @itinerary = @itinerary_price.itinerary
+    
     if @itinerary_price.save
       @itinerary_price.itinerary.status = "Pricing Created"
       @itinerary_price.itinerary.save
@@ -32,8 +36,8 @@ class ItineraryPricesController < ApplicationController
   end
 
   def update
-
     @itinerary_price = ItineraryPrice.find(params[:id])
+    @itinerary = @itinerary_price.itinerary
     
     if @itinerary_price.update_attributes(itinerary_price_params)
       flash[:success] = "Itinerary Pricing updated"
@@ -55,6 +59,4 @@ private
     :price_total, :supplier_id, :itinerary_price_id,  :deposit,
     :item_price, :quantity, :_destroy ])
   end  
-  
-
 end

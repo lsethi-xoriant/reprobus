@@ -35,6 +35,13 @@
             <%= render partial: 'shared/material_numberfield', locals: { col: "s6", field: "num_days_deposit_due", f: f, value: @setting.num_days_deposit_due, name: "Deposit due # days from quote generation"} %>
           </div>          
           
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select(:supplier_ids, options_from_collection_for_select(@suppliers, :id, :supplier_name, @setting.supplier_ids),{},{class: "select2-suppliers browser-default", multiple: "multiple"}) %>
+          <%= f.label :supplier_ids, "Default Suppliers for pricing", class: 'active' %>
+        </div>      
+      </div>          
+          
           <div class="row">
             <div class="input-field col s6">
               <%= f.select(:currency_id, options_for_select([[f.object.currencyDisplay, f.object.currency_id]],f.object.currency_id),{},{class: "select2-currencies browser-default"}) %>

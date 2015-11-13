@@ -52,6 +52,7 @@ class Product < ActiveRecord::Base
   
   #belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
   has_and_belongs_to_many :suppliers, :class_name => "Customer", :join_table => "customers_products", :association_foreign_key  => :customer_id
+
   
   belongs_to  :country
   belongs_to  :destination

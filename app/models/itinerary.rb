@@ -58,6 +58,23 @@ class Itinerary < ActiveRecord::Base
     return self.itinerary_template.name if self.itinerary_template
   end
   
+  def nice_id
+    self.id.to_s.rjust(6, '0')
+  end
+  
+  def select_suppliers
+    # return list of potential suppliers for dropdowns
+    suppliers = []
+    self.itinerary_infos.each do |info| 
+      if !info.supplier.blank? && !suppliers.include?(info.supplier)  
+        suppliers << info.supplier
+      end
+    end
+    suppliers = suppliers + Setting.global_settings.suppliers
+    
+    return suppliers
+  end    
+  
   def get_itinerary_image_link
     if self.itinerary_default_image and self.itinerary_default_image.hasImage? then 
       return self.itinerary_default_image.get_image_link()

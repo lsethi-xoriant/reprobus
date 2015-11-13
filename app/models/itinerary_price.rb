@@ -10,6 +10,7 @@
 #  invoice_date      :date
 #  balance_due       :date
 #  final_balance_due :date
+#  locked            :boolean          default("false")
 #
 
 class ItineraryPrice < ActiveRecord::Base
@@ -45,6 +46,23 @@ class ItineraryPrice < ActiveRecord::Base
     return "$#{total}"
   end
   
-
+  def new_setup
+    setting = Setting.global_settings
+    supArray = []
+    
+    setting.suppliers.each do |sup|
+      if !supArray.include?(sup)
+        self.supplier_itinerary_price_items.build({supplier_id: sup.id})
+        supArray << sup
+      end
+    end
+    
+    self.itinerary.itinerary_infos.each do |info|
+      if info.supplier && !supArray.include?(info.supplier)
+        self.supplier_itinerary_price_items.build({supplier_id: info.supplier.id})
+        supArray << info.supplier
+      end
+    end 
+  end
     
 end

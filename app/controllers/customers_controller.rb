@@ -41,11 +41,11 @@ class CustomersController < ApplicationController
     if @customer.save
       flash[:success] = "#{@customer.cust_sup} created!"
       if @customer.isSupplier?
-        redirect_to supplier_path @customer
+        redirect_to edit_supplier_path @customer
       elsif @customer.isAgent?
-       redirect_to agent_path @customer
+       redirect_to edit_agent_path @customer
       else
-        redirect_to @customer
+        redirect_to edit_customer_path @customer
       end
     else
       render 'new'
@@ -62,7 +62,7 @@ class CustomersController < ApplicationController
       elsif @customer.isAgent?
        redirect_to edit_agent_path @customer
       else
-        redirect_to edit_customer_patch @customer
+        redirect_to edit_customer_path @customer
       end
     else
       render 'edit'

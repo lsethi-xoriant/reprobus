@@ -2,31 +2,33 @@
 #
 # Table name: invoices
 #
-#  id                  :integer          not null, primary key
-#  booking_id          :integer
-#  status              :string(255)
-#  invoice_date        :datetime
-#  deposit_due         :datetime
-#  final_payment_due   :datetime
-#  created_at          :datetime
-#  updated_at          :datetime
-#  deposit             :decimal(12, 2)   default("0.0")
-#  pxpay_deposit_trxId :string(255)
-#  ccPaymentsAmount    :text
-#  ccPaymentsDate      :text
-#  supplier_invoice_id :integer
-#  customer_invoice_id :integer
-#  currency            :string(255)
-#  xero_id             :string(255)
-#  xdeposits           :text
-#  xpayments           :text
-#  supplier_id         :integer
-#  currency_id         :integer
-#  exchange_amount     :decimal(12, 2)   default("0.0")
-#  exchange_rate       :decimal(12, 2)   default("0.0")
-#  pxpay_balance_trxId :string
-#  pxpay_deposit_url   :string
-#  pxpay_balance_url   :string
+#  id                          :integer          not null, primary key
+#  booking_id                  :integer
+#  status                      :string(255)
+#  invoice_date                :datetime
+#  deposit_due                 :datetime
+#  final_payment_due           :datetime
+#  created_at                  :datetime
+#  updated_at                  :datetime
+#  deposit                     :decimal(12, 2)   default("0.0")
+#  pxpay_deposit_trxId         :string(255)
+#  ccPaymentsAmount            :text
+#  ccPaymentsDate              :text
+#  supplier_invoice_id         :integer
+#  customer_invoice_id         :integer
+#  currency                    :string(255)
+#  xero_id                     :string(255)
+#  xdeposits                   :text
+#  xpayments                   :text
+#  supplier_id                 :integer
+#  currency_id                 :integer
+#  exchange_amount             :decimal(12, 2)   default("0.0")
+#  exchange_rate               :decimal(12, 2)   default("0.0")
+#  pxpay_balance_trxId         :string
+#  pxpay_deposit_url           :string
+#  pxpay_balance_url           :string
+#  customer_itinerary_price_id :integer
+#  supplier_itinerary_price_id :integer
 #
 
 class Invoice < ActiveRecord::Base
