@@ -7,11 +7,23 @@ $(document).ready(function() {
     });
     
     $('#supplier_itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+    
       $(".select2-suppliers-noajax").select2();  
       
-      //$(insertedItem).closest('.field').find(".select2-suppliers-noajax").select2();
-      //$(insertedItem).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
-      console.log("inserting item ");
+    });
+    
+    
+    $('#itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+      $(".select2-suppliers-noajax").select2();  
+      
+      $(insertedItem).find('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 5, // Creates a dropdown of 15 years to control year
+        formatSubmit: 'yyyy-mm-dd',
+        format: 'yyyy-mm-dd',
+        hiddenSuffix: ''
+      });  
+      
     });
     
   }
