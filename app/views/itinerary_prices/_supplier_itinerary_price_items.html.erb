@@ -3,17 +3,16 @@
     <div class="field  col s12">
       
       <div class="input-field col s2">
-        <%= f.select(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers, :id, :supplier_name, f.object.supplier_id),{},{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
-        <%#= select_tag(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers,:id, :supplier_name, f.object.supplier_id),{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
+        <%= f.select(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers, :id, :supplier_name, f.object.supplier_id),{include_blank: true},{class: "select2-suppliers-noajax browser-default"}) %>
         <label for="supplier_id" class="active">Supplier</label>
       </div>    
     
       <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "booking_ref", f: f, name: "Confirmation Ref." } %>
       
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "quantity", f: f } %>
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "item_price", f: f } %>
-      <%= render partial: 'shared/material_percentfield', locals: { col: "s1 center-align", field: "markup_percentage", f: f, name: "Mark up %", value: f.object.markup_percentage } %>
-      <%= render partial: 'shared/material_textfield', locals: { col: "s2", field: "price_total", f: f } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1 qty_field", field: "quantity", f: f } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1 price_field", field: "item_price", f: f } %>
+      <%= render partial: 'shared/material_percentfield', locals: { col: "s1 center-align markup_percent_field", field: "markup_percentage", f: f, name: "Mark up %", value: f.object.markup_percentage } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s2 total_field", field: "price_total", f: f } %>
       <div class="input-field col s1 center-align">
         <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
           <i class="mdi-content-clear"></i>

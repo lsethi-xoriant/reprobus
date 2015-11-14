@@ -4,6 +4,7 @@
   <%= form_for @itinerary_price, :html => {:multipart => true, :class => ""} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :itinerary_id %>
+	  <%= f.hidden_field :deposit_system_default, value: @setting.deposit_percentage, class: "deposit_system_default" %>
 
     <%= render partial: 'itinerary_details' %>
 
@@ -22,6 +23,12 @@
         <%= render partial: 'shared/material_date', locals: { col: "s4", field: "invoice_date", f: f, name: "Invoice Date", value: @itinerary_price.invoice_date } %>
         <%= render partial: 'shared/material_date', locals: { col: "s4", field: "deposit_due", f: f, name: "Deposit Due Date", value: @itinerary_price.deposit_due } %>
         <%= render partial: 'shared/material_date', locals: { col: "s4", field: "final_balance_due", f: f, name: "Final Balance Due Date", value: @itinerary_price.final_balance_due } %>
+      </div>
+      
+      <div class= "row">
+          <%= render partial: 'shared/material_numberfield', locals: { col: "s4 deposit_total", field: "deposit", f: f } %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total", value: @itinerary_price.get_sale_total_display } %>
+          
       </div>
       
 	  </div>

@@ -9,7 +9,7 @@ $(document).ready(function() {
     $('#supplier_itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
     
       $(".select2-suppliers-noajax").select2();  
-      
+      reset_material_active_labels('#itinerary_price_items');
     });
     
     
@@ -24,7 +24,35 @@ $(document).ready(function() {
         hiddenSuffix: ''
       });  
       
+      reset_material_active_labels('#itinerary_price_items');
+      
+    });
+  
+      $(document).on('change', '.price_field', function() {
+    console.log("pice change");  
+      var totalfield = $(this).closest('.field').find('.price_total_field');
+      var qtyfield = $(this).closest('.field').find('.qty_field');
+      var total = ($(this).val() * qtyfield.val());
+    console.log(total);    
+      totalfield.val(total);
+      
+      var depositPercent = $(this).closest('.field').find('.deposit_percent_field').val();
+      var depTot = 0;
+      depTot = $(".itinerary_price_deposit_system_default").val();
+      depTot = (+depTot) + ((depositPercent/100) * total);
+      $(".itinerary_price_deposit_system_default").val(depTot);
+      
     });
     
+    $(document).on('change', '.qty_field', function() {
+      //alert( "Handler for .blur() called." );
+      var pricefield = $(this).closest('.field').find('.price_field');
+      var totalfield = pricefield.closest('.field').find('.price_total_field');
+    
+      var total = ($(this).val() * pricefield.val());
+      totalfield.val(total);
+    }); 
+      
   }
 });
+

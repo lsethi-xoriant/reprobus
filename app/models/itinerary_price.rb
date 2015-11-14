@@ -38,7 +38,11 @@ class ItineraryPrice < ActiveRecord::Base
   def get_currency_display
     return self.currency.displayName if self.currency
   end
-    
+
+  def get_sale_total_display
+    return "$" + self.sale_total.to_s
+  end
+  
   def get_consultant_display
     return  self.itinerary.enquiry.assigned_to_name
   end  

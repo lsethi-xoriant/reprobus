@@ -118,10 +118,13 @@ function initProductSelect2() {
         // populate supplier dropdown, and room type dropdown
         var optionStr = "";
         var selectedVal;
+        optionStr = optionStr + '<option value=""></option>';
         $.each(data.suppliers,function(i, item){
           optionStr = optionStr + '<option value="'+item.id+'">'+item.supplier_name+'</option>';
         });
-        if (data.suppliers.length == 1){selectedVal = data.suppliers[0].id;}
+        if (data.suppliers.length == 1){
+          selectedVal = data.suppliers[0].id;
+        }
         nextSuppField.empty().append(optionStr).val(selectedVal).trigger("change");
         
         optionStr = "";

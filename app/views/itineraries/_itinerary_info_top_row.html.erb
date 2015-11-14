@@ -55,7 +55,7 @@
     </div>
     
     <div class="input-field col s1">
-      <%= f.select(:supplier_id, options_from_collection_for_select(f.object.select_suppliers,:id, :supplier_name, f.object.supplier_id),{},{class: "select2-suppliers-noajax browser-default", include_blank: true}) %>
+      <%= f.select(:supplier_id, options_from_collection_for_select(f.object.select_suppliers,:id, :supplier_name, f.object.supplier_id),{include_blank: true},{class: "select2-suppliers-noajax browser-default"}) %>
       <label for="supplier_id" class="active">Supplier</label>
     </div>            
         
