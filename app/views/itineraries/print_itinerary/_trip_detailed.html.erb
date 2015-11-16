@@ -1,5 +1,5 @@
 
-
+<% imaageShown = false %>
 <% leg_count = 0 %>
 <% currCruise = nil %>
 <% cruiseDay = 0 %>
@@ -17,6 +17,7 @@
   <% leg_count = leg_count + 1 %>
   <% dayInfos = ItineraryInfosDay.new %>
   <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
+  <% imaageShown = false %>
   
   <% if dayInfos.cruise %>
     <% if currCruise == dayInfos.cruise %>
@@ -35,18 +36,28 @@
     
     <% if dayInfos.standard_infos.first %>
       <div class="imgdetails"><img src=<%= dayInfos.standard_infos.first.product.get_dropbox_image_link %> alt="" /></div>
-    <% elsif dayInfos.cruise %>
+      <% imaageShown = true %>
+    <% end %>
+    
+    <% if dayInfos.cruise %>
       <% cruiseProduct = dayInfos.cruise.product.getCruiseDay(cruiseDay) %>
       <% if cruiseProduct && cruiseProduct.get_dropbox_image_link %>
         <div class="imgdetails"><img src=<%= cruiseProduct.get_dropbox_image_link %> alt="" /></div>
+        <% imaageShown = true %>
       <% else %>
         <% if !dayInfos.cruise.product.image_remote_url.blank? %>  
           <div class="imgdetails"><img src=<%= dayInfos.cruise.product.get_dropbox_image_link %> alt="" /></div>
+          <% imaageShown = true %>
         <% end %>
       <% end %>
-    <% elsif dayInfos.hotel && !dayInfos.hotel.product.image_remote_url.blank?  %>
+    <% end %>
+      
+    <% if dayInfos.hotel && !dayInfos.hotel.product.image_remote_url.blank?  %>
       <div class="imgdetails"><img src=<%= dayInfos.hotel.product.get_dropbox_image_link %> alt="" /></div>
-    <% else %>
+      <% imaageShown = true %>
+    <% end %>
+    
+    <% if  !imaageShown %>
       <div class="imgdetails">&nbsp;</div>
     <% end %>
     
