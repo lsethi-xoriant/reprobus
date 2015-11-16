@@ -447,6 +447,7 @@ DEPENDENCIES
   mini_magick
   minitest-reporters (= 1.0.5)
   money
+  net-ssh
   nprogress-rails
   paper_trail (~> 4.0.0.beta)
   pg

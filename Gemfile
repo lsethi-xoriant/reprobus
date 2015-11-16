@@ -70,6 +70,7 @@ gem 'responders', '~> 2.0'
 gem 'delayed_job_active_record'
 gem 'cocoon'
 gem 'dropbox-sdk'
+gem 'net-ssh'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
