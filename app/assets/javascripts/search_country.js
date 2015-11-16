@@ -54,7 +54,6 @@ function initCountrySelect2() {
     // if countries field changes clear related fields if they exist -  destinations, products....
     $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
     $(this).closest(".row").find(".select2-products").val(null).trigger("change");
-    $(this).closest(".row").find(".itinerary-number-days").val("0");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
@@ -65,7 +64,6 @@ function initCountrySelect2() {
     //$(this).closest(".row").find(".select2-destinations-noajax").val(null).trigger("change");
     $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
     $(this).closest(".row").find(".select2-products").val(null).trigger("change");
-    $(this).closest(".row").find(".itinerary-number-days").val("0");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
     $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");

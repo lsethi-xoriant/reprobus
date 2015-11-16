@@ -84,8 +84,7 @@ $(document).ready(function() {
     // only want this behaviour on itinerary screens. - clearing & setting seach values on selecting of other conditions. 
     $('.type-itineraries').on('change', function(e) {
       $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
-//      $(this).closest(".row").find(".itinerary-number-days").val("0");
-//      $(this).closest(".row").find(".itinerary-days-from-start").val("0");
+
       $(this).closest('.field').find(".product_details").text("");
       $(this).closest('.field').find(".cruise-info").hide();
       $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
@@ -120,8 +119,8 @@ $(document).ready(function() {
   $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
     var prev_value = parseInt(insertedItem.prev().find(".itinerary-days-from-start").val(),10);
     prev_value += parseInt(insertedItem.prev().find(".itinerary-number-days").val(),10);
-    insertedItem.find(".itinerary-days-from-start").val(prev_value);    
-
+    if (isNaN(prev_value) == false) {insertedItem.find(".itinerary-days-from-start").val(prev_value); }
+    
     itineraryForm_initialise_elements_after_insert(insertedItem);
     
     insertedItem.find('.itinerary-days-from-start').on('change', function(e) { 
@@ -269,8 +268,7 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     
   insertedItem.find(".type-itineraries").on('change', function(e) {
     $(this).closest(".row").find(".select2-products").val(null).trigger("change"); 
-    //$(this).closest(".row").find(".itinerary-number-days").val("0");
-    //$(this).closest(".row").find(".itinerary-days-from-start").val("0");
+
     $(this).closest('.field').find(".product_details").text("");
     $(this).closest('.field').find(".cruise-info").hide();
     $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
