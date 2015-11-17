@@ -31,7 +31,7 @@
        
   <div class="detailsbox">
     
-  	<p class="headdetails"><%= date.strftime("#{date.day.ordinalize} %b %Y") %><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
+  	<p class="headdetails"><span class="itinerary_date_color"><%= date.strftime("#{date.day.ordinalize} %b %Y") %></span><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
     
       <% if dayInfos.transfer && dayInfos.first_start_date == dayInfos.transfer.start_date #arriving transfer %>
           <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer, type: "transfer"}  %>
