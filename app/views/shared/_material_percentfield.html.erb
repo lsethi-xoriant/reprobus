@@ -1,9 +1,12 @@
+<% classStr = class_for_input if local_assigns.has_key? :class_for_input %>
+<% classStr = "" if !local_assigns.has_key? :class_for_input %>
+
 <div class="input-field col <%=col%>">
   <% if local_assigns.has_key? :icon %>
    <i class="<%= icon %>"></i>
   <% end %>
   
-  <%= f.number_field field.to_sym, value: number_with_precision(value, strip_insignificant_zeros: true, precision: 2), step: 0.1 %>
+  <%= f.number_field field.to_sym, value: number_with_precision(value, strip_insignificant_zeros: true, precision: 2), step: 0.1, class: classStr %>
 
   <% if local_assigns.has_key? :name %>
     <%= f.label field.to_sym, name %>

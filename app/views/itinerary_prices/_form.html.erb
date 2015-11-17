@@ -4,7 +4,7 @@
   <%= form_for @itinerary_price, :html => {:multipart => true, :class => ""} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :itinerary_id %>
-	  <%= f.hidden_field :deposit_system_default, value: @setting.deposit_percentage, class: "deposit_system_default" %>
+	  <%= f.hidden_field :system_default_for_deposits, value: @setting.deposit_percentage, id: "system_default_for_deposits" %>
 
     <%= render partial: 'itinerary_details' %>
 
@@ -26,8 +26,14 @@
       </div>
       
       <div class= "row">
-          <%= render partial: 'shared/material_numberfield', locals: { col: "s4 deposit_total", field: "deposit", f: f } %>
-          <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total", value: @itinerary_price.get_sale_total_display } %>
+          <%= render partial: 'shared/material_numberfield', locals: { col: "s2 deposit_total", field: "deposit", name: "Deposit $", f: f, class_for_input: "grand_deposit_total" } %>
+          <div class="input-field col s2">
+          <p>
+            <%= f.check_box :deposit_system_default, class: "filled-in deposit_system_default" %>
+            <%= f.label :deposit_system_default, "Use system default (#{@setting.deposit_percentage}%)" %>            
+          </p>
+          </div>
+          <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total $", value: @itinerary_price.get_sale_total_display, class_for_input: "grand_total" } %>
           
       </div>
       
@@ -54,7 +60,16 @@
           </div>
         </div>
           
+          
+        <div class="customer_totals_row row">
+          <strong>
+          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s7 s2", label: "Deposit total $", value: @itinerary_price.get_sale_total_display, class_for_input: "grand_deposit_total" } %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Sale Total $", value: @itinerary_price.deposit, class_for_input: "grand_total" } %>          
+          </strong>
+        </div>    
       </div>	    
+      
+      
 	  </div>
 	  
 	  <div class ="card-panel">

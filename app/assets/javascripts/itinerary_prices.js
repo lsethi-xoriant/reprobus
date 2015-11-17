@@ -1,7 +1,13 @@
 $(document).ready(function() {
 
-  if ($('#supplier_itinerary_price_items').length || $('#itinerary_price_items').length) {
-  // only do if on itinerary price page... 
+  if ($('#itinerary_price_items').length) {
+    // only do if on itinerary price page...
+    
+    // onload calc all deposit totals
+    $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));}); 
+    // onload calc all totals. 
+    doPricingCalculationsCustomerTotals();
+  
   
     $('#supplier_itinerary_price_items').on('cocoon:after-remove', function() {   // this container is on itinerary new form
   
@@ -28,32 +34,59 @@ $(document).ready(function() {
     });
   
   
+    $(document).on('change', '.deposit_percent_field', function() {
+     calculateDepositFromTotalPrice($(this));    
+     calculateTotalDepositForPricing();
+    });
+   
     $(document).on('change', '.price_total_field', function() {
     // CALCULATE ITEM PRICE USING QTY AND TOTAL
     calculateItemPriceFromTotal($(this));
-    
-    
+    calculateTotalForPricing();
+    calculateDepositFromTotalPrice($(this));
+    calculateTotalDepositForPricing();
     });
   
     $(document).on('change', '.price_field', function() {
       calculateTotalFromQtyPrice($(this));
-      
-      
-
-      var depositPercent = $(this).closest('.field').find('.deposit_percent_field').val();
-      var depTot = 0;
-      depTot = $(".itinerary_price_deposit_system_default").val();
-      depTot = (+depTot) + ((depositPercent/100) * total);
-      $(".itinerary_price_deposit_system_default").val(depTot);
-      
+      calculateTotalForPricing();
+      calculateDepositFromTotalPrice($(this));
+      calculateTotalDepositForPricing();
     });
     
     $(document).on('change', '.qty_field', function() {
       calculateTotalFromQtyPrice($(this));
+      calculateTotalForPricing();
+      calculateDepositFromTotalPrice($(this));
+      calculateTotalDepositForPricing();
     }); 
       
+      
+    $(document).on('change', '.deposit_system_default', function() {
+      // if ticked, only calculate deposit on system %s 
+      if($('.deposit_system_default').is(":checked")){
+        calculateTotalDepositFromSystemDefault();
+        //and hide show whatever -
+        $(".deposit_percent_field").hide();
+        $(".deposit_price_field").hide();        
+      } else { // go back to normal calculations
+        $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));});     
+        calculateTotalDepositForPricing();     
+        calculateTotalForPricing();
+        
+        //and hide show whatever -
+        $(".deposit_percent_field").show();
+        $(".deposit_price_field").show();
+      } 
+    
+    });  
   }
 });
+
+function doPricingCalculationsCustomerTotals(e){
+  calculateTotalForPricing();
+  calculateTotalDepositForPricing();  
+}
 
 function calculateTotalFromQtyPrice(e){
   var totalfield = $(e).closest('.field').find('.price_total_field');
@@ -77,4 +110,59 @@ function calculateItemPriceFromTotal(e){
   }
   
   itemPriceField.val(item_price.toFixed(2));
+}
+
+function calculateTotalForPricing(){
+  var sum = 0.00;
+  $('.price_total_field').each(function() {
+      sum += Number($(this).val());
+  });  
+    
+  $(".grand_total").val(sum.toFixed(2));
+}
+
+function calculateTotalDepositForPricing(){
+  // if doing system default ignore this calculation!
+  if($('.deposit_system_default').is(":checked")){
+    calculateTotalDepositFromSystemDefault();
+    return;
+  }
+  
+  var sum = 0.00;
+  $('.deposit_price_field').each(function() {
+      sum += Number($(this).val());
+  });  
+    
+  $(".grand_deposit_total").val(sum.toFixed(2));
+}
+
+function calculateDepositFromTotalPrice(e){
+  // if doing system default ignore this calculation!
+  if($('.deposit_system_default').is(":checked")){
+    return;
+  }
+  
+  var deposit_price = 0.00;
+  var depositAmountField = $(e).closest('.field').find('.deposit_price_field');
+  var depositPercent = $(e).closest('.field').find('.deposit_percent_field');
+  var totalfield = $(e).closest('.field').find('.price_total_field');
+
+  // only do this calc if we have a qty value
+  if ( isNaN(depositPercent.val()) == false && parseInt(depositPercent.val(),10) > 0)  {
+    deposit_price = (totalfield.val() * (depositPercent.val()/100));
+  } else {
+    deposit_price = 0;
+  }
+  
+  depositAmountField.val(deposit_price.toFixed(2));
+}
+
+function calculateTotalDepositFromSystemDefault(){
+  var deposit_price = 0.00;
+  var totalSaleAmount = $('.grand_total');
+  var systemDefaultPercentage = $('#system_default_for_deposits');
+  
+  deposit_price = (totalSaleAmount.val() * (systemDefaultPercentage.val()/100));
+    
+  $(".grand_deposit_total").val(deposit_price.toFixed(2));
 }
