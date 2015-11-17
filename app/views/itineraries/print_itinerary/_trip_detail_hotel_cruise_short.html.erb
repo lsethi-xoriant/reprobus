@@ -1,10 +1,23 @@
-<%if info%>
-<p class="title"><%= "#{info.get_itinerary_header_details_cruiseday(preFix)}" %></p>
-<% if info.has_meal_inclusions %>
-  <p><strong><%= "Includes: #{info.get_meal_inclusions}" %></strong></p>
-<% end %>  
-<% if info.comment_for_customer %>
-  <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
-<% end %>  
-<div class="clear50"></div>
-<%end%>
+<% if info %>
+
+  <% if info.get_product_image_remote_url %>
+    <div class="imgdetails"><img src=<%= info.get_dropbox_image_link %> alt="" /></div>
+  <% else %>
+    <div class="imgdetails"></div>
+  <% end %>
+
+  <div class="contdetails">
+    <p class="title"><%= "#{info.get_itinerary_header_details_cruiseday(preFix)}" %></p>
+    
+    <% if info.has_meal_inclusions %>
+      <p><strong><%= "Includes: #{info.get_meal_inclusions}" %></strong></p>
+    <% end %>  
+    
+    <% if info.comment_for_customer %>
+      <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
+    <% end %>  
+    
+    <div class="clear50"></div>
+  </div>
+  
+<% end %>

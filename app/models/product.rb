@@ -144,6 +144,10 @@ class Product < ActiveRecord::Base
     end
   end
   
+  def get_product_image_remote_url
+    return self.image_remote_url
+  end
+  
   def self.handle_file_import(spreadsheet, fhelp, job_progress, type, run_live)
     # NOTE: 'Room' & 'CruiseDay' type has this method overwritten in subclass
       header = spreadsheet.row(1)

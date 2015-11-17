@@ -1,9 +1,17 @@
-<%if info %>
-
-  <p class="title"><% if !info.get_group_classification.blank? %><span class="changecolor"><%= "#{info.get_group_classification} "%></span><% end %><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
-  <p class="caption"><%= "#{info.get_product_description}"%></p>
-  <% if info.comment_for_customer %>
-    <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
+<% if info %>
+  <% if type != "transfer" && info.get_product_image_remote_url %>
+    <div class="imgdetails"><img src=<%= info.get_dropbox_image_link %> alt="" /></div>
+  <% else %>
+    <div class="imgdetails"></div>
   <% end %>
-  <div class="clear50"></div>
-<%end%>
+    
+  <div class="contdetails">
+    <p class="title"><% if !info.get_group_classification.blank? %><span class="changecolor"><%= "#{info.get_group_classification} "%></span><% end %><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
+    <p class="caption"><%= "#{info.get_product_description}"%></p>
+    <% if info.comment_for_customer %>
+      <p class="caption"><em><%= "#{info.comment_for_customer}"%></em></p>
+    <% end %>
+    <div class="clear50"></div>
+  </div>
+  
+<% end %>

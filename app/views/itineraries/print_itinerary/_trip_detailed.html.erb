@@ -33,48 +33,28 @@
     
   	<p class="headdetails"><%= date.strftime("#{date.day.ordinalize} %b %Y") %><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
     
-    <% if dayInfos.standard_infos.first %>
-      <div class="imgdetails"><img src=<%= dayInfos.standard_infos.first.product.get_dropbox_image_link %> alt="" /></div>
-    <% elsif dayInfos.cruise %>
-      <% cruiseProduct = dayInfos.cruise.product.getCruiseDay(cruiseDay) %>
-      <% if cruiseProduct && cruiseProduct.get_dropbox_image_link %>
-        <div class="imgdetails"><img src=<%= cruiseProduct.get_dropbox_image_link %> alt="" /></div>
-      <% else %>
-        <% if !dayInfos.cruise.product.image_remote_url.blank? %>  
-          <div class="imgdetails"><img src=<%= dayInfos.cruise.product.get_dropbox_image_link %> alt="" /></div>
-        <% end %>
+      <% if dayInfos.transfer && dayInfos.first_start_date == dayInfos.transfer.start_date #arriving transfer %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer, type: "transfer"}  %>
       <% end %>
-    <% elsif dayInfos.hotel && !dayInfos.hotel.product.image_remote_url.blank?  %>
-      <div class="imgdetails"><img src=<%= dayInfos.hotel.product.get_dropbox_image_link %> alt="" /></div>
-    <% else %>
-      <div class="imgdetails">&nbsp;</div>
-    <% end %>
-    
-  	<div class="contdetails">
-
-        <% if dayInfos.transfer && dayInfos.first_start_date == dayInfos.transfer.start_date #arriving transfer %>
-            <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
-        <% end %>
-        
-        <% if dayInfos.cruise %>
-          <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "Cruise:", info: dayInfos.cruise.product.getCruiseDay(cruiseDay)}  %>
-        <% end %>
-        
-        <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: ""}  %>        
-        
-        <% if dayInfos.transfer && dayInfos.first_start_date != dayInfos.transfer.start_date  # departing transfer e.g. to hotel %>
-            <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer}  %>
-        <% end %>
-        
-        <% if dayInfos.hotel %>
-            <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
-            <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel}  %>
-        <% elsif dayInfos.cruise %>
-            <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
-            <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise}  %>
-        <% end %>
       
-      </div>
+      <% if dayInfos.cruise %>
+        <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "Cruise:", info: dayInfos.cruise.product.getCruiseDay(cruiseDay), type: "cruise"}  %>
+      <% end %>
+      
+      <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: "", type: "other"}  %>        
+      
+      <% if dayInfos.transfer && dayInfos.first_start_date != dayInfos.transfer.start_date  # departing transfer e.g. to hotel %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_item', formats: [:html], locals: {preFix: "", info: dayInfos.transfer,  type: "transfer"}  %>
+      <% end %>
+      
+      <% if dayInfos.hotel %>
+          <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel,  type: "hotel"}  %>
+      <% elsif dayInfos.cruise %>
+          <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise,  type: "cruise"}  %>
+      <% end %>
+
   	<div class="clear"></div>
   </div>
 

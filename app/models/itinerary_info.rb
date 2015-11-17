@@ -141,5 +141,16 @@ class ItineraryInfo < ActiveRecord::Base
     end
   end 
   
+  def get_product_image_remote_url
+    return self.product.image_remote_url if self.product      
+  end
   
+  
+  def get_dropbox_image_link
+    if self.product && !self.product.image_remote_url.blank?
+      return DropboxHelper.get_db_image_link_url(self.product.image_remote_url)
+    else
+      return ActionController::Base.helpers.image_path('noImage.jpg')
+    end
+  end  
 end
