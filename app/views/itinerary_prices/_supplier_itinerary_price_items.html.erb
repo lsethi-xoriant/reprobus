@@ -18,7 +18,7 @@
       <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "item_price", f: f, class_for_input: "supplier_item_price_field" } %>
       <%= render partial: 'shared/material_percentfield', locals: { col: "s1", field: "markup_percentage", f: f, name: "Mark up %", value: f.object.markup_percentage, class_for_input: 'markup_percent_field' } %>
       <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Mark up $", class_for_input: 'markup_price_field', value: 0} %>
-      <%= render partial: 'shared/material_readonly', locals: { col: "s2 total_field", label: "Total Price $", f: f, class_for_input: "supplier_total_field", value: f.object.price_total.to_s } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s2", field: "price_total", name: "Total Price $", f: f, class_for_input: 'supplier_total_field' } %>
       <div class="input-field col s1 center-align">
         <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
           <i class="mdi-content-clear"></i>
