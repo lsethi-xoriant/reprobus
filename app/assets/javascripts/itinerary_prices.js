@@ -5,9 +5,13 @@ $(document).ready(function() {
     
     // onload calc all deposit totals
     $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));}); 
+    
     // onload calc all totals. 
     doPricingCalculationsCustomerTotals();
-  
+    
+    // onload calc all markup totals
+    $('.markup_percent_field').each(function() {calculateSupplierMarkupFromTotalPrice($(this));});   
+    
   
     $('#supplier_itinerary_price_items').on('cocoon:after-remove', function() {   // this container is on itinerary new form
   
@@ -42,20 +46,15 @@ $(document).ready(function() {
     $(document).on('change', '.price_total_field', function() {
     // CALCULATE ITEM PRICE USING QTY AND TOTAL
     calculateItemPriceFromTotal($(this));
+    
     calculateTotalForPricing();
     calculateDepositFromTotalPrice($(this));
     calculateTotalDepositForPricing();
     });
-  
-    $(document).on('change', '.price_field', function() {
-      calculateTotalFromQtyPrice($(this));
-      calculateTotalForPricing();
-      calculateDepositFromTotalPrice($(this));
-      calculateTotalDepositForPricing();
-    });
     
-    $(document).on('change', '.qty_field', function() {
+    $(document).on('change', '.qty_field, .price_field', function() {
       calculateTotalFromQtyPrice($(this));
+      
       calculateTotalForPricing();
       calculateDepositFromTotalPrice($(this));
       calculateTotalDepositForPricing();
@@ -78,8 +77,17 @@ $(document).ready(function() {
         $(".deposit_percent_field").show();
         $(".deposit_price_field").show();
       } 
+    }); 
     
-    });  
+    
+    $(document).on('change', '.supplier_qty_field, .supplier_item_price_field', function() {
+      calculateSupplierTotalFromQtyPrice($(this));
+      calculateSupplierMarkupFromTotalPrice($(this));
+    });
+    $(document).on('change', '.markup_percent_field', function() {
+      calculateSupplierTotalFromQtyPrice($(this));
+      calculateSupplierMarkupFromTotalPrice($(this));
+    });    
   }
 });
 
@@ -97,13 +105,50 @@ function calculateTotalFromQtyPrice(e){
   totalfield.val(total.toFixed(2));
 }
 
+
+function calculateSupplierTotalFromQtyPrice(e){
+  var totalfield = $(e).closest('.field').find('.supplier_total_field');
+  var qtyfield = $(e).closest('.field').find('.supplier_qty_field');
+  var itemPriceField = $(e).closest('.field').find('.supplier_item_price_field');
+  var total = (itemPriceField.val() * qtyfield.val());
+
+  totalfield.val(total.toFixed(2));
+}
+
+function calculateSupplierMarkupFromTotalPrice(e){
+  var markup_price = 0.00;
+  var totalAmount = 0.00;
+  var markupAmountField = $(e).closest('.field').find('.markup_price_field');
+  var markupPercent = $(e).closest('.field').find('.markup_percent_field');
+  var totalfield = $(e).closest('.field').find('.supplier_total_field');
+  
+  if ( isNaN(totalfield.val()) ){
+    totalAmount = 0.00;
+  }else{
+    totalAmount = parseFloat(totalfield.val());
+  }
+  
+  // only do this calc if we have a qty value
+  if ( isNaN(markupPercent.val()) == false && parseFloat(markupPercent.val()) > 0)  {
+    markup_price = (totalAmount * (markupPercent.val()/100));
+  } else {
+    markup_price = 0.00;
+  }
+  
+  totalAmount = (markup_price + totalAmount);
+  
+  markupAmountField.val(markup_price.toFixed(2));
+  totalfield.val(totalAmount.toFixed(2));
+}
+
+
 function calculateItemPriceFromTotal(e){
   var item_price = 0.00;
   var totalfield = $(e).closest('.field').find('.price_total_field');
   var qtyfield = $(e).closest('.field').find('.qty_field');
   var itemPriceField = $(e).closest('.field').find('.price_field');
   // only do this calc if we have a qty value
-  if ( isNaN(qtyfield.val()) == false && parseInt(qtyfield.val(),10) > 0)  {
+  if ( isNaN(qtyfield.val()) == false && parseFloat(qtyfield.val()) > 0)  {
     item_price = (totalfield.val() / qtyfield.val());
   } else {
     item_price = parseFloat(totalfield.val());
@@ -148,7 +193,7 @@ function calculateDepositFromTotalPrice(e){
   var totalfield = $(e).closest('.field').find('.price_total_field');
 
   // only do this calc if we have a qty value
-  if ( isNaN(depositPercent.val()) == false && parseInt(depositPercent.val(),10) > 0)  {
+  if ( isNaN(depositPercent.val()) == false && parseFloat(depositPercent.val()) > 0)  {
     deposit_price = (totalfield.val() * (depositPercent.val()/100));
   } else {
     deposit_price = 0;

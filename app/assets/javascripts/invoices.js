@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
 //$(document).on("ready page:load", function(){
   var saveClicked = false;
   var i = $("#tab_logic > tbody > tr").length-1;
@@ -99,5 +99,5 @@ $(document).on('change', '.qty_field', function() {
   totalfield.val(total);
 });
 
-
+*/
 

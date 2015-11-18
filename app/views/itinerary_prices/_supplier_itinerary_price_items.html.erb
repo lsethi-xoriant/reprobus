@@ -2,17 +2,23 @@
   <div class="nested-fields">
     <div class="field  col s12">
       
-      <div class="input-field col s2">
+      <div class="input-field col s1">
         <%= f.select(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers, :id, :supplier_name, f.object.supplier_id),{include_blank: true},{class: "select2-suppliers-noajax browser-default"}) %>
         <label for="supplier_id" class="active">Supplier</label>
       </div>    
     
-      <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "booking_ref", f: f, name: "Confirmation Ref." } %>
+      <%= render partial: 'shared/material_textfield', locals: { col: "s1", field: "booking_ref", f: f, name: "Confirmation Ref." } %>
       
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s1 qty_field", field: "quantity", f: f } %>
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s1 price_field", field: "item_price", f: f } %>
-      <%= render partial: 'shared/material_percentfield', locals: { col: "s1 center-align markup_percent_field", field: "markup_percentage", f: f, name: "Mark up %", value: f.object.markup_percentage } %>
-      <%= render partial: 'shared/material_textfield', locals: { col: "s2 total_field", field: "price_total", f: f } %>
+      <div class="input-field col s2">
+            <%= f.select(:currency_id, options_for_select([[f.object.currencyDisplay, f.object.currencyID]],f.object.currencyID),{},{class: "select2-currencies browser-default"}) %>
+        <label for="currency_id" class="active">Supplier</label>
+      </div>   
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "sell_currency_rate", f: f, class_for_input: "sell_currency_rate" } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "quantity", f: f, class_for_input: "supplier_qty_field" } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "item_price", f: f, class_for_input: "supplier_item_price_field" } %>
+      <%= render partial: 'shared/material_percentfield', locals: { col: "s1", field: "markup_percentage", f: f, name: "Mark up %", value: f.object.markup_percentage, class_for_input: 'markup_percent_field' } %>
+      <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Mark up $", class_for_input: 'markup_price_field', value: 0} %>
+      <%= render partial: 'shared/material_readonly', locals: { col: "s2 total_field", label: "Total Price $", f: f, class_for_input: "supplier_total_field", value: f.object.price_total.to_s } %>
       <div class="input-field col s1 center-align">
         <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
           <i class="mdi-content-clear"></i>

@@ -54,10 +54,10 @@ private
     :invoice_date, :balance_due, :final_balance_due, :currency_id, 
     :deposit, :sale_total, :deposit_system_default,
     itinerary_price_items_attributes: [:id, :booking_ref, :description, 
-    :price_total, :supplier_id, :itinerary_price_id,  :deposit,
-    :item_price, :quantity, :_destroy ],
+    :price_total,  :deposit,
+    :item_price, :quantity, :start_date, :end_date, :_destroy ],
     supplier_itinerary_price_items_attributes: [:id, :booking_ref, :description, 
-    :price_total, :supplier_id, :itinerary_price_id,  :deposit,
-    :item_price, :quantity, :_destroy ])
+    :price_total, :itinerary_price_id, :supplier_id, :markup_percentage,
+    :item_price, :quantity, :currency_id, :sell_currency_rate,  :_destroy ])
   end  
 end
