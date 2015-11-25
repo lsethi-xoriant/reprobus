@@ -80,14 +80,12 @@ $(document).ready(function() {
     }); 
     
     
-    $(document).on('change', '.supplier_qty_field, .supplier_item_price_field', function() {
+    $(document).on('change', '.supplier_qty_field, .supplier_item_price_field, .markup_percent_field', function() {
       calculateSupplierTotalFromQtyPrice($(this));
       calculateSupplierMarkupFromTotalPrice($(this));
+      addSupplierMarkupToTotal($(this));
     });
-    $(document).on('change', '.markup_percent_field', function() {
-      calculateSupplierTotalFromQtyPrice($(this));
-      calculateSupplierMarkupFromTotalPrice($(this));
-    });    
+  
   }
 });
 
@@ -119,6 +117,7 @@ function calculateSupplierMarkupFromTotalPrice(e){
   var markup_price = 0.00;
   var totalAmount = 0.00;
   var markupAmountField = $(e).closest('.field').find('.markup_price_field');
+  
   var markupPercent = $(e).closest('.field').find('.markup_percent_field');
   var totalfield = $(e).closest('.field').find('.supplier_total_field');
   
@@ -134,10 +133,29 @@ function calculateSupplierMarkupFromTotalPrice(e){
   } else {
     markup_price = 0.00;
   }
+
+  markupAmountField.val(markup_price.toFixed(2));
+}
+
+function addSupplierMarkupToTotal(e){
+  var totalAmount = 0.00;
+  var markup_price = 0.00;
+  var totalfield = $(e).closest('.field').find('.supplier_total_field');
+  var markupAmountField = $(e).closest('.field').find('.markup_price_field');
+  
+  if ( isNaN(totalfield.val()) ){
+    totalAmount = 0.00;
+  }else{
+    totalAmount = parseFloat(totalfield.val());
+  }
+  
+  if ( isNaN(markupAmountField.val()) ) {
+    markup_price = 0.00;
+  } else {
+    markup_price = parseFloat(markupAmountField.val());
+  }  
   
   totalAmount = (markup_price + totalAmount);
-  
-  markupAmountField.val(markup_price.toFixed(2));
   totalfield.val(totalAmount.toFixed(2));
 }
 

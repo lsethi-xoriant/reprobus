@@ -34,7 +34,7 @@ Reprobus::Application.routes.draw do
   resources :email_templates
   resources :itinerary_templates
   resources :itineraries do
-    get 'printItinerary'
+    get 'printQuote'
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create]

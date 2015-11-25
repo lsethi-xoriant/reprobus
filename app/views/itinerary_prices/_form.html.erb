@@ -26,7 +26,7 @@
       </div>
       
       <div class= "row">
-          <%= render partial: 'shared/material_numberfield', locals: { col: "s2 deposit_total", field: "deposit", name: "Deposit $", f: f, class_for_input: "grand_deposit_total" } %>
+          <%= render partial: 'shared/material_numberfield', locals: { col: "s2 deposit_total", field: "deposit", name: "Deposit $", f: f, class_for_input: "grand_deposit_total", step: 0.01 } %>
           <div class="input-field col s2">
           <p>
             <%= f.check_box :deposit_system_default, class: "filled-in deposit_system_default" %>

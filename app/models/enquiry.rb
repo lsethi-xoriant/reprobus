@@ -70,7 +70,7 @@ class Enquiry < ActiveRecord::Base
   
   has_many    :activities,  dependent: :destroy
   has_one     :booking
-  has_one     :itinerary
+  has_many     :itineraries
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
   belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
   

@@ -1,5 +1,7 @@
-<% classStr = class_for_input if local_assigns.has_key? :class_for_input %>
-<% classStr = "" if !local_assigns.has_key? :class_for_input %>
+<% class_for_input = "" if !local_assigns.has_key? :class_for_input %>
+<% step = 1 if !local_assigns.has_key? :step %>
+<% disabled = false if !local_assigns.has_key? :disabled %>
+
 
 <div class="input-field col <%=col%>">
   <% if local_assigns.has_key? :icon %>
@@ -7,9 +9,9 @@
   <% end %>
   
   <% if local_assigns.has_key? :value %>
-    <%= f.number_field field.to_sym, value: value, step: 1, class: classStr %>
+    <%= f.number_field field.to_sym, value: value, step: step, class: class_for_input, disabled: disabled %>
   <% else %>
-   <%= f.number_field field.to_sym, step: 1, class: classStr %>
+   <%= f.number_field field.to_sym, step: step, class: class_for_input, disabled: disabled %>
   <% end %>
   
   <% if local_assigns.has_key? :name %>

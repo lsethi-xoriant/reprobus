@@ -3,7 +3,7 @@ class ItinerariesController < ApplicationController
   before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
 
-  def printItinerary
+  def printQuote
     @itinerary = Itinerary.find(params[:itinerary_id])
     @enquiry = @itinerary.enquiry
 
