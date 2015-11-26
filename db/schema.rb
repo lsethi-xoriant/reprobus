@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119094753) do
+ActiveRecord::Schema.define(version: 20151126144242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20151119094753) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.string   "body",               limit: 255
+    t.text     "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"

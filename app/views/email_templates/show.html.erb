@@ -20,7 +20,7 @@
             <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">CC to Assigned User</li>
             <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( translate(@email_template.copy_assigned_user.class) ) %></li><br>
             <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Email Body</li>
-            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @email_template.body ) %></li><br>
+            <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @email_template.body ).html_safe %></li><br>
             <li class="col-lg-5 col-md-5 col-sm-5 profile-details-field">Used in #'s triggers</li>
             <li class="col-lg-6 col-md-6 col-sm-6"><%= value_or_dash( @email_template.triggers.count) %></li><br>
          </ul>

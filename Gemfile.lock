@@ -67,6 +67,13 @@ GEM
       mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    ckeditor (4.1.5)
+      cocaine
+      orm_adapter (~> 0.5.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -279,6 +286,7 @@ GEM
       shellany (~> 0.0)
     nprogress-rails (0.1.6.6)
     oauth (0.4.7)
+    orm_adapter (0.5.0)
     paper_trail (4.0.0.beta2)
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
@@ -426,6 +434,7 @@ DEPENDENCIES
   better_errors
   byebug
   carrierwave
+  ckeditor
   cocoon
   coffee-rails (~> 4.0.0)
   deep_cloneable (~> 2.1.1)
@@ -469,3 +478,6 @@ DEPENDENCIES
   wkhtmltopdf-binary-edge (~> 0.12.2.1)
   wkhtmltopdf-heroku
   xeroizer (~> 2.15.6)
+
+BUNDLED WITH
+   1.10.6
