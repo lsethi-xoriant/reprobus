@@ -1,0 +1,42 @@
+<div class="input-field copy_template_cont input-field col s3" >
+  <a
+    id="CopyTemplateBtn"
+    class="waves-effect waves-light btn right deep-purple darken-1 modal-trigger tooltipped"
+    data-position="bottom"
+    data-delay="50"
+    data-tooltip="Copy template"
+    href="#copy_modal_<%=f.object.id%>">
+
+    Copy Template
+
+  </a>
+</div>
+
+<!-- Modal Structure -->
+<div id="copy_modal_<%=f.object.id%>" class="modal modal-fixed-footer white">
+  <div class="modal-content">
+    <h4><i class="mdi-image-add-to-photos"></i>  Copy Template</h4>
+
+    <ul>
+      <li>
+        <div class="row">
+          <div id="copy_template_container" class="col s12">
+
+            <div class="row">
+              <div class="input-field col s10">
+                <%= select_tag(:itinerary_template_copy, options_for_select(""),{class: "select2-itinerary_templates browser-default", :style => "width:450px"}) %>
+                <%= f.label :itinerary_template_copy, "Itinerary Template",  class: 'active' %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" id="copy_template_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Copy</a>
+  </div>
+</div>
