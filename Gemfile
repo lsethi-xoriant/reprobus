@@ -72,6 +72,8 @@ gem 'cocoon'
 gem 'dropbox-sdk'
 gem 'net-ssh'
 
+gem 'ckeditor' # rich text editor
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 

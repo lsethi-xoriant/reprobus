@@ -24,6 +24,5 @@
 //= require nprogress-ajax
 //= require cocoon
 //= require select2.min
+//= require ckeditor/init
 //= require_tree .
-
-

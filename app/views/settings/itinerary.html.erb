@@ -9,23 +9,23 @@
          <%= hidden_field_tag :redirect, '', value: "itinerary" %>
 
           <div class="row">
-            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_includes", f: f, name: "Default Itinerary Includes", length: "1000" } %>
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_includes", f: f, name: "Default Itinerary Includes", length: "1000", ckeditor_field: true } %>
           </div>
           
           <div class="row">
-            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_excludes", f: f, name: "Default Itinerary Excludes", length: "1000"  } %>
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_excludes", f: f, name: "Default Itinerary Excludes", length: "1000", ckeditor_field: true } %>
           </div>
           
           <div class="row">
-            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_notes", f: f, name: "Default Itinerary Notes", length: "1000"  } %>
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itinerary_notes", f: f, name: "Default Itinerary Notes", length: "1000", ckeditor_field: true } %>
           </div>
       
           <div class="row">
-            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "quote_introduction", f: f, length: "1000"  } %>
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "quote_introduction", f: f, name: "Quote Introduction", length: "1000", ckeditor_field: true } %>
           </div>      
           
           <div class="row">
-            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "confirmed_introduction", f: f, name: "Confirmed Itinerary Introduction", length: "1000"  } %>
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "confirmed_introduction", f: f, name: "Confirmed Itinerary Introduction", length: "1000", ckeditor_field: true } %>
           </div>      
       
           <%= f.fields_for :itinerary_default_image, @setting.itinerary_default_image do |t| %>
