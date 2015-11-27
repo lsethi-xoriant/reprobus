@@ -32,7 +32,11 @@ Reprobus::Application.routes.draw do
 
   
   resources :email_templates
-  resources :itinerary_templates
+  resources :itinerary_templates do
+    member do
+      get 'copy'
+    end
+  end
   resources :itineraries do
     get 'printQuote'
   end
@@ -119,7 +123,7 @@ Reprobus::Application.routes.draw do
   get 'searches/agent_search'
   get 'searches/user_search'
   get 'searches/currency_search'
-  get 'searches/template_search'
+  get 'searches/template_search', to: 'searches#template_search'
   get 'searches/supplier_search'
   get 'searches/customer_search'
   get 'searches/country_search'

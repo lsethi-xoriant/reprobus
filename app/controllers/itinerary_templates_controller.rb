@@ -55,6 +55,19 @@ class ItineraryTemplatesController < ApplicationController
     flash[:success] = "ItineraryTemplate deleted."
     redirect_to itinerary_templates_url
   end
+
+  def copy
+    original_template = ItineraryTemplate.find(params[:id])
+
+    new_template =
+      original_template.deep_clone(
+        include: [:itinerary_template_infos],
+        exclude: [:itineraries])
+
+    new_template.name = original_template.name + ' COPY'
+    response_code = new_template.save ? 200 : 500
+    head response_code, content_type: "text/html"
+  end
   
 private
     def template_params

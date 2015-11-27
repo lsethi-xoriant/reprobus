@@ -216,7 +216,26 @@ $(document).ready(function() {
     } else {
       toastr.warning("Template & postion must be selected to insert template!");      
     }
-  });   
+  });
+
+  $('.modal-footer').on('click', '#copy_template_OK', function(e) {
+    var template = $("#copy_template_container").find('.select2-itinerary_templates').val();
+    if ($.isNumeric(template)){
+      
+      url = '/itinerary_templates/' + template + '/copy';
+      
+      $.get(url, function( data ) {
+        toastr.info("Template copied succesfully.");
+      })
+      .fail(function() {
+        toastr.warning("Error while copying template.");
+      });
+
+    } else {
+      toastr.warning("Template must be selected to copy template!");
+    };
+  }); 
+
 });
 
 /* JS hooks to update sortable elements   */
