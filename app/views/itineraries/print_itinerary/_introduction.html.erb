@@ -3,7 +3,9 @@
 <div class="clear75"></div>
 <p class="bigBigtitle2">Introduction</p>
 <div class="clear50"></div>
-<p class="caption"><%= (h @setting.quote_introduction.html_safe).gsub("\n", "<br />").html_safe %></p>
+<p class="caption">
+  <%= (h (@enquiry.agent ? @enquiry.agent.quote_introduction : @setting.quote_introduction).html_safe).gsub("\n", "<br />").html_safe %>
+</p>
 
 <div class="clear75"></div>
 <p class="bigBigtitle2">Quote Details</p>

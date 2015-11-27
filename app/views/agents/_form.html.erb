@@ -6,7 +6,7 @@
 	    <%= render 'shared/error_messages', object: f.object %>
 	    
 	    <div class="row">
-      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "supplier_name", f: f, name: "Agent" } %>
+        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "supplier_name", f: f, name: "Agent" } %>
       </div>
 
       <%= f.fields_for :company_logo, @customer.company_logo do |t| %>
@@ -22,8 +22,8 @@
       </div></div>
       
       <div class="row">
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "first_name", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "last_name", f: f } %>
       </div>
       
       <div class="row">
@@ -33,12 +33,12 @@
       </div>
 
       <div class="row">
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "email", f: f } %>
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "alt_email", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "email", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "alt_email", f: f } %>
       </div>
       <div class="row">
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f } %>
-      <%= render partial: 'shared/material_textfield_cols6', locals: { field: "mobile", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "phone", f: f } %>
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "mobile", f: f } %>
       </div>
       
       <div class="row">
@@ -49,6 +49,14 @@
       <%= f.fields_for :address do |address| %>
         <%= render :partial => 'shared/address', :locals => {:f => address} %>
       <% end %>
+
+      <div class="row">
+        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "quote_introduction", f: f, name: "Quote Introduction", ckeditor_field: true } %>
+      </div>
+
+      <div class="row">
+        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "confirmed_introduction", f: f, name: "Confirmed Itinerary Introduction", ckeditor_field: true } %>
+      </div>
     
       <div class="input-field col s12">
         <%= f.submit buttontxt, class: "btn" %>
