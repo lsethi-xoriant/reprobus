@@ -101,16 +101,15 @@ class ItinerariesController < ApplicationController
   end
 
   def copy
-    itinerary_copy = ItineraryCloneService.clone(params)
-    # response_code = (itinerary_copy.present? && itinerary_copy.save) ? 200 : 500
-    # head response_code, content_type: "text/html"
-    if itinerary_copy.save
+    itinerary_copy = ItineraryCloneService.clone(params[:copy])
+    if itinerary_copy.try(:save)
       flash[:success] = "Itinerary succesfully copied"
-      render text: edit_itinerary_path(itinerary_copy)
+      itinerary_id = itinerary_copy.id
     else
       flash[:error] = "Error while copying Itinerary"
-      render text: edit_itinerary_path(params[:id])
+      itinerary_id = params[:id]
     end
+    redirect_to edit_itinerary_path(itinerary_id)
   end
 
   def cancel

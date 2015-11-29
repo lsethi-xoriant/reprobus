@@ -44,7 +44,7 @@
             data-position="bottom" data-delay="50" data-tooltip="Lock Itinerary (will also save any changes)" 
             href="#">Lock Itinerary</a> 
           </div>      
-          <%= render partial: 'copy_itinerary', locals: {f: f} %>
+          <%= render partial: 'copy_itinerary_button' %>
         </div>
       <% else %>  
         <div class="row">
@@ -145,3 +145,5 @@
     <a href="#!" id="bump_dates_modal_button" class="modal-action modal-close waves-effect green waves-lighten-3 btn-flat">Save</a>
   </div>  
 </div>
+
+<%= render partial: 'copy_itinerary_modal' %>

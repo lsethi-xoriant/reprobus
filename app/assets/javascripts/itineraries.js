@@ -238,27 +238,15 @@ $(document).ready(function() {
 
   // Copy Itinerary on Edit Itinerary Page
   $('.modal-footer').on('click', '#copy_itinerary_OK', function(e) {
-    element_with_data = $('#copy_itinerary_OK');
-    itinerary = element_with_data.data('id');
-    old_date = element_with_data.data('old-date');
-    start_date = $('#itinerary_start_date.start_leg_itinerary.picker__input').prop('value');
-
-    if ($.isNumeric(itinerary)){
-      
-      url = '/itineraries/' + itinerary + '/copy';
-      
-      $.get(url, { old_date: old_date, start_date: start_date }, function( data ) {
-        toastr.info("Itinerary copied succesfully.");
-        window.location = data
-      })
-      .fail(function() {
-        toastr.warning("Error while copying itinerary.");
-      });
-
-    } else {
-      toastr.warning("Itinerary must be selected to copy itinerary!");
-    };
-  }); 
+    e.preventDefault();
+    $("#copy_itinerary_form").submit();
+  });
+  
+  $('#itinerary_start_date').on('change', function(e) {
+    new_date = $(this).prop('value');
+    $("#copy_old_date").attr('value', new_date);
+    $("#copy_start_date").pickadate('picker').set('select', new_date, { format: 'yyyy-mm-dd' });
+  });
 
 });
 
