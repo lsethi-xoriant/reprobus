@@ -40,6 +40,10 @@ class Itinerary < ActiveRecord::Base
   
   has_many :itinerary_infos, -> { order("position ASC")}
   accepts_nested_attributes_for :itinerary_infos, allow_destroy: true
+
+  def cancel
+    self.update_attribute(:status, 'Cancelled')
+  end
   
   def start_date_cannot_be_in_the_past
     if start_date.nil?

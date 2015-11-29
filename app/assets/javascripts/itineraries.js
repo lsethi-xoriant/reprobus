@@ -249,6 +249,7 @@ $(document).ready(function() {
       
       $.get(url, { old_date: old_date, start_date: start_date }, function( data ) {
         toastr.info("Itinerary copied succesfully.");
+        window.location = data
       })
       .fail(function() {
         toastr.warning("Error while copying itinerary.");
