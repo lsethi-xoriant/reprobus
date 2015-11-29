@@ -234,6 +234,29 @@ $(document).ready(function() {
     } else {
       toastr.warning("Template must be selected to copy template!");
     };
+  });
+
+  // Copy Itinerary on Edit Itinerary Page
+  $('.modal-footer').on('click', '#copy_itinerary_OK', function(e) {
+    element_with_data = $('#copy_itinerary_OK');
+    itinerary = element_with_data.data('id');
+    old_date = element_with_data.data('old-date');
+    start_date = $('#itinerary_start_date.start_leg_itinerary.picker__input').prop('value');
+
+    if ($.isNumeric(itinerary)){
+      
+      url = '/itineraries/' + itinerary + '/copy';
+      
+      $.get(url, { old_date: old_date, start_date: start_date }, function( data ) {
+        toastr.info("Itinerary copied succesfully.");
+      })
+      .fail(function() {
+        toastr.warning("Error while copying itinerary.");
+      });
+
+    } else {
+      toastr.warning("Itinerary must be selected to copy itinerary!");
+    };
   }); 
 
 });

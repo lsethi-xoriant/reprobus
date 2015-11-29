@@ -39,6 +39,9 @@ Reprobus::Application.routes.draw do
   end
   resources :itineraries do
     get 'printQuote'
+    member do
+      get 'copy'
+    end
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create]

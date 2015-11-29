@@ -99,6 +99,12 @@ class ItinerariesController < ApplicationController
     flash[:success] = "Itinerary deleted."
     redirect_to itinerary_templates_url
   end
+
+  def copy
+    itinerary_copy = ItineraryCloneService.clone(params)
+    response_code = (itinerary_copy.present? && itinerary_copy.save) ? 200 : 500
+    head response_code, content_type: "text/html"
+  end
   
 private
     def itinerary_params
