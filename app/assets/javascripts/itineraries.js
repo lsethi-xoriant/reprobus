@@ -217,6 +217,7 @@ $(document).ready(function() {
       toastr.warning("Template & postion must be selected to insert template!");      
     }
   });
+
 });
 
 /* JS hooks to update sortable elements   */
