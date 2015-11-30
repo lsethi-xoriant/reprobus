@@ -59,16 +59,16 @@ class ItineraryTemplatesController < ApplicationController
   def copy
     original_template = ItineraryTemplate.find(params[:id])
 
-    new_template =
-      original_template.deep_clone(
-        include: [:itinerary_template_infos],
+    @template = original_template.deep_clone(
+        include: [:itinerary_template_infos, :itinerary_default_image],
         exclude: [:itineraries])
 
-    new_template.name = original_template.name + ' COPY'
-    response_code = new_template.save ? 200 : 500
-    head response_code, content_type: "text/html"
+    @template.name = original_template.name + ' COPY'
+    @template.itinerary_default_image = 
+      @template.itinerary_default_image.presence || ImageHolder.new
+    render :new
   end
-  
+
 private
     def template_params
       params.require(:itinerary_template).permit(:name, :includes, :excludes, :notes, 
