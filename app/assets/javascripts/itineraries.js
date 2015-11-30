@@ -223,7 +223,8 @@ $(document).ready(function() {
     e.preventDefault();
     $("#copy_itinerary_form").submit();
   });
-  
+
+  // Change dates for Itenirary copy after changing Itenirary date
   $('#itinerary_start_date').on('change', function(e) {
     new_date = $(this).prop('value');
     $("#copy_old_date").attr('value', new_date);
