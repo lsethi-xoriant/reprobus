@@ -20,6 +20,12 @@ class ItinerariesController < ApplicationController
     end    
   end
 
+  def emailQuote
+    @itinerary = Itinerary.find(params[:itinerary_id])
+    @enquiry = @itinerary.enquiry
+    email = @enquiry.agent.try(:email).presence || @itinerary.user.try(:email)
+  end
+
   def index
     respond_to do |format|
       format.html

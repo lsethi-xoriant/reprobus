@@ -1,0 +1,50 @@
+<%= form_for :email_quoute, url: itinerary_emailQuote_path(@itinerary), method: :get, html: { id: 'copy_itinerary_form' } do |c| %>
+
+  <div id="email_quote_modal" class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="email_quote_container" class="col s12">
+
+              <div class="row">
+
+                  <div class="input-field col s5">
+                    <!-- Lead customer name -->
+                    <%= c.text_field :lead_customer, value: "#{@enquiry.try(:lead_customer_name)}" %>
+                    <%= c.label :lead_customer, 'Lead Customer Name' %>
+                  </div>
+
+                  <% if @enquiry.try(:agent).present? %>
+                    <div class="input-field col s5">
+                      <!-- Agent Name in bold (if agent is associated with enquiry) -->
+                      <%= c.text_field :agent, value: "#{@enquiry.try(:agent).try(:first_name)} #{@enquiry.try(:agent).try(:last_name)}" %>
+                      <%= c.label :agent, 'Agent Name' %>
+                    </div>
+                  <% end %>
+
+                  
+                    <!-- To email address -->
+                    <!-- From email address -->
+                    <!-- a selection option for either PDF, or Rich Text Document -->
+
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
+
+      <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+  </div>
+
+<% end %>
