@@ -41,6 +41,7 @@ Reprobus::Application.routes.draw do
     get 'printQuote'
     member do
       get 'copy'
+      get 'cancel'
     end
   end
   
