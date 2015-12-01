@@ -41,7 +41,6 @@ class ItinerariesController < ApplicationController
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
-    @itinerary.itinerary_default_image = ImageHolder.new if !@itinerary.itinerary_default_image
   end
 
   def show
@@ -52,7 +51,7 @@ class ItinerariesController < ApplicationController
   def edit
     @itinerary = Itinerary.includes(:itinerary_infos).find(params[:id])
     @enquiry = @itinerary.enquiry
-    @itinerary.itinerary_default_image = ImageHolder.new if !@itinerary.itinerary_default_image
+    @destinations = @itinerary.itinerary_infos.map(&:product).map(&:destination)
   end
   
   def create
@@ -103,12 +102,10 @@ class ItinerariesController < ApplicationController
 private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
-      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference, 
-      :user_id, :status,  itinerary_infos_attributes: [:id, :position, :product_id, :start_date, 
+      :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
+      :destination_image_id, :user_id, :status,
+      itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
-      :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ],
-      itinerary_default_image_attributes: [:id, :image_local, :image_remote_url])
+      :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ])
     end
 end
-
- 
