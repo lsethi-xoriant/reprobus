@@ -1,5 +1,6 @@
 class Admin::DestinationsController < ApplicationController
-  before_filter :admin_user
+  before_filter :admin_user, except: ['search_by_name']
+  protect_from_forgery with: :null_session
   
   def index
     @destinations = Destination.includes(:country).all
@@ -11,10 +12,12 @@ class Admin::DestinationsController < ApplicationController
   end
   def new
     @destination = Destination.new
+    @destination.default_image = ImageHolder.new if !@destination.default_image
   end
 
   def edit
     @destination = Destination.find(params[:id])
+    @destination.default_image = ImageHolder.new if !@destination.default_image
   end
  
   def export
@@ -66,10 +69,35 @@ class Admin::DestinationsController < ApplicationController
       render 'edit'
     end
   end
+
+  def search_by_name
+    search_params = params[:destinations].present? ? params[:destinations] : ''
+    result = Destination.where(name: params[:destinations])
+    selected = 
+      if params[:selected].present?
+        selected_destination = result
+                                .select { |dest| dest.name == params[:selected] }
+        selected_destination.any? ? selected_destination[0].default_image_id : nil
+      end
+    respond_to do |format|
+      html = render_to_string(
+          partial:    'itineraries/itinerary_destinations_select',
+          locals:     { result: result, selected: selected }
+      )
+      format.json do
+        render json: {
+            result: result,
+            status: :success,
+            html:   html
+        }
+      end
+    end
+  end
   
 private
     def destination_params
-      params.require(:destination).permit(:name, :country_id)
+      params.require(:destination).permit(:name, :country_id, :default_image,
+        default_image_attributes: [:id, :image_local, :image_remote_url])
     end  
   
 end

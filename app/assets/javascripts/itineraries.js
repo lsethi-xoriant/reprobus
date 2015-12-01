@@ -361,6 +361,40 @@ function check_days_from_start_seq(){
   });
 }
 
+$(document).on('click', '.itinerary_info_bottom_row_edit .remove_fields.existing', function () {
+  updateItineraryImage();
+});
+
+document.addEventListener('destinationsChange', function (e) { 
+  updateItineraryImage();
+}, false);
+
+function updateItineraryImage() {
+  destinations = []
+  $.each($('.itinerary_info_top_row_edit [aria-labelledby="select2-destination-container"] .select2-selection__rendered'), function (index, entry) {
+    destinations.push(entry.textContent);
+  });
+  selected = $('#itinerary_destinations_select .select-dropdown').val();
+  searchDestinationsUrl = '/admin/destinations/search_by_name';
+  $.ajax({
+    url: searchDestinationsUrl,
+    method: 'POST',
+    dataType: 'json',
+    data: {
+      destinations: destinations,
+      selected: selected
+    },
+    cache: false,
+    success: function(data) {
+      $('#itinerary_destinations_select').innerHTML(data.html);
+      console.log(data)
+      $('select').not('.disabled').material_select();
+    },
+    error: function(data) {
+    }
+  });
+}
+
 /*JS override on date. this is to get datepicker and calculating dates working properly */
 Date.prototype.yyyymmdd = function() {         
   var yyyy = this.getFullYear().toString();                                    
