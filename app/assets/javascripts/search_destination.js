@@ -50,8 +50,13 @@ function initDestinationSelect2() {
    // minimumInputLength: 1,
     templateResult: formatDestination,
     templateSelection: formatDestinationSelection
-  }).on('select2:open', function(e){
-    theSelect2Element = e.currentTarget;});
+  }).on('select2:open', function(e) {
+    theSelect2Element = e.currentTarget;
+  })
+  .on('select2:select', function(e) {
+    var destinationsChangeEvent = new CustomEvent("destinationsChange");
+    document.dispatchEvent(destinationsChangeEvent);
+  });
     
   $('.select2-destinations').on("select2:select", function(e) {
     $(this).closest(".row").find(".select2-products").val(null).trigger("change");
