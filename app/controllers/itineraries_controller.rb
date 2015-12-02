@@ -21,11 +21,17 @@ class ItinerariesController < ApplicationController
   end
 
   def emailQuote
-    if CustomerMailer.send_email_quote(@setting, params[:email_settings]).deliver
+    @itinerary = Itinerary.find(params[:email_settings][:id])
+    
+    if CustomerMailer.send_email_quote(
+      @itinerary, @setting, params[:email_settings]).deliver
+    
+      @itinerary.quote_sent_update_date
       flash[:success] = 'Itinerary Query has been sent.'
     else
       flash[:error] = 'Error occured while sending Quote'
     end
+    
     redirect_to edit_itinerary_path(params[:itinerary_id])
   end
 
@@ -140,7 +146,7 @@ private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
-      :destination_image_id, :user_id, :status,
+      :destination_image_id, :user_id, :status, :quote_sent,
       itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
       :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ])

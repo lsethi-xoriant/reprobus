@@ -25,10 +25,7 @@ class CustomerMailer < ActionMailer::Base
     end
   end
 
-  def send_email_quote(setting, params)
-    @itinerary = Itinerary.find(params[:id])
-    @enquiry = @itinerary.enquiry
-
+  def send_email_quote(itinerary, setting, params)
     # In development emails are opened by letter opener
     # Bring back this if its necessery:
     # if !Setting.global_settings.send_emails_turned_off
@@ -41,7 +38,7 @@ class CustomerMailer < ActionMailer::Base
         format.pdf do
           if params[:type] == 'PDF'
             attachments['ItineraryQuote.pdf'] = 
-              ItineraryRenderService.as_pdf(@itinerary, setting)
+              ItineraryRenderService.as_pdf(itinerary, setting)
           end
         end
         # TODO: need to be updated after Editable Format will be implemented
