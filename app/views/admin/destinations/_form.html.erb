@@ -13,6 +13,11 @@
       <%= f.label :country_id, "Country",  class: 'active' %>
     </div>
     </div>
+     <div class="row">
+      <%= f.fields_for :default_image, @destination.default_image do |t| %>
+        <%= render partial: 'shared/image_field', locals: { imageHolder: @destination.default_image, f: t, title: "Default Image (recomended size 880px x 880px):" } %>
+      <% end %>
+    </div>
     <br>
     <br>
     <div class="row">

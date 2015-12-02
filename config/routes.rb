@@ -139,7 +139,11 @@ Reprobus::Application.routes.draw do
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
     resources :carriers
-    resources :destinations
+    resources :destinations do
+      collection do
+        post :search_by_name
+      end
+    end
     resources :countries
     resources :stopovers
   end

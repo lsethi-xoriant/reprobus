@@ -34,8 +34,9 @@ class Itinerary < ActiveRecord::Base
   has_one       :itinerary_price
   belongs_to    :itinerary_template
   belongs_to    :enquiry
-  belongs_to  :itinerary_default_image, :class_name => "ImageHolder", :foreign_key => :itinerary_default_image_id
-  accepts_nested_attributes_for :itinerary_default_image, allow_destroy: true
+
+  belongs_to    :destination_image, :class_name => "ImageHolder", :foreign_key => :destination_image_id
+  accepts_nested_attributes_for :destination_image
 
   
   has_many :itinerary_infos, -> { order("position ASC")}
@@ -80,8 +81,8 @@ class Itinerary < ActiveRecord::Base
   end    
   
   def get_itinerary_image_link
-    if self.itinerary_default_image and self.itinerary_default_image.hasImage? then 
-      return self.itinerary_default_image.get_image_link()
+    if self.destination_image and self.destination_image.hasImage? then
+      return self.destination_image.get_image_link()
     elsif self.itinerary_template and self.itinerary_template.itinerary_default_image  and self.itinerary_template.itinerary_default_image.hasImage?  then 
       return self.itinerary_template.itinerary_default_image.get_image_link()
     else

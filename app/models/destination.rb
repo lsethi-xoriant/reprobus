@@ -14,6 +14,9 @@ class Destination < Admin
    
   has_and_belongs_to_many :enquiries
   belongs_to :country
+
+  belongs_to :default_image, :class_name => "ImageHolder", :foreign_key => :default_image_id
+  accepts_nested_attributes_for :default_image, allow_destroy: true
    
   def country_name
     self.country.name if self.country
