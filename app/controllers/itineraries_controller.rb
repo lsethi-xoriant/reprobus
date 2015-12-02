@@ -21,9 +21,6 @@ class ItinerariesController < ApplicationController
   end
 
   def emailQuote
-    @itinerary = Itinerary.find(params[:itinerary_id])
-    @enquiry = @itinerary.enquiry
-    email = @enquiry.agent.try(:email).presence || @itinerary.user.try(:email)
   end
 
   def index
@@ -63,6 +60,7 @@ class ItinerariesController < ApplicationController
                       .map { |product| product.destination if product }
                       .compact
                       .uniq
+    set_email_modal_values
   end
   
   def create
@@ -140,5 +138,13 @@ private
       itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
       :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ])
+    end
+
+    def set_email_modal_values
+      @lead_customer = @enquiry.customer_name_and_title
+      @agent_name = @enquiry.agent_name_and_title
+      @to_email = 
+        @enquiry.agent.try(:email).presence || @itinerary.user.try(:email)
+      @from_email = @setting.try(:itineraries_from_email)
     end
 end

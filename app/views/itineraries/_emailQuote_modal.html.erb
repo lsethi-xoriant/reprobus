@@ -1,4 +1,3 @@
-<%= form_for :email_quoute, url: itinerary_emailQuote_path(@itinerary), method: :get, html: { id: 'copy_itinerary_form' } do |c| %>
 
   <div id="email_quote_modal" class="modal modal-fixed-footer white">
     <div class="modal-content">
@@ -13,25 +12,27 @@
 
                   <div class="input-field col s5">
                     <!-- Lead customer name -->
-                    <%= c.text_field :lead_customer, value: "#{@enquiry.try(:lead_customer_name)}" %>
+                    <%= c.text_field :lead_customer, value: @lead_customer %>
                     <%= c.label :lead_customer, 'Lead Customer Name' %>
                   </div>
 
-                  <div class="input-field col s5">
-                    <!-- Agent Name in bold (if agent is associated with enquiry) -->
-                    <%= c.text_field :agent, value: "#{@enquiry.try(:agent).try(:first_name)} #{@enquiry.try(:agent).try(:last_name)}" %>
-                    <%= c.label :agent, 'Agent Name' %>
-                  </div>
+                  <% if @enquiry.agent.present? %>
+                    <div class="input-field col s5">
+                      <!-- Agent Name in bold (if agent is associated with enquiry) -->
+                      <%= c.text_field :agent_name, value: @agent_name %>
+                      <%= c.label :agent_name, 'Agent Name' %>
+                    </div>
+                  <% end %>
                   
                   <div class="input-field col s5">
                     <!-- To email address -->
-                    <%= c.text_field :to_email, value: "#{@enquiry.agent.try(:email).presence || @itinerary.user.try(:email)}" %>
+                    <%= c.text_field :to_email, value: @to_email %>
                     <%= c.label :to_email, 'TO:' %>
                   </div>
 
                   <div class="input-field col s5">
                     <!-- From email address -->
-                    <%= c.text_field :from_email, value: "#{@setting.try(:itineraries_from_email)}" %>
+                    <%= c.text_field :from_email, value: @from_email %>
                     <%= c.label :from_email, 'FROM:' %>
                   </div>
 

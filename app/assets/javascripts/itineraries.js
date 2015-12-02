@@ -231,6 +231,11 @@ $(document).ready(function() {
     $("#copy_start_date").pickadate('picker').set('select', new_date, { format: 'yyyy-mm-dd' });
   });
 
+  $('.modal-footer').on('click', '#email_quote_OK', function(e) {
+    e.preventDefault();
+    $("#email_quote_form").submit();
+  });
+
 });
 
 /* JS hooks to update sortable elements   */
