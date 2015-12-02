@@ -1,3 +1,4 @@
+<%= form_for :email_settings, url: itinerary_emailQuote_path(@itinerary), method: :get, html: { id: 'email_quote_form' } do |c| %>
 
   <div id="email_quote_modal" class="modal modal-fixed-footer white">
     <div class="modal-content">
@@ -38,6 +39,8 @@
 
                   <div class="input-field col s5">
                     <!-- a selection option for either PDF, or Rich Text Document -->
+                    <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']) %>
+                    <%= c.label :type, 'Document Type' %>
                   </div>
 
               </div>
