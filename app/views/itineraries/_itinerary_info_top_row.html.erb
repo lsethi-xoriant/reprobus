@@ -12,6 +12,10 @@
     <div class="input-field col s1 valign-wrapper sort_itinerary_item_col">
       <i class="mdi-editor-format-line-spacing small grey-text"></i>
       <h6 class="grey-text valign iti_postion_number"></h6>
+      <p class="itinerary-info-checkbox">
+        <input type="checkbox" class="filled-in muli-select-itinerary" id="muli-select-<%=f.object.id || f.object.object_id %>" />
+        <label for="muli-select-<%=f.object.id || f.object.object_id %>"></label>
+      </p>
       <% if !f.object.comment_for_customer.blank? %>
         <i class="mdi-communication-chat itineraryCommentNotification green-text"></i>
       <% end %>

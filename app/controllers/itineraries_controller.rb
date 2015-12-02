@@ -51,7 +51,12 @@ class ItinerariesController < ApplicationController
   def edit
     @itinerary = Itinerary.includes(:itinerary_infos).find(params[:id])
     @enquiry = @itinerary.enquiry
-    @destinations = @itinerary.itinerary_infos.map(&:product).map(&:destination)
+    @destinations = @itinerary
+                      .itinerary_infos
+                      .map(&:product)
+                      .map { |product| product.destination if product }
+                      .compact
+                      .uniq
   end
   
   def create

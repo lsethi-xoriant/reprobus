@@ -62,7 +62,18 @@
         </div>      
       <% end %> 
      
-      <h4 class="header2">Trip Details</h4>
+      <h4 class="header2">Trip Details 
+        <span class="itinerary-infos-action-buttons">
+          <a id="delete-itinerary-infos" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Delete selected items">Delete</a>
+          <a id="move-itinerary-infos" class="waves-effect waves-light btn right deep-purple darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Move to position">Move</a>
+          <div class="itinerary-info-position-select itinerary-info-margin">
+            <%= label_tag :position_to, "", class: "control-label"%>
+            <%= select_tag :position_to, options_for_select((1..@itinerary.itinerary_infos.size).to_a) %>
+          </div>
+        </span>
+      </h4>
   
       <div id="itinerary_infos">
         <% if !@itinerary.isLocked? %>
