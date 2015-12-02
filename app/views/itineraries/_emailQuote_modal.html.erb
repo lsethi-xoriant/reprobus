@@ -34,6 +34,8 @@
 
                   <div class="input-field col s5">
                     <!-- From email address -->
+                    <%= c.text_field :from_email, value: "#{@setting.try(:itineraries_from_email)}" %>
+                    <%= c.label :from_email, 'FROM:' %>
                   </div>
 
                   <div class="input-field col s5">
