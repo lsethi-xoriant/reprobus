@@ -17,14 +17,11 @@
                     <%= c.label :lead_customer, 'Lead Customer Name' %>
                   </div>
 
-                  <% if @enquiry.try(:agent).present? %>
-                    <div class="input-field col s5">
-                      <!-- Agent Name in bold (if agent is associated with enquiry) -->
-                      <%= c.text_field :agent, value: "#{@enquiry.try(:agent).try(:first_name)} #{@enquiry.try(:agent).try(:last_name)}" %>
-                      <%= c.label :agent, 'Agent Name' %>
-                    </div>
-                  <% end %>
-
+                  <div class="input-field col s5">
+                    <!-- Agent Name in bold (if agent is associated with enquiry) -->
+                    <%= c.text_field :agent, value: "#{@enquiry.try(:agent).try(:first_name)} #{@enquiry.try(:agent).try(:last_name)}" %>
+                    <%= c.label :agent, 'Agent Name' %>
+                  </div>
                   
                   <div class="input-field col s5">
                     <!-- To email address -->
