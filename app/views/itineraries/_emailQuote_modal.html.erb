@@ -15,33 +15,33 @@
 
                   <div class="input-field col s5">
                     <!-- Lead customer name -->
-                    <%= c.text_field :lead_customer, value: @lead_customer %>
+                    <%= c.text_field :lead_customer, value: @lead_customer, disabled: 'disabled' %>
                     <%= c.label :lead_customer, 'Lead Customer Name' %>
                   </div>
 
                   <% if @enquiry.agent.present? %>
                     <div class="input-field col s5">
                       <!-- Agent Name in bold (if agent is associated with enquiry) -->
-                      <%= c.text_field :agent_name, value: @agent_name %>
+                      <%= c.text_field :agent_name, value: @agent_name, disabled: 'disabled' %>
                       <%= c.label :agent_name, 'Agent Name' %>
                     </div>
                   <% end %>
                   
                   <div class="input-field col s5">
                     <!-- To email address -->
-                    <%= c.text_field :to_email, value: @to_email %>
+                    <%= c.text_field :to_email, value: @to_email, disabled: 'disabled' %>
                     <%= c.label :to_email, 'TO:' %>
                   </div>
 
                   <div class="input-field col s5">
                     <!-- From email address -->
-                    <%= c.text_field :from_email, value: @from_email %>
+                    <%= c.text_field :from_email, value: @from_email, disabled: 'disabled' %>
                     <%= c.label :from_email, 'FROM:' %>
                   </div>
 
                   <div class="input-field col s5">
                     <!-- a selection option for either PDF, or Rich Text Document -->
-                    <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']) %>
+                    <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']), disabled: 'disabled' %>
                     <%= c.label :type, 'Document Type' %>
                   </div>
 
