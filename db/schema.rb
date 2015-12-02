@@ -312,7 +312,6 @@ ActiveRecord::Schema.define(version: 20151202104227) do
     t.integer  "destination_image_id"
     t.datetime "quote_sent"
     t.datetime "confirmed_itinerary_sent"
-    t.string   "itineraries_from_email"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree
@@ -518,6 +517,7 @@ ActiveRecord::Schema.define(version: 20151202104227) do
     t.integer  "num_days_balance_due",                                           default: 95
     t.integer  "num_days_deposit_due",                                           default: 7
     t.integer  "deposit_percentage",                                             default: 0
+    t.string   "itineraries_from_email"
   end
 
   create_table "stopovers", force: :cascade do |t|
