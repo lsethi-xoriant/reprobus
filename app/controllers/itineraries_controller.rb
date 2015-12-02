@@ -21,7 +21,7 @@ class ItinerariesController < ApplicationController
   end
 
   def emailQuote
-    if CustomerMailer.send_email_quote(params[:email_settings]).deliver
+    if CustomerMailer.send_email_quote(@setting, params[:email_settings]).deliver
       flash[:success] = 'Itinerary Query has been sent.'
     else
       flash[:error] = 'Error occured while sending Quote'
