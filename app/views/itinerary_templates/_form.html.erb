@@ -38,7 +38,8 @@
 
       <div class="row">
         <div class="input-field col s12">
-         <%= f.submit buttontxt, class: "btn right" %>
+          <%= render partial: 'copy_template_button' if @template.id %>
+          <%= f.submit buttontxt, class: "btn right" %>
         </div>
       </div>
     

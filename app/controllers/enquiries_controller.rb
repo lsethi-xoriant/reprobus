@@ -151,8 +151,8 @@ class EnquiriesController < ApplicationController
       
       flash[:success] = "Enquiry updated.  #{undo_link}"
       
-      if @enquiry.itinerary
-        redirect_to edit_itinerary_path(@enquiry.itinerary)
+      if @enquiry.itineraries.any?
+        redirect_to edit_itinerary_path(@enquiry.itineraries.first)
       else
         redirect_to edit_enquiry_path(@enquiry)
       end

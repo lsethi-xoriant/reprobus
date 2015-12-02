@@ -39,6 +39,10 @@ Reprobus::Application.routes.draw do
   end
   resources :itineraries do
     get 'printQuote'
+    member do
+      get 'copy'
+      get 'cancel'
+    end
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create]
@@ -135,7 +139,11 @@ Reprobus::Application.routes.draw do
   namespace :admin do
     get '', to: 'dashboard#index', as: '/'
     resources :carriers
-    resources :destinations
+    resources :destinations do
+      collection do
+        post :search_by_name
+      end
+    end
     resources :countries
     resources :stopovers
   end

@@ -218,23 +218,18 @@ $(document).ready(function() {
     }
   });
 
-  $('.modal-footer').on('click', '#copy_template_OK', function(e) {
-    var template = $("#copy_template_container").find('.select2-itinerary_templates').val();
-    if ($.isNumeric(template)){
-      
-      url = '/itinerary_templates/' + template + '/copy';
-      
-      $.get(url, function( data ) {
-        toastr.info("Template copied succesfully.");
-      })
-      .fail(function() {
-        toastr.warning("Error while copying template.");
-      });
+  // Copy Itinerary on Edit Itinerary Page
+  $('.modal-footer').on('click', '#copy_itinerary_OK', function(e) {
+    e.preventDefault();
+    $("#copy_itinerary_form").submit();
+  });
 
-    } else {
-      toastr.warning("Template must be selected to copy template!");
-    };
-  }); 
+  // Change dates for Itenirary copy after changing Itenirary date
+  $('#itinerary_start_date').on('change', function(e) {
+    new_date = $(this).prop('value');
+    $("#copy_old_date").attr('value', new_date);
+    $("#copy_start_date").pickadate('picker').set('select', new_date, { format: 'yyyy-mm-dd' });
+  });
 
 });
 
@@ -363,6 +358,40 @@ function check_days_from_start_seq(){
     if (isOutOfSeq) {$(this).addClass("invalid");}
     prevNumNights = parseInt($(this).closest(".field").find(".itinerary-number-days").val());
     prevDaysFromStart = days_from_start;        
+  });
+}
+
+$(document).on('click', '.itinerary_info_bottom_row_edit .remove_fields.existing', function () {
+  updateItineraryImage();
+});
+
+document.addEventListener('destinationsChange', function (e) { 
+  updateItineraryImage();
+}, false);
+
+function updateItineraryImage() {
+  destinations = []
+  $.each($('.itinerary_info_top_row_edit [aria-labelledby="select2-destination-container"] .select2-selection__rendered'), function (index, entry) {
+    destinations.push(entry.textContent);
+  });
+  selected = $('#itinerary_destinations_select .select-dropdown').val();
+  searchDestinationsUrl = '/admin/destinations/search_by_name';
+  $.ajax({
+    url: searchDestinationsUrl,
+    method: 'POST',
+    dataType: 'json',
+    data: {
+      destinations: destinations,
+      selected: selected
+    },
+    cache: false,
+    success: function(data) {
+      $('#itinerary_destinations_select').innerHTML(data.html);
+      console.log(data)
+      $('select').not('.disabled').material_select();
+    },
+    error: function(data) {
+    }
   });
 }
 

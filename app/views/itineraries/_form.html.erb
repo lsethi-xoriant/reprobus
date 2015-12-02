@@ -28,11 +28,14 @@
       <div class="row">
         <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "2000", ckeditor_field: true } %>
       </div>
-      
+
       <div class="row">
-      <%= f.fields_for :itinerary_default_image, @itinerary.itinerary_default_image do |t| %>
-        <%= render partial: 'shared/image_field', locals: { imageHolder: @itinerary.itinerary_default_image, f: t, title: "Default Itinerary Image (recomended size 880px x 880px):" } %>
-      <% end %>
+        <div class="form-group" id="itinerary_destinations_select">
+          <div class="col s6">
+            <%= label_tag :destination_image, "Destination Image", class: "control-label"%>
+            <%= select_tag :destination_image_id, options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
+          </div>
+        </div>
       </div>
       
       <% if !@itinerary.isLocked? %>
@@ -44,7 +47,7 @@
             data-position="bottom" data-delay="50" data-tooltip="Lock Itinerary (will also save any changes)" 
             href="#">Lock Itinerary</a> 
           </div>      
-          <%= render partial: 'copy_template', locals: {f: f} %>
+          <%= render partial: 'copy_itinerary_button' %>
         </div>
       <% else %>  
         <div class="row">
@@ -119,10 +122,13 @@
   <div class="input-field col s3 offset-s1" >
   <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn left deep-purple darken-1" target="_blank" >View Quote Pdf</a>
   </div>
+
   
   <div class="input-field col s3 offset-s4" >
     <%= render partial: 'pricingBtn'%>
-  </div>               
+  </div>
+
+  <%= render partial: 'cancel_itinerary_button' %>
 </div>
 <%# end %>
   
@@ -145,3 +151,5 @@
     <a href="#!" id="bump_dates_modal_button" class="modal-action modal-close waves-effect green waves-lighten-3 btn-flat">Save</a>
   </div>  
 </div>
+
+<%= render partial: 'copy_itinerary_modal' %>

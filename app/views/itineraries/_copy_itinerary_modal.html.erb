@@ -1,0 +1,37 @@
+<%= form_for :copy, url: { controller: "itineraries", action: "copy" }, method: :get, html: { id: 'copy_itinerary_form' } do |c| %>
+  <div id="copy_itinerary_modal" class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Copy Itinerary</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="copy_itinerary_container" class="col s12">
+
+              <div class="row">
+
+                  <div class="input-field col s2">
+                    <%= c.hidden_field :id, value: @itinerary.id %>
+                    <%= c.hidden_field :old_date, value: @itinerary.start_date %>
+                    <%= c.date_field :start_date, class:"datepicker start_leg_itinerary", :"data-value" =>  @itinerary.start_date %>
+                    <%= c.label :start_date, class: 'active' %>
+                  </div>
+
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <a href="#" id="copy_itinerary_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Copy</a>
+
+      <a href="#" id="copy_itinerary_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+  </div>
+
+<% end %>
