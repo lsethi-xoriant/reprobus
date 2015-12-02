@@ -20,15 +20,14 @@ $(document).ready(function() {
     });
     
     $('#supplier_itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      $(".select2-suppliers").select2();  
-      $(".select2-currencies").select2();  
+      initSupplierSelect2();  
+      initCurrencySelect2(); 
       
       reset_material_active_labels('#supplier_itinerary_price_items');
     });
     
     
     $('#itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-//      $(".select2-suppliers-noajax").select2();  
       
       $(insertedItem).find('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
