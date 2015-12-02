@@ -21,6 +21,8 @@ class ItinerariesController < ApplicationController
   end
 
   def emailQuote
+    CustomerMailer.send_email_quote(params[:email_settings]).deliver
+    redirect_to edit_itinerary_path(params[:itinerary_id])
   end
 
   def index

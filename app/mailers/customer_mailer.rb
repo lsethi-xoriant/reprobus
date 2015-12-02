@@ -1,5 +1,8 @@
 class CustomerMailer < ActionMailer::Base
   default from: "donotreply@tripease.com"
+  
+  include SessionsHelper
+  before_action :setCompanySettings, only: [:send_email_quote]
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -21,5 +24,51 @@ class CustomerMailer < ActionMailer::Base
          from: from_name, cc: cc)
     end
   end
+
+  def send_email_quote(params)
+    @itinerary = Itinerary.find(params[:id])
+    @enquiry = @itinerary.enquiry
+
+    # In development emails are opened by letter opener
+    # Bring back this if its necessery:
+    # if !Setting.global_settings.send_emails_turned_off
+    mail(
+      from: params[:from_email],
+      reply_to: params[:from_email],
+      to: params[:to_email], 
+      subject: "Itinerary Quote") do |format|
+        format.html
+        format.pdf do
+          if params[:type] == 'PDF'
+            attachments['ItineraryQuote.pdf'] = render_itinerary_as_pdf(params)
+          end
+        end
+        # TODO: need to be updated after Editable Format will be implemented
+        # format.something do
+        #   if params[:type] == 'Rich Text Document'
+        #     attachments['ItineraryQuote.something'] = render_itinerary_as_something(params)
+        #   end
+        # end
+      end
+    # end
+  
+  end
+
+  private
+    def render_itinerary_as_pdf(params)
+      render_to_string(
+        template: 'itineraries/printQuote',
+        pdf: "Itinerary_no_" + params[:id].to_s.rjust(8, '0'),
+        show_as_html: params.key?('debug'),
+        margin:  { :bottom => 15 },
+        footer: { 
+                  html: 
+                    { 
+                      template:'itineraries/print_itinerary/footer.pdf.erb',
+                      layout: false 
+                    }
+                }
+      )
+    end
 
 end
