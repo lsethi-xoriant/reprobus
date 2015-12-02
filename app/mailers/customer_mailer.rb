@@ -37,7 +37,7 @@ class CustomerMailer < ActionMailer::Base
       reply_to: params[:from_email],
       to: params[:to_email], 
       subject: "Itinerary Quote") do |format|
-        format.html
+        format.html { render layout: false }
         format.pdf do
           if params[:type] == 'PDF'
             attachments['ItineraryQuote.pdf'] = render_itinerary_as_pdf(params)
@@ -56,18 +56,23 @@ class CustomerMailer < ActionMailer::Base
 
   private
     def render_itinerary_as_pdf(params)
-      render_to_string(
-        template: 'itineraries/printQuote',
+      body_html   = 
+        render_to_string(
+          template: 'itineraries/printQuote.pdf.erb', 
+          layout: false
+        )
+
+      footer_html = 
+        render_to_string(
+          template: 'itineraries/print_itinerary/footer.pdf.erb',
+          layout: false
+        )
+      
+      WickedPdf.new.pdf_from_string(
+        body_html,
         pdf: "Itinerary_no_" + params[:id].to_s.rjust(8, '0'),
-        show_as_html: params.key?('debug'),
-        margin:  { :bottom => 15 },
-        footer: { 
-                  html: 
-                    { 
-                      template:'itineraries/print_itinerary/footer.pdf.erb',
-                      layout: false 
-                    }
-                }
+        margin: { bottom: 15 },
+        footer: { content: footer_html } 
       )
     end
 
