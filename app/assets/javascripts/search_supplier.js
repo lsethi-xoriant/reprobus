@@ -64,6 +64,7 @@ function initSupplierSelect2() {
 }
 
 $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
+  //OLD CODE WHICH WONT BE WORKING NOW
   $('#supplierDefaultCurrency').val(e.params.data.currency);
   
   if ($('#base_date').length) {  // if we are on the supplier invoice screen and (basedate is present) then update pay date

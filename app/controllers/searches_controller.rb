@@ -124,7 +124,7 @@ class SearchesController < ApplicationController
     respond_to do |format|
       format.json { render json: {total: resources_count,
         items: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay, 
-                                    currency_id: e.currency_id, currency_rate: e.getSupplierCurrencyRate, numdays: e.num_days_payment_due}}} }
+                                    currency_id: e.currency_id, currency_rate: e.getSupplierCurrencyRateDisplay, numdays: e.num_days_payment_due}}} }
     end
   end
   
