@@ -1,7 +1,5 @@
 
-<div class="form-group" id="itinerary_destinations_select">
   <div class="col s6">
     <%= label_tag :destination_image, "Destination Image", class: "control-label"%>
     <%= select_tag :destination_image_id, options_from_collection_for_select(result, "default_image_id", "name", selected: selected), class: 'form-control', name: "itinerary[destination_image_id]" %>
   </div>
-</div>
