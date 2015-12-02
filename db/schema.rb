@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127075650) do
+ActiveRecord::Schema.define(version: 20151127131500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,10 +176,11 @@ ActiveRecord::Schema.define(version: 20151127075650) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "destinations", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "country_id"
+    t.integer  "default_image_id"
   end
 
   create_table "destinations_enquiries", id: false, force: :cascade do |t|
@@ -308,7 +309,7 @@ ActiveRecord::Schema.define(version: 20151127075650) do
     t.integer  "itinerary_template_id"
     t.integer  "enquiry_id"
     t.string   "status"
-    t.integer  "itinerary_default_image_id"
+    t.integer  "destination_image_id"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree

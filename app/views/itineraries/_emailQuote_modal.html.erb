@@ -26,9 +26,19 @@
                   <% end %>
 
                   
+                  <div class="input-field col s5">
                     <!-- To email address -->
+                    <%= c.text_field :to_email, value: "#{@enquiry.agent.try(:email).presence || @itinerary.user.try(:email)}" %>
+                    <%= c.label :to_email, 'TO:' %>
+                  </div>
+
+                  <div class="input-field col s5">
                     <!-- From email address -->
+                  </div>
+
+                  <div class="input-field col s5">
                     <!-- a selection option for either PDF, or Rich Text Document -->
+                  </div>
 
               </div>
 
