@@ -11,6 +11,8 @@
 
               <div class="row">
 
+                  <%= c.hidden_field :id, value: @itinerary.id %>
+
                   <div class="input-field col s5">
                     <!-- Lead customer name -->
                     <%= c.text_field :lead_customer, value: @lead_customer %>
