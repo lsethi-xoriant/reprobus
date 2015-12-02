@@ -49,7 +49,7 @@ $(document).ready(function() {
   $eventSelect.on("select2:select", function(e) {
     var data = e.params.data;
     var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
-console.log("Hi hamish");
+//console.log("Hi hamish");
     
     sellRateField.val(data.currency_rate);
   });

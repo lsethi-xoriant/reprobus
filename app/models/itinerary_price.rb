@@ -61,23 +61,20 @@ class ItineraryPrice < ActiveRecord::Base
   
   def new_setup
     setting = Setting.global_settings
-    
     self.currency_id = setting.getDefaultCurrency.id
     
     supArray = []
     
     setting.suppliers.each do |sup|
-      if !supArray.include?(sup)
-        self.supplier_itinerary_price_items.build({supplier_id: sup.id, currency_id: sup.currency_id})
-        supArray << sup
-      end
+      supArray << sup if !supArray.include?(sup)
     end
     
     self.itinerary.itinerary_infos.each do |info|
-      if info.supplier && !supArray.include?(info.supplier)
-        self.supplier_itinerary_price_items.build({supplier_id: info.supplier.id})
-        supArray << info.supplier
-      end
+      supArray << info.supplier if info.supplier && !supArray.include?(info.supplier)
+    end     
+    
+    supArray.each do |sup|
+      self.supplier_itinerary_price_items.build({supplier_id: sup.id, currency_id: sup.currency_id, sell_currency_rate: sup.getSupplierCurrencyRateDefault})
     end 
   end
   

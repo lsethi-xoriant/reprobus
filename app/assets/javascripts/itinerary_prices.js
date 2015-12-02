@@ -2,6 +2,8 @@ $(document).ready(function() {
 
   if ($('#itinerary_price_items').length) {
     // only do if on itinerary price page...
+    reset_material_active_labels('#itinerary_price_items');
+    reset_material_active_labels('#supplier_itinerary_price_items');
     
     // onload calc all deposit totals
     $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));}); 
@@ -18,13 +20,15 @@ $(document).ready(function() {
     });
     
     $('#supplier_itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      $(".select2-suppliers-noajax").select2();  
-      reset_material_active_labels('#itinerary_price_items');
+      $(".select2-suppliers").select2();  
+      $(".select2-currencies").select2();  
+      
+      reset_material_active_labels('#supplier_itinerary_price_items');
     });
     
     
     $('#itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      $(".select2-suppliers-noajax").select2();  
+//      $(".select2-suppliers-noajax").select2();  
       
       $(insertedItem).find('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month

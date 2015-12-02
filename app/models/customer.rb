@@ -190,9 +190,16 @@ class Customer < ActiveRecord::Base
     end
   end
   
-  def getSupplierCurrencyRate
+  def getSupplierCurrencyRateDisplay
+    # returns the currency rate if the supplier has a currency or 0
     return self.currency.getCurrencyRate if self.currency
     return 0.00
+  end 
+ 
+  def getSupplierCurrencyRateDefault
+    # returns the currency rate if the supplier has a currency or the system default rate
+    return self.currency.getCurrencyRate if self.currency
+    return Setting.global_settings.getDefaultCurrency.getCurrencyRate 
   end 
  
   def get_company_logo_image_link
