@@ -189,6 +189,11 @@ class Customer < ActiveRecord::Base
       return self.currency.displayName if self.currency
     end
   end
+  
+  def getSupplierCurrencyRate
+    return self.currency.getCurrencyRate if self.currency
+    return 0.00
+  end 
  
   def get_company_logo_image_link
     #for agent.

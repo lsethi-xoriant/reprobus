@@ -68,7 +68,7 @@ class ItineraryPrice < ActiveRecord::Base
     
     setting.suppliers.each do |sup|
       if !supArray.include?(sup)
-        self.supplier_itinerary_price_items.build({supplier_id: sup.id})
+        self.supplier_itinerary_price_items.build({supplier_id: sup.id, currency_id: sup.currency_id})
         supArray << sup
       end
     end

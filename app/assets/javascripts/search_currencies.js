@@ -20,7 +20,7 @@ $(document).ready(function() {
     ajax: {
       url: "/searches/currency_search",
       dataType: 'json',
-      delay: 250,
+      delay: 200,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -44,4 +44,14 @@ $(document).ready(function() {
    });
    
   }
+  
+  var $eventSelect = $(".select2-currencies.supplier-itinerary-price");
+  $eventSelect.on("select2:select", function(e) {
+    var data = e.params.data;
+    var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
+    //console.log(data);
+    
+    sellRateField.val(data.currency_rate);
+  });
+  
  });

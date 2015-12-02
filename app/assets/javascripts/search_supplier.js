@@ -23,7 +23,7 @@ function initSupplierSelect2() {
     ajax: {
       url: "/searches/supplier_search",
       dataType: 'json',
-      delay: 250,
+      delay: 200,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -46,6 +46,21 @@ function initSupplierSelect2() {
     templateSelection: formatSupplierSelection
    });
  
+ 
+  var $eventSelect = $(".select2-suppliers.supplier-itinerary-price");
+  $eventSelect.on("select2:select", function(e) {
+    var data = e.params.data;
+    var currencyField = $(this).closest('.row').find(".select2-currencies");
+    var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
+    //console.log("data.currency = " + data.currency + "  data.currency_id = " + data.currency_id);
+    
+    if (currencyField.find("option:selected").val() != data.currency_id){
+      currencyField.empty().append('<option value="'+data.currency_id+'">'+data.currency+'</option>').val(data.currency_id).trigger("change");
+    }
+    sellRateField.val(data.currency_rate);
+  });
+  
+  
 }
 
 $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
@@ -65,3 +80,5 @@ $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
     
   }
 });
+
+

@@ -85,8 +85,11 @@ $(document).ready(function() {
       calculateSupplierMarkupFromTotalPrice($(this));
       addSupplierMarkupToTotal($(this));
     });
+    
+    
   
   }
+  
 });
 
 function doPricingCalculationsCustomerTotals(e){
@@ -229,3 +232,7 @@ function calculateTotalDepositFromSystemDefault(){
     
   $(".grand_deposit_total").val(deposit_price.toFixed(2));
 }
+
+
+
+

@@ -5,10 +5,10 @@
       <%= render partial: 'shared/material_date', locals: { col: "s1", field: "start_date", f: f, name: "Start Date", value: f.object.start_date } %>
       <%= render partial: 'shared/material_date', locals: { col: "s1", field: "end_date", f: f, name: "End Date", value: f.object.end_date } %>   
       <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "quantity", f: f, class_for_input: 'qty_field' } %>
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "item_price", name: "Item Price $", f: f, class_for_input: 'price_field'  } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s1", field: "item_price", name: "Item Price $", f: f, class_for_input: 'price_field', step: 0.01  } %>
       <%= render partial: 'shared/material_percentfield', locals: { col: "s1", field: "deposit_percentage", name: "Deposit %", f: f, value: f.object.deposit_percentage, class_for_input: 'deposit_percent_field' } %>
       <%= render partial: 'shared/material_numberfield', locals: { col: "s1", name: "Deposit $", field: 'deposit', f: f,class_for_input: 'deposit_price_field', disabled: true} %>
-      <%= render partial: 'shared/material_numberfield', locals: { col: "s2", field: "price_total", name: "Total Price $", f: f, class_for_input: 'price_total_field' } %>
+      <%= render partial: 'shared/material_numberfield', locals: { col: "s2", field: "price_total", name: "Total Price $", f: f, class_for_input: 'price_total_field', step: 0.01 } %>
       <div class="input-field col s1 center-align">
         <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
           <i class="mdi-content-clear"></i>

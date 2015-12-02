@@ -50,7 +50,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
-                    items: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}"} }} }
+                    items: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}", currency_rate: e.getCurrencyRate } }} }
     end
   end
   
@@ -117,13 +117,14 @@ class SearchesController < ApplicationController
   def supplier_search
     @customers = Customer.includes(:currency).select([:id, :supplier_name, :cust_sup, :currency_id, :num_days_payment_due]).where("cust_sup ILIKE :p", p: "Supplier" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
-                            order('last_name')
+                            order('supplier_name')
     
     resources_count = @customers.size
-    
+  
     respond_to do |format|
       format.json { render json: {total: resources_count,
-        items: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay, numdays: e.num_days_payment_due}}} }
+        items: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay, 
+                                    currency_id: e.currency_id, currency_rate: e.getSupplierCurrencyRate, numdays: e.num_days_payment_due}}} }
     end
   end
   
