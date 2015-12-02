@@ -29,8 +29,8 @@
         <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "2000", ckeditor_field: true } %>
       </div>
 
-      <div class="row">
-        <div class="form-group" id="itinerary_destinations_select">
+      <div class="row" id="itinerary_destinations_select">
+        <div class="form-group">
           <div class="col s6">
             <%= label_tag :destination_image, "Destination Image", class: "control-label"%>
             <%= select_tag :destination_image_id, options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
@@ -62,7 +62,18 @@
         </div>      
       <% end %> 
      
-      <h4 class="header2">Trip Details</h4>
+      <h4 class="header2">Trip Details 
+        <span class="itinerary-infos-action-buttons">
+          <a id="delete-itinerary-infos" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Delete selected items">Delete</a>
+          <a id="move-itinerary-infos" class="waves-effect waves-light btn right deep-purple darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Move to position">Move</a>
+          <div class="itinerary-info-position-select itinerary-info-margin">
+            <%= label_tag :position_to, "", class: "control-label"%>
+            <%= select_tag :position_to, options_for_select((1..@itinerary.itinerary_infos.size).to_a) %>
+          </div>
+        </span>
+      </h4>
   
       <div id="itinerary_infos">
         <% if !@itinerary.isLocked? %>
