@@ -61,6 +61,9 @@ gem 'jquery-datatables-rails'
 gem 'ajax-datatables-rails'
 gem 'xeroizer', '~> 2.15.6'
 gem 'wicked_pdf'
+gem 'pandoc-ruby'
+gem "tidy_ffi"
+gem 'rtf'
 #gem 'wkhtmltopdf-binary', # removed as having issues accessing https resourses from older gem - replaced above with another similiar one.
 
 gem 'pxpay'

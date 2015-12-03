@@ -1,3 +1,4 @@
+
 class ItinerariesController < ApplicationController
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
@@ -17,7 +18,13 @@ class ItinerariesController < ApplicationController
                }}
       end
       format.html { render layout: false }
-    end    
+      # format.docx { render layout: false }
+      format.docx do
+        render docx: "Itinerary_no_" + @itinerary.id.to_s.rjust(8, '0'),
+               show_as_html: params.key?('debug'),
+               margin:  { :bottom => 15 }
+      end
+    end
   end
 
   def emailQuote
