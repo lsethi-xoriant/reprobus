@@ -1,0 +1,69 @@
+<%= form_for :email_settings, url: itinerary_emailQuote_path(@itinerary), method: :get, html: { id: 'email_quote_form' } do |c| %>
+
+  <div id="email_quote_modal" class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="email_quote_container" class="col s12">
+
+              <div class="row">
+
+                  <%= c.hidden_field :id, value: @itinerary.id %>
+
+                  <div class="input-field col s5">
+                    <!-- Lead customer name -->
+                    <%= c.hidden_field :lead_customer, value: @lead_customer %>
+                    <%= c.text_field :lead_customer, value: @lead_customer, disabled: 'disabled' %>
+                    <%= c.label :lead_customer, 'Lead Customer Name' %>
+                  </div>
+
+                  <% if @enquiry.agent.present? %>
+                    <div class="input-field col s5">
+                      <!-- Agent Name in bold (if agent is associated with enquiry) -->
+                      <%= c.hidden_field :agent_name, value: @agent_name %>
+                      <%= c.text_field :agent_name, value: @agent_name, disabled: 'disabled' %>
+                      <%= c.label :agent_name, 'Agent Name' %>
+                    </div>
+                  <% end %>
+                  
+                  <div class="input-field col s5">
+                    <!-- To email address -->
+                    <%= c.hidden_field :to_email, value: @to_email %>
+                    <%= c.text_field :to_email, value: @to_email, disabled: 'disabled' %>
+                    <%= c.label :to_email, 'TO:' %>
+                  </div>
+
+                  <div class="input-field col s5">
+                    <!-- From email address -->
+                    <%= c.hidden_field :from_email, value: @from_email %>
+                    <%= c.text_field :from_email, value: @from_email, disabled: 'disabled' %>
+                    <%= c.label :from_email, 'FROM:' %>
+                  </div>
+
+                  <div class="input-field col s5">
+                    <!-- a selection option for either PDF, or Rich Text Document -->
+                    <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']), disabled: 'disabled' %>
+                    <%= c.label :type, 'Document Type' %>
+                  </div>
+
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
+
+      <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+  </div>
+
+<% end %>
