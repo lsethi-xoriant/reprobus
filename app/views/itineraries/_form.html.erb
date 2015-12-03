@@ -41,6 +41,9 @@
       <% if !@itinerary.isLocked? %>
         <div class="row">
           <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
+
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: 'flight_reference', f: f } %>
+
           <%= render partial: 'insert_template', locals: {f: f} %>
           <div class="input-field insert_template_cont input-field col s3" >
             <a id="lockItineraryBtn" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped" 
