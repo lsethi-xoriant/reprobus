@@ -39,6 +39,7 @@ Reprobus::Application.routes.draw do
   end
   resources :itineraries do
     get 'printQuote'
+    get 'emailQuote'
     member do
       get 'copy'
       get 'cancel'

@@ -43,5 +43,6 @@ Reprobus::Application.configure do
   
   #Rails.application.routes.default_url_options[:host] = 'http://firstapp-rails-86540.apse2.nitrousbox.com' # used for payment express success and failure link generation
   Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'  # local testing, change back for nitrous...
-  
+
+  config.action_mailer.delivery_method = :letter_opener
 end

@@ -37,6 +37,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.3.8)
     ajax-datatables-rails (0.3.0)
       railties (>= 3.1)
     annotate (2.6.5)
@@ -241,6 +242,10 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     listen (2.10.0)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
@@ -450,6 +455,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   kaminari
+  letter_opener
   materialize-sass (= 0.96.1)
   meta_request
   mini_backtrace (= 0.1.3)

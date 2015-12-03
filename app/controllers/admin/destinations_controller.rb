@@ -1,5 +1,6 @@
 class Admin::DestinationsController < ApplicationController
   before_filter :admin_user, except: ['search_by_name']
+  before_action :set_settings, only: [:new, :edit]
   protect_from_forgery with: :null_session
   
   def index
@@ -95,9 +96,14 @@ class Admin::DestinationsController < ApplicationController
   end
   
 private
-    def destination_params
-      params.require(:destination).permit(:name, :country_id, :default_image,
-        default_image_attributes: [:id, :image_local, :image_remote_url])
-    end  
+
+  def destination_params
+    params.require(:destination).permit(:name, :country_id, :default_image,
+      default_image_attributes: [:id, :image_local, :image_remote_url])
+  end
+
+  def set_settings
+    @setting = Setting.first if Setting.any?
+  end
   
 end

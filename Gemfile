@@ -4,6 +4,10 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'pg'
 
+group :development do
+  gem 'letter_opener'
+end
+
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'annotate', ">=2.6.0"
