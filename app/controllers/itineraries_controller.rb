@@ -20,6 +20,9 @@ class ItinerariesController < ApplicationController
     end    
   end
 
+  def printConfirmed
+  end
+
   def emailQuote
     @itinerary = Itinerary.find(params[:email_settings][:id])
     
