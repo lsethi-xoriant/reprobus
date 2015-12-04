@@ -1,6 +1,6 @@
 <p class="bigBigtitle4">Important Notes</p>
 <div class="border"></div>
-<%= @setting.important_notes.gsub('\n', '<br />').html_safe %>
+<%= @setting.important_notes.html_safe %>
 
 <% @countries = Country.joins(products: :itinerary_infos).where(itinerary_infos: {id: @itinerary.itinerary_info_ids}).distinct %>
 
