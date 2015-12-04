@@ -1,7 +1,7 @@
 <p class="bigBigtitle4">Supplier Details</p>
 <div class="border"></div>
 
-<% @itinerary_price_items = @itinerary.itinerary_price.try(:supplier_itinerary_price_items).joins(:supplier) %>
+<% @itinerary_price_items = @itinerary.itinerary_price.try(:supplier_itinerary_price_items).try(:joins, :supplier) %>
 
 <% if @itinerary_price_items.present? %>
   <table style="border: 1px solid black;">
