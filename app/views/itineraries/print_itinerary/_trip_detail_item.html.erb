@@ -10,8 +10,8 @@
     <div class="contdetails">
       <p class="title"><% if !info.get_group_classification.blank? %><span class="changecolor"><%= "#{info.get_group_classification} "%></span><% end %><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
       
-      <% if @confirmed? %>
-        <p class="caption"><%= "Local Contact - " %></p>
+      <% if @confirmed %>
+        <p class="caption"><%= "Local Contact - #{info.supplier_name} " %></p>
       <% end %>
       
       <p class="caption"><%= "#{info.get_product_description}"%></p>

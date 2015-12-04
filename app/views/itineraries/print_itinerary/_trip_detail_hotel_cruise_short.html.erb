@@ -9,8 +9,8 @@
     <div class="contdetails">
       <p class="title"><%= "#{info.get_itinerary_header_details_cruiseday(preFix)}" %></p>
 
-      <% if @confirmed? %>
-        <p class="caption"><%= "Local Contact - " %></p>
+      <% if @confirmed %>
+        <p class="caption"><%= "Local Contact - #{info.supplier_name} " %></p>
       <% end %>
       
       <% if info.has_meal_inclusions %>
