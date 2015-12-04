@@ -1,0 +1,19 @@
+<p class="bigBigtitle4">Important Notes</p>
+<div class="border"></div>
+<%= @setting.important_notes.gsub('\n', '<br />').html_safe %>
+
+<% @countries = Country.joins(products: :itinerary_infos).where(itinerary_infos: {id: @itinerary.itinerary_info_ids}).distinct %>
+
+<% if @countries.present? %>
+  <table style="border: 1px solid black;">
+    <tr>
+      <th>Country Name</th>
+      <th>Warnings</th>
+      <th>Vaccinations</th>
+      <th>Visa Details</th>  
+    </tr>
+    <%= render partial: "itineraries/print_itinerary/country", collection: @countries %>
+  </table>
+<% end %>
+
+<div class="page-break"></div>

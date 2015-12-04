@@ -41,6 +41,9 @@
       <% if !@itinerary.isLocked? %>
         <div class="row">
           <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
+
+          <%= render partial: 'shared/material_textfield_cols6', locals: { field: 'flight_reference', f: f } %>
+
           <%= render partial: 'insert_template', locals: {f: f} %>
           <div class="input-field insert_template_cont input-field col s3" >
             <a id="lockItineraryBtn" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped" 
@@ -132,6 +135,15 @@
 <div class="row">
   <div class="input-field col s3 offset-s1" >
     <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+
+    <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
+      class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
+      target: '_blank' do %>
+
+        View Confirmed PDF
+
+    <% end %>
+
   </div>
   <div class="input-field col s3 offset-s1" >
     <%= render partial: 'emailQuote_button' %>

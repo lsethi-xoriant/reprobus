@@ -6,6 +6,13 @@
     <%= render 'shared/error_messages', object: f.object %>
   
     <%= render partial: 'shared/material_textfield_cols6', locals: { field: "name", f: f } %>
+
+    <%= render partial: 'shared/material_textareafield_cols6', locals: { field: 'visa_details', f: f, name: "Visa Details", length: "1000", ckeditor_field: true } %>
+
+    <%= render partial: 'shared/material_textareafield_cols6', locals: { field: 'warnings', f: f, name: "Warnings", length: "1000", ckeditor_field: true } %>
+
+    <%= render partial: 'shared/material_textareafield_cols6', locals: { field: 'vaccinations', f: f, name: 'Vaccinations', length: "1000", ckeditor_field: true } %>
+
     <div class="row">
       <div class="col-sm-6 col-md-offset-3">    
       <%= f.submit "Save", class: "btn btn-large btn-primary" %>
