@@ -39,6 +39,9 @@
 <div class="bodyWrap">
 <%= render partial: 'itineraries/print_itinerary/title', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/introduction', formats: [:html]  %>
+<% if @confirmed %>
+  <%= render partial: 'itineraries/print_itinerary/important_notes', formats: [:html]  %>
+<% end %>
 <%= render partial: 'itineraries/print_itinerary/summary', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>
 <%= render partial: 'itineraries/print_itinerary/pricing', formats: [:html] %>

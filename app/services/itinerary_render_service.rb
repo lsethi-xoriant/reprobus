@@ -1,9 +1,10 @@
 class ItineraryRenderService
-  def self.as_pdf(itinerary, setting)
+  def self.as_pdf(itinerary, setting, confirmed=false)
     locals = { 
                 :@itinerary => itinerary, 
                 :@enquiry   => itinerary.enquiry,
                 :@setting   => setting 
+                :@confirmed => confirmed
               }
 
     body_html   = 
