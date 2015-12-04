@@ -46,6 +46,7 @@
 <%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>
 <% if @confirmed %>
   <%= render partial: 'itineraries/print_itinerary/flight_details', formats: [:html]  %>
+  <%= render partial: 'itineraries/print_itinerary/supplier_details', formats: [:html]  %>
 <% end %>
 <%= render partial: 'itineraries/print_itinerary/pricing', formats: [:html] %>
 
