@@ -3,7 +3,7 @@ class ItineraryRenderService
     locals = { 
                 :@itinerary => itinerary, 
                 :@enquiry   => itinerary.enquiry,
-                :@setting   => setting 
+                :@setting   => setting,
                 :@confirmed => confirmed
               }
 
