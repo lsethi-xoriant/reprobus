@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127131500) do
+ActiveRecord::Schema.define(version: 20151202104227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,7 +310,8 @@ ActiveRecord::Schema.define(version: 20151127131500) do
     t.integer  "enquiry_id"
     t.string   "status"
     t.integer  "destination_image_id"
-
+    t.datetime "quote_sent"
+    t.datetime "confirmed_itinerary_sent"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree
@@ -458,8 +459,6 @@ ActiveRecord::Schema.define(version: 20151127131500) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -473,6 +472,8 @@ ActiveRecord::Schema.define(version: 20151127131500) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
