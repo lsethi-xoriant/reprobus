@@ -42,6 +42,10 @@ class Itinerary < ActiveRecord::Base
   has_many :itinerary_infos, -> { order("position ASC")}
   accepts_nested_attributes_for :itinerary_infos, allow_destroy: true
 
+  def quote_sent_update_date
+    self.update_attribute(:quote_sent, DateTime.now)
+  end
+
   def cancel
     self.update_attribute(:status, 'Cancelled')
   end

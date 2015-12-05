@@ -171,6 +171,14 @@ class Enquiry < ActiveRecord::Base
     end
   end
   
+  def agent_name_and_title
+    agent = self.agent
+    if agent.present?
+      [agent.title, agent.first_name, agent.last_name].join(' ').squish
+    else
+      'No Agent Details'
+    end
+  end
   
   def dasboard_customer_name
     self.lead_customer ? self.lead_customer.last_name + ", " + self.lead_customer.first_name : "No Customer Details"

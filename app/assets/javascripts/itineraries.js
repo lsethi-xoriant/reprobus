@@ -231,6 +231,11 @@ $(document).ready(function() {
     $("#copy_start_date").pickadate('picker').set('select', new_date, { format: 'yyyy-mm-dd' });
   });
 
+  $('.modal-footer').on('click', '#email_quote_OK', function(e) {
+    e.preventDefault();
+    $("#email_quote_form").submit();
+  });
+
 });
 
 /* JS hooks to update sortable elements   */
@@ -386,14 +391,60 @@ function updateItineraryImage() {
     },
     cache: false,
     success: function(data) {
-      $('#itinerary_destinations_select').innerHTML(data.html);
-      console.log(data)
+      $('#itinerary_destinations_select').replaceWith(data.html);
       $('select').not('.disabled').material_select();
     },
-    error: function(data) {
-    }
+    error: function(data) {}
   });
 }
+
+var actionElements = [];
+$(document).on('change', '.itinerary-info-checkbox .muli-select-itinerary', function(e) {
+  checkedElements = $('.itinerary-info-checkbox .muli-select-itinerary:checked');
+  actionElements = [];
+  if (checkedElements.size() > 0) {
+    $.each(checkedElements, function(index, entry) {
+      actionElements.push($(entry).parents('.sortable-item')[0]);
+    });
+    $('.itinerary-infos-action-buttons').show();
+  }
+  else {
+    $('.itinerary-infos-action-buttons').hide();
+  }
+});
+
+$(document).on('click', '#delete-itinerary-infos', function(e) {
+  e.preventDefault();
+  $(actionElements).remove();
+  $('.sortable').trigger("sortupdate", {});
+
+  newElementsSize = $('[data-item-sortable-id]').size();
+  data = Array.apply(null, { length: newElementsSize }).map(Number.call, Number);
+  console.log(data)
+  var s = $("<select id=\"position_to\" name=\"position_to\" />");
+  for(var val in data) {
+    $("<option />", {value: (val + 1), text: (data[val] + 1)}).appendTo(s);
+  }
+
+  $('.itinerary-info-position-select').html(s);
+  $('select').not('.disabled').material_select();
+  $('.itinerary-infos-action-buttons').hide();
+});
+
+$(document).on('click', '#move-itinerary-infos', function(e) {
+  e.preventDefault();
+  postitionNumber = parseInt($('.itinerary-info-position-select .select-dropdown').val());
+  if (postitionNumber == $('[data-item-sortable-id]').size())
+    $(actionElements).insertAfter($('[data-item-sortable-id]')[postitionNumber - 1]);
+  else
+    $(actionElements).insertBefore($('[data-item-sortable-id]')[postitionNumber - 1]);
+  $('.sortable').trigger("sortupdate", {});
+
+  $.each(checkedElements, function(index, entry) {
+    $(entry).attr('checked', false);
+  });
+  $('.itinerary-infos-action-buttons').hide();
+});
 
 /*JS override on date. this is to get datepicker and calculating dates working properly */
 Date.prototype.yyyymmdd = function() {         
