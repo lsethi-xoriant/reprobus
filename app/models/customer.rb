@@ -43,6 +43,8 @@
 #  company_logo_id            :integer
 #  agent_commision_percentage :integer          default("0")
 #  setting_id                 :integer
+#  quote_introduction         :text
+#  confirmed_introduction     :text
 #
 
 class Customer < ActiveRecord::Base

@@ -2,25 +2,25 @@
 #
 # Table name: itineraries
 #
-#  id                         :integer          not null, primary key
-#  name                       :string
-#  start_date                 :date
-#  num_passengers             :integer
-#  complete                   :boolean
-#  sent                       :boolean
-#  quality_check              :boolean
-#  includes                   :text
-#  excludes                   :text
-#  notes                      :text
-#  flight_reference           :string
-#  user_id                    :integer
-#  customer_id                :integer
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  itinerary_template_id      :integer
-#  enquiry_id                 :integer
-#  status                     :string
-#  itinerary_default_image_id :integer
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  start_date            :date
+#  num_passengers        :integer
+#  complete              :boolean
+#  sent                  :boolean
+#  quality_check         :boolean
+#  includes              :text
+#  excludes              :text
+#  notes                 :text
+#  flight_reference      :string
+#  user_id               :integer
+#  customer_id           :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  itinerary_template_id :integer
+#  enquiry_id            :integer
+#  status                :string
+#  destination_image_id  :integer
 #
 
 class Itinerary < ActiveRecord::Base

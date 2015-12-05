@@ -11,7 +11,7 @@ class ItineraryPricesController < ApplicationController
     end
     
     @itinerary_price = ItineraryPrice.new
-    @itinerary_price.itinerary = @itinerary   
+    @itinerary_price.itinerary = @itinerary
     @itinerary_price.new_setup()
    
   end
@@ -50,14 +50,14 @@ class ItineraryPricesController < ApplicationController
   
 private
   def itinerary_price_params
-    params.require(:itinerary_price).permit(:itinerary_id, :deposit_due, 
-    :invoice_date, :balance_due, :final_balance_due, :currency_id, 
+    params.require(:itinerary_price).permit(:itinerary_id, :deposit_due,
+    :invoice_date, :balance_due, :final_balance_due, :currency_id,
     :deposit, :sale_total, :deposit_system_default,
-    itinerary_price_items_attributes: [:id, :booking_ref, :description, 
-    :price_total,  :deposit,
+    itinerary_price_items_attributes: [:id, :booking_ref, :description,
+    :price_total,  :deposit, :deposit_percentage,
     :item_price, :quantity, :start_date, :end_date, :_destroy ],
-    supplier_itinerary_price_items_attributes: [:id, :booking_ref, :description, 
-    :price_total, :itinerary_price_id, :supplier_id, :markup_percentage,
+    supplier_itinerary_price_items_attributes: [:id, :booking_ref, :description,
+    :price_total, :itinerary_price_id, :supplier_id, :markup, :markup_percentage,
     :item_price, :quantity, :currency_id, :sell_currency_rate,  :_destroy ])
-  end  
+  end
 end

@@ -6,13 +6,13 @@ $(document).ready(function() {
     reset_material_active_labels('#supplier_itinerary_price_items');
     
     // onload calc all deposit totals
-    $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));}); 
+    $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));});
     
-    // onload calc all totals. 
+    // onload calc all totals.
     doPricingCalculationsCustomerTotals();
     
     // onload calc all markup totals
-    $('.markup_percent_field').each(function() {calculateSupplierMarkupFromTotalPrice($(this));});   
+    $('.markup_percent_field').each(function() {calculateSupplierMarkupFromTotalPrice($(this));});
     
   
     $('#supplier_itinerary_price_items').on('cocoon:after-remove', function() {   // this container is on itinerary new form
@@ -20,8 +20,8 @@ $(document).ready(function() {
     });
     
     $('#supplier_itinerary_price_items').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
-      initSupplierSelect2();  
-      initCurrencySelect2(); 
+      initSupplierSelect2();
+      initCurrencySelect2();
       
       reset_material_active_labels('#supplier_itinerary_price_items');
     });
@@ -35,14 +35,14 @@ $(document).ready(function() {
         formatSubmit: 'yyyy-mm-dd',
         format: 'yyyy-mm-dd',
         hiddenSuffix: ''
-      });  
+      });
       
       reset_material_active_labels('#itinerary_price_items');
     });
   
   
     $(document).on('change', '.deposit_percent_field', function() {
-     calculateDepositFromTotalPrice($(this));    
+     calculateDepositFromTotalPrice($(this));
      calculateTotalDepositForPricing();
     });
    
@@ -61,26 +61,26 @@ $(document).ready(function() {
       calculateTotalForPricing();
       calculateDepositFromTotalPrice($(this));
       calculateTotalDepositForPricing();
-    }); 
+    });
       
       
     $(document).on('change', '.deposit_system_default', function() {
-      // if ticked, only calculate deposit on system %s 
+      // if ticked, only calculate deposit on system %s
       if($('.deposit_system_default').is(":checked")){
         calculateTotalDepositFromSystemDefault();
         //and hide show whatever -
         $(".deposit_percent_field").hide();
-        $(".deposit_price_field").hide();        
+        $(".deposit_price_field").hide();
       } else { // go back to normal calculations
-        $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));});     
-        calculateTotalDepositForPricing();     
+        $('.deposit_price_field').each(function() {calculateDepositFromTotalPrice($(this));});
+        calculateTotalDepositForPricing();
         calculateTotalForPricing();
         
         //and hide show whatever -
         $(".deposit_percent_field").show();
         $(".deposit_price_field").show();
-      } 
-    }); 
+      }
+    });
     
     
     $(document).on('change', '.supplier_qty_field, .supplier_item_price_field, .markup_percent_field', function() {
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
 function doPricingCalculationsCustomerTotals(e){
   calculateTotalForPricing();
-  calculateTotalDepositForPricing();  
+  calculateTotalDepositForPricing();
 }
 
 function calculateTotalFromQtyPrice(e){
@@ -134,7 +134,7 @@ function calculateSupplierMarkupFromTotalPrice(e){
   }
   
   // only do this calc if we have a qty value
-  if ( isNaN(markupPercent.val()) == false && parseFloat(markupPercent.val()) > 0)  {
+  if ( isNaN(markupPercent.val()) === false && parseFloat(markupPercent.val()) > 0)  {
     markup_price = (totalAmount * (markupPercent.val()/100));
   } else {
     markup_price = 0.00;
@@ -159,7 +159,7 @@ function addSupplierMarkupToTotal(e){
     markup_price = 0.00;
   } else {
     markup_price = parseFloat(markupAmountField.val());
-  }  
+  }
   
   totalAmount = (markup_price + totalAmount);
   totalfield.val(totalAmount.toFixed(2));
@@ -172,7 +172,7 @@ function calculateItemPriceFromTotal(e){
   var qtyfield = $(e).closest('.field').find('.qty_field');
   var itemPriceField = $(e).closest('.field').find('.price_field');
   // only do this calc if we have a qty value
-  if ( isNaN(qtyfield.val()) == false && parseFloat(qtyfield.val()) > 0)  {
+  if ( isNaN(qtyfield.val()) === false && parseFloat(qtyfield.val()) > 0)  {
     item_price = (totalfield.val() / qtyfield.val());
   } else {
     item_price = parseFloat(totalfield.val());
@@ -185,10 +185,29 @@ function calculateTotalForPricing(){
   var sum = 0.00;
   $('.price_total_field').each(function() {
       sum += Number($(this).val());
-  });  
+  });
     
   $(".grand_total").val(sum.toFixed(2));
 }
+
+function calculateSupplierTotalForPricing(){
+  var sum = 0.00;
+  $('.supplier_total_field').each(function() {
+      sum += Number($(this).val());
+  });
+    
+  $(".grand_supplier_total").val(sum.toFixed(2));
+}
+
+function calculateSupplierMarkupTotalForPricing(){
+  var sum = 0.00;
+  $('.markup_price_field').each(function() {
+      sum += Number($(this).val());
+  });
+    
+  $(".grand_markup_total").val(sum.toFixed(2));
+}
+
 
 function calculateTotalDepositForPricing(){
   // if doing system default ignore this calculation!
@@ -200,7 +219,7 @@ function calculateTotalDepositForPricing(){
   var sum = 0.00;
   $('.deposit_price_field').each(function() {
       sum += Number($(this).val());
-  });  
+  });
     
   $(".grand_deposit_total").val(sum.toFixed(2));
 }

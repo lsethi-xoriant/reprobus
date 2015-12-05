@@ -2,12 +2,13 @@
 #
 # Table name: destinations
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  country_id :integer
-#  
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#  country_id       :integer
+#  default_image_id :integer
+#
 
 class Destination < Admin
   validates :name, presence: true, length: { maximum: 255 }

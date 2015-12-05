@@ -32,7 +32,7 @@ class ItineraryPrice < ActiveRecord::Base
  
  
   def get_agent_display
-    if self.itinerary.enquiry.agent 
+    if self.itinerary.enquiry.agent
       return self.itinerary.enquiry.agent.fullname
     else
       return "N/A"
@@ -49,12 +49,28 @@ class ItineraryPrice < ActiveRecord::Base
   
   def get_consultant_display
     return  self.itinerary.enquiry.assigned_to_name
-  end  
+  end
   
   def get_total_customer_price
     total = 0.00
     self.itinerary_price_items.each do |ipi|
       total = total + ipi.price_total
+    end
+    return "$#{total}"
+  end
+  
+  def get_total_supplier_price
+    total = 0.00
+    self.supplier_itinerary_price_items.each do |ipi|
+      total = total + ipi.price_total
+    end
+    return "$#{total}"
+  end
+  
+  def get_total_supplier_markup
+    total = 0.00
+    self.supplier_itinerary_price_items.each do |ipi|
+      total = total + ipi.markup
     end
     return "$#{total}"
   end
@@ -71,11 +87,11 @@ class ItineraryPrice < ActiveRecord::Base
     
     self.itinerary.itinerary_infos.each do |info|
       supArray << info.supplier if info.supplier && !supArray.include?(info.supplier)
-    end     
+    end
     
     supArray.each do |sup|
       self.supplier_itinerary_price_items.build({supplier_id: sup.id, currency_id: sup.currency_id, sell_currency_rate: sup.getSupplierCurrencyRateDefault})
-    end 
+    end
   end
   
 end

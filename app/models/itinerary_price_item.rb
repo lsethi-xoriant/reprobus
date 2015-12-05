@@ -14,12 +14,14 @@
 #  invoice_id                  :integer
 #  quantity                    :integer          default("0")
 #  item_price                  :decimal(12, 2)   default("0.0")
-#  deposit                     :integer          default("0")
+#  deposit_percentage          :integer          default("0")
 #  start_date                  :date
 #  currency_id                 :integer
 #  markup_percentage           :integer
 #  end_date                    :date
 #  sell_currency_rate          :decimal(12, 2)   default("0.0")
+#  deposit                     :decimal(12, 2)   default("0.0")
+#  markup                      :decimal(12, 2)   default("0.0")
 #
 
 class ItineraryPriceItem < ActiveRecord::Base
