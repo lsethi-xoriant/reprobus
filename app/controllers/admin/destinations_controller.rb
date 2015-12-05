@@ -1,6 +1,7 @@
 class Admin::DestinationsController < ApplicationController
   before_filter :admin_user, except: ['search_by_name']
   protect_from_forgery with: :null_session
+  before_action :setCompanySettings
   
   def index
     @destinations = Destination.includes(:country).all
