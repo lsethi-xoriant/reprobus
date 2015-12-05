@@ -11,7 +11,7 @@
       <p class="title"><% if !info.get_group_classification.blank? %><span class="changecolor"><%= "#{info.get_group_classification} "%></span><% end %><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
       
       <% if @confirmed %>
-        <p class="caption"><%= "Local Contact - #{info.supplier_name} " %></p>
+        <p class="caption"><%= "Local Contact - " %></p>
       <% end %>
       
       <p class="caption"><%= "#{info.get_product_description}"%></p>
