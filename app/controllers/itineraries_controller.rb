@@ -79,6 +79,7 @@ class ItinerariesController < ApplicationController
                       .map { |product| product.destination if product }
                       .compact
                       .uniq
+
     set_email_modal_values
   end
   
