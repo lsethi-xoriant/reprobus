@@ -1,0 +1,6 @@
+<tr>
+  <td><%= country.name %></td>
+  <td><%= country.warnings.try(:html_safe) %></td>
+  <td><%= country.vaccinations.try(:html_safe) %></td>
+  <td><%= country.visa_details.try(:html_safe) %></td>
+</tr>

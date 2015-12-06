@@ -33,6 +33,10 @@
           <% end %>
 
           <div class="row">
+            <%= render partial: 'shared/material_textareafield_cols12', locals: { field: 'important_notes', f: f, name: 'Important Notes', length: "1000",  ckeditor_field: true } %>
+          </div>
+
+          <div class="row">
             <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "itineraries_from_email", f: f, name: "Itineraries FROM email", length: "255" } %>
           </div>
         

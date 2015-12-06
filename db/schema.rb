@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202104227) do
+ActiveRecord::Schema.define(version: 20151203094427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,9 @@ ActiveRecord::Schema.define(version: 20151202104227) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "visa_details"
+    t.text     "warnings"
+    t.text     "vaccinations"
   end
 
   create_table "currencies", force: :cascade do |t|
@@ -518,6 +521,7 @@ ActiveRecord::Schema.define(version: 20151202104227) do
     t.integer  "num_days_deposit_due",                                           default: 7
     t.integer  "deposit_percentage",                                             default: 0
     t.string   "itineraries_from_email"
+    t.text     "important_notes"
   end
 
   create_table "stopovers", force: :cascade do |t|

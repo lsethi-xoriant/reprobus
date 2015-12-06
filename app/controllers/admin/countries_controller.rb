@@ -71,7 +71,7 @@ class Admin::CountriesController < ApplicationController
   
 private
     def country_params
-      params.require(:country).permit(:name)
+      params.require(:country).permit(:name, :visa_details, :warnings, :vaccinations)
     end  
   
 end

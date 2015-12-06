@@ -12,6 +12,7 @@ class Country < Admin
   validates :name, presence: true, length: { maximum: 255 }
   
   has_many :destinations
+  has_many :products
   
   require 'roo'
   
