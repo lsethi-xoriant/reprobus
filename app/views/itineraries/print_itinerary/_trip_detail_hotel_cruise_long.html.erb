@@ -9,8 +9,8 @@
   <% if info %>
     <div class="contdetails">
       <p class="title"><%= "#{info.get_itinerary_header_details(preFix)}" %></p>
-      <% if @confirmed %>
-        <p class="caption"><%= "Local Contact - " %></p>
+      <% if @confirmed && info.respond_to? :supplier_name %>
+        <p class="caption"><%= "Local Contact - #{info.try(:supplier_name)}" %></p>
       <% end %>
       <p class="address"><strong><%= "#{info.get_product_address}" %></strong></p>
       <p class="phone"><strong><%= "#{info.get_product_phone}" %></strong></p>
