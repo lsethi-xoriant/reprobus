@@ -1,7 +1,24 @@
-<tr>
-  <td><%= itinerary_price_item.try(:supplier).try(:supplier_name) %> </td>
-  <td><%= itinerary_price_item.try(:supplier).try(:fullname_with_title) %></td>
-  <td><%= itinerary_price_item.try(:supplier).try(:phone) %></td>
-  <td><%= itinerary_price_item.try(:supplier).try(:address).try(:getDisplayString) %></td>
-  <td><%= itinerary_price_item.try(:booking_ref) %></td>
-</tr>
+<p>
+  <strong><%= itinerary_price_item.try(:supplier).try(:supplier_name) %></strong>
+</p>
+
+<p>
+  <%= 'Address: ' + itinerary_price_item.try(:supplier).try(:address).try(:getDisplayString).to_s %>
+</p>
+
+</br />
+
+<p>
+  <%= 'Phone: ' + itinerary_price_item.try(:supplier).try(:phone).to_s %>
+</p>
+
+
+<p>
+  <%= 'Contact Name: ' + itinerary_price_item.try(:supplier).try(:fullname_with_title).to_s %>
+</p>
+
+<p>
+  <%= 'Booking Reference: ' + itinerary_price_item.try(:booking_ref).to_s %>
+</p>
+
+</br />
