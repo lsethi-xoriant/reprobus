@@ -18,7 +18,6 @@
 //= require dataTables/jquery.dataTables
 //= require materialize-sprockets
 //= require toastr
-//= require turbolinks
 //= require nprogress
 //= require nprogress-turbolinks
 //= require nprogress-ajax
@@ -26,3 +25,4 @@
 //= require select2.min
 //= require ckeditor/init
 //= require_tree .
+//= require turbolinks
