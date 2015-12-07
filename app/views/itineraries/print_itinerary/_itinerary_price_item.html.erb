@@ -18,7 +18,10 @@
 </p>
 
 <p>
-  <%= 'Booking Reference: ' + itinerary_price_item.try(:booking_ref).to_s %>
+  Booking Reference: 
+  <span class='booking-color'>
+    <%= itinerary_price_item.try(:booking_ref).to_s %>
+  </span>
 </p>
 
 </br />
