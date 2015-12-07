@@ -2,7 +2,10 @@
 <div class="border"></div>
 
 <p class='bigBigtitle5'>
-  <%= "Please check www.viewtrip.com with booking reference: #{@itinerary.flight_reference}" %>
+  Please check 
+  <span class='link-color'> www.viewtrip.com </span> 
+  with booking reference: 
+  <span class='booking-color'><%= @itinerary.flight_reference.presence || 'N/A' %></span>
 </p>
 <div class="clear50"></div>
 
