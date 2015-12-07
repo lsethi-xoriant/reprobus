@@ -33,7 +33,7 @@
         <div class="form-group">
           <div class="col s6">
             <%= label_tag :destination_image, "Destination Image", class: "control-label"%>
-            <%= select_tag :destination_image_id, options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
+            <%= select_tag :destination_image_id, content_tag(:option, 'Select one...', value: "") + options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
           </div>
         </div>
       </div>
