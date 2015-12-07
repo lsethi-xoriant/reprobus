@@ -26,6 +26,7 @@
 .title { color:#97bd4e; font-size:20px; line-height:30px; font-weight: 800;}
 .title2 { color:#97bd4e; font-size:18px; line-height:30px; font-weight: 800;}
 .caption { color:#424043; font-size:18px; line-height:28px; font-weight: 400;}
+.caption-green { color:#97bd4e; font-size:18px; line-height:28px; font-weight: 400;}
 .page-break { display:block; clear:both; page-break-after:always; }
 .itinerary_date_color{color:#3399ff;}
 </style>
@@ -39,15 +40,18 @@
 <div class="bodyWrap">
 <%= render partial: 'itineraries/print_itinerary/title', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/introduction', formats: [:html]  %>
+
 <% if @confirmed %>
   <%= render partial: 'itineraries/print_itinerary/important_notes', formats: [:html]  %>
 <% end %>
+
 <%= render partial: 'itineraries/print_itinerary/summary', formats: [:html]  %>
 <%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>
+
 <% if @confirmed %>
-  <%= render partial: 'itineraries/print_itinerary/flight_details', formats: [:html]  %>
-  <%= render partial: 'itineraries/print_itinerary/supplier_details', formats: [:html]  %>
+  <%= render partial: 'itineraries/print_itinerary/flight_and_supplier_details', formats: [:html]  %>
 <% end %>
+
 <%= render partial: 'itineraries/print_itinerary/pricing', formats: [:html] %>
 
 </div>
