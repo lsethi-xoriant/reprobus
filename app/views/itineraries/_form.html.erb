@@ -33,7 +33,7 @@
         <div class="form-group">
           <div class="col s6">
             <%= label_tag :destination_image, "Destination Image", class: "control-label"%>
-            <%= select_tag :destination_image_id, options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
+            <%= select_tag :destination_image_id, content_tag(:option, 'Select one...', value: "") + options_from_collection_for_select(@destinations, "default_image_id", "name", selected: @itinerary.destination_image_id), name: "itinerary[destination_image_id]" %>
           </div>
         </div>
       </div>
@@ -77,6 +77,12 @@
           </div>
         </span>
       </h4>
+
+      <div class="row">
+        <div class="col s2">
+          <a id="select-all-itinerary-infos" class="waves-effect waves-light btn right deep-purple darken-1 itinerary-info-margin">Select All</a>
+        </div>
+      </div>
   
       <div id="itinerary_infos">
         <% if !@itinerary.isLocked? %>
