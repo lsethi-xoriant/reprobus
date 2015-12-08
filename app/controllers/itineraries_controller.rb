@@ -143,9 +143,21 @@ class ItinerariesController < ApplicationController
   def cancel
     @itinerary = Itinerary.find(params[:id])
     if @itinerary.cancel
-      flash[:success] = "Itinerary cancelled"
+      undo_link = view_context.link_to("(Undo Cancel)",
+      revert_cancel_itinerary_path(@itinerary), :method => :post)
+      flash[:success] = "Itinerary cancelled. #{undo_link}"
     else
       flash[:error] = "Error while cancelling Itinerary"
+    end
+    redirect_to edit_itinerary_path(@itinerary)
+  end
+
+  def revert_cancel
+    @itinerary = Itinerary.find(params[:id])
+    if @itinerary.update_attributes(status: 'Reinstated')
+      flash[:success] = "Itinerary reinstated"
+    else
+      flash[:error] = "Error while undo cancelling Itinerary"
     end
     redirect_to edit_itinerary_path(@itinerary)
   end
