@@ -400,6 +400,21 @@ function updateItineraryImage() {
 
 var actionElements = [];
 $(document).on('change', '.itinerary-info-checkbox .muli-select-itinerary', function(e) {
+  setActionElements();
+});
+
+var checkedAll = false;
+$(document).on('click', '#select-all-itinerary-infos', function(e) {
+  e.preventDefault();
+  checkedAll = !checkedAll;
+  infosElements = $('.itinerary-info-checkbox .muli-select-itinerary');
+  $.each(infosElements, function(index, entry) {
+    entry.checked = checkedAll;
+  });
+  setActionElements();
+});
+
+var setActionElements = function() {
   checkedElements = $('.itinerary-info-checkbox .muli-select-itinerary:checked');
   actionElements = [];
   if (checkedElements.size() > 0) {
@@ -411,27 +426,20 @@ $(document).on('change', '.itinerary-info-checkbox .muli-select-itinerary', func
   else {
     $('.itinerary-infos-action-buttons').hide();
   }
-});
+}
 
 $(document).on('click', '#delete-itinerary-infos', function(e) {
   e.preventDefault();
   $.each(actionElements, function(index, entry) {
     $(entry).find('.remove_fields').click();
+    $(entry).detach();
   });
 
-  newElementsSize = $('[data-item-sortable-id]').size();
-  data = Array.apply(null, { length: newElementsSize }).map(Number.call, Number);
-  var s = $("<select id=\"position_to\" name=\"position_to\" />");
-  for(var val in data) {
-    $("<option />", {value: (val + 1), text: (data[val] + 1)}).appendTo(s);
-  }
-
-  $('.itinerary-info-position-select').html(s);
-  $('select').not('.disabled').material_select();
+  updateItineraryInfosNumberSelect();
   $('.itinerary-infos-action-buttons').hide();
   $('.sortable').trigger("sortupdate", {});
-
   actionElements = [];
+  checkedAll = false;
 });
 
 $(document).on('click', '#move-itinerary-infos', function(e) {
@@ -446,10 +454,22 @@ $(document).on('click', '#move-itinerary-infos', function(e) {
   $.each(checkedElements, function(index, entry) {
     $(entry).attr('checked', false);
   });
+  updateItineraryInfosNumberSelect();
   $('.itinerary-infos-action-buttons').hide();
-
   actionElements = [];
+  checkedAll = false;
 });
+
+var updateItineraryInfosNumberSelect = function() {
+  newElementsSize = $('[data-item-sortable-id]').size();
+  data = Array.apply(null, { length: newElementsSize }).map(Number.call, Number);
+  var s = $("<select id=\"position_to\" name=\"position_to\" />");
+  for(var val in data) {
+    $("<option />", {value: (val + 1), text: (data[val] + 1)}).appendTo(s);
+  }
+  $('.itinerary-info-position-select').html(s);
+  $('select').not('.disabled').material_select();
+}
 
 /*JS override on date. this is to get datepicker and calculating dates working properly */
 Date.prototype.yyyymmdd = function() {         
