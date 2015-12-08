@@ -1,39 +1,70 @@
+class @ItineraryInfosDatesValidator
+  constructor: ->
+    @itinerary_start_date = $('#itinerary_start_date').prop('value')
+    @start_dates = $("[id^=itinerary_itinerary_infos_attributes_][id$=_start_date]")
+
+    $('#dates_validation_message').css('display', 'none')
+
+    self = this
+    @start_dates.each (index) ->
+      current_element = $(this)
+      current_element_date = current_element.prop('value')
+
+      current_element.removeClass('invalid')
+
+      self.validateFirstEqualToStart(current_element, current_element_date, index)
+      self.validateCurrentIsAfterStart(current_element, current_element_date, index)
+      self.validateCurrentIsAfterPrevious(current_element, current_element_date, index)
+      self.validateCurrentIsBeforeCurrentEnd(current_element, current_element_date, index)
+
+  # start date of first element should be equal to start date
+  validateFirstEqualToStart: (current_element, current_element_date, index) =>
+    if (index == 0)
+      if current_element_date != @itinerary_start_date
+        @validationFailed(current_element)
+
+  # compare with start date
+  validateCurrentIsAfterStart: (current_element, current_element_date, index) =>
+    if current_element_date < @itinerary_start_date
+      @validationFailed(current_element)
+
+  # compare with previous element
+  validateCurrentIsAfterPrevious: (current_element, current_element_date, index) =>
+    if (index > 0)
+      previous_element = @start_dates.eq(index - 1)
+      previous_element_date = previous_element.prop('value')
+      if current_element_date < previous_element_date
+        @validationFailed(current_element)
+
+  # compare with end_date
+  validateCurrentIsBeforeCurrentEnd: (current_element, current_element_date, index) =>
+    end_date_id = '#itinerary_itinerary_infos_attributes_' + index + '_end_date'
+    end_date_element = $(end_date_id)
+    end_date_element.removeClass('invalid')
+    end_date_date = end_date_element.prop('value')
+    if current_element_date > end_date_date
+      @validationFailed(end_date_element)
+
+  # what to do if validation fails
+  validationFailed: (failed_element) =>
+    failed_element.addClass('invalid')
+    $('#dates_validation_message').css('display', 'block')
+
 $(document).ready ->
-  $('#itinerary_start_date').on 'change', (e) ->
-    new_date = $(this).prop('value');
 
-    start_dates = $("[id^=itinerary_itinerary_infos_attributes_][id$=_start_date]")
+  # validation on Edit Itinerary page load
+  if window.location.pathname.match(/\/itineraries\/\d+\/edit/)
+    new ItineraryInfosDatesValidator()
 
-    start_dates.each (index) ->
-      
-      $(this).removeClass('invalid')
+  # validation on Itinerary start date change
+  $(document).on "change", '#itinerary_start_date', (e) -> 
+    new ItineraryInfosDatesValidator()
 
-      current_element_date = $(this).prop('value')
+  # validation on any Trip Details start date change
+  $("[id^=itinerary_itinerary_infos_attributes_][id$=_start_date]").bind 'change', ->
+    new ItineraryInfosDatesValidator()
 
-      # start date of first element should be equal to start date
-      if (index == 0)
-        if current_element_date != new_date
-          # console.log 'current_element_date != new_date'
-          $(this).addClass('invalid')
+  # validation on any Trip Details end date change
+  $("[id^=itinerary_itinerary_infos_attributes_][id$=_end_date]").bind 'change', ->
+    new ItineraryInfosDatesValidator()
 
-      # compare with start date
-      if current_element_date < new_date
-        # console.log 'current_element_date < new_date'
-        $(this).addClass('invalid')
-
-      # compare with previous element
-      if (index > 0)
-        previous_element = start_dates.eq(index - 1)
-        previous_element_date = previous_element.prop('value')
-        if current_element_date < previous_element_date
-          # console.log 'current_element_date < previous_element_date'
-          $(this).addClass('invalid')
-
-      # compare with end_date
-      end_date_id = '#itinerary_itinerary_infos_attributes_' + index + '_end_date'
-      end_date_element = $(end_date_id)
-      end_date_element.removeClass('invalid')
-      end_date_date = end_date_element.prop('value')
-      if current_element_date > end_date_date
-        # console.log 'current_element_date < end_date_date'
-        end_date_element.addClass('invalid')
