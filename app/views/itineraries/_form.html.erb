@@ -61,7 +61,18 @@
         </div>      
       <% end %> 
      
-      <h4 class="header2">Trip Details</h4>
+      <h4 class="header2">Trip Details 
+        <span class="itinerary-infos-action-buttons">
+          <a id="delete-itinerary-infos" class="waves-effect waves-light btn right deep-orange darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Delete selected items">Delete</a>
+          <a id="move-itinerary-infos" class="waves-effect waves-light btn right deep-purple darken-1 tooltipped itinerary-info-margin" 
+            data-position="bottom" data-delay="50" data-tooltip="Move to position">Move</a>
+          <div class="itinerary-info-position-select itinerary-info-margin">
+            <%= label_tag :position_to, "", class: "control-label"%>
+            <%= select_tag :position_to, options_for_select((1..@itinerary.itinerary_infos.size).to_a) %>
+          </div>
+        </span>
+      </h4>
   
       <div id="itinerary_infos">
         <% if !@itinerary.isLocked? %>
@@ -119,7 +130,10 @@
 <%# if @itinerary.isLocked? %>
 <div class="row">
   <div class="input-field col s3 offset-s1" >
-  <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="waves-effect waves-light btn left deep-purple darken-1" target="_blank" >View Quote Pdf</a>
+    <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+  </div>
+  <div class="input-field col s3 offset-s1" >
+    <%= render partial: 'emailQuote_button' %>
   </div>
 
   
@@ -152,3 +166,5 @@
 </div>
 
 <%= render partial: 'copy_itinerary_modal' %>
+<!-- Email Quote Modal -->
+<%= render partial: 'emailQuote_modal' %>
