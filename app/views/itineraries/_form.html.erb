@@ -106,7 +106,7 @@
             <% if !@itinerary.isLocked? %>
               <%= link_to_add_association  f, :itinerary_infos, partial: 'itinerary_infos', 
                   class: "btn-floating btn-small waves-effect waves-light green" do %>
-                <i class="mdi-content-add"></i>
+                <i class="mdi-content-add" id='add_new_trip_detail'></i>
               <% end %>
             <% end %>
           </div>

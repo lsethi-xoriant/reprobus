@@ -52,19 +52,34 @@ class @ItineraryInfosDatesValidator
 
 $(document).ready ->
 
-  # validation on Edit Itinerary page load
   if window.location.pathname.match(/\/itineraries\/\d+\/edit/)
+    # validation on Edit Itinerary page load
     new ItineraryInfosDatesValidator()
 
-  # validation on Itinerary start date change
-  $(document).on "change", '#itinerary_start_date', (e) -> 
-    new ItineraryInfosDatesValidator()
+    # validation on Itinerary start date change
+    $(document).on 'change', '#itinerary_start_date', (e) -> 
+      new ItineraryInfosDatesValidator()
 
-  # validation on any Trip Details start date change
-  $("[id^=itinerary_itinerary_infos_attributes_][id$=_start_date]").bind 'change', ->
-    new ItineraryInfosDatesValidator()
+    # validation on any Trip Details start date change
+    $("[id^=itinerary_itinerary_infos_attributes_][id$=_start_date]").bind 'change', ->
+      new ItineraryInfosDatesValidator()
 
-  # validation on any Trip Details end date change
-  $("[id^=itinerary_itinerary_infos_attributes_][id$=_end_date]").bind 'change', ->
-    new ItineraryInfosDatesValidator()
+    # validation on any Trip Details end date change
+    $("[id^=itinerary_itinerary_infos_attributes_][id$=_end_date]").bind 'change', ->
+      new ItineraryInfosDatesValidator()
 
+    # validation on deletion of Trip Detail
+    $(document).on 'click', '#delete-itinerary-infos', (e) ->
+      new ItineraryInfosDatesValidator()
+
+    # validation on changing position of Trip Detail (Igor's feature)
+    $(document).on 'click', '#move-itinerary-infos', (e) ->
+      new ItineraryInfosDatesValidator()
+
+    # validation on dragging/dropping of Trip Detail
+    $('.sortable').sortable().bind 'sortupdate', (e, ui) ->
+      new ItineraryInfosDatesValidator()
+
+    # validation on adding new Trip Detail
+    $(document).on 'click', '#add_new_trip_detail', (e) ->
+      new ItineraryInfosDatesValidator()
