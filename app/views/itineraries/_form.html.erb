@@ -131,32 +131,36 @@
   
     <% end %>
     
-<%# if @itinerary.isLocked? %>
-<div class="row">
-  <div class="input-field col s3 offset-s1" >
-    <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+    <%# if @itinerary.isLocked? %>
+    <div class="row">
 
-    <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
-      class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
-      target: '_blank' do %>
+      <div class="input-field col s2" >
+        <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+      </div>
 
-        View Confirmed PDF
+      <div class="input-field col s2" >
+        <%= render partial: 'emailQuote_button' %>
+      </div>
 
-    <% end %>
+      <div class="input-field col s3">
+        <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
+          class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
+          target: '_blank' do %>
 
-  </div>
-  <div class="input-field col s3 offset-s1" >
-    <%= render partial: 'emailQuote_button' %>
-  </div>
+            View Confirmed PDF
 
-  
-  <div class="input-field col s3 offset-s4" >
-    <%= render partial: 'pricingBtn'%>
-  </div>
+        <% end if @itinerary.itinerary_price.present? %>
+      </div>
 
-  <%= render partial: 'cancel_itinerary_button' %>
-</div>
-<%# end %>
+      <div class="input-field col s2">
+        <%= render partial: 'pricingBtn'%>
+      </div>
+
+      <div class="input-field col s3" >
+        <%= render partial: 'cancel_itinerary_button' %>
+      </div>
+    </div>
+    <%# end %>
   
   </div>
 </div>
