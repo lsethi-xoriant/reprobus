@@ -26,15 +26,13 @@ class ItineraryPrice < ActiveRecord::Base
 
   #has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_itinerary_price_id
   #has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
-  
-  
-  
+
   belongs_to :itinerary
   belongs_to :currency
  
   def has_uninvoiced_customer_items
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.inv
+      if !price_item.invoice
         return true
       end
     end
@@ -43,7 +41,7 @@ class ItineraryPrice < ActiveRecord::Base
  
   def has_uninvoiced_supplier_items
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.inv
+      if !price_item.invoice
         return true
       end
     end

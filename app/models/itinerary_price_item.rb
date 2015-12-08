@@ -32,6 +32,7 @@ class ItineraryPriceItem < ActiveRecord::Base
   belongs_to      :itinerary_price
   has_one         :supplier,  :foreign_key => "supplier_id", :class => "Customer"
   belongs_to      :currency
+  belongs_to      :invoice
 
   def currencyID
     self.currency_id ? self.currency_id : Setting.global_settings.getDefaultCurrency.id

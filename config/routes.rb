@@ -48,7 +48,7 @@ Reprobus::Application.routes.draw do
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
     collection do
-      get 'invoice'
+      match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
     end
   end
     
