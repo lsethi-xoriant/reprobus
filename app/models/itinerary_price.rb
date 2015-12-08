@@ -27,6 +27,8 @@ class ItineraryPrice < ActiveRecord::Base
   #has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_itinerary_price_id
   #has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
   
+  
+  
   belongs_to :itinerary
   belongs_to :currency
  
