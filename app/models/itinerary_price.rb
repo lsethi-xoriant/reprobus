@@ -24,13 +24,41 @@ class ItineraryPrice < ActiveRecord::Base
   has_many      :supplier_itinerary_price_items, -> { order "created_at ASC" }, :class_name => "ItineraryPriceItem", :foreign_key => :supplier_itinerary_price_id
   accepts_nested_attributes_for :supplier_itinerary_price_items, allow_destroy: true
 
-  has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_itinerary_price_id
-  has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
+  #has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_itinerary_price_id
+  #has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
   
   belongs_to :itinerary
   belongs_to :currency
  
+  def has_uninvoiced_customer_items
+    self.supplier_itinerary_price_items.each do |price_item|
+      if !price_item.inv
+        return true
+      end
+    end
+    return false
+  end
  
+  def has_uninvoiced_supplier_items
+    self.supplier_itinerary_price_items.each do |price_item|
+      if !price_item.inv
+        return true
+      end
+    end
+    return false
+  end
+  
+  def create_customer_invoices
+    return if !self.has_uninvoiced_customer_items
+    inv = Invoice.new
+    
+    self.supplier_itinerary_price_items.each do |price_item|
+      if !price_item.inv
+        return true
+      end
+    end
+  end
+  
   def get_agent_display
     if self.itinerary.enquiry.agent
       return self.itinerary.enquiry.agent.fullname
@@ -74,6 +102,7 @@ class ItineraryPrice < ActiveRecord::Base
     end
     return "$#{total}"
   end
+  
   
   def new_setup
     setting = Setting.global_settings

@@ -45,7 +45,11 @@ Reprobus::Application.routes.draw do
     end
   end
   
-  resources :itinerary_prices, only: [:new, :edit, :update, :create]
+  resources :itinerary_prices, only: [:new, :edit, :update, :create] do
+    collection do
+      get 'invoice'
+    end
+  end
     
   resources :suppliers
   resources :agents
@@ -102,7 +106,7 @@ Reprobus::Application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   
   match '/import_products',   to: 'static_pages#import_products' ,   via: 'post'
-  match '/import_countries',   to: 'static_pages#import_countries' ,   via: 'post'  
+  match '/import_countries',   to: 'static_pages#import_countries' ,   via: 'post'
   match '/import_destinations',   to: 'static_pages#import_destinations' ,   via: 'post'
   match '/import_suppliers',   to: 'static_pages#import_suppliers' ,   via: 'post'
   get '/import_status', to: 'static_pages#import_status', as: 'import_status'

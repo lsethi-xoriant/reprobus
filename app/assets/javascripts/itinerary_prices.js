@@ -87,9 +87,9 @@ $(document).ready(function() {
       calculateSupplierTotalFromQtyPrice($(this));
       calculateSupplierMarkupFromTotalPrice($(this));
       addSupplierMarkupToTotal($(this));
+      calculateSupplierTotalForPricing();
+      calculateSupplierMarkupTotalForPricing();
     });
-    
-    
   
   }
   
@@ -112,11 +112,13 @@ function calculateTotalFromQtyPrice(e){
 
 function calculateSupplierTotalFromQtyPrice(e){
   var totalfield = $(e).closest('.field').find('.supplier_total_field');
+  var sellfield = $(e).closest('.field').find('.supplier_sell_total');
   var qtyfield = $(e).closest('.field').find('.supplier_qty_field');
   var itemPriceField = $(e).closest('.field').find('.supplier_item_price_field');
   var total = (itemPriceField.val() * qtyfield.val());
 
   totalfield.val(total.toFixed(2));
+  sellfield.val(total.toFixed(2));
 }
 
 function calculateSupplierMarkupFromTotalPrice(e){

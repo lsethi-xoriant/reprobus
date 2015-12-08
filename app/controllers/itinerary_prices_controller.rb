@@ -47,6 +47,17 @@ class ItineraryPricesController < ApplicationController
     end
   end
 
+  def invoice
+    @itinerary_price = ItineraryPrice.find(params[:id])
+    
+    if !@itinerary_price.has_uninvoiced_customer_items
+      flash[:error] = "No items requiring invoices!"
+      redirect_to edit_itinerary_price_path(@itinerary_price)
+    end
+    
+    @itinerary_price.create_customer_invoices
+    
+  end
   
 private
   def itinerary_price_params

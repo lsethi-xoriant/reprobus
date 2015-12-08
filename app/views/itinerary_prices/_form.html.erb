@@ -35,6 +35,11 @@
           </div>
           <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total $", value: @itinerary_price.get_sale_total_display, class_for_input: "grand_total" } %>
           
+          <div class="input-field col s1" >
+            <% if @itinerary_price.has_uninvoiced_customer_items %>
+            <a href="<%= invoice_itinerary_prices_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
+            <% end %>
+          </div>
       </div>
       
 	  </div>
