@@ -1,23 +1,21 @@
+<p class="bigBigtitle4">Flight Details</p>
+<div class="border"></div>
+
+<p class='bigBigtitle5'>
+  Please check 
+  <span class='link-color'> www.viewtrip.com </span> 
+  with booking reference: 
+  <span class='booking-color'><%= @itinerary.flight_reference.presence || 'N/A' %></span>
+</p>
+<div class="clear50"></div>
+
 <p class="bigBigtitle4">Supplier Details</p>
 <div class="border"></div>
 
 <% @itinerary_price_items = @itinerary.itinerary_price.try(:supplier_itinerary_price_items).try(:joins, :supplier) %>
 
 <% if @itinerary_price_items.present? %>
-  <table style="border: 1px solid black;">
-
-    
-    <tr>
-      <th>Supplier Name</th>
-      <th>Contact Name</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Booking Reference</th>
-    </tr>
-
     <%= render partial: 'itineraries/print_itinerary/itinerary_price_item', collection: @itinerary_price_items %>
-
-  </table>
 <% end %>
 
 <div class="page-break"></div>

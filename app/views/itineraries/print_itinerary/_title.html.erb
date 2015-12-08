@@ -3,12 +3,11 @@
     <a class="logo" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
 </div>
 
-<div class="clear100"></div>
+<div class="clear45"></div>
 <p class="bigBigtitle1"><%= @itinerary.name %></p>
 <div class="clear50"></div>
 <% if @confirmed %><p class="bigBigtitle3">Confirmed Itinerary</p><% end %>
-<div class="clear50"></div>
+<div class="clear45"></div>
 <p class="bigBigtitle2"><%= "#{@itinerary.get_trip_date_range},  #{@itinerary.enquiry.lead_customer.fullname_with_title}" %></p>
-<div class="clear155"></div>
 <p class="bigBigtitle3"><%= "Prepared by #{@itinerary.enquiry.user.name}" %> </p>
 <div class="page-break"></div>
