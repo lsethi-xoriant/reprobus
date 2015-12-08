@@ -6,6 +6,7 @@ $(function() {
     formatSubmit: 'yyyy-mm-dd',
     format: 'yyyy-mm-dd',
 //    min: new Date(), took this out, as if we ever go into a historic date it sets it to todays date....
-    hiddenSuffix: ''
+    hiddenSuffix: '',
+    container: 'body'
   });   
 });
