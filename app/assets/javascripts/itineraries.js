@@ -391,7 +391,7 @@ function updateItineraryImage() {
     },
     cache: false,
     success: function(data) {
-      $('#itinerary_destinations_select').replaceWith(data.html);
+      $('#itinerary_destinations_select').html(data.html);
       $('select').not('.disabled').material_select();
     },
     error: function(data) {}
@@ -415,12 +415,12 @@ $(document).on('change', '.itinerary-info-checkbox .muli-select-itinerary', func
 
 $(document).on('click', '#delete-itinerary-infos', function(e) {
   e.preventDefault();
-  $(actionElements).remove();
-  $('.sortable').trigger("sortupdate", {});
+  $.each(actionElements, function(index, entry) {
+    $(entry).find('.remove_fields').click();
+  });
 
   newElementsSize = $('[data-item-sortable-id]').size();
   data = Array.apply(null, { length: newElementsSize }).map(Number.call, Number);
-  console.log(data)
   var s = $("<select id=\"position_to\" name=\"position_to\" />");
   for(var val in data) {
     $("<option />", {value: (val + 1), text: (data[val] + 1)}).appendTo(s);
@@ -429,12 +429,15 @@ $(document).on('click', '#delete-itinerary-infos', function(e) {
   $('.itinerary-info-position-select').html(s);
   $('select').not('.disabled').material_select();
   $('.itinerary-infos-action-buttons').hide();
+  $('.sortable').trigger("sortupdate", {});
+
+  actionElements = [];
 });
 
 $(document).on('click', '#move-itinerary-infos', function(e) {
   e.preventDefault();
   postitionNumber = parseInt($('.itinerary-info-position-select .select-dropdown').val());
-  if (postitionNumber == $('[data-item-sortable-id]').size())
+  if (postitionNumber == $('[data-item-sortable-id]').size() || postitionNumber == 2)
     $(actionElements).insertAfter($('[data-item-sortable-id]')[postitionNumber - 1]);
   else
     $(actionElements).insertBefore($('[data-item-sortable-id]')[postitionNumber - 1]);
@@ -444,6 +447,8 @@ $(document).on('click', '#move-itinerary-infos', function(e) {
     $(entry).attr('checked', false);
   });
   $('.itinerary-infos-action-buttons').hide();
+
+  actionElements = [];
 });
 
 /*JS override on date. this is to get datepicker and calculating dates working properly */

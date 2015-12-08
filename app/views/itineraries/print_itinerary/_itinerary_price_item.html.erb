@@ -1,0 +1,7 @@
+<tr>
+  <td><%= itinerary_price_item.try(:supplier).try(:supplier_name) %> </td>
+  <td><%= itinerary_price_item.try(:supplier).try(:fullname_with_title) %></td>
+  <td><%= itinerary_price_item.try(:supplier).try(:phone) %></td>
+  <td><%= itinerary_price_item.try(:supplier).try(:address).try(:getDisplayString) %></td>
+  <td><%= itinerary_price_item.try(:booking_ref) %></td>
+</tr>

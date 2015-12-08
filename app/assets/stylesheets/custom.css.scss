@@ -1562,8 +1562,8 @@ footer.page-footer {
 }
 
 .itinerary-info-checkbox {
-  top: 50px;
-  left: 35px;
+  top: 42px;
+  left: 53px;
   position: absolute;
 }
 
@@ -1575,4 +1575,8 @@ footer.page-footer {
 
 .itinerary-info-margin {
   margin-right: 5px !important;
+}
+
+.dropdown-content {
+  z-index: 2 !important;
 }
