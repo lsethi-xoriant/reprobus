@@ -432,7 +432,7 @@ $(document).on('click', '#delete-itinerary-infos', function(e) {
   e.preventDefault();
   $.each(actionElements, function(index, entry) {
     $(entry).find('.remove_fields').click();
-    $(entry).detach();
+    $(entry).hide();
   });
 
   updateItineraryInfosNumberSelect();
@@ -461,7 +461,7 @@ $(document).on('click', '#move-itinerary-infos', function(e) {
 });
 
 var updateItineraryInfosNumberSelect = function() {
-  newElementsSize = $('[data-item-sortable-id]').size();
+  newElementsSize = $('[data-item-sortable-id]:visible').size();
   data = Array.apply(null, { length: newElementsSize }).map(Number.call, Number);
   var s = $("<select id=\"position_to\" name=\"position_to\" />");
   for(var val in data) {
