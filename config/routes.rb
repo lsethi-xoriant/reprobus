@@ -45,6 +45,7 @@ Reprobus::Application.routes.draw do
       get 'copy'
       get 'cancel'
       post 'revert_cancel'
+      get 'details'
     end
   end
   

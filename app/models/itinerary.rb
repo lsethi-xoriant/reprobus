@@ -24,6 +24,8 @@
 #
 
 class Itinerary < ActiveRecord::Base
+  include CustomerRelation
+
   validates :name, presence: true
   validates :user_id, presence: true
   validates :enquiry_id, presence: true
@@ -37,10 +39,20 @@ class Itinerary < ActiveRecord::Base
 
   belongs_to    :destination_image, :class_name => "ImageHolder", :foreign_key => :destination_image_id
   accepts_nested_attributes_for :destination_image
-
   
   has_many :itinerary_infos, -> { order("position ASC")}
   accepts_nested_attributes_for :itinerary_infos, allow_destroy: true
+
+  has_and_belongs_to_many :customers
+  accepts_nested_attributes_for :customers, allow_destroy: true
+  validates_associated :customers
+
+  belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
+  belongs_to  :lead_customer, :class_name => "Customer", :foreign_key => :lead_customer_id
+  
+  after_save  :set_lead
+
+  has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names }
 
   def quote_sent_update_date
     self.update_attribute(:quote_sent, DateTime.now)

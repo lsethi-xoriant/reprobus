@@ -80,6 +80,7 @@ class ItinerariesController < ApplicationController
                       .compact
                       .uniq
 
+    set_customers_for_itinerary
     set_email_modal_values
   end
   
@@ -88,6 +89,10 @@ class ItinerariesController < ApplicationController
     @enquiry = Enquiry.find(params[:itinerary][:enquiry_id])
      
     @itinerary.copy_template(@itinerary.itinerary_template)
+
+    @itinerary.customers = @enquiry.customers
+    @itinerary.agent = @enquiry.agent
+    @itinerary.lead_customer = @enquiry.lead_customer
      
     if @itinerary.save
       @itinerary.enquiry.stage = "Itinerary"
@@ -100,10 +105,16 @@ class ItinerariesController < ApplicationController
   end
 
   def update
-
     @itinerary = Itinerary.find(params[:id])
     @enquiry = @itinerary.enquiry
-     
+
+    params[:itinerary][:customers_attributes].each do |key, value|
+      if !value[:id].to_s.blank? #existing customer
+        @customer = Customer.find(value[:id])
+        @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+      end
+    end
+
     if @itinerary.update_attributes(itinerary_params)
       
       if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 
@@ -120,6 +131,13 @@ class ItinerariesController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def details
+    @itinerary = Itinerary.find(params[:id])
+    @enquiry = @itinerary.enquiry
+    set_customers_for_itinerary
+    @customer = @itinerary.lead_customer
   end
 
   def destroy
@@ -166,10 +184,11 @@ private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
-      :destination_image_id, :user_id, :status, :quote_sent,
+      :destination_image_id, :user_id, :status, :quote_sent, :agent_id,
       itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
-      :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ])
+      :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ],
+      customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy])
     end
 
     def set_email_modal_values
@@ -178,5 +197,11 @@ private
       @to_email = 
         @enquiry.agent.try(:email).presence || @itinerary.user.try(:email)
       @from_email = @setting.try(:itineraries_from_email)
+    end
+
+    def set_customers_for_itinerary
+      @itinerary.customers = @itinerary.customers.any? ? @itinerary.customers : @enquiry.customers
+      @itinerary.agent = @itinerary.agent ? @itinerary.agent : @enquiry.agent
+      @itinerary.lead_customer = @itinerary.lead_customer ? @itinerary.lead_customer : @enquiry.lead_customer
     end
 end
