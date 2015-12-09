@@ -3,8 +3,21 @@ $(document).ready(function() {
   initEnquirySelect2();  // intialise select drop downs
 });
 
+function formatEnquiry (searchOb) {
+  if (searchOb.loading) return searchOb.text;
+  var markup = "";
+  if (searchOb.text) {
+    markup += '<div>' + searchOb.text + '</div>';
+  }
+  return markup;
+}
+
+function formatEnquirySelection (searchOb) {
+  return searchOb.text;
+}
+
 function initEnquirySelect2() {
-  var current_enquiry = $('#copy_enquiry_id').attr('value')
+  var current_enquiry = $('#copy_current_enquiry_id').attr('value')
   //ajax version
   $(".select2-enquiries").select2({
     ajax: {
@@ -30,19 +43,14 @@ function initEnquirySelect2() {
     },
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
    // minimumInputLength: 1,
-    templateResult: formatCountry,
-    templateSelection: formatCountrySelection
+    templateResult: formatEnquiry,
+    templateSelection: formatEnquirySelection
   });
   
   // handle items being selected - clear related fields. 
   
   $('.select2-enquiries').on("select2:select", function(e) {
-    // if countries field changes clear related fields if they exist -  destinations, products....
-    // $(this).closest(".row").find(".select2-destinations").val(null).trigger("change");
-    // $(this).closest(".row").find(".select2-products").val(null).trigger("change");
-    // $(this).closest('.field').find(".cruise-info").hide();
-    // $(this).closest('.field').find(".select2-suppliers-noajax").val(null).trigger("change");
-    // $(this).closest('.field').find(".select2-room-types-noajax").val(null).trigger("change");
+
   });  
   
 }
