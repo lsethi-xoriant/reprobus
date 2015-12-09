@@ -15,14 +15,14 @@
         
         <%= f.fields_for :customers, :html => {:class => "col s12"}  do |c| %>
           <div class="row">
-            <%= render partial: 'customer', locals: { f: c } %>
+            <%= render partial: 'enquiries/customer', locals: { f: c, main_object: @itinerary } %>
           </div>
         <% end %>
         
         <div class="links">
           <div class="row">
             <div class="offset-s10 col s2">
-              <%= link_to_add_association f, :customers, {partial: 'customer', class: "btn-floating btn-small waves-effect waves-light green right"} do %>
+              <%= link_to_add_association f, :customers, { partial: 'enquiries/customer', render_options: { locals: { main_object: @itinerary } }, class: "btn-floating btn-small waves-effect waves-light green right"} do %>
                 <i class="mdi-content-add"></i>
               <% end %>
               <a class="btn-floating btn-small waves-effect waves-light blue modal-trigger-custsearch right" href="#cust_search_modal">

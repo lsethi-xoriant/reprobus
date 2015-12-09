@@ -63,6 +63,8 @@ class ItinerariesController < ApplicationController
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
+
+    set_customers_for_itinerary
   end
 
   def show
@@ -107,7 +109,14 @@ class ItinerariesController < ApplicationController
   def update
     @itinerary = Itinerary.find(params[:id])
     @enquiry = @itinerary.enquiry
-     
+
+    params[:itinerary][:customers_attributes].each do |key, value|
+      if !value[:id].to_s.blank? #existing customer
+        @customer = Customer.find(value[:id])
+        @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+      end
+    end
+
     if @itinerary.update_attributes(itinerary_params)
       
       if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 
