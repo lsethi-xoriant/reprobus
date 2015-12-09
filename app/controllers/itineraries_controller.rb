@@ -63,6 +63,8 @@ class ItinerariesController < ApplicationController
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
+
+    set_customers_for_itinerary
   end
 
   def show
