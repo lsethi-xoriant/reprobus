@@ -43,6 +43,7 @@ function initEnquirySelect2() {
     },
     escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
    // minimumInputLength: 1,
+    width: '100%',
     templateResult: formatEnquiry,
     templateSelection: formatEnquirySelection
   });
