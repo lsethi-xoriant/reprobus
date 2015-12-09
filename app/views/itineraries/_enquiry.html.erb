@@ -4,7 +4,7 @@
       <i class="mdi-action-account-circle circle medium blue"></i>
     </div>
     <div class="col s5">
-      <h6 class="title">Enquiry Details:</h6>
+      <h6 class="title">Itinerary Details:</h6>
 
       <i class="mdi-communication-email"></i>&nbsp;&nbsp; Enquiry: <%= @enquiry.name %></br>
       <% if @itinerary.itinerary_template %>
@@ -12,17 +12,17 @@
       <% end %>
     </div>
     <div class="col s4">
-      <i class="mdi-action-account-circle"></i>&nbsp;&nbsp; Customer: <%= @enquiry.lead_customer.fullname_with_title %></br>
-      <% if @enquiry.agent %>
-        <i class="mdi-action-account-child"></i >&nbsp;&nbsp; Agent: <%= @enquiry.agent.supplier_name %></br>
+      <i class="mdi-action-account-circle"></i>&nbsp;&nbsp; Customer: <%= @itinerary.lead_customer.fullname_with_title %></br>
+      <% if @itinerary.agent %>
+        <i class="mdi-action-account-child"></i >&nbsp;&nbsp; Agent: <%= @itinerary.agent.supplier_name %></br>
       <% end %>
-      <i class="mdi-communication-phone"></i>&nbsp;&nbsp; Contact Phone: <%=  @enquiry.customer_phone %></br>
-      <i class="mdi-communication-email"></i>&nbsp;&nbsp; Contact Email: <%= @enquiry.customer_email %></br>
+      <i class="mdi-communication-phone"></i>&nbsp;&nbsp; Contact Phone: <%= @itinerary.customer_phone %></br>
+      <i class="mdi-communication-email"></i>&nbsp;&nbsp; Contact Email: <%= @itinerary.customer_email %></br>
     </div>
     <div class="col s2">
     <br>
       <% if @itinerary.persisted? %>
-        <a href=<%= edit_enquiry_path(@enquiry) %> ><button type="button" class="waves-effect waves-light btn grey darken-1">Edit Details</button></a>
+        <a href=<%= details_itinerary_path(@itinerary) %> ><button type="button" class="waves-effect waves-light btn grey darken-1">Edit Details</button></a>
       <% end %>
     </div>
   </div>
