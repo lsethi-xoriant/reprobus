@@ -95,4 +95,6 @@ Reprobus::Application.configure do
   }
 
   Rails.application.routes.default_url_options[:host] = 'https://reprobus.herokuapp.com' # used for payment express success and failure link generation
+
+  config.action_mailer.delivery_method = :letter_opener
 end
