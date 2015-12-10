@@ -50,9 +50,5 @@ function initEnquirySelect2() {
   
   // handle items being selected - clear related fields. 
   
-  $('.select2-enquiries').on("select2:select", function(e) {
-
-  });  
-  
 }
 
