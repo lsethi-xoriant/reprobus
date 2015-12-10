@@ -151,7 +151,7 @@ class ItinerariesController < ApplicationController
   end
 
   def copy
-    itinerary_copy = ItineraryCloneService.clone(params[:copy])
+    itinerary_copy = ItineraryCloneService.clone(params[:copy], current_user)
     if itinerary_copy.try(:save)
       flash[:success] = "Itinerary succesfully copied"
       itinerary_id = itinerary_copy.id
