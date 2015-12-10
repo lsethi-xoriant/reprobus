@@ -84,17 +84,15 @@ Reprobus::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
   
   # settings taken from mailgun set up.
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   :port           => ENV['MAILGUN_SMTP_PORT'],
-  #   :address        => ENV['MAILGUN_SMTP_SERVER'],
-  #   :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-  #   :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-  #   :domain         => 'reprobus.herokuapp.com',
-  #   :authentication => :plain,
-  # }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'reprobus.herokuapp.com',
+    :authentication => :plain,
+  }
 
   Rails.application.routes.default_url_options[:host] = 'https://reprobus.herokuapp.com' # used for payment express success and failure link generation
-
-  config.action_mailer.delivery_method = :letter_opener
 end
