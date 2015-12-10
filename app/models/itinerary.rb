@@ -71,15 +71,24 @@ class Itinerary < ActiveRecord::Base
     self.id.to_s.rjust(6, '0')
   end
   
-  def select_suppliers
+  def select_suppliers_for_pricing
     # return list of potential suppliers for dropdowns
     suppliers = []
+    suppliers = suppliers + Setting.global_settings.suppliers
+    
     self.itinerary_infos.each do |info| 
       if !info.supplier.blank? && !suppliers.include?(info.supplier)  
         suppliers << info.supplier
       end
     end
-    suppliers = suppliers + Setting.global_settings.suppliers
+    
+    if self.itinerary_price 
+      self.itinerary_price.supplier_itinerary_price_items.each do |sipi|
+        if sipi.supplier && !suppliers.include?(sipi.supplier)    
+          suppliers << sipi.supplier
+        end 
+      end
+    end 
     
     return suppliers
   end    

@@ -58,7 +58,7 @@ class ItinerariesController < ApplicationController
     
     @itinerary = Itinerary.new
     @itinerary.user = current_user
-    @itinerary.status = "New Itinerary"
+    @itinerary.status = "Itinerary"
     @itinerary.enquiry = @enquiry
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
