@@ -11,10 +11,27 @@
               <div class="row">
 
                   <div class="input-field col s2">
+                    <%= c.hidden_field :current_enquiry_id, value: @enquiry.id %>
                     <%= c.hidden_field :id, value: @itinerary.id %>
                     <%= c.hidden_field :old_date, value: @itinerary.start_date %>
                     <%= c.date_field :start_date, class:"datepicker start_leg_itinerary", :"data-value" =>  @itinerary.start_date %>
                     <%= c.label :start_date, class: 'active' %>
+                  </div>
+
+                  <div class="input-field col s10">
+                    <%= c.select(:enquiry_id, 
+                          options_for_select(
+                            [
+                              [
+                                "#{@enquiry.id} - #{@enquiry.lead_customer.fullname} - #{@enquiry.name}",
+                                @enquiry.id
+                              ]
+                            ],
+                              @enquiry.id
+                          ), {},
+                            {class: "select2-enquiries browser-default"}) %>
+                    <label for="enquiry_id" class="active">For Customer Enquiry</label>
+
                   </div>
 
               </div>

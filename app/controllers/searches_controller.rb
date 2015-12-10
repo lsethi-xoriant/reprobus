@@ -181,6 +181,35 @@ class SearchesController < ApplicationController
                     }}
     end
   end
+
+  def enquiry_search
+    @enquiries = 
+      if params[:q] && params[:current_enquiry]
+        Enquiry.active_plus_this_id(params[:current_enquiry])
+          .includes(:customers)
+          .where(
+            "id = :id OR name ILIKE :q", 
+            id: params[:q].to_i,
+            q: "%#{params[:q]}%")
+      else
+        Enquiry.none
+      end
+
+    respond_to do |format|
+      format.json do 
+        render json: 
+          { 
+            items: 
+              @enquiries.map do |e|
+                { 
+                  id: e.id, 
+                  text: "#{e.id} - #{e.lead_customer.fullname} - #{e.name}"
+                } 
+              end
+          }
+      end
+    end
+  end
   
 private
 
