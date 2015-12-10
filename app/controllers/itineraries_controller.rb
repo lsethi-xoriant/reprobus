@@ -110,10 +110,12 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.find(params[:id])
     @enquiry = @itinerary.enquiry
 
-    params[:itinerary][:customers_attributes].each do |key, value|
-      if !value[:id].to_s.blank? #existing customer
-        @customer = Customer.find(value[:id])
-        @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+    if params[:itinerary] && params[:itinerary][:customers_attributes]
+      params[:itinerary][:customers_attributes].each do |key, value|
+        if !value[:id].to_s.blank? #existing customer
+          @customer = Customer.find(value[:id])
+          @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+        end
       end
     end
 
@@ -149,7 +151,7 @@ class ItinerariesController < ApplicationController
   end
 
   def copy
-    itinerary_copy = ItineraryCloneService.clone(params[:copy], current_user)
+    itinerary_copy = ItineraryCloneService.clone(params[:copy])
     if itinerary_copy.try(:save)
       flash[:success] = "Itinerary succesfully copied"
       itinerary_id = itinerary_copy.id
