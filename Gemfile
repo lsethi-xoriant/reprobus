@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'pg'
 
-group :development do
+group :development, :production do
   gem 'letter_opener'
 end
 
