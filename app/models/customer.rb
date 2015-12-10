@@ -64,7 +64,7 @@ class Customer < ActiveRecord::Base
   validates :after_hours_phone, length: { maximum: 255 }
   validates :num_days_payment_due, numericality: true,  allow_blank: true
   
-  validates :supplier_name, uniqueness: { case_sensitive: false },allow_blank: true
+  validates :supplier_name, uniqueness: { case_sensitive: false }, allow_blank: true
   validate :check_lead_customer_has_phone_email
   
   belongs_to  :user
@@ -72,7 +72,10 @@ class Customer < ActiveRecord::Base
 #  has_many    :customers_enquiries
  # has_many    :enquiries, -> { order("enquiries.id DESC")}, :through => :customers_enquiries
   has_and_belongs_to_many :enquiries
-  accepts_nested_attributes_for :enquiries, allow_destroy: true;
+  accepts_nested_attributes_for :enquiries, allow_destroy: true
+
+  has_and_belongs_to_many :itineraries
+  accepts_nested_attributes_for :itineraries, allow_destroy: true
   
   belongs_to  :company_logo, :class_name => "ImageHolder", :foreign_key => :company_logo_id
   accepts_nested_attributes_for :company_logo, allow_destroy: true;
@@ -88,7 +91,6 @@ class Customer < ActiveRecord::Base
   has_and_belongs_to_many :products, :class_name => "Product", :join_table => "customers_products", :foreign_key => :customer_id
     
   has_many    :template_infos, :foreign_key => "supplier_id"
-  has_many    :itineraries
    
   has_paper_trail :ignore => [:created_at, :updated_at]
    

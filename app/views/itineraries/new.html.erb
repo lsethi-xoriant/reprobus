@@ -14,7 +14,7 @@
   
   <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
   <div class="row">
-    <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date"} %>
+    <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
     <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_passengers", f: f, name: "num_passengers"} %>
   </div>
 
