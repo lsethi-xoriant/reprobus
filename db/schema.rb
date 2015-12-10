@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203094427) do
+ActiveRecord::Schema.define(version: 20151209110452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,11 @@ ActiveRecord::Schema.define(version: 20151203094427) do
 
   add_index "customers_enquiries", ["customer_id"], name: "index_customers_enquiries_on_customer_id", using: :btree
   add_index "customers_enquiries", ["enquiry_id"], name: "index_customers_enquiries_on_enquiry_id", using: :btree
+
+  create_table "customers_itineraries", id: false, force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "itinerary_id"
+  end
 
   create_table "customers_products", id: false, force: :cascade do |t|
     t.integer "customer_id"
@@ -315,6 +320,8 @@ ActiveRecord::Schema.define(version: 20151203094427) do
     t.integer  "destination_image_id"
     t.datetime "quote_sent"
     t.datetime "confirmed_itinerary_sent"
+    t.integer  "agent_id"
+    t.integer  "lead_customer_id"
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree

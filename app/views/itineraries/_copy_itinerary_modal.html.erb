@@ -22,10 +22,7 @@
                     <%= c.select(:enquiry_id, 
                           options_for_select(
                             [
-                              [
-                                "#{@enquiry.id} - #{@enquiry.lead_customer.fullname} - #{@enquiry.name}",
-                                @enquiry.id
-                              ]
+                              [ enquiry_name_in_select(@enquiry), @enquiry.id ]
                             ],
                               @enquiry.id
                           ), {},
