@@ -88,6 +88,12 @@ ActiveRecord::Schema.define(version: 20151215065405) do
     t.datetime "updated_at"
   end
 
+  create_table "customer_interactions", force: :cascade do |t|
+    t.datetime "emailed_at"
+    t.string   "emailed_to"
+    t.integer  "document_type"
+  end
+
   create_table "customers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "lead_id"
