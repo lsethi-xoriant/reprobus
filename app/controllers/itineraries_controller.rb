@@ -110,10 +110,12 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.find(params[:id])
     @enquiry = @itinerary.enquiry
 
-    params[:itinerary][:customers_attributes].each do |key, value|
-      if !value[:id].to_s.blank? #existing customer
-        @customer = Customer.find(value[:id])
-        @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+    if params[:itinerary] && params[:itinerary][:customers_attributes]
+      params[:itinerary][:customers_attributes].each do |key, value|
+        if !value[:id].to_s.blank? #existing customer
+          @customer = Customer.find(value[:id])
+          @itinerary.customers << @customer unless @itinerary.customers.include?(@customer)
+        end
       end
     end
 
