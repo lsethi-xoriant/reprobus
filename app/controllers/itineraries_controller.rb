@@ -119,6 +119,10 @@ class ItinerariesController < ApplicationController
       end
     end
 
+    if params[:itinerary] && params[:itinerary][:agent_id] && params[:itinerary][:agent_id] == :remove_agent
+      @itinerary.agent = nil
+    end
+
     if @itinerary.update_attributes(itinerary_params)
       
       if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 

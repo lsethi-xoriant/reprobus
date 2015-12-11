@@ -110,6 +110,10 @@ class EnquiriesController < ApplicationController
       end
     end
 
+    if params[:enquiry] && params[:enquiry][:agent_id] && params[:enquiry][:agent_id] == :remove_agent
+      @enquiry.agent = nil
+    end
+
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
     if @enquiry.update_attributes(enquiry_params)
