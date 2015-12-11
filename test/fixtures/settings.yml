@@ -31,6 +31,8 @@
 #  num_days_balance_due       :integer          default("95")
 #  num_days_deposit_due       :integer          default("7")
 #  deposit_percentage         :integer          default("0")
+#  itineraries_from_email     :string
+#  important_notes            :text
 #
 
 firstcompany:

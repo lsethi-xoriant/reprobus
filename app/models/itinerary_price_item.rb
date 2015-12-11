@@ -49,4 +49,8 @@ class ItineraryPriceItem < ActiveRecord::Base
   def get_item_sell_total
     return self.quantity * self.item_price
   end
+  
+  def get_exchange_total 
+    return self.sell_currency_rate * self.price_total
+  end 
 end
