@@ -102,6 +102,8 @@ $(document).ready(function() {
       $('.lead-customer-check').not(this).prop('checked', false);
   });
 
+  $('.select2-enquiry-destinations').select2();
+
 });
 
 
