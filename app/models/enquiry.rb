@@ -50,6 +50,8 @@ class Enquiry < ActiveRecord::Base
   has_and_belongs_to_many  :carriers
   has_and_belongs_to_many  :destinations
   has_and_belongs_to_many  :stopovers
+
+  belongs_to :destination
   
   serialize :xpayments
   
