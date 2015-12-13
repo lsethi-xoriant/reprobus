@@ -70,10 +70,6 @@ class ItineraryPrice < ActiveRecord::Base
   def get_currency_display
     return self.currency.displayName if self.currency
   end
-
-  def get_sale_total_display
-    return "$" + self.sale_total.to_s
-  end
   
   def get_consultant_display
     return  self.itinerary.enquiry.assigned_to_name
@@ -84,7 +80,7 @@ class ItineraryPrice < ActiveRecord::Base
     self.itinerary_price_items.each do |ipi|
       total = total + ipi.price_total
     end
-    return "$#{total}"
+    return total
   end
   
   def get_total_supplier_price
@@ -92,15 +88,27 @@ class ItineraryPrice < ActiveRecord::Base
     self.supplier_itinerary_price_items.each do |ipi|
       total = total + ipi.price_total
     end
-    return "$#{total}"
+    return total
   end
   
-  def get_total_supplier_markup
+  def get_total_supplier_sell_total
     total = 0.00
     self.supplier_itinerary_price_items.each do |ipi|
-      total = total + ipi.markup
+      total = total + ipi.exchange_rate_total
     end
-    return "$#{total}"
+    return total
+  end
+  
+  def get_total_incl_supplier_markup
+    total = 0.00
+    self.supplier_itinerary_price_items.each do |ipi|
+      total = total + ipi.total_incl_markup
+    end
+    return total
+  end
+  
+  def get_total_supplier_profit
+    return get_total_incl_supplier_markup - get_total_supplier_sell_total
   end
   
   

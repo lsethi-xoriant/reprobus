@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209110452) do
+ActiveRecord::Schema.define(version: 20151213024156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -372,6 +372,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.decimal  "sell_currency_rate",          precision: 12, scale: 2, default: 0.0
     t.decimal  "deposit",                     precision: 12, scale: 2, default: 0.0
     t.decimal  "markup",                      precision: 12, scale: 2, default: 0.0
+    t.decimal  "exchange_rate_total",         precision: 12, scale: 2, default: 0.0
+    t.decimal  "total_incl_markup",           precision: 12, scale: 2, default: 0.0
   end
 
   add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree
@@ -469,6 +471,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -482,8 +486,6 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"

@@ -67,8 +67,8 @@ private
     itinerary_price_items_attributes: [:id, :booking_ref, :description,
     :price_total,  :deposit, :deposit_percentage,
     :item_price, :quantity, :start_date, :end_date, :_destroy ],
-    supplier_itinerary_price_items_attributes: [:id, :booking_ref, :description,
+    supplier_itinerary_price_items_attributes: [:id, :exchange_rate_total, :booking_ref, :description,
     :price_total, :itinerary_price_id, :supplier_id, :markup, :markup_percentage,
-    :item_price, :quantity, :currency_id, :sell_currency_rate,  :_destroy ])
+    :item_price, :quantity, :currency_id, :sell_currency_rate, :total_incl_markup,  :_destroy ])
   end
 end

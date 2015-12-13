@@ -17,7 +17,7 @@ function formatSupplierSelection (searchOb) {
 }
 
 function initSupplierSelect2() {
-  $(".select2-suppliers-noajax").select2();  
+  $(".select2-suppliers-noajax").select2();
   
    $(".select2-suppliers").select2({
     ajax: {
@@ -50,14 +50,12 @@ function initSupplierSelect2() {
   var $eventSelect = $(".select2-suppliers.supplier-itinerary-price");
   $eventSelect.on("select2:select", function(e) {
     var data = e.params.data;
-    var currencyField = $(this).closest('.row').find(".select2-currencies");
     var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
-    //console.log("data.currency = " + data.currency + "  data.currency_id = " + data.currency_id);
-    
-    if (currencyField.find("option:selected").val() != data.currency_id){
-      currencyField.empty().append('<option value="'+data.currency_id+'">'+data.currency+'</option>').val(data.currency_id).trigger("change");
-    }
     sellRateField.val(data.currency_rate);
+    var currencyFieldHidden = $(this).closest('.row').find(".currency_id");
+    currencyFieldHidden.val(data.currency_id);
+    var currencyCodeField = $(this).closest('.row').find(".currency_code");
+    currencyCodeField.val(data.currency);
   });
   
   

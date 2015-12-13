@@ -40,7 +40,6 @@ $(document).ready(function() {
       reset_material_active_labels('#itinerary_price_items');
     });
   
-  
     $(document).on('change', '.deposit_percent_field', function() {
      calculateDepositFromTotalPrice($(this));
      calculateTotalDepositForPricing();
@@ -83,12 +82,31 @@ $(document).ready(function() {
     });
     
     
-    $(document).on('change', '.supplier_qty_field, .supplier_item_price_field, .markup_percent_field', function() {
+    $(document).on('change', '.supplier_qty_field, .supplier_item_price_field', function() {
       calculateSupplierTotalFromQtyPrice($(this));
+      calculateExchangeRatePrice($(this));
       calculateSupplierMarkupFromTotalPrice($(this));
-      addSupplierMarkupToTotal($(this));
-      calculateSupplierTotalForPricing();
+      //addSupplierMarkupToTotal($(this));
       calculateSupplierMarkupTotalForPricing();
+      calculateSupplierTotalForPricing();
+      calculateSupplierSellTotalForPricing();
+      calculateSupplierProfitForPricing();
+    });
+    
+    $(document).on('change', '.supplier_sell_total', function() {
+      calculateItemPriceFromTotalSupplier($(this));
+      calculateExchangeRatePrice($(this));
+      calculateSupplierMarkupFromTotalPrice($(this));
+      calculateSupplierMarkupTotalForPricing();
+      calculateSupplierTotalForPricing();
+      calculateSupplierSellTotalForPricing();
+      calculateSupplierProfitForPricing();
+    });
+    
+    $(document).on('change', '.markup_percent_field', function() {
+      calculateSupplierMarkupFromTotalPrice($(this));
+      calculateSupplierMarkupTotalForPricing();
+      calculateSupplierProfitForPricing();
     });
   
   }
@@ -109,17 +127,25 @@ function calculateTotalFromQtyPrice(e){
   totalfield.val(total.toFixed(2));
 }
 
+function calculateExchangeRatePrice(e){
+  var totalfield = $(e).closest('.field').find('.supplier_exchange_total');
+  var ratefield = $(e).closest('.field').find('.sell_currency_rate');
+  var itemPriceField = $(e).closest('.field').find('.supplier_sell_total');
+  var total = (itemPriceField.val() * ratefield.val());
+
+  totalfield.val(total.toFixed(2));
+}
+
 
 function calculateSupplierTotalFromQtyPrice(e){
-  var totalfield = $(e).closest('.field').find('.supplier_total_field');
   var sellfield = $(e).closest('.field').find('.supplier_sell_total');
   var qtyfield = $(e).closest('.field').find('.supplier_qty_field');
   var itemPriceField = $(e).closest('.field').find('.supplier_item_price_field');
   var total = (itemPriceField.val() * qtyfield.val());
 
-  totalfield.val(total.toFixed(2));
   sellfield.val(total.toFixed(2));
 }
+
 
 function calculateSupplierMarkupFromTotalPrice(e){
   var markup_price = 0.00;
@@ -127,24 +153,27 @@ function calculateSupplierMarkupFromTotalPrice(e){
   var markupAmountField = $(e).closest('.field').find('.markup_price_field');
   
   var markupPercent = $(e).closest('.field').find('.markup_percent_field');
-  var totalfield = $(e).closest('.field').find('.supplier_total_field');
-  
-  if ( isNaN(totalfield.val()) ){
+  var totalfield = $(e).closest('.field').find('.supplier_total_inc_markup_field');
+  var exchangeTotal = $(e).closest('.field').find('.supplier_exchange_total');
+
+  if ( isNaN(exchangeTotal.val()) ){
     totalAmount = 0.00;
   }else{
-    totalAmount = parseFloat(totalfield.val());
+    totalAmount = parseFloat(exchangeTotal.val());
   }
-  
+
+
+
   // only do this calc if we have a qty value
   if ( isNaN(markupPercent.val()) === false && parseFloat(markupPercent.val()) > 0)  {
     markup_price = (totalAmount * (markupPercent.val()/100));
   } else {
     markup_price = 0.00;
   }
-
   markupAmountField.val(markup_price.toFixed(2));
+  totalfield.val((totalAmount + markup_price).toFixed(2));
 }
-
+/*
 function addSupplierMarkupToTotal(e){
   var totalAmount = 0.00;
   var markup_price = 0.00;
@@ -166,6 +195,29 @@ function addSupplierMarkupToTotal(e){
   totalAmount = (markup_price + totalAmount);
   totalfield.val(totalAmount.toFixed(2));
 }
+*/
+/*
+function calculateSupplierMarkupToTotal(e){
+  var totalAmount = 0.00;
+  var markup_price = 0.00;
+  var totalfield = $(e).closest('.field').find('.supplier_total_field');
+  var markupAmountField = $(e).closest('.field').find('.markup_price_field');
+  
+  if ( isNaN(totalfield.val()) ){
+    totalAmount = 0.00;
+  }else{
+    totalAmount = parseFloat(totalfield.val());
+  }
+  
+  if ( isNaN(markupAmountField.val()) ) {
+    markup_price = 0.00;
+  } else {
+    markup_price = parseFloat(markupAmountField.val());
+  }
+  
+  totalAmount = (markup_price + totalAmount);
+  totalfield.val(totalAmount.toFixed(2));
+}*/
 
 
 function calculateItemPriceFromTotal(e){
@@ -183,6 +235,22 @@ function calculateItemPriceFromTotal(e){
   itemPriceField.val(item_price.toFixed(2));
 }
 
+function calculateItemPriceFromTotalSupplier(e){
+  var item_price = 0.00;
+  var totalfield = $(e).closest('.field').find('.supplier_sell_total');
+  var qtyfield = $(e).closest('.field').find('.supplier_qty_field');
+  var itemPriceField = $(e).closest('.field').find('.supplier_item_price_field');
+  // only do this calc if we have a qty value
+  if ( isNaN(qtyfield.val()) === false && parseFloat(qtyfield.val()) > 0)  {
+    item_price = (totalfield.val() / qtyfield.val());
+  } else {
+    item_price = parseFloat(totalfield.val());
+  }
+  
+  itemPriceField.val(item_price.toFixed(2));
+}
+
+
 function calculateTotalForPricing(){
   var sum = 0.00;
   $('.price_total_field').each(function() {
@@ -194,20 +262,36 @@ function calculateTotalForPricing(){
 
 function calculateSupplierTotalForPricing(){
   var sum = 0.00;
-  $('.supplier_total_field').each(function() {
+  $('.supplier_sell_total').each(function() {
       sum += Number($(this).val());
   });
     
   $(".grand_supplier_total").val(sum.toFixed(2));
 }
 
-function calculateSupplierMarkupTotalForPricing(){
+function calculateSupplierSellTotalForPricing(){
   var sum = 0.00;
-  $('.markup_price_field').each(function() {
+  $('.supplier_exchange_total').each(function() {
       sum += Number($(this).val());
   });
     
-  $(".grand_markup_total").val(sum.toFixed(2));
+  $(".grand_supplier_sell_total").val(sum.toFixed(2));
+}
+
+function calculateSupplierProfitForPricing(){
+  var totalPrice = Number($('.grand_supplier_sell_total').val());
+  var totalPriceIncMarkup = Number($('.grand_incl_markup_total').val());
+    
+  $(".grand_profit_total").val((totalPriceIncMarkup- totalPrice).toFixed(2));
+}
+
+function calculateSupplierMarkupTotalForPricing(){
+  var sum = 0.00;
+  $('.supplier_total_inc_markup_field').each(function() {
+      sum += Number($(this).val());
+  });
+    
+  $(".grand_incl_markup_total").val(sum.toFixed(2));
 }
 
 
