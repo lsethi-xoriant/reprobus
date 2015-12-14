@@ -48,12 +48,12 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-  def fog_public
-    false
-  end
+  # def fog_public
+  #   false
+  # end
 
-  def fog_authenticated_url_expiration
-    5.minutes
-  end
+  # def fog_authenticated_url_expiration
+  #   5.minutes
+  # end
 
 end
