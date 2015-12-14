@@ -1,8 +1,8 @@
-<%= link_to cancel_itinerary_path(@itinerary), 
+
+<% button_name = @itinerary.status == "Cancelled" ? 'Undo Cancel' : 'Cancel' %>
+<% button_path = @itinerary.status == "Cancelled" ? reinstate_itinerary_path(@itinerary) : cancel_itinerary_path(@itinerary) %>
+
+<%= link_to  button_name, button_path, 
   class: 'input-field waves-effect waves-light btn right red darken-1 tooltipped',
-  data: { position: 'bottom', delay: '50', tooltip: 'Cancel Itinerary' } do %>
-
-  Cancel Itinerary
-
-<% end %>
+  data: { position: 'bottom', delay: '50', tooltip: "#{button_name} Itinerary" } %>
 
