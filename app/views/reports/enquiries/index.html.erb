@@ -1,0 +1,21 @@
+<div class="container">
+  <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
+
+  <%= form_for :reports_search, method: :get, url: reports_enquiries_path do |c| %>
+    <div class="row">
+      <div class="col s3">
+        <%= c.date_field :from, class:"datepicker start_leg_itinerary", :"data-value" => (@from || 2.weeks.ago) %>
+        <%= c.label :from, class: 'active' %>
+      </div>
+      <div class="col s3">
+        <%= c.date_field :to, class:"datepicker start_leg_itinerary", :"data-value" => (@to || Date.today) %>
+        <%= c.label :to, class: 'active' %>
+      </div>
+      <div class="col s3">
+        <%= c.submit :search, class: 'btn' %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: "reports/partials/enquiries_table", locals: { objects: @enquiries, entity: "Enquiry" } %>
+</div>

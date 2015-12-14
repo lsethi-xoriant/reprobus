@@ -10,8 +10,9 @@ class Admin::DestinationsController < ApplicationController
       format.html
       format.csv { send_data @destinations.to_csv }
       format.xls
-    end 
+    end
   end
+
   def new
     @destination = Destination.new
     @destination.default_image = ImageHolder.new if !@destination.default_image
