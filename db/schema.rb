@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20151215065405) do
     t.datetime "emailed_at"
     t.string   "emailed_to"
     t.integer  "document_type"
+    t.string   "attachment"
   end
 
   create_table "customers", force: :cascade do |t|

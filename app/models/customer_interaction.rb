@@ -5,6 +5,8 @@ class CustomerInteraction < ActiveRecord::Base
   # document_type: integer
   # document:      copy
 
+  mount_uploader :attachment
+
   enum document_type: [ :quote, :confirmed_itinerary ]
 
 end
