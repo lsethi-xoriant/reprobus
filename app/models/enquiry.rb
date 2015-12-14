@@ -50,6 +50,8 @@ class Enquiry < ActiveRecord::Base
   has_and_belongs_to_many  :carriers
   has_and_belongs_to_many  :destinations
   has_and_belongs_to_many  :stopovers
+
+  belongs_to :destination
   
   serialize :xpayments
   
@@ -59,6 +61,12 @@ class Enquiry < ActiveRecord::Base
   scope :bookings, -> { where(stage: 'Booking') }
   scope :is_itinerary, -> { where(stage: 'Itinerary') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
+  
+  scope :active_plus_this_id, -> (id=0) { 
+    where("id = :id OR stage IN (:active_stages)",
+      id: id,
+      active_stages: ['In Progress', 'Open', 'New Enquiry'])
+  }
  # scope :notClosed, -> {where('stage != "Closed"') }
   
   belongs_to  :user

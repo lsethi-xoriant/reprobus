@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def enquiry_name_in_select(enquiry)
+    return nil unless enquiry.present?
+    "#{enquiry.id} - #{enquiry.lead_customer.try(:fullname)} - #{enquiry.name}"
+  end
   
   # Returns the full title on a per-page basis.
   def full_title(page_title)

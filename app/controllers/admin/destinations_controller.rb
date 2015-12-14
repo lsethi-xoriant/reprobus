@@ -74,7 +74,7 @@ class Admin::DestinationsController < ApplicationController
 
   def search_by_name
     search_params = params[:destinations].present? ? params[:destinations] : ''
-    result = Destination.where(name: params[:destinations])
+    result = Destination.where(name: params[:destinations]).uniq
     selected = 
       if params[:selected].present?
         selected_destination = result

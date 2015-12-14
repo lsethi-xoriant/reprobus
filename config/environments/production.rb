@@ -20,7 +20,7 @@ Reprobus::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_files = false
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -93,6 +93,6 @@ Reprobus::Application.configure do
     :domain         => 'reprobus.herokuapp.com',
     :authentication => :plain,
   }
-  
+
   Rails.application.routes.default_url_options[:host] = 'https://reprobus.herokuapp.com' # used for payment express success and failure link generation
 end

@@ -60,5 +60,6 @@ module Reprobus
         html_tag
       end
     end
+    config.assets.paths << Rails.root.join('vendor', 'assets')
   end
 end

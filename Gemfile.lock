@@ -468,7 +468,7 @@ DEPENDENCIES
   pg
   pxpay
   rails (= 4.2.0)
-  rails_12factor (= 0.0.2)
+  rails_12factor
   responders (~> 2.0)
   roo
   rspec-rails (= 2.13.1)

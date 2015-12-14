@@ -142,6 +142,7 @@ Reprobus::Application.routes.draw do
   get 'searches/destination_search'
   get 'searches/cruise_info_search'
   get 'searches/product_info_search'
+  get 'searches/enquiry_search', to: 'searches#enquiry_search'
       
       
   namespace :admin do

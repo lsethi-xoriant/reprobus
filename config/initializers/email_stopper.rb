@@ -4,7 +4,7 @@ class EmailAddressFilter
     
     if message.to == "hamishgardiner@gmail.com" || message.to == "hamishgardiner@hotmail.com" ||
       message.to == "stephenarnold@gmail.com" || message.to == "tim@eclipsetravel.com.au" ||
-      message.to == "matt@eclipsetravel.com.au"
+      message.to == "matt@eclipsetravel.com.au" || message.to == 'o.khriapina@gmail.com'
       
       message.perform_deliveries = true
       return
