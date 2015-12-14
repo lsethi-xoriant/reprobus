@@ -75,7 +75,7 @@ class Enquiry < ActiveRecord::Base
 #  has_many    :customers_enquiries
  # has_many    :customers, -> { order("customers.id ASC") }, through: :customers_enquiries
   has_and_belongs_to_many :customers
-  accepts_nested_attributes_for :customers, allow_destroy: true;
+  accepts_nested_attributes_for :customers, allow_destroy: true
   validates_associated :customers
   
   has_many    :activities,  dependent: :destroy
