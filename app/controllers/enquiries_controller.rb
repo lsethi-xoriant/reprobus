@@ -255,7 +255,7 @@ private
       params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent,
-        :fin_date, :standard, :insurance, :reminder, :destination_id,
+        :fin_date, :standard, :insurance, :reminder,
         customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy] )
     end
 
