@@ -15,7 +15,6 @@ class EmailAddressFilter
       return
     end
     
-   
 
     
     #if in dev send to developers.  ###### ALL MESSAGES TO ME WHILE BUILDING APP
