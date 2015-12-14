@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20151213024156) do
-=======
-ActiveRecord::Schema.define(version: 20151209110452) do
->>>>>>> origin/altoros-staging
+ActiveRecord::Schema.define(version: 20151214121512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +236,7 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
+    t.integer  "destination_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
@@ -475,8 +472,6 @@ ActiveRecord::Schema.define(version: 20151209110452) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -490,6 +485,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
@@ -535,6 +532,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.integer  "deposit_percentage",                                             default: 0
     t.string   "itineraries_from_email"
     t.text     "important_notes"
+    t.text     "overide_email_addresses"
+    t.boolean  "overide_emails"
   end
 
   create_table "stopovers", force: :cascade do |t|

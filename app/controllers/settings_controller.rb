@@ -135,7 +135,7 @@ private
     params.require(:setting).permit(:company_name, :pxpay_user_id, :pxpay_key,
     :use_xero, :xero_consumer_key, :xero_consumer_secret, :currency_id, :itinerary_notes,
     :payment_gateway, :cc_mastercard, :cc_visa, :cc_amex, :dropbox_user, :itinerary_excludes,
-    :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes,
+    :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes, :overide_email_addresses, :overide_emails,
     :quote_introduction, :confirmed_introduction, :num_days_balance_due, :num_days_deposit_due,
     :deposit_percentage, :itineraries_from_email, :important_notes, {:supplier_ids => []},
     triggers_attributes: [:id, :email_template_id, :num_days],

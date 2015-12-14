@@ -35,6 +35,10 @@
       </div>
       
       <div class="row">
+        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_passengers", f: f, name: "Number of Passengers"} %>
+      </div>
+      
+      <div class="row">
         <div class="input-field col s6">
           <%= f.select(:agent_id, options_for_select([[f.object.agent_name, f.object.agent_id]],f.object.agent_id),{},{class: "select2-agents browser-default"}) %>
           <%= f.label :agent_id, "Agent",  class: 'active' %>

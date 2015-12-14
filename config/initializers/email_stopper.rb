@@ -14,12 +14,18 @@ class EmailAddressFilter
       message.perform_deliveries = true
       return
     end
-      
+    
+   
 
     
     #if in dev send to developers.  ###### ALL MESSAGES TO ME WHILE BUILDING APP
 #    if Rails.env.development?
-      message.to = "hamishgardiner@gmail.com"
+      if Setting.global_settings.overide_emails 
+        message.to = Setting.global_settings.overide_email_addresses
+      else
+        message.to = "hamishgardiner@gmail.com"
+      end 
+      
       message.perform_deliveries = true
       return
 #    end
