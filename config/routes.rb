@@ -46,6 +46,7 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       get 'reinstate'
       get 'details'
+      get 'customer_interactions'
     end
   end
   
@@ -151,7 +152,6 @@ Reprobus::Application.routes.draw do
     end
     resources :countries
     resources :stopovers
-    resources :customer_interactions, only: [:index]
   end
 
   namespace :products do
