@@ -61,7 +61,8 @@ class CustomerMailer < ActionMailer::Base
       emailed_at: DateTime.now,
       emailed_to: params[:to_email],
       document_type: :quote,
-      attachment: file
+      attachment: file,
+      itinerary_id: params[:id]
     }
     customer_interaction = CustomerInteraction.new(options)
     customer_interaction.save

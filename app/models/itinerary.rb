@@ -40,6 +40,7 @@ class Itinerary < ActiveRecord::Base
   has_one       :itinerary_price
   belongs_to    :itinerary_template
   belongs_to    :enquiry
+  has_many      :customer_interactions
 
   belongs_to    :destination_image, :class_name => "ImageHolder", :foreign_key => :destination_image_id
   accepts_nested_attributes_for :destination_image

@@ -7,6 +7,8 @@ class CustomerInteraction < ActiveRecord::Base
 
   mount_uploader :attachment, AttachmentUploader
 
+  belongs_to :itinerary
+
   enum document_type: [ :quote, :confirmed_itinerary ]
 
 end
