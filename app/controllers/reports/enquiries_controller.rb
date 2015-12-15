@@ -1,26 +1,23 @@
 class Reports::EnquiriesController < ApplicationController
 
   def index
+    search_params = {}
     if params[:reports_search]
       @from, @to   = params[:reports_search][:from], params[:reports_search][:to]
       @stage       = params[:reports_search][:stage]
                       .map {|prm| prm[0] if prm[1] == "1"} ## Warning. This map needed for collect values from checkboxes form
                       .compact                             ## value == "1" mean checked, value == "0" mean unchecked
-      stage        = @stage.any? ? @stage : Enquiry::STATUSES   ## If there is no values we choose all statuses by default
+      stage        = @stage.any? ? @stage : Enquiry::STATUSES ## If there is no values we choose all statuses by default
       @assigned_to = params[:reports_search][:assigned_to_id]
+
+      search_params[:created_at]  = (@from..@to)
+      search_params[:stage]       = stage if stage
+      search_params[:assigned_to] = @assigned_to if @assigned_to && @assigned_to != ""
     end
-    @enquiries =
-      if @from && @to
-        Enquiry
-         .includes(:destination, itineraries: [:itinerary_price])
-         .where(created_at: (@from..@to),
-                stage: stage,
-                assigned_to: @assigned_to)
-      else
-        Enquiry
-         .includes(:destination, itineraries: [:itinerary_price])
-         .all
-      end
+    puts search_params
+    @enquiries = Enquiry
+                  .includes(:destination, itineraries: [:itinerary_price])
+                  .where(search_params)
 
     respond_to do |format|
       format.html

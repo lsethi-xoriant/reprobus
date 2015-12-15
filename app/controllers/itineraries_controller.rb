@@ -82,7 +82,6 @@ class ItinerariesController < ApplicationController
                       .compact
                       .uniq
 
-    set_customers_for_itinerary
     set_email_modal_values
   end
   
@@ -140,7 +139,6 @@ class ItinerariesController < ApplicationController
   def details
     @itinerary = Itinerary.find(params[:id])
     @enquiry = @itinerary.enquiry
-    set_customers_for_itinerary
     @customer = @itinerary.lead_customer
   end
 
