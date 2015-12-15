@@ -37,9 +37,8 @@ class CustomerMailer < ActionMailer::Base
         format.html { render layout: false }
         format.pdf do
           if params[:type] == 'PDF'
-            @attachment = 
+            attachments['ItineraryQuote.pdf'] = 
               ItineraryRenderService.as_pdf(itinerary, setting)
-            attachments['ItineraryQuote.pdf'] = @attachment
           end
         end
         # TODO: need to be updated after Editable Format will be implemented
@@ -51,21 +50,6 @@ class CustomerMailer < ActionMailer::Base
       end
     # end
 
-    file = StringIO.new(attachments['ItineraryQuote.pdf'].decoded)
-    file.class.class_eval { attr_accessor :original_filename, :content_type }
-    file.original_filename = attachments['ItineraryQuote.pdf'].filename
-    file.content_type = attachments['ItineraryQuote.pdf'].mime_type
-
-    options = 
-    {
-      emailed_at: DateTime.now,
-      emailed_to: params[:to_email],
-      document_type: :quote,
-      attachment: file,
-      itinerary_id: params[:id]
-    }
-    customer_interaction = CustomerInteraction.new(options)
-    customer_interaction.save
-
+    CustomerInteractionService.record_interaction(attachments, params)
   end
 end
