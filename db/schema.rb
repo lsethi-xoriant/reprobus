@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211143529) do
+ActiveRecord::Schema.define(version: 20151215121652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20151211143529) do
     t.string   "emailed_to"
     t.integer  "document_type"
     t.string   "attachment"
+    t.integer  "itinerary_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -243,6 +244,7 @@ ActiveRecord::Schema.define(version: 20151211143529) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
+    t.integer  "destination_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
