@@ -61,6 +61,8 @@ class Enquiry < ActiveRecord::Base
   scope :bookings, -> { where(stage: 'Booking') }
   scope :is_itinerary, -> { where(stage: 'Itinerary') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
+
+  STATUSES = ['In Progress', 'Open', 'New Enquiry', 'Itinerary']
   
   scope :active_plus_this_id, -> (id=0) { 
     where("id = :id OR stage IN (:active_stages)",

@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>#</th>
+        <th>Enquery name</th>
         <th>Customer Name</th>
         <th>Consultant</th>
         <th>Date enquiry received</th>
@@ -17,6 +18,7 @@
       <% objects.each do |obj| %> 
         <tr>
           <td><%= obj.id %></td>
+          <td><%= link_to obj.name, edit_enquiry_path(obj) %></td>
           <td><%= obj.try(:lead_customer).try(:fullname) %></td>
           <td><%= obj.try(:assignee).try(:name) %></td>
           <td><%= obj.created_at.strftime("%d-%m-%Y") %></td>
@@ -24,7 +26,6 @@
           <td><%= obj.try(:itineraries).map(&:itinerary_price).compact.any? ? "Y" : "N" %></td>
           <td></td>
           <td><%= obj.try(:destination).try(:name) %></td>
-          <td><%= link_to obj.name, "#{entity.pluralize.downcase}/#{obj.id}/edit" %></td>
         </tr>
       <% end %>
     </tbody>
