@@ -34,12 +34,6 @@
           </p>
           </div>
           <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total, precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
-          
-          <div class="input-field col s1" >
-            <% if @itinerary_price.has_uninvoiced_customer_items %>
-            <a href="<%= invoice_itinerary_prices_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
-            <% end %>
-          </div>
       </div>
       
 	  </div>
@@ -67,8 +61,14 @@
           
           
         <div class="customer_totals_row row">
+          <div class="input-field col s2" >
+            <% if  !@itinerary_price.new_record? && @itinerary_price.has_uninvoiced_customer_items %>
+              <a href="<%= invoice_itinerary_prices_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
+            <% end %>
+          </div>          
+          
           <strong>
-          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s8 s1", label: "Deposit total $", value: number_with_precision(@itinerary_price.deposit,precision: 2), class_for_input: "grand_deposit_total blue-text text-darken-4" } %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s6 s1", label: "Deposit total $", value: number_with_precision(@itinerary_price.deposit,precision: 2), class_for_input: "grand_deposit_total blue-text text-darken-4" } %>
           <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total,precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
           </strong>
         </div>
@@ -98,8 +98,14 @@
           </div>
           
         <div class="supplier_totals_row row">
+          <div class="input-field col s2" >
+            <% if  !@itinerary_price.new_record? && @itinerary_price.has_uninvoiced_supplier_items %>
+              <a href="<%= invoice_itinerary_prices_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoices</a>
+            <% end %>
+          </div>              
+          
           <strong>
-          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s6 s1", label: "Sale Total $", value: number_with_precision(@itinerary_price.get_total_supplier_price,precision: 2), class_for_input: "grand_supplier_total blue-text text-darken-4" } %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s4 s1", label: "Sale Total $", value: number_with_precision(@itinerary_price.get_total_supplier_price,precision: 2), class_for_input: "grand_supplier_total blue-text text-darken-4" } %>
           
           <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} total $", value: number_with_precision(@itinerary_price.get_total_supplier_sell_total,precision: 2), class_for_input: "grand_supplier_sell_total blue-text text-darken-4" } %>
           

@@ -20,8 +20,8 @@ class ExchangeRate < ActiveRecord::Base
     syscode = Setting.find(1).currencyCode 
     
     # get the total amount and times by 100 as Money uses cents.     
-    mon = Money.new(100, code)
-    exch = mon.exchange_to(syscode)
+    mon = Money.new(100, syscode)
+    exch = mon.exchange_to(code)
     return exch.dollars    
   end
 end

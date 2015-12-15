@@ -108,7 +108,7 @@ $(document).ready(function() {
       calculateSupplierMarkupTotalForPricing();
       calculateSupplierProfitForPricing();
     });
-  
+
   }
   
 });
@@ -131,7 +131,8 @@ function calculateExchangeRatePrice(e){
   var totalfield = $(e).closest('.field').find('.supplier_exchange_total');
   var ratefield = $(e).closest('.field').find('.sell_currency_rate');
   var itemPriceField = $(e).closest('.field').find('.supplier_sell_total');
-  var total = (itemPriceField.val() * ratefield.val());
+  
+  var total = (1 / ratefield.val() ) * itemPriceField.val();
 
   totalfield.val(total.toFixed(2));
 }

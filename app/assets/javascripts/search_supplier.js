@@ -56,6 +56,17 @@ function initSupplierSelect2() {
     currencyFieldHidden.val(data.currency_id);
     var currencyCodeField = $(this).closest('.row').find(".currency_code");
     currencyCodeField.val(data.currency);
+  
+    // from itinerary_price.js
+    calculateSupplierTotalFromQtyPrice($(this));
+    calculateExchangeRatePrice($(this));
+    calculateSupplierMarkupFromTotalPrice($(this));
+    //addSupplierMarkupToTotal($(this));
+    calculateSupplierMarkupTotalForPricing();
+    calculateSupplierTotalForPricing();
+    calculateSupplierSellTotalForPricing();
+    calculateSupplierProfitForPricing();          
+    
   });
   
   
@@ -76,7 +87,6 @@ $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
       var dueDate = new Date(duedateComp[2],duedateComp[1]-1,duedateComp[0]);
       $('#final_payment_due').datepicker('update', dueDate);
     }
-    
   }
 });
 
