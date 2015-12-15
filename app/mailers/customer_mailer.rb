@@ -51,21 +51,10 @@ class CustomerMailer < ActionMailer::Base
       end
     # end
 
-    # io = StringIO.new(Base64.decode64(@attachment))
-    # def io.original_filename; "ItineraryQuote.pdf"; end
-    # io = attachments['ItineraryQuote.pdf']
-
-    tempfile = Tempfile.new(['ItineraryQuote', '.pdf'], Rails.root.join('tmp'))
-    tempfile.binmode
-    tempfile.write @attachment
-    tempfile.close
-
-    file = File.open(tempfile.path)
-
-    # file = StringIO.new(attachments['ItineraryQuote.pdf'].decoded)
-    # file.class.class_eval { attr_accessor :original_filename, :content_type }
-    # file.original_filename = attachments['ItineraryQuote.pdf'].filename
-    # file.content_type = attachments['ItineraryQuote.pdf'].mime_type
+    file = StringIO.new(attachments['ItineraryQuote.pdf'].decoded)
+    file.class.class_eval { attr_accessor :original_filename, :content_type }
+    file.original_filename = attachments['ItineraryQuote.pdf'].filename
+    file.content_type = attachments['ItineraryQuote.pdf'].mime_type
 
     options = 
     {
@@ -75,9 +64,7 @@ class CustomerMailer < ActionMailer::Base
       attachment: file
     }
     customer_interaction = CustomerInteraction.new(options)
-    customer_interaction.save!
+    customer_interaction.save
 
-    tempfile.unlink
-  
   end
 end
