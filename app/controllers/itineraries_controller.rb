@@ -199,8 +199,9 @@ private
       @lead_customer = @enquiry.customer_name_and_title
       @agent_name = @enquiry.agent_name_and_title
       @to_email = 
-        @enquiry.agent.try(:email).presence || @itinerary.user.try(:email)
-      @from_email = @setting.try(:itineraries_from_email)
+        @enquiry.agent.try(:email).presence || @itinerary.lead_customer.try(:email)
+      @from_email = 
+        @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
     end
 
     def set_customers_for_itinerary
