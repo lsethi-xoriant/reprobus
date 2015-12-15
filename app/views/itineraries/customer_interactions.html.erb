@@ -1,0 +1,4 @@
+<% provide(:title, 'Customer Interactions') %>
+<div class="row">
+  <%= render partial: 'customer_interaction_entity', locals: { entity: CustomerInteraction, collect: @customer_interactions } %>
+</div> 
