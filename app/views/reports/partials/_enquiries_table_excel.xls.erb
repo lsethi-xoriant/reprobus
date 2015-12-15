@@ -8,6 +8,7 @@
     <Table>
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Enquiry Name</Data></Cell>
         <Cell><Data ss:Type="String">Customer Name</Data></Cell>
         <Cell><Data ss:Type="String">Consultant</Data></Cell>
         <Cell><Data ss:Type="String">Date enquiry received</Data></Cell>
@@ -19,6 +20,7 @@
       <% objects.each do |obj| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= obj.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= obj.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= obj.try(:lead_customer).try(:fullname) %></Data></Cell>
         <Cell><Data ss:Type="String"><%= obj.try(:assignee).try(:name) %></Data></Cell>
         <Cell><Data ss:Type="String"><%= obj.created_at.strftime("%d-%m-%Y") %></Data></Cell>
