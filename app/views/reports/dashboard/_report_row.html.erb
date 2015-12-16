@@ -1,0 +1,8 @@
+<li>
+  <h4><%= report_row %></h4>
+  <%= link_to send("reports_#{report_row.pluralize.downcase}_path") do %>
+    <%= button_tag report_row.pluralize, class: 'waves-effect waves-light btn right', type: 'button', method: :get %>
+  <% end %>
+  <p>Reports</p>
+</li>
+<div class="divider"></div>

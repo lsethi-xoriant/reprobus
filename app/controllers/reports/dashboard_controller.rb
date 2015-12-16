@@ -3,5 +3,6 @@ class Reports::DashboardController < ApplicationController
   before_filter :admin_user
   
   def index
+    @collection = ['Enquiry', 'Itinerary']
   end
 end
