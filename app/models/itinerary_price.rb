@@ -15,9 +15,13 @@
 #  deposit                :decimal(12, 2)   default("0.0")
 #  sale_total             :decimal(12, 2)   default("0.0")
 #  deposit_system_default :boolean          default("false")
+#  booking_confirmed_date :date
+#  booking_confirmed      :boolean
 #
 
 class ItineraryPrice < ActiveRecord::Base
+  before_save :set_booking_confirmed_date, if: :booking_confirmed_changed?
+  
   has_many      :itinerary_price_items, -> { order "created_at ASC" }
   accepts_nested_attributes_for :itinerary_price_items, allow_destroy: true
   
@@ -31,8 +35,13 @@ class ItineraryPrice < ActiveRecord::Base
   has_many :invoices, through: :itinerary_price_items 
   has_many :supplier_invoices, through: :supplier_itinerary_price_items, class_name: "Invoice" 
  
+ 
+  def set_booking_confirmed_date 
+    self.booking_confirmed_date = Date.today if !self.booking_confirmed_date
+  end 
+  
   def has_uninvoiced_customer_items
-    self.supplier_itinerary_price_items.each do |price_item|
+    self.itinerary_price_items.each do |price_item|
       if !price_item.invoice
         return true
       end
@@ -49,15 +58,22 @@ class ItineraryPrice < ActiveRecord::Base
     return false
   end
   
-  def create_customer_invoices
+  def create_customer_invoices(user)
     return if !self.has_uninvoiced_customer_items
-    inv = Invoice.new
     
-    self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.inv
-        return true
+    inv = Invoice.new({invoice_date: Date.today(), final_payment_due: self.final_balance_due,  deposit_due: self.deposit_due, deposit: self.deposit })
+    
+    self.itinerary_price_items.each do |price_item|
+      if !price_item.invoice 
+        inv.line_items.build({item_price: price_item.item_price, quantity: price_item.quantity, description: price_item.description, total: price_item.price_total })
+        inv.itinerary_price_items << price_item
       end
     end
+    
+    if inv.create_invoice_xero(user)
+      inv.save
+    end
+    
   end
   
   def get_agent_display
@@ -77,35 +93,19 @@ class ItineraryPrice < ActiveRecord::Base
   end
   
   def get_total_customer_price
-    total = 0.00
-    self.itinerary_price_items.each do |ipi|
-      total = total + ipi.price_total
-    end
-    return total
+    self.itinerary_price_items.sum(:price_total)
   end
   
   def get_total_supplier_price
-    total = 0.00
-    self.supplier_itinerary_price_items.each do |ipi|
-      total = total + ipi.price_total
-    end
-    return total
+    self.supplier_itinerary_price_items.sum(:price_total)
   end
   
   def get_total_supplier_sell_total
-    total = 0.00
-    self.supplier_itinerary_price_items.each do |ipi|
-      total = total + ipi.exchange_rate_total
-    end
-    return total
+    self.supplier_itinerary_price_items.sum(:exchange_rate_total)
   end
   
   def get_total_incl_supplier_markup
-    total = 0.00
-    self.supplier_itinerary_price_items.each do |ipi|
-      total = total + ipi.total_incl_markup
-    end
-    return total
+    self.supplier_itinerary_price_items.sum(:total_incl_markup)
   end
   
   def get_total_supplier_profit

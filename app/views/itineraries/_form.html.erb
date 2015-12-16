@@ -21,15 +21,6 @@
   
       <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
       
-      <div class="row">
-        <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "1000", ckeditor_field: true } %>
-        <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "1000", ckeditor_field: true } %>
-      </div>
-      
-      <div class="row">
-        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "2000", ckeditor_field: true } %>
-      </div>
-
       <div class="row" id="itinerary_destinations_select">
         <div class="form-group">
           <div class="col s6">
@@ -81,7 +72,7 @@
 
       <div class="row">
         <div class="col s2">
-          <a id="select-all-itinerary-infos" class="waves-effect waves-light btn right deep-purple darken-1 itinerary-info-margin">Select All</a>
+          <a id="select-all-itinerary-infos" class="waves-effect waves-light btn left grey lighten-2 itinerary-info-margin">Select All</a>
         </div>
       </div>
   
@@ -135,41 +126,55 @@
           <%= f.submit buttontxt, class: "btn itinerary_submit_btn right"%>
         </div>
       </div>
-  
-    <% end %>
     
-    <%# if @itinerary.isLocked? %>
-    <div class="row">
-
-      <div class="input-field col s2" >
-        <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
-      </div>
-
-      <div class="input-field col s2" >
-        <%= render partial: 'emailQuote_button' %>
-      </div>
-
-      <div class="input-field col s3">
-        <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
-          class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
-          target: '_blank' do %>
-
-            View Confirmed PDF
-
-        <% end if @itinerary.itinerary_price.present? %>
-      </div>
-
-      <div class="input-field col s2">
-        <%= render partial: 'pricingBtn'%>
-      </div>
-
-      <div class="input-field col s3" >
-        <%= render partial: 'cancel_itinerary_button' %>
-      </div>
-    </div>
-    <%# end %>
+      <%# if @itinerary.isLocked? %>
+      <div class="row">
   
+        <div class="input-field col s2" >
+          <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+        </div>
+  
+        <div class="input-field col s2" >
+          <%= render partial: 'emailQuote_button' %>
+        </div>
+  
+        <div class="input-field col s3">
+          <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
+            class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
+            target: '_blank' do %>
+  
+              View Confirmed PDF
+  
+          <% end if @itinerary.itinerary_price.present? %>
+        </div>
+  
+        <div class="input-field col s2">
+          <%= render partial: 'pricingBtn'%>
+        </div>
+  
+        <div class="input-field col s3" >
+          <%= render partial: 'cancel_itinerary_button' %>
+        </div>
+      </div>
+      <%# end %>
+      <br>
+      <br>
+      
+      <div class="card-panel">
+        <h4 class="header2">Inclusions/Exclusions/Notes</h4>
+        <div class="row">
+          <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "1000", ckeditor_field: true } %>
+          <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "1000", ckeditor_field: true } %>
+        </div>
+        
+        <div class="row">
+          <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "2000", ckeditor_field: true } %>
+        </div>
+      </div>
+  
+   <% end %>
   </div>
+
 </div>
 
 <div id="bump_dates_modal" class="modal">
