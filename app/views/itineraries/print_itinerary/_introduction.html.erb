@@ -5,11 +5,12 @@
 <div class="clear50"></div>
 <p class="caption">
   <% if @confirmed %>
-    <%= (h (@enquiry.agent ? @enquiry.agent.confirmed_introduction : @setting.confirmed_introduction).html_safe).to_s.gsub("\n", "<br />").html_safe %>
+    <%= (h (@enquiry.agent && !@enquiry.agent.confirmed_introduction.blank? ? @enquiry.agent.confirmed_introduction : @setting.confirmed_introduction).html_safe).to_s.gsub("\n", "<br />").html_safe %>
   <% else %>
-    <%= (h (@enquiry.agent ? @enquiry.agent.quote_introduction : @setting.quote_introduction).html_safe).gsub("\n", "<br />").html_safe %>
+    <%= (h (@enquiry.agent && !@enquiry.agent.quote_introduction.blank? ? @enquiry.agent.quote_introduction : @setting.quote_introduction).html_safe).gsub("\n", "<br />").html_safe %>
   <% end %>
 </p>
+
 
 <div class="clear75"></div>
 <p class="bigBigtitle2"><%= @confirmed? 'Confirmed Itinerary Details' : 'Quote Details' %></p>

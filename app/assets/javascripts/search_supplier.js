@@ -17,13 +17,13 @@ function formatSupplierSelection (searchOb) {
 }
 
 function initSupplierSelect2() {
-  $(".select2-suppliers-noajax").select2();  
+  $(".select2-suppliers-noajax").select2();
   
    $(".select2-suppliers").select2({
     ajax: {
       url: "/searches/supplier_search",
       dataType: 'json',
-      delay: 250,
+      delay: 200,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -46,9 +46,34 @@ function initSupplierSelect2() {
     templateSelection: formatSupplierSelection
    });
  
+ 
+  var $eventSelect = $(".select2-suppliers.supplier-itinerary-price");
+  $eventSelect.on("select2:select", function(e) {
+    var data = e.params.data;
+    var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
+    sellRateField.val(data.currency_rate);
+    var currencyFieldHidden = $(this).closest('.row').find(".currency_id");
+    currencyFieldHidden.val(data.currency_id);
+    var currencyCodeField = $(this).closest('.row').find(".currency_code");
+    currencyCodeField.val(data.currency);
+  
+    // from itinerary_price.js
+    calculateSupplierTotalFromQtyPrice($(this));
+    calculateExchangeRatePrice($(this));
+    calculateSupplierMarkupFromTotalPrice($(this));
+    //addSupplierMarkupToTotal($(this));
+    calculateSupplierMarkupTotalForPricing();
+    calculateSupplierTotalForPricing();
+    calculateSupplierSellTotalForPricing();
+    calculateSupplierProfitForPricing();          
+    
+  });
+  
+  
 }
 
 $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
+  //OLD CODE WHICH WONT BE WORKING NOW
   $('#supplierDefaultCurrency').val(e.params.data.currency);
   
   if ($('#base_date').length) {  // if we are on the supplier invoice screen and (basedate is present) then update pay date
@@ -62,6 +87,7 @@ $(".select2-suppliers.supplier-invoice").on("select2-selecting", function(e) {
       var dueDate = new Date(duedateComp[2],duedateComp[1]-1,duedateComp[0]);
       $('#final_payment_due').datepicker('update', dueDate);
     }
-    
   }
 });
+
+

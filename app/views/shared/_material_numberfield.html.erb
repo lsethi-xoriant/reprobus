@@ -1,6 +1,6 @@
 <% class_for_input = "" if !local_assigns.has_key? :class_for_input %>
 <% step = 1 if !local_assigns.has_key? :step %>
-<% disabled = false if !local_assigns.has_key? :disabled %>
+<% readonly = false if !local_assigns.has_key? :readonly %>
 
 
 <div class="input-field col <%=col%>">
@@ -9,9 +9,9 @@
   <% end %>
   
   <% if local_assigns.has_key? :value %>
-    <%= f.number_field field.to_sym, value: value, step: step, class: class_for_input, disabled: disabled %>
+    <%= f.number_field field.to_sym, value: value, step: step, class: class_for_input, readonly: readonly %>
   <% else %>
-   <%= f.number_field field.to_sym, step: step, class: class_for_input, disabled: disabled %>
+   <%= f.number_field field.to_sym, step: step, class: class_for_input, readonly: readonly %>
   <% end %>
   
   <% if local_assigns.has_key? :name %>

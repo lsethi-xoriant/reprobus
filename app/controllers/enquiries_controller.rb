@@ -55,8 +55,13 @@ class EnquiriesController < ApplicationController
   
   def new
     @enquiry = Enquiry.new
-	  @enquiry.customers.build
-    @enquiry.customers.first.build_address
+    if params[:customer_id]
+      @customer = Customer.find(params[:customer_id])
+      @enquiry.customers << @customer
+    else
+      @enquiry.customers.build
+      @enquiry.customers.first.build_address
+    end
     @enquiry.stage = "New Enquiry"
     @enquiry.assignee = current_user
     @enquiry.lead_customer = @enquiry.customers.first
@@ -254,8 +259,8 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
-        :assigned_to, :num_people, :duration, :est_date, :percent,
-        :fin_date, :standard, :insurance, :reminder,
+        :assigned_to, :num_people, :duration, :est_date, :percent, :campaign,
+        :fin_date, :standard, :insurance, :reminder, :destination_id,
         customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy] )
     end
 

@@ -50,7 +50,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: {total: resources_count,
-                    items: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}"} }} }
+                    items: @entities.map { |e| {id: e.id, text: "#{e.code} - #{e.currency}", currency_rate: e.getCurrencyRate } }} }
     end
   end
   
@@ -117,13 +117,14 @@ class SearchesController < ApplicationController
   def supplier_search
     @customers = Customer.includes(:currency).select([:id, :supplier_name, :cust_sup, :currency_id, :num_days_payment_due]).where("cust_sup ILIKE :p", p: "Supplier" ).
                             where("supplier_name ILIKE :q", q: "%#{params[:q]}%").
-                            order('last_name')
+                            order('supplier_name')
     
     resources_count = @customers.size
-    
+  
     respond_to do |format|
       format.json { render json: {total: resources_count,
-        items: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay, numdays: e.num_days_payment_due}}} }
+        items: @customers.map { |e| {id: e.id, text: "#{e.supplier_name}", currency: e.getSupplierCurrencyDisplay,
+                                    currency_id: e.currency_id, currency_rate: e.getSupplierCurrencyRateDisplay, numdays: e.num_days_payment_due}}} }
     end
   end
   
@@ -172,8 +173,8 @@ class SearchesController < ApplicationController
     respond_to do |format|
       format.json { render json: {
                     id: e.id, name: e.name, text: e.name, type: e.type,
-                    country: e.country_search, city: e.destination_search, 
-                    country_id: e.country_id, destination_id: e.destination_id, 
+                    country: e.country_search, city: e.destination_search,
+                    country_id: e.country_id, destination_id: e.destination_id,
                     grouptype: e.group_classification, numdays: e.default_length,
                     breakfast: e.includes_breakfast, dinner: e.includes_dinner, lunch: e.includes_lunch,
                     suppliers: e.suppliers.map { |s| {id: s.id, supplier_name: s.supplier_name}},

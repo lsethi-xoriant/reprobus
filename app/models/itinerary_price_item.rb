@@ -14,12 +14,14 @@
 #  invoice_id                  :integer
 #  quantity                    :integer          default("0")
 #  item_price                  :decimal(12, 2)   default("0.0")
-#  deposit                     :integer          default("0")
+#  deposit_percentage          :integer          default("0")
 #  start_date                  :date
 #  currency_id                 :integer
 #  markup_percentage           :integer
 #  end_date                    :date
 #  sell_currency_rate          :decimal(12, 2)   default("0.0")
+#  deposit                     :decimal(12, 2)   default("0.0")
+#  markup                      :decimal(12, 2)   default("0.0")
 #
 
 class ItineraryPriceItem < ActiveRecord::Base
@@ -30,6 +32,7 @@ class ItineraryPriceItem < ActiveRecord::Base
   belongs_to      :itinerary_price
   belongs_to      :supplier, :class_name => "Customer", :foreign_key => "supplier_id"
   belongs_to      :currency
+  belongs_to      :invoice
 
   def currencyID
     self.currency_id ? self.currency_id : Setting.global_settings.getDefaultCurrency.id
@@ -41,5 +44,20 @@ class ItineraryPriceItem < ActiveRecord::Base
   
   def currencyDisplay
     self.currency_id ? self.currency.displayName : Setting.global_settings.getDefaultCurrency.displayName
-  end   
+  end
+  
+  def get_item_sell_total
+    return self.quantity * self.item_price
+  end
+  
+  def get_exchange_total
+    return self.sell_currency_rate * self.price_total
+  end
+  
+  def get_sell_currency_rate
+    if self.sell_currency_rate == 0.0
+      return "1.0"
+    end
+    return self.sell_currency_rate
+  end
 end

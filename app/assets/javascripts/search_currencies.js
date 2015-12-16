@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
   initCurrencySelect2();  // intialise select drop downs
-  
+});
+
   function formatCurrency (searchOb) {
     if (searchOb.loading) return searchOb.text;
     var markup = "";
@@ -20,7 +21,7 @@ $(document).ready(function() {
     ajax: {
       url: "/searches/currency_search",
       dataType: 'json',
-      delay: 250,
+      delay: 200,
       data: function (params) {
         return {
           q: params.term, // search term
@@ -43,5 +44,14 @@ $(document).ready(function() {
     templateSelection: formatCurrencySelection
    });
    
+/*    var $eventSelect = $(".select2-currencies.supplier-itinerary-price");
+    $eventSelect.on("select2:select", function(e) {
+      var data = e.params.data;
+      var sellRateField = $(this).closest('.row').find(".sell_currency_rate");
+      sellRateField.val(data.currency_rate);
+    });   */
+   
   }
- });
+  
+
+  

@@ -269,8 +269,8 @@ class Invoice < ActiveRecord::Base
   
   def set_exchange_currency_amount
     code = self.getCurrencyCode
-    syscode = Setting.find(1).currencyCode
-    overRideExRate = Setting.find(1).exchange_rates.find_by_currency_code(code)
+    syscode = Setting.global_settings.currencyCode
+    overRideExRate = Setting.global_settings.exchange_rates.find_by_currency_code(code)
     
     if overRideExRate
       googleBank = Money.default_bank # save google currency ex, so we can set it back later.

@@ -2,10 +2,13 @@
 #
 # Table name: countries
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  name         :string
+#  created_at   :datetime
+#  updated_at   :datetime
+#  visa_details :text
+#  warnings     :text
+#  vaccinations :text
 #
 
 class Country < Admin
