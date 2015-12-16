@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215065405) do
+ActiveRecord::Schema.define(version: 20151215111520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -271,31 +271,29 @@ ActiveRecord::Schema.define(version: 20151215065405) do
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "booking_id"
-    t.string   "status",                      limit: 255
+    t.string   "status",              limit: 255
     t.datetime "invoice_date"
     t.datetime "deposit_due"
     t.datetime "final_payment_due"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "deposit",                                 precision: 12, scale: 2, default: 0.0
-    t.string   "pxpay_deposit_trxId",         limit: 255
+    t.decimal  "deposit",                         precision: 12, scale: 2, default: 0.0
+    t.string   "pxpay_deposit_trxId", limit: 255
     t.text     "ccPaymentsAmount"
     t.text     "ccPaymentsDate"
     t.integer  "supplier_invoice_id"
     t.integer  "customer_invoice_id"
-    t.string   "currency",                    limit: 255
-    t.string   "xero_id",                     limit: 255
+    t.string   "currency",            limit: 255
+    t.string   "xero_id",             limit: 255
     t.text     "xdeposits"
     t.text     "xpayments"
     t.integer  "supplier_id"
     t.integer  "currency_id"
-    t.decimal  "exchange_amount",                         precision: 12, scale: 2, default: 0.0
-    t.decimal  "exchange_rate",                           precision: 12, scale: 2, default: 0.0
+    t.decimal  "exchange_amount",                 precision: 12, scale: 2, default: 0.0
+    t.decimal  "exchange_rate",                   precision: 12, scale: 2, default: 0.0
     t.string   "pxpay_balance_trxId"
     t.string   "pxpay_deposit_url"
     t.string   "pxpay_balance_url"
-    t.integer  "customer_itinerary_price_id"
-    t.integer  "supplier_itinerary_price_id"
   end
 
   add_index "invoices", ["pxpay_balance_trxId"], name: "index_invoices_on_pxpay_balance_trxId", using: :btree

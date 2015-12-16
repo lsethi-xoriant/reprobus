@@ -24,11 +24,12 @@ class ItineraryPrice < ActiveRecord::Base
   has_many      :supplier_itinerary_price_items, -> { order "created_at ASC" }, :class_name => "ItineraryPriceItem", :foreign_key => :supplier_itinerary_price_id
   accepts_nested_attributes_for :supplier_itinerary_price_items, allow_destroy: true
 
-  #has_many    :customer_invoices, :class_name => "Invoice", :foreign_key => :customer_itinerary_price_id
-  #has_many    :supplier_invoices, :class_name => "Invoice", :foreign_key => :supplier_itinerary_price_id
-
+  
   belongs_to :itinerary
   belongs_to :currency
+  
+  has_many :invoices, through: :itinerary_price_items 
+  has_many :supplier_invoices, through: :supplier_itinerary_price_items, class_name: "Invoice" 
  
   def has_uninvoiced_customer_items
     self.supplier_itinerary_price_items.each do |price_item|

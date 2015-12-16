@@ -19,11 +19,15 @@ data-position="bottom" data-delay="50" data-tooltip="Cruise Info" >
                     <div class="col s1">
                       <%= text_field_tag(:position, int, class: "cruise_legs_details", :readonly => true  ) %>
                     </div>
-                    <div class="col offset-s1 s8">
-                      <%= text_field_tag(:cruise_leg_name, leg.name, class: "cruise_legs_details", :readonly => true  ) %>
+                    <div class="col s10">
+                      <p class="product_details" ><strong><%= leg.name %></strong></p>
                     </div>  
                 </div>
-              
+                <div class="row">
+                  <div class="col offset-s1 s10">
+                    <p class="product_details" ><%= leg.get_product_description %></p>
+                  </div> 
+                </div>
             <% end %>
           
           </div>
