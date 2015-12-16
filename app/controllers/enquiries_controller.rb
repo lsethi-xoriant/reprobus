@@ -55,8 +55,13 @@ class EnquiriesController < ApplicationController
   
   def new
     @enquiry = Enquiry.new
-	  @enquiry.customers.build
-    @enquiry.customers.first.build_address
+    if params[:customer_id]
+      @customer = Customer.find(params[:customer_id])
+      @enquiry.customers << @customer
+    else
+      @enquiry.customers.build
+      @enquiry.customers.first.build_address
+    end
     @enquiry.stage = "New Enquiry"
     @enquiry.assignee = current_user
     @enquiry.lead_customer = @enquiry.customers.first
