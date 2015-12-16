@@ -12,7 +12,9 @@
       <% end %>
     </div>
     <div class="col s4">
-      <i class="mdi-action-account-circle"></i>&nbsp;&nbsp; Customer: <%= @itinerary.lead_customer.fullname_with_title %></br>
+      <% if @itinerary.lead_customer %>
+        <i class="mdi-action-account-circle"></i>&nbsp;&nbsp; Customer: <%= @itinerary.lead_customer.fullname_with_title %></br>
+      <% end %>
       <% if @itinerary.agent %>
         <i class="mdi-action-account-child"></i >&nbsp;&nbsp; Agent: <%= @itinerary.agent.supplier_name %></br>
       <% end %>

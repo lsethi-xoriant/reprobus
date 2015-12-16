@@ -1,8 +1,9 @@
 <div class="container">
   <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
 
-  <%= form_for :reports_search, method: :get, url: reports_enquiries_path do |c| %>
+  <%= form_for :reports_search, method: :get, url: reports_booking_travel_index_path do |c| %>
     <div class="row">
+
       <div class="col s1">
         <%= c.label :from, class: 'active' %>
         <%= c.date_field :from, class:"datepicker start_leg_itinerary", :"data-value" => (@from || 1.month.ago) %>
@@ -11,16 +12,17 @@
         <%= c.label :to, class: 'active' %>
         <%= c.date_field :to, class:"datepicker start_leg_itinerary", :"data-value" => (@to || Date.today) %>
       </div>
-      <div class="col s2">
-        <% Enquiry::STATUSES.each do |stage| %>
-          <%= c.check_box "stage[#{stage}]", checked: (@stage ? @stage.include?(stage) : false) %>
-          <%= c.label "stage[#{stage}]", stage, id: 'stage' %>
-        <% end %>
-      </div>
+
       <div class="col s2">
         <%= c.label :assigned_to, class: 'active' %> 
-        <%= c.select :assigned_to_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(User.where.not(name: "System"), "id", "name", selected: (@assigned_to ? @assigned_to : nil)) %>
+        <%= c.select :assigned_to_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@users, "id", "name", selected: (@assigned_to.presence)) %>
       </div>
+
+      <div class="col s2">
+        <%= c.label :country, class: 'active' %> 
+        <%= c.select :country_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@countries, "id", "name", selected: (@country.presence)) %>
+      </div>
+
       <div class="section">
         <div class="col s2">
           <%= c.submit :search, class: 'btn' %>
@@ -29,5 +31,4 @@
     </div>
   <% end %>
 
-  <%= render partial: "reports/enquiries/table", locals: { enquiries: @enquiries } %>
 </div>
