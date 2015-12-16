@@ -46,7 +46,12 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       post 'revert_cancel'
       get 'details'
+      get 'customer_interactions'
     end
+  end
+
+  resources :customer_interactions, only: [:download] do
+    member { get :download }
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do

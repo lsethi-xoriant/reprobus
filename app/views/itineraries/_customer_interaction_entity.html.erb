@@ -1,0 +1,28 @@
+<div class="container">
+
+  <div class="section">
+      <table id="data-table-simple" class="responsive-table display" >
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Emailed At</th>
+            <th>Emailed To</th>
+            <th>Document Type</th>
+            <th>Attachment URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% collect.each do |ob| %> 
+            <tr>
+              <td><%= ob.id %></td>
+              <td><%= ob.emailed_at %></td>
+              <td><%= ob.emailed_to %></td>
+              <td><%= ob.document_type %></td>
+              <td><%= link_to 'Download', download_customer_interaction_path(ob), target: :blank %></td>
+            </tr>
+          <% end %> 
+        </tbody>
+      </table>
+  </div>
+  
+</div>

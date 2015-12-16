@@ -64,7 +64,6 @@ class ItinerariesController < ApplicationController
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
 
-    set_customers_for_itinerary
   end
 
   def show
@@ -82,7 +81,6 @@ class ItinerariesController < ApplicationController
                       .compact
                       .uniq
 
-    set_customers_for_itinerary
     set_email_modal_values
   end
   
@@ -182,6 +180,13 @@ class ItinerariesController < ApplicationController
       flash[:error] = "Error while undo cancelling Itinerary"
     end
     redirect_to edit_itinerary_path(@itinerary)
+  end
+
+  def customer_interactions
+    @customer_interactions = CustomerInteraction.where(itinerary_id: params[:id])
+    respond_to do |format|
+      format.html
+    end 
   end
   
 private

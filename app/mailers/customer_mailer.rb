@@ -49,6 +49,7 @@ class CustomerMailer < ActionMailer::Base
         # end
       end
     # end
-  
+
+    CustomerInteractionService.record_interaction(attachments, params)
   end
 end
