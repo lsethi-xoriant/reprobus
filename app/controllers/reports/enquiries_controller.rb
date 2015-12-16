@@ -1,7 +1,6 @@
 class Reports::EnquiriesController < ApplicationController
 
   def index
-    search_params = {}
     if params[:reports_search]
       @from, @to   = params[:reports_search][:from], params[:reports_search][:to]
       @stage       = params[:reports_search][:stage]
@@ -9,12 +8,13 @@ class Reports::EnquiriesController < ApplicationController
                       .compact                             ## value == "1" mean checked, value == "0" mean unchecked
       stage        = @stage.any? ? @stage : Enquiry::STATUSES ## If there is no values we choose all statuses by default
       @assigned_to = params[:reports_search][:assigned_to_id]
-
-      search_params[:created_at]  = (@from..@to)
-      search_params[:stage]       = stage if stage
-      search_params[:assigned_to] = @assigned_to if @assigned_to && @assigned_to != ""
     end
-    puts search_params
+
+    search_params = {}
+    search_params[:created_at]  = (@from && @to) ? (@from..@to) : (1.month.ago..Date.today)
+    search_params[:stage]       = stage if stage
+    search_params[:assigned_to] = @assigned_to if @assigned_to && @assigned_to != ""
+
     @enquiries = Enquiry
                   .includes(:destination, itineraries: [:itinerary_price])
                   .where(search_params)
@@ -24,6 +24,7 @@ class Reports::EnquiriesController < ApplicationController
       format.csv do
         attributes  = [ "Id",
                         "Enquiry name",
+                        "Status",
                         "Customer name",
                         "Consultant",
                         "Date enquiry received",
@@ -37,6 +38,7 @@ class Reports::EnquiriesController < ApplicationController
           @enquiries.each do |enq|
             row = [ enq.id,
                     enq.name,
+                    enq.stage,
                     enq.try(:lead_customer).try(:fullname),
                     enq.try(:assignee).try(:name),
                     enq.created_at.strftime("%d-%m-%Y"),
