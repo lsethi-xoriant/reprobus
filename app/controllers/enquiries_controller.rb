@@ -254,7 +254,7 @@ private
     def enquiry_params
       params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
-        :assigned_to, :num_people, :duration, :est_date, :percent,
+        :assigned_to, :num_people, :duration, :est_date, :percent, :campaign,
         :fin_date, :standard, :insurance, :reminder, :destination_id,
         customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy] )
     end

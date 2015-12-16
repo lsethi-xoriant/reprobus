@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'pg'
 
-group :development do
+group :development, :production do
   gem 'letter_opener'
 end
 
@@ -20,7 +20,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor'
 end
 
 group :staging, :production do

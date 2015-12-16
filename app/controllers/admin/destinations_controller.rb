@@ -2,6 +2,7 @@ class Admin::DestinationsController < ApplicationController
   before_filter :admin_user, except: ['search_by_name']
   before_action :set_settings, only: [:new, :edit]
   protect_from_forgery with: :null_session
+  before_action :setCompanySettings
   
   def index
     @destinations = Destination.includes(:country).all
@@ -73,7 +74,7 @@ class Admin::DestinationsController < ApplicationController
 
   def search_by_name
     search_params = params[:destinations].present? ? params[:destinations] : ''
-    result = Destination.where(name: params[:destinations])
+    result = Destination.where(name: params[:destinations]).uniq
     selected = 
       if params[:selected].present?
         selected_destination = result

@@ -7,7 +7,7 @@
 #  from_email         :string(255)
 #  from_name          :string(255)
 #  subject            :string(255)
-#  body               :string(255)
+#  body               :text
 #  copy_assigned_user :boolean
 #  created_at         :datetime
 #  updated_at         :datetime

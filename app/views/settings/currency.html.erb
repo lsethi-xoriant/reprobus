@@ -10,39 +10,36 @@
     </div>
          
     <div class="card-panel">
-            <h5>Set Exchange Rates</h5>
-            <%=  form_tag({controller: "settings", action: "addcurrency"}, method: "post", class: "form-horizontal") do %>
-  
-              <%= hidden_field_tag :redirect, '', value: "currency" %>
-              
-    
-              <div class="row">
-                <div class="input-field col s6">
-                <%= select_tag(:currency_id, options_for_select([["", ""]],""),{class: "select2-currencies browser-default"}) %>
-                  <label for="currency_id" class="active">Currency</label>
-                </div>
-                
-                <div class="input-field col s6">
-                  <%= number_field_tag :exchange_rate, nil, class: "form-control", :step => 'any' %>
-                  <label for="exchange_rate" class="active">Exchange Rate</label>
-                </div>
-              
-              </div>
-              
-  
-              <%= hidden_field_tag :setting_id, '', :value => @setting.id %>
-              
-              
-              <%= submit_tag "Save Exchange Rate", class: "btn btn-primary" %>
+      <h5>Set Exchange Rates</h5>
+      <%=  form_tag({controller: "settings", action: "addcurrency"}, method: "post", class: "form-horizontal") do %>
+
+        <%= hidden_field_tag :redirect, '', value: "currency" %>
+
+          <div class="row">
+            <div class="input-field col s6">
+            <%= select_tag(:currency_id, options_for_select([["", ""]],""),{class: "select2-currencies browser-default"}) %>
+              <label for="currency_id" class="active">Currency</label>
+            </div>
             
-            <% end %>
+            <div class="input-field col s6">
+              <%= number_field_tag :exchange_rate, nil, class: "form-control", :step => 'any' %>
+              <label for="exchange_rate" class="active">Exchange Rate</label>
+            </div>
           
+          </div>
           
-        <% else %>
-          <h4>System Currency needs to be set before setting up currencies</h4>
+  
+          <%= hidden_field_tag :setting_id, '', :value => @setting.id %>
+          
+          <%= submit_tag "Save Exchange Rate", class: "btn btn-primary" %>
+
         <% end %>
+        
+      <% else %>
+        <h4>System Currency needs to be set before setting up currencies</h4>
+      <% end %>
+      
     </div>
     
-   
   </div>
 </div>

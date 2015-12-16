@@ -2,25 +2,29 @@
 #
 # Table name: itineraries
 #
-#  id                         :integer          not null, primary key
-#  name                       :string
-#  start_date                 :date
-#  num_passengers             :integer
-#  complete                   :boolean
-#  sent                       :boolean
-#  quality_check              :boolean
-#  includes                   :text
-#  excludes                   :text
-#  notes                      :text
-#  flight_reference           :string
-#  user_id                    :integer
-#  customer_id                :integer
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  itinerary_template_id      :integer
-#  enquiry_id                 :integer
-#  status                     :string
-#  itinerary_default_image_id :integer
+#  id                       :integer          not null, primary key
+#  name                     :string
+#  start_date               :date
+#  num_passengers           :integer
+#  complete                 :boolean
+#  sent                     :boolean
+#  quality_check            :boolean
+#  includes                 :text
+#  excludes                 :text
+#  notes                    :text
+#  flight_reference         :string
+#  user_id                  :integer
+#  customer_id              :integer
+#  created_at               :datetime
+#  updated_at               :datetime
+#  itinerary_template_id    :integer
+#  enquiry_id               :integer
+#  status                   :string
+#  destination_image_id     :integer
+#  quote_sent               :datetime
+#  confirmed_itinerary_sent :datetime
+#  agent_id                 :integer
+#  lead_customer_id         :integer
 #
 
 class Itinerary < ActiveRecord::Base
@@ -83,15 +87,24 @@ class Itinerary < ActiveRecord::Base
     self.id.to_s.rjust(6, '0')
   end
   
-  def select_suppliers
+  def select_suppliers_for_pricing
     # return list of potential suppliers for dropdowns
     suppliers = []
+    suppliers = suppliers + Setting.global_settings.suppliers
+    
     self.itinerary_infos.each do |info| 
       if !info.supplier.blank? && !suppliers.include?(info.supplier)  
         suppliers << info.supplier
       end
     end
-    suppliers = suppliers + Setting.global_settings.suppliers
+    
+    if self.itinerary_price 
+      self.itinerary_price.supplier_itinerary_price_items.each do |sipi|
+        if sipi.supplier && !suppliers.include?(sipi.supplier)    
+          suppliers << sipi.supplier
+        end 
+      end
+    end 
     
     return suppliers
   end    

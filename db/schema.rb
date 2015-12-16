@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209110452) do
+ActiveRecord::Schema.define(version: 20151215065405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
+    t.integer  "destination_id"
+    t.text     "campaign"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
@@ -372,6 +374,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.decimal  "sell_currency_rate",          precision: 12, scale: 2, default: 0.0
     t.decimal  "deposit",                     precision: 12, scale: 2, default: 0.0
     t.decimal  "markup",                      precision: 12, scale: 2, default: 0.0
+    t.decimal  "exchange_rate_total",         precision: 12, scale: 2, default: 0.0
+    t.decimal  "total_incl_markup",           precision: 12, scale: 2, default: 0.0
   end
 
   add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree
@@ -529,6 +533,8 @@ ActiveRecord::Schema.define(version: 20151209110452) do
     t.integer  "deposit_percentage",                                             default: 0
     t.string   "itineraries_from_email"
     t.text     "important_notes"
+    t.text     "overide_email_addresses"
+    t.boolean  "overide_emails"
   end
 
   create_table "stopovers", force: :cascade do |t|
