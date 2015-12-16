@@ -117,6 +117,8 @@ class ItinerariesController < ApplicationController
       end
     end
 
+    @itinerary.end_date = @itinerary.get_end_date
+
     if @itinerary.update_attributes(itinerary_params)
       
       if (params.has_key?(:itinerary_template_insert) && params[:itinerary_template_insert].to_i >= 0) 

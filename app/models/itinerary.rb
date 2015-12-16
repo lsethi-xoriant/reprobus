@@ -204,11 +204,12 @@ class Itinerary < ActiveRecord::Base
   end
   
   def get_end_date
+    lastdate = nil
     if !self.itinerary_infos.empty?
       lastdate = self.itinerary_infos.first.end_date
       
       self.itinerary_infos.each do |info|
-        lastdate = info.end_date if lastdate < info.end_date
+        lastdate = info.end_date if info.end_date && lastdate < info.end_date
       end
     end
     return lastdate
