@@ -2,7 +2,8 @@ class Reports::EnquiryController < ApplicationController
 
   def index
     if params[:reports_search]
-      @from, @to   = params[:reports_search][:from], params[:reports_search][:to]
+      @from        = params[:reports_search][:from] if params[:reports_search][:from].presence
+      @to          = params[:reports_search][:to]   if params[:reports_search][:to].presence
       @stage       = params[:reports_search][:stage]
                       .map {|prm| prm[0] if prm[1] == "1"} ## Warning. This map needed for collect values from checkboxes form
                       .compact                             ## value == "1" mean checked, value == "0" mean unchecked
@@ -11,9 +12,9 @@ class Reports::EnquiryController < ApplicationController
     end
 
     search_params = {}
-    search_params[:created_at]  = (@from && @to) ? (@from..@to) : (1.month.ago..Date.today)
+    search_params[:created_at]  = (@from && @to) ? (@from.to_date..@to.to_date.end_of_day) : (1.month.ago..Date.today.end_of_day)
     search_params[:stage]       = stage if stage
-    search_params[:assigned_to] = @assigned_to if @assigned_to && @assigned_to != ""
+    search_params[:assigned_to] = @assigned_to if @assigned_to.presence
 
     @enquiries = Enquiry
                   .includes(:destination, itineraries: [:itinerary_price])

@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <% enquiries.each do |enq| %> 
+      <% @enquiries.each do |enq| %> 
         <tr>
           <td><%= enq.id %></td>
           <td><%= link_to enq.name, edit_enquiry_path(enq) %></td>

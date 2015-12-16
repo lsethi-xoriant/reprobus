@@ -6,7 +6,8 @@ class Reports::DashboardController < ApplicationController
     @collection = 
       [
        'Enquiry', 
-       'Booking Travel'
+       'Booking Travel',
+       'Confirmed Booking'
       ]
   end
 end

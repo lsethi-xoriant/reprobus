@@ -178,6 +178,7 @@ Reprobus::Application.routes.draw do
     get '', to: 'dashboard#index', as: '/'
     resources :enquiry, only: [:index]
     resources :booking_travel, only: [:index]
+    resources :confirmed_booking, only: [:index]
   end
   
   post "emails/post"
