@@ -209,7 +209,7 @@ class Itinerary < ActiveRecord::Base
       lastdate = self.itinerary_infos.first.end_date
       
       self.itinerary_infos.each do |info|
-        lastdate = info.end_date if info.end_date && lastdate < info.end_date
+        lastdate = info.end_date if lastdate && info.end_date && lastdate < info.end_date
       end
     end
     return lastdate
@@ -219,13 +219,13 @@ class Itinerary < ActiveRecord::Base
     self.start_date.strftime('%d %b %Y')
   end
   def end_date_display
-    self.get_end_date.strftime('%d %b %Y')
+    self.end_date.strftime('%d %b %Y')
   end
   
   def get_trip_date_range
     str = self.start_date.strftime('%d %b %Y')
-    if self.get_end_date
-      str += " - #{self.get_end_date.strftime('%d %b %Y')}"
+    if self.end_date
+      str += " - #{self.end_date.strftime('%d %b %Y')}"
     end 
     return str
   end
@@ -240,7 +240,7 @@ class Itinerary < ActiveRecord::Base
   end
     
   def set_up_print
-    self.start_date.upto(self.get_end_date) do |date| 
+    self.start_date.upto(self.end_date) do |date| 
       @leg_count = @leg_count + 1 
       @infos = @itinerary.get_infos_for_date(date) 
       

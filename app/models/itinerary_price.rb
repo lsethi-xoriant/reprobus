@@ -130,7 +130,7 @@ class ItineraryPrice < ActiveRecord::Base
       self.supplier_itinerary_price_items.build({supplier_id: sup.id, currency_id: sup.currency_id, sell_currency_rate: sup.getSupplierCurrencyRateDefault})
     end
     
-    self.itinerary_price_items.build({description: self.itinerary.name, start_date: self.itinerary.start_date, end_date: self.itinerary.get_end_date, quantity: self.itinerary.num_passengers })
+    self.itinerary_price_items.build({description: self.itinerary.name, start_date: self.itinerary.start_date, end_date: self.itinerary.end_date, quantity: self.itinerary.num_passengers })
     
     self.invoice_date = Date.today
     self.deposit_due  = Date.today + 2
