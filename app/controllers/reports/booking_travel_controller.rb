@@ -1,4 +1,4 @@
-class Reports::ItinerariesController < ApplicationController
+class Reports::BookingTravelController < ApplicationController
   before_filter :define_initial_parameters
 
   def index
