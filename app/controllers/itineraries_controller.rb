@@ -64,7 +64,6 @@ class ItinerariesController < ApplicationController
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
 
-    set_customers_for_itinerary
   end
 
   def show
@@ -117,6 +116,8 @@ class ItinerariesController < ApplicationController
         end
       end
     end
+
+    @itinerary.end_date = @itinerary.get_end_date
 
     if @itinerary.update_attributes(itinerary_params)
       
@@ -205,12 +206,9 @@ private
       @agent_name = @enquiry.agent_name_and_title
       @to_email = 
         @enquiry.agent.try(:email).presence || @itinerary.lead_customer.try(:email)
-<<<<<<< HEAD
+
       @from_email = 
         @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
-=======
-      @from_email = @setting.try(:itineraries_from_email)
->>>>>>> origin/pricing-module
     end
 
     def set_customers_for_itinerary

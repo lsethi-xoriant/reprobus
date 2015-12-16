@@ -13,7 +13,7 @@
 
 <% hotelArray = [] %>
 
-<% @itinerary.start_date.upto(@itinerary.get_end_date) do |date|  %>
+<% @itinerary.start_date.upto(@itinerary.end_date) do |date|  %>
   <% leg_count = leg_count + 1 %>
   <% dayInfos = ItineraryInfosDay.new %>
   <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
