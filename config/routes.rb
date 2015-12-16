@@ -176,8 +176,8 @@ Reprobus::Application.routes.draw do
 
   namespace :reports do
     get '', to: 'dashboard#index', as: '/'
-    resources :enquiries, only: [:index]
-    resources :itineraries, only: [:index]
+    resources :enquiry, only: [:index]
+    resources :booking_travel, only: [:index]
   end
   
   post "emails/post"

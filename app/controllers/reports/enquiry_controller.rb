@@ -1,4 +1,4 @@
-class Reports::EnquiriesController < ApplicationController
+class Reports::EnquiryController < ApplicationController
 
   def index
     if params[:reports_search]
