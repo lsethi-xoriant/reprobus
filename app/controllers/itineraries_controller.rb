@@ -64,7 +64,6 @@ class ItinerariesController < ApplicationController
     @itinerary.start_date = @enquiry.est_date
     @itinerary.name = @enquiry.name
 
-    set_customers_for_itinerary
   end
 
   def show
@@ -82,7 +81,6 @@ class ItinerariesController < ApplicationController
                       .compact
                       .uniq
 
-    set_customers_for_itinerary
     set_email_modal_values
   end
   
