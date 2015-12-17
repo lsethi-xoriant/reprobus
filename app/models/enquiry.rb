@@ -63,6 +63,8 @@ class Enquiry < ActiveRecord::Base
   scope :bookings, -> { where(stage: 'Booking') }
   scope :is_itinerary, -> { where(stage: 'Itinerary') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
+
+  STATUSES = ['In Progress', 'Open', 'New Enquiry', 'Itinerary']
   
   scope :active_plus_this_id, -> (id=0) { 
     where("id = :id OR stage IN (:active_stages)",
@@ -77,7 +79,7 @@ class Enquiry < ActiveRecord::Base
 #  has_many    :customers_enquiries
  # has_many    :customers, -> { order("customers.id ASC") }, through: :customers_enquiries
   has_and_belongs_to_many :customers
-  accepts_nested_attributes_for :customers, allow_destroy: true;
+  accepts_nested_attributes_for :customers, allow_destroy: true
   validates_associated :customers
   
   has_many    :activities,  dependent: :destroy

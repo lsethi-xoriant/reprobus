@@ -174,6 +174,12 @@ Reprobus::Application.routes.draw do
   match '/products', to: 'products/products#create',     via: 'post'
   match '/products/:id', to: 'products/products#update',     via: 'patch', :as => :current_product
 
+  namespace :reports do
+    get '', to: 'dashboard#index', as: '/'
+    resources :enquiry, only: [:index]
+    resources :booking_travel, only: [:index]
+    resources :confirmed_booking, only: [:index]
+  end
   
   post "emails/post"
 

@@ -1,0 +1,24 @@
+
+<div class="section">
+  <div class="row">
+      <div class="col s3">
+        <%= link_to search_params.merge(format: :csv) do %>
+          <button class="btn btn-primary" name="csv">
+            <i class="icon-white icon-ok"></i>
+            Export to csv
+          </button>
+        <% end %>
+      </div>
+      <div class="col s3">
+        <%= link_to search_params.merge(format: :xls) do %>
+          <button class="btn btn-primary" name="xls">
+            <i class="icon-white icon-ok"></i>
+            Export to Excel
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="section"></div>
+  <div class="divider"></div>
+</div>

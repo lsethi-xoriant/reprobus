@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <%= render partial: 'reports/partials/table_cell', collection: @structure.keys, locals: { evaluate: false }%>
+      </Row>
+
+      <%= render partial: 'reports/partials/table_row', collection: @itineraries, locals: { structure: @structure.values } %>
+
+    </Table>
+  </Worksheet>
+</Workbook>

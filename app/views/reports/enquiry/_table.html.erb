@@ -1,0 +1,35 @@
+
+<div class="section">
+  <table class="responsive-table display">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Enquery name</th>
+        <th>Status</th>
+        <th>Customer Name</th>
+        <th>Consultant</th>
+        <th>Date enquiry received</th>
+        <th>Quote</th>
+        <th>Booking</th>
+        <th>Adv. campaign</th>
+        <th>Destination</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @enquiries.each do |enq| %> 
+        <tr>
+          <td><%= enq.id %></td>
+          <td><%= link_to enq.name, edit_enquiry_path(enq) %></td>
+          <td><%= enq.stage %></td>
+          <td><%= enq.try(:lead_customer).try(:fullname) %></td>
+          <td><%= enq.try(:assignee).try(:name) %></td>
+          <td><%= enq.created_at.strftime("%d-%m-%Y") %></td>
+          <td><%= enq.itineraries.any? ? "Y" : "N" %></td>
+          <td><%= enq.try(:itineraries).map(&:itinerary_price).compact.any? ? "Y" : "N" %></td>
+          <td></td>
+          <td><%= enq.try(:destination).try(:name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
