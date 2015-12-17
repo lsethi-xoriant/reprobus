@@ -22,6 +22,8 @@
 #  sell_currency_rate          :decimal(12, 2)   default("0.0")
 #  deposit                     :decimal(12, 2)   default("0.0")
 #  markup                      :decimal(12, 2)   default("0.0")
+#  exchange_rate_total         :decimal(12, 2)   default("0.0")
+#  total_incl_markup           :decimal(12, 2)   default("0.0")
 #
 
 class ItineraryPriceItem < ActiveRecord::Base

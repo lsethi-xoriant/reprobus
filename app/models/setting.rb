@@ -33,6 +33,8 @@
 #  deposit_percentage         :integer          default("0")
 #  itineraries_from_email     :string
 #  important_notes            :text
+#  overide_email_addresses    :text
+#  overide_emails             :boolean
 #
 
 class Setting < ActiveRecord::Base
