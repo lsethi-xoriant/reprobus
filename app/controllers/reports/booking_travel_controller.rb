@@ -6,7 +6,7 @@ class Reports::BookingTravelController < ApplicationController
     @users = User.where.not(name: "System")
     @countries = Country.all
     @itineraries = 
-      ReportsService.booking_travel_search(@from, @to, @user, @country)
+      ReportService.booking_travel_search(@from, @to, @user, @country)
   end
 
   private
