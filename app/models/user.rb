@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   
   has_many    :activities, dependent: :destroy
   has_many    :itineraries
+
+  has_many    :user_roles 
+  has_many    :roles, through: :user_roles
   
   def User.new_remember_token
     SecureRandom.urlsafe_base64
