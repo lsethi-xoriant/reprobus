@@ -6,11 +6,6 @@
     
 
     <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f } %></div>
-    <div class="row">
-      <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "500", ckeditor_field: true } %>
-      <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500", ckeditor_field: true} %>
-    </div>
-    <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "500", ckeditor_field: true} %></div>
     
     <%= f.fields_for :itinerary_default_image, @template.itinerary_default_image do |t| %>
       <%= render partial: 'shared/image_field', locals: { imageHolder: @template.itinerary_default_image, f: t, title: "Default Itinerary Image (recomended size 880px x 880px):" } %>
@@ -37,10 +32,21 @@
       </div>
 
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
           <%= render partial: 'copy_template_button' if @template.id %>
+        </div>
+        <div class="input-field col s6">
           <%= f.submit buttontxt, class: "btn right" %>
         </div>
+      </div>
+<br><br>    
+      <div class="card-panel">
+        <h4 class="header2">Inclusions/Exclusions/Notes</h4>
+        <div class="row">
+          <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "includes", f: f, name: "Inclusions", length: "500", ckeditor_field: true } %>
+          <%= render partial: 'shared/material_textareafield_cols6', locals: { field: "excludes", f: f, name: "Exclusions", length: "500", ckeditor_field: true} %>
+        </div>
+        <div class="row"><%= render partial: 'shared/material_textareafield_cols12', locals: { field: "notes", f: f, name: "Notes", length: "500", ckeditor_field: true} %></div>
       </div>
     
   <% end %>

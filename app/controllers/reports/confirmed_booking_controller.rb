@@ -2,21 +2,21 @@ class Reports::ConfirmedBookingController < ApplicationController
 
   def index
     if params[:reports_search]
-      @from = params[:reports_search][:from]    if params[:reports_search][:from].presence
-      @to   = params[:reports_search][:to]      if params[:reports_search][:to].presence
-      @user = params[:reports_search][:user_id] if params[:reports_search][:user_id].presence
+      @from    = params[:reports_search][:from]    if params[:reports_search][:from].presence
+      @to      = params[:reports_search][:to]      if params[:reports_search][:to].presence
+      @user_id = params[:reports_search][:user_id] if params[:reports_search][:user_id].presence
     end
 
     search_params = {}
-    search_params[:created_at]  = (@from && @to) ? (@from.to_date..@to.to_date.end_of_day) : (1.month.ago..Date.today.end_of_day)
-    # ItineraryPrice.joins(:itinerary).where(created_at: (1.month.ago..Date.tomorrow)).where( :itinerary => { user_id: 2 } ) # WTF
+    search_params[:itineraries] = {}
+    search_params[:booking_confirmed_date] = (@from && @to) ? (@from.to_date..@to.to_date.end_of_day) : (1.month.ago..Date.today.end_of_day)
+    search_params[:booking_confirmed]      = true
+    search_params[:itineraries][:user_id]  = @user_id
 
     @users = User.where.not(name: "System")
     @itinerary_prices = ItineraryPrice
                           .includes(:itinerary)
                           .where(search_params)
-                          .map { |it_price| it_price if @user ? (@user && it_price.itinerary.user.id == @user.to_i) : true } # UPDATE THIS
-                          .compact
 
     respond_to do |format|
       format.html

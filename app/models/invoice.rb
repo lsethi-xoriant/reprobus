@@ -2,48 +2,50 @@
 #
 # Table name: invoices
 #
-#  id                          :integer          not null, primary key
-#  booking_id                  :integer
-#  status                      :string(255)
-#  invoice_date                :datetime
-#  deposit_due                 :datetime
-#  final_payment_due           :datetime
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  deposit                     :decimal(12, 2)   default("0.0")
-#  pxpay_deposit_trxId         :string(255)
-#  ccPaymentsAmount            :text
-#  ccPaymentsDate              :text
-#  supplier_invoice_id         :integer
-#  customer_invoice_id         :integer
-#  currency                    :string(255)
-#  xero_id                     :string(255)
-#  xdeposits                   :text
-#  xpayments                   :text
-#  supplier_id                 :integer
-#  currency_id                 :integer
-#  exchange_amount             :decimal(12, 2)   default("0.0")
-#  exchange_rate               :decimal(12, 2)   default("0.0")
-#  pxpay_balance_trxId         :string
-#  pxpay_deposit_url           :string
-#  pxpay_balance_url           :string
-#  customer_itinerary_price_id :integer
-#  supplier_itinerary_price_id :integer
+#  id                  :integer          not null, primary key
+#  booking_id          :integer
+#  status              :string(255)
+#  invoice_date        :datetime
+#  deposit_due         :datetime
+#  final_payment_due   :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
+#  deposit             :decimal(12, 2)   default("0.0")
+#  pxpay_deposit_trxId :string(255)
+#  ccPaymentsAmount    :text
+#  ccPaymentsDate      :text
+#  supplier_invoice_id :integer
+#  customer_invoice_id :integer
+#  currency            :string(255)
+#  xero_id             :string(255)
+#  xdeposits           :text
+#  xpayments           :text
+#  supplier_id         :integer
+#  currency_id         :integer
+#  exchange_amount     :decimal(12, 2)   default("0.0")
+#  exchange_rate       :decimal(12, 2)   default("0.0")
+#  pxpay_balance_trxId :string
+#  pxpay_deposit_url   :string
+#  pxpay_balance_url   :string
 #
 
 class Invoice < ActiveRecord::Base
-  belongs_to :supplier, :class_name => "Customer", :foreign_key => :supplier_id
-  belongs_to :booking
-  has_many   :line_items, dependent: :destroy
   validates  :invoice_date, presence: true
   validates  :final_payment_due, presence: true
+
   validates_presence_of :line_items
+  #validate   :validate_customer_invoice # validate deposit is set, and deposit due date.
+  #validate   :validate_supplier_invoice # validate it has a supplier set.  
+  
+  has_many   :line_items, dependent: :destroy
+  
   serialize  :ccPaymentsAmount
   serialize  :ccPaymentsDate
   serialize  :xpayments
   serialize  :xdeposits
-  validate   :validate_customer_invoice # validate deposit is set, and deposit due date.
-  validate   :validate_supplier_invoice # validate it has a supplier set.
+
+  belongs_to :supplier, :class_name => "Customer", :foreign_key => :supplier_id
+  belongs_to :booking
   belongs_to :currency
   has_many   :payments, dependent: :destroy
   has_one    :x_invoice
@@ -61,27 +63,27 @@ class Invoice < ActiveRecord::Base
     end
   end
   
-  def validate_customer_invoice
-    if self.customer_invoice_id
-      if self.deposit.blank?
-         errors.add(:deposit, "can't be blank")
-      end
-      if self.deposit_due.blank?
-        errors.add(:deposit_due, "can't be blank")
-      end
-    end
-  end
+#  def validate_customer_invoice
+#    if self.customer_invoice_id
+#      if self.deposit.blank?
+#         errors.add(:deposit, "can't be blank")
+#      end
+#      if self.deposit_due.blank?
+#        errors.add(:deposit_due, "can't be blank")
+#      end
+#    end
+#  end
   
-  def validate_supplier_invoice
-    if self.isSupplierInvoice?
-      if self.supplier.nil?
-        errors.add(:Supplier, "must be selected")
-      end
-    end
-  end
+#  def validate_supplier_invoice
+#    if self.isSupplierInvoice?
+#      if self.supplier.nil?
+#        errors.add(:Supplier, "must be selected")
+#      end
+#    end
+#  end
   
   def isSupplierInvoice?
-    return !self.supplier_invoice_id.blank?
+    return self.supplier
   end
   
   def addCCPayment!(amount)
@@ -122,11 +124,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def getTotalAmount
-    total = 0
-    self.line_items.each do |item|
-      total = total + item.total
-    end
-    return total
+    self.line_items.sum(:total)
   end
   
   def getBalance
@@ -242,11 +240,11 @@ class Invoice < ActiveRecord::Base
   end
   
   def getCurrencyCode
-    self.currency ? self.currency.code : Setting.find(1).currencyCode
+    self.currency ? self.currency.code : Setting.global_settings.currencyCode
   end
  
   def getCurrencyDisplay
-    self.currency ? self.currency.displayName : Setting.find(1).currencyDisplay
+    self.currency ? self.currency.displayName : Setting.global_settings.currencyDisplay
   end
   
   def getCurrencySelect2

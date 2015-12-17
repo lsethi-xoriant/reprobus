@@ -12,9 +12,13 @@ data-position="bottom" data-delay="50" data-tooltip="Product Info" >
       <ul>
         <li>
           <div class="row">
-            <div class="col offset-s1 s8">
+            <div class="col offset-s1 s10">
               <p class="product_details" ><%= @info.get_product_details %></p>
-            </div>  
+            </div> 
+            
+            <div class="col offset-s1 s10">
+              <p class="product_details" ><%= @info.get_product_description %></p>
+            </div>             
           </div>
         </li> 
       </ul>

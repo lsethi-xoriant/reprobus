@@ -55,7 +55,13 @@ class ItineraryPricesController < ApplicationController
       redirect_to edit_itinerary_price_path(@itinerary_price)
     end
     
-    @itinerary_price.create_customer_invoices
+    if  @itinerary_price.create_customer_invoices(current_user) 
+      flash[:error] = "Waa waa no invoice for you"
+      redirect_to edit_itinerary_price_path(@itinerary_price)
+    else
+      flash[:success] = "Invoices smashed it"
+      redirect_to edit_itinerary_price_path(@itinerary_price)
+    end 
     
   end
   
@@ -63,7 +69,7 @@ private
   def itinerary_price_params
     params.require(:itinerary_price).permit(:itinerary_id, :deposit_due,
     :invoice_date, :balance_due, :final_balance_due, :currency_id,
-    :deposit, :sale_total, :deposit_system_default,
+    :deposit, :sale_total, :deposit_system_default, :booking_confirmed, :booking_confirmed_date, 
     itinerary_price_items_attributes: [:id, :booking_ref, :description,
     :price_total,  :deposit, :deposit_percentage,
     :item_price, :quantity, :start_date, :end_date, :_destroy ],
