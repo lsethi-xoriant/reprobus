@@ -16,8 +16,8 @@
       </div>
 
       <div class="col s2">
-        <%= c.label :assigned_to, class: 'active' %> 
-        <%= c.select :assigned_to_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@users, "id", "name", selected: (@assigned_to.presence)) %>
+        <%= c.label :user, class: 'active' %> 
+        <%= c.select :user_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@users, "id", "name", selected: (@user.presence)) %>
       </div>
 
       <div class="col s2">
@@ -32,5 +32,7 @@
       </div>
     </div>
   <% end %>
+
+  <%= render partial: "reports/booking_travel/table" %>
 
 </div>
