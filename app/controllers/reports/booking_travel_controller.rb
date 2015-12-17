@@ -5,7 +5,8 @@ class Reports::BookingTravelController < ApplicationController
   def index
     @users = User.where.not(name: "System")
     @countries = Country.all
-    @itineraries = Itinerary.search(@from, @to, @user, @country)
+    @itineraries = 
+      ReportsService.booking_travel_search(@from, @to, @user, @country)
   end
 
   private
