@@ -8,15 +8,15 @@ class Reports::ConfirmedBookingController < ApplicationController
     end
 
     search_params = {}
-    search_params[:itineraries] = {}
     search_params[:booking_confirmed_date] = (@from && @to) ? (@from.to_date..@to.to_date.end_of_day) : (1.month.ago..Date.today.end_of_day)
     search_params[:booking_confirmed]      = true
-    search_params[:itineraries][:user_id]  = @user_id
+    if @user_id
+      search_params[:itineraries] = {}
+      search_params[:itineraries][:user_id] = @user_id
+    end
 
     @users = User.where.not(name: "System")
-    @itinerary_prices = ItineraryPrice
-                          .includes(:itinerary)
-                          .where(search_params)
+    @itinerary_prices = ItineraryPrice.includes(:itinerary).where(search_params)
 
     respond_to do |format|
       format.html
