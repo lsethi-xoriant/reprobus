@@ -513,6 +513,10 @@ ActiveRecord::Schema.define(version: 20151217090112) do
   add_index "products", ["cruise_id"], name: "index_products_on_cruise_id", using: :btree
   add_index "products", ["hotel_id"], name: "index_products_on_hotel_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string   "company_name",               limit: 255
     t.string   "pxpay_user_id",              limit: 255
@@ -566,6 +570,13 @@ ActiveRecord::Schema.define(version: 20151217090112) do
   add_index "triggers", ["email_template_id"], name: "index_triggers_on_email_template_id", using: :btree
   add_index "triggers", ["name"], name: "index_triggers_on_name", using: :btree
   add_index "triggers", ["setting_id"], name: "index_triggers_on_setting_id", using: :btree
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "user_roles", ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   limit: 255
