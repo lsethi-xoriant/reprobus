@@ -22,7 +22,9 @@ class ReportService
     csv_string = CSV.generate do |csv|
       csv << titles_methods.keys
       entities.each do |obj|
-        row = titles_methods.values.map { |method| obj.instance_eval(method) }
+        row = titles_methods.values.map do |method| 
+          obj.instance_eval(method) if method.present?
+        end
         csv << row
       end
     end
