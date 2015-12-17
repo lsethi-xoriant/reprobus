@@ -1,5 +1,5 @@
 <Cell>
   <Data ss:Type="String">
-    <%= evaluate ? current_object.instance_eval(table_cell) : table_cell %>
+    <%= evaluate && table_cell.present? ? current_object.instance_eval(table_cell) : table_cell %>
   </Data>
 </Cell>
