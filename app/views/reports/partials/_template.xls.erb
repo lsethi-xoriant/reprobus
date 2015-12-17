@@ -10,7 +10,7 @@
         <%= render partial: 'reports/partials/table_cell', collection: @structure.keys, locals: { evaluate: false }%>
       </Row>
 
-      <%= render partial: 'reports/partials/table_row', collection: @itineraries, locals: { structure: @structure.values } %>
+      <%= render partial: 'reports/partials/table_row', collection: objects, locals: { structure: @structure.values } %>
 
     </Table>
   </Worksheet>
