@@ -42,13 +42,15 @@ class Xero
   end
   
   def create_invoice(invoice)
-    booking = invoice.booking
+
+    itinerary = invoice.itinerary_price_items.first.itinerary_price.itinerary
+
     #if we have a lead customer create contact in xero if it does not already exist.
     #self.customers.each do |cust| # xero only allows one contact per invoice.
     if invoice.isSupplierInvoice?
       cust = invoice.supplier
     else
-      cust = invoice.booking.customer
+      cust = itinerary.lead_customer
     end
     
     xcust = self.getContact(cust)
@@ -61,7 +63,7 @@ class Xero
     
     currency = invoice.getCurrencyCode
     if currency.blank?
-      currency = Setting.find(1).getDefaultCurrency.code
+      currency = Setting.global_settings.getDefaultCurrency.code
     end
     
     xinv = self.client.Invoice.build({
@@ -72,7 +74,7 @@ class Xero
       :due_date => (Date.today + 30),
       :currency_code => currency,
       :line_items => [{
-        :description => booking.name,
+        :description => itinerary.name,
         :quantity => 1,
         :unit_amount => invoice.getTotalAmount,
         :account_code => 200,
@@ -81,7 +83,7 @@ class Xero
       })
     
     if invoice.isSupplierInvoice?
-      xinv.invoice_number = booking.nice_id + " " + booking.name
+      xinv.invoice_number = itinerary.nice_id + " " + itinerary.name
     end
     
     xinv.contact = xcust

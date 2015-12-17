@@ -31,6 +31,8 @@
 #  agent_id           :integer
 #  lead_customer_id   :integer
 #  lead_customer_name :string
+#  destination_id     :integer
+#  campaign           :text
 #
 
 require 'spec_helper'
