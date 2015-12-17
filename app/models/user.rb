@@ -41,7 +41,13 @@ class User < ActiveRecord::Base
 
   has_many    :user_roles 
   has_many    :roles, through: :user_roles
-  
+
+  Role.all.pluck(:name).each do |role_name|
+    define_method "#{role_name.parameterize('_')}?" do
+      self.roles.find_by(name: role_name).present?
+    end
+  end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   before_filter :signed_in_user
+  authorize_resource class: false, only: [:snapshot]
   skip_before_filter :signed_in_user, :only => [:home, :about]
   layout "plain"
   
