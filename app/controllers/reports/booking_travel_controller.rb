@@ -7,16 +7,35 @@ class Reports::BookingTravelController < ApplicationController
     @countries = Country.all
     @itineraries = 
       ReportService.booking_travel_search(@from, @to, @user, @country)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = ReportService.generate_csv(@itineraries,
+          {
+            'Booking ID'    => 'id',
+            'Name'          => 'name',
+            'Customer Name' => 'lead_customer.try(:fullname)',
+            'Agent'         => 'agent.try(:supplier_name)',
+            'Start Date'    => 'start_date',
+            'End Date'      => 'end_date',
+            'Status'        => 'status'
+          }
+        )
+        send_data csv_string
+      end
+    end
   end
 
   private
 
     def define_initial_parameters
-      @from, @to = 200.years.ago, Date.today
+      @from, @to = 1.month.ago.beginning_of_day, Date.today.end_of_day
     end
 
     def define_search_parameters
-      @from, @to   = params[:reports_search][:from], params[:reports_search][:to]
+      @from        = params[:reports_search][:from].to_date.beginning_of_day
+      @to          = params[:reports_search][:to].to_date.end_of_day
       @user        = params[:reports_search][:user_id]
       @country     = params[:reports_search][:country_id]
     end
