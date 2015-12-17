@@ -1,5 +1,4 @@
 <div class=""><h6><%=title%></h6></div>
-<%=  @setting.use_dropbox  %>
 <% if @setting.use_dropbox %>
   <% @setting.dropbox_default_path ? name = "Dropbox File Name (default path: #{@setting.dropbox_default_path} )" : name = "Dropbox File Name" %>
   <div class="row"><%= render partial: 'shared/material_textfield_cols12', locals: { field: "image_remote_url", f: f, name: name } %></div>
