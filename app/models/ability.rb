@@ -56,8 +56,36 @@ class Ability
       can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
         :currencysearch, :noaccess], StaticPagesController
     end
+
     if user.sales?
+      can [:manage], Reports::DashboardController # same 
+      can [:manage], Reports::ConfirmedBookingController # same
+      can [:manage], Reports::EnquiryController # same
+      can [:manage], Reports::BookingTravelController # same
+      can [:manage], AgentsController
+      can [:manage], CustomerInteractionsController # same
+
+      can [:manage], CustomersController # same
+      cannot [:destroy], CustomersController # same
+
+      can [:manage], EnquiriesController
+      cannot [:destroy], EnquiriesController
+
+      can [:manage], InvoicesController # same
+      cannot [:destroy], InvoicesController # same
+
+      can [:manage], ItinerariesController # same
+      cannot [:destroy], ItinerariesController # same
+
+      сan [:manage], ItineraryPricesController # same
+      cannot [:destroy], ItineraryPricesController # same
+
+      сan [:manage], SearchesController # same
+      can [:show], UsersController # same
+      can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
+        :currencysearch, :noaccess], StaticPagesController # same
     end
+    
     if user.admin?
     end
     if user.management?
