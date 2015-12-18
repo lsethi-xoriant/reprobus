@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  authorize_resource class: InvoicesController
+  authorize_resource class: InvoicesController, :except => [:pxpaymentsuccess, :pxpaymentfailure]
   
   before_filter :signed_in_user, :except => [:pxpaymentsuccess, :pxpaymentfailure]
   before_filter :admin_user, only: :destroy

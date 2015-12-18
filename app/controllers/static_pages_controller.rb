@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  authorize_resource class: StaticPagesController
+  authorize_resource class: StaticPagesController, except: [:home, :about]
   
   before_filter :signed_in_user
   authorize_resource class: false, only: [:snapshot]
