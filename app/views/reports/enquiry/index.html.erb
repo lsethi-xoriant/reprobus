@@ -15,8 +15,8 @@
       </div>
       <div class="col s2">
         <% Enquiry::STATUSES.each do |stage| %>
-          <%= c.check_box "stage[#{stage}]", checked: (@stage ? @stage.include?(stage) : false) %>
-          <%= c.label "stage[#{stage}]", stage, id: 'stage' %>
+          <%= check_box_tag "reports_search[stage][]", stage, (@stage ? @stage.include?(stage) : false), id: stage.downcase.split.join('_') %>
+          <label for=<%= stage.downcase.split.join('_') %>><%= stage %></label>
         <% end %>
       </div>
       <div class="col s2">
