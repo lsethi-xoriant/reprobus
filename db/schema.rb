@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216111358) do
+ActiveRecord::Schema.define(version: 20151217090112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,13 +396,15 @@ ActiveRecord::Schema.define(version: 20151216111358) do
     t.date     "invoice_date"
     t.date     "balance_due"
     t.date     "final_balance_due"
-    t.boolean  "locked",                                          default: false
+    t.boolean  "locked",                                              default: false
     t.integer  "currency_id"
-    t.decimal  "deposit",                precision: 12, scale: 2, default: 0.0
-    t.decimal  "sale_total",             precision: 12, scale: 2, default: 0.0
-    t.boolean  "deposit_system_default",                          default: false
+    t.decimal  "deposit",                    precision: 12, scale: 2, default: 0.0
+    t.decimal  "sale_total",                 precision: 12, scale: 2, default: 0.0
+    t.boolean  "deposit_system_default",                              default: false
     t.date     "booking_confirmed_date"
     t.boolean  "booking_confirmed"
+    t.date     "customer_invoice_sent_date"
+    t.boolean  "customer_invoice_sent"
   end
 
   add_index "itinerary_prices", ["itinerary_id"], name: "index_itinerary_prices_on_itinerary_id", using: :btree

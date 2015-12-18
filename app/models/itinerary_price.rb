@@ -2,25 +2,28 @@
 #
 # Table name: itinerary_prices
 #
-#  id                     :integer          not null, primary key
-#  itinerary_id           :integer
-#  created_at             :datetime
-#  updated_at             :datetime
-#  deposit_due            :date
-#  invoice_date           :date
-#  balance_due            :date
-#  final_balance_due      :date
-#  locked                 :boolean          default("false")
-#  currency_id            :integer
-#  deposit                :decimal(12, 2)   default("0.0")
-#  sale_total             :decimal(12, 2)   default("0.0")
-#  deposit_system_default :boolean          default("false")
-#  booking_confirmed_date :date
-#  booking_confirmed      :boolean
+#  id                         :integer          not null, primary key
+#  itinerary_id               :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  deposit_due                :date
+#  invoice_date               :date
+#  balance_due                :date
+#  final_balance_due          :date
+#  locked                     :boolean          default("false")
+#  currency_id                :integer
+#  deposit                    :decimal(12, 2)   default("0.0")
+#  sale_total                 :decimal(12, 2)   default("0.0")
+#  deposit_system_default     :boolean          default("false")
+#  booking_confirmed_date     :date
+#  booking_confirmed          :boolean
+#  customer_invoice_sent_date :date
+#  customer_invoice_sent      :boolean
 #
 
 class ItineraryPrice < ActiveRecord::Base
   before_save :set_booking_confirmed_date, if: :booking_confirmed_changed?
+  before_save :set_customer_invoice_sent_date, if: :customer_invoice_sent_changed?
   
   has_many      :itinerary_price_items, -> { order "created_at ASC" }
   accepts_nested_attributes_for :itinerary_price_items, allow_destroy: true
@@ -38,6 +41,10 @@ class ItineraryPrice < ActiveRecord::Base
  
   def set_booking_confirmed_date 
     self.booking_confirmed_date = Date.today if !self.booking_confirmed_date
+  end 
+
+  def set_customer_invoice_sent_date 
+    self.customer_invoice_sent_date = Date.today if !self.customer_invoice_sent_date
   end 
   
   def has_uninvoiced_customer_items
