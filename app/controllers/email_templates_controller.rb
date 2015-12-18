@@ -1,4 +1,6 @@
 class EmailTemplatesController < ApplicationController
+  authorize_resource class: EmailTemplatesController
+
   before_filter :signed_in_user
   
   def show

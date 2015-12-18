@@ -85,8 +85,25 @@ class Ability
       can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
         :currencysearch, :noaccess], StaticPagesController # same
     end
-    
+
     if user.admin?
+      сan [:manage], Admin::CarriersController
+      сan [:manage], Admin::DestinationsController
+      сan [:manage], Admin::StopoversController
+      сan [:manage], Admin::DashboardController
+      сan [:manage], Admin::CountriesController
+
+      сan [:manage], Products::DashboardController
+      сan [:manage], Products::ProductsController 
+
+      can [:manage], AgentsController
+
+      # ApplicationController.timed_out
+      can [:manage], ItineraryTemplatesController
+      сan [:manage], SearchesController
+      сan [:manage], SuppliersController
+      can [:show], UsersController
+      can [:manage], StaticPagesController
     end
     if user.management?
       can [:manage], :all
