@@ -132,6 +132,10 @@
         <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
         <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light right purple") %>
       <% end %>
+    <% elsif @enquiry.persisted? && itinerary_has_been_created %>
+        <% @enquiry.itineraries.each do |itin| %>
+        <a href="<%= edit_itinerary_path itin %>"  class="waves-effect waves-light btn right deep-purple darken-1" >Edit Itinerary # <%=itin.id %></a><br>
+        <% end %>
     <% end %>
   </div>
      
