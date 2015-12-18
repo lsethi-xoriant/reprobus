@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  authorize_resource class: UsersController
+  
   before_filter :signed_in_user, except: [:new, :create]
   before_filter :correct_user, only: [:edit, :update, :destroy]
   before_filter :admin_user, only: :destroy

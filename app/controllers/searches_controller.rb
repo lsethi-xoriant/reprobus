@@ -1,4 +1,6 @@
 class SearchesController < ApplicationController
+  authorize_resource class: SearchesController
+  
   before_filter :signed_in_user
  
   def product

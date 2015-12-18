@@ -1,4 +1,5 @@
 class Reports::EnquiryController < ApplicationController
+  authorize_resource class: Reports::EnquiryController
 
   def index
     if params[:reports_search]
