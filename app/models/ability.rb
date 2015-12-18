@@ -28,8 +28,40 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+    if user.accounts?
+      can [:manage], Reports::DashboardController
+      can [:manage], Reports::ConfirmedBookingController
+      can [:manage], Reports::EnquiryController
+      can [:manage], Reports::BookingTravelController
+      # can [:timed_out], ApplicationController
+      can [:manage], CustomerInteractionsController
+      
+      can [:manage], CustomersController
+      cannot [:destroy], CustomersController 
+
+      can [:manage], InvoicesController
+      cannot [:destroy], InvoicesController
+
+      can [:manage], ItinerariesController
+      cannot [:destroy], ItinerariesController
+
+      сan [:manage], ItineraryPricesController
+      cannot [:destroy], ItineraryPricesController
+
+      сan [:manage], SearchesController
+      сan [:manage], SuppliersController
+
+      can [:show], UsersController
+
+      can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
+        :currencysearch, :noaccess], StaticPagesController
+    end
+    if user.sales?
+    end
+    if user.admin?
+    end
     if user.management?
-      # can [:snapshot], :static_page
+      can [:manage], :all
     end
   end
 end

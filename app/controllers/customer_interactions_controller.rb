@@ -1,5 +1,7 @@
 class CustomerInteractionsController < ApplicationController
+  authorize_resource class: CustomerInteractionsController
   before_filter :signed_in_user
+  
   def download
     url = CustomerInteraction.find(params[:id]).try(:attachment).try(:url)
     return unless url.present?
