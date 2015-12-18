@@ -2,21 +2,23 @@
 #
 # Table name: itinerary_prices
 #
-#  id                     :integer          not null, primary key
-#  itinerary_id           :integer
-#  created_at             :datetime
-#  updated_at             :datetime
-#  deposit_due            :date
-#  invoice_date           :date
-#  balance_due            :date
-#  final_balance_due      :date
-#  locked                 :boolean          default("false")
-#  currency_id            :integer
-#  deposit                :decimal(12, 2)   default("0.0")
-#  sale_total             :decimal(12, 2)   default("0.0")
-#  deposit_system_default :boolean          default("false")
-#  booking_confirmed_date :date
-#  booking_confirmed      :boolean
+#  id                         :integer          not null, primary key
+#  itinerary_id               :integer
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  deposit_due                :date
+#  invoice_date               :date
+#  balance_due                :date
+#  final_balance_due          :date
+#  locked                     :boolean          default("false")
+#  currency_id                :integer
+#  deposit                    :decimal(12, 2)   default("0.0")
+#  sale_total                 :decimal(12, 2)   default("0.0")
+#  deposit_system_default     :boolean          default("false")
+#  booking_confirmed_date     :date
+#  booking_confirmed          :boolean
+#  customer_invoice_sent_date :date
+#  customer_invoice_sent      :boolean
 #
 
 class ItineraryPrice < ActiveRecord::Base
