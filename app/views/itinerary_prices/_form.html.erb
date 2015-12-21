@@ -53,7 +53,7 @@
       </div>
       
       <div class= "row">
-          <% if current_user.admin && @itinerary_price.booking_confirmed %>
+          <% if current_user.admin && @itinerary_price.customer_invoice_sent %>
             <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Sent", value: "#{@itinerary_price.customer_invoice_sent_date.strftime('%d-%b-%Y')}" } %>
           <% else %>
             <div class="input-field offset-s1 col s1"></div>
