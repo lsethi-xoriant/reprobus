@@ -31,7 +31,7 @@ class Ability
 
     if user.accounts?
       default_abilities
-      сan [:manage], SuppliersController
+      can [:manage], SuppliersController
     end
 
     if user.sales?
@@ -80,10 +80,10 @@ class Ability
     can [:manage], ItinerariesController
     cannot [:destroy], ItinerariesController
 
-    сan [:manage], ItineraryPricesController
+    can [:manage], ItineraryPricesController
     cannot [:destroy], ItineraryPricesController
 
-    сan [:manage], SearchesController
+    can [:manage], SearchesController
     can [:show], UsersController
     can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
          :currencysearch, :noaccess], StaticPagesController
