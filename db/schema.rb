@@ -209,7 +209,7 @@ ActiveRecord::Schema.define(version: 20151218105122) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.string   "body"
+    t.text     "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"
