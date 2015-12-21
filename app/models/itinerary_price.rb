@@ -40,11 +40,11 @@ class ItineraryPrice < ActiveRecord::Base
  
  
   def set_booking_confirmed_date 
-    self.booking_confirmed_date = Date.today if !self.booking_confirmed_date
+    self.booking_confirmed_date = Date.today if !self.booking_confirmed_date && self.booking_confirmed
   end 
 
   def set_customer_invoice_sent_date 
-    self.customer_invoice_sent_date = Date.today if !self.customer_invoice_sent_date
+    self.customer_invoice_sent_date = Date.today if !self.customer_invoice_sent_date && self.customer_invoice_sent
   end 
   
   def has_uninvoiced_customer_items
