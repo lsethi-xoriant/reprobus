@@ -1,0 +1,91 @@
+
+<style type="text/css">
+* { margin:0; padding:0;} body { background:#fff;}
+.bodWrap { width:902px; margin:0 auto; padding:45px; background:#fff; box-shadow:0 10px 5px 0 #b3b5ba; font-family: 'Droid Sans';}
+.tc { text-align:center;}
+.listing { margin:67px 0 110px 0;} .m0 { margin-top:0;}
+.listing li { list-style:inside; font-size:20px; color:#424043; line-height:28px; padding:6px 0 10px 14px; font-family: 'Droid Sans';}
+.listing li:nth-child(odd) { background:#f3f8f1;}
+
+.bodWrap { -webkit-print-color-adjust:exact;}
+
+.header { min-height:872px; position:relative;}
+.logo { position:absolute; right:22px; top:0;} .clear100 { clear:both; height:100px;} .clear50 { clear:both; height:30px;} .clear45 { clear:both; height:45px;}
+.clear90 { clear:both; height:90px;} .clear75 { clear:both; height:75px;} .clear60 { clear:both; height:60px;} .clear155 { clear:both; height:155px;}
+
+.bigBigtitle1 { color:#9cbd52; font-size:55px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
+.bigBigtitle2 { color:#414143; font-size:34px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
+.bigBigtitle3 { color:#404042; font-size:28px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
+.bigBigtitle4 { color:#9cbd52; font-size:40px; line-height:30px; font-family: 'Raleway'; font-weight: 400; padding-bottom:30px;}
+.changecolor { color:#404042;}
+
+.border { border-top:1px solid #000; padding-top: 12px; text-align: right;}
+.detailsbox { margin:40px 0;} .headdetails { color:#414143; font-size:28px; font-weight:800; margin-bottom:40px; page-break-inside: avoid;}
+.imgdetails { float:left; margin-right:40px; width:260px;} .contdetails { float:left; width:65%;} .clear { clear:both;}
+.imgdetails img{width:100%;}
+.title { color:#97bd4e; font-size:20px; line-height:30px; font-weight: 800;}
+.title2 { color:#97bd4e; font-size:18px; line-height:30px; font-weight: 800;}
+.caption { color:#424043; font-size:18px; line-height:28px; font-weight: 400;}
+.page-break { display:block; clear:both; page-break-after:always; }
+</style>
+
+<!--  google font  -->
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+<meta charset='utf-8' />
+
+<body> 
+<div class="bodyWrap">
+
+  <div class="header">
+      <%= image_tag(@itinerary.get_itinerary_image_link, :class => "") %>
+      <a class="logo" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
+  </div>
+
+  <p><h3>Dear <%= @supplier.supplier_name %>,</h3></p>
+  <p><h3>Please quote the following services for quote number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:</h3></p>
+  <p><h3>Itinerary details:</h3></p>
+  <table>
+    <thead>
+      <tr>
+        <td>Supplier</td>
+        <td>Start</td>
+        <td>End</td>
+        <td>Country</td>
+        <td>Destination</td>
+        <td>Product Type</td>
+        <td>Product</td>
+        <td>Room</td>
+        <td>Classification</td>
+        <td>Bedding</td>
+      </tr>
+    </thead>
+  </table>
+
+  <% @itinerary_infos.each do |info| %>
+    <table>
+      <tr>
+        <td><%= info.try(:supplier).try(:supplier_name) %></td>
+        <td><%= info.try(:start_date).try(:strftime, "%d-%m-%Y") %></td>
+        <td><%= info.try(:end_date).try(:strftime, "%d-%m-%Y") %></td>
+        <td><%= info.try(:get_product_country) %></td>
+        <td><%= info.try(:get_product_destination) %></td>
+        <td><%= info.try(:get_product_type) %></td>
+        <td><%= info.try(:get_product_name) %></td>
+        <td><%= (info.try(:get_product_type) && ['Hotel', 'Cruise'].include?(info.try(:get_product_type))) ? info.try(:get_room_type_name) : "" %></td>
+        <td><%= (info.try(:get_product_type) && ['Tour', 'Transfer'].include?(info.try(:get_product_type))) ? info.try(:get_room_type_name) : "" %></td>
+        <td><%= (info.try(:get_product_type) && ['Hotel', 'Cruise'].include?(info.try(:get_product_type))) ? info.try(:itinerary).try(:bedding_type) : "" %></td>
+      </tr>
+      <tr>
+        <%= info.try(:get_product_details) %>
+      </tr>
+    </table>
+  <% end %>
+
+  <p><h3>Customer details:</h3></p>
+  <% @itinerary.customers.each do |customer| %>
+    <p><%= customer.try(:fullname_with_title) %></p>
+  <% end %>
+
+</div>
+</body>
