@@ -28,62 +28,17 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+
     if user.accounts?
-      can [:manage], Reports::DashboardController
-      can [:manage], Reports::ConfirmedBookingController
-      can [:manage], Reports::EnquiryController
-      can [:manage], Reports::BookingTravelController
-      # can [:timed_out], ApplicationController
-      can [:manage], CustomerInteractionsController
-      
-      can [:manage], CustomersController
-      cannot [:destroy], CustomersController 
-
-      can [:manage], InvoicesController
-      cannot [:destroy], InvoicesController
-
-      can [:manage], ItinerariesController
-      cannot [:destroy], ItinerariesController
-
-      сan [:manage], ItineraryPricesController
-      cannot [:destroy], ItineraryPricesController
-
-      сan [:manage], SearchesController
+      default_abilities
       сan [:manage], SuppliersController
-
-      can [:show], UsersController
-
-      can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
-        :currencysearch, :noaccess], StaticPagesController
     end
 
     if user.sales?
-      can [:manage], Reports::DashboardController # same 
-      can [:manage], Reports::ConfirmedBookingController # same
-      can [:manage], Reports::EnquiryController # same
-      can [:manage], Reports::BookingTravelController # same
+      default_abilities
       can [:manage], AgentsController
-      can [:manage], CustomerInteractionsController # same
-
-      can [:manage], CustomersController # same
-      cannot [:destroy], CustomersController # same
-
       can [:manage], EnquiriesController
       cannot [:destroy], EnquiriesController
-
-      can [:manage], InvoicesController # same
-      cannot [:destroy], InvoicesController # same
-
-      can [:manage], ItinerariesController # same
-      cannot [:destroy], ItinerariesController # same
-
-      сan [:manage], ItineraryPricesController # same
-      cannot [:destroy], ItineraryPricesController # same
-
-      сan [:manage], SearchesController # same
-      can [:show], UsersController # same
-      can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
-        :currencysearch, :noaccess], StaticPagesController # same
     end
 
     if user.admin?
@@ -97,16 +52,40 @@ class Ability
       сan [:manage], Products::ProductsController 
 
       can [:manage], AgentsController
-
-      # ApplicationController.timed_out
       can [:manage], ItineraryTemplatesController
       сan [:manage], SearchesController
       сan [:manage], SuppliersController
-      can [:show], UsersController
+      can [:show],   UsersController
       can [:manage], StaticPagesController
     end
     if user.management?
       can [:manage], :all
     end
+  end
+
+  def default_abilities
+    can [:manage], Reports::DashboardController
+    can [:manage], Reports::ConfirmedBookingController
+    can [:manage], Reports::EnquiryController
+    can [:manage], Reports::BookingTravelController
+
+    can [:manage], CustomerInteractionsController
+
+    can [:manage], CustomersController
+    cannot [:destroy], CustomersController
+
+    can [:manage], InvoicesController
+    cannot [:destroy], InvoicesController
+
+    can [:manage], ItinerariesController
+    cannot [:destroy], ItinerariesController
+
+    сan [:manage], ItineraryPricesController
+    cannot [:destroy], ItineraryPricesController
+
+    сan [:manage], SearchesController
+    can [:show], UsersController
+    can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
+         :currencysearch, :noaccess], StaticPagesController
   end
 end
