@@ -42,19 +42,19 @@ class Ability
     end
 
     if user.admin?
-      сan [:manage], Admin::CarriersController
-      сan [:manage], Admin::DestinationsController
-      сan [:manage], Admin::StopoversController
-      сan [:manage], Admin::DashboardController
-      сan [:manage], Admin::CountriesController
+      can [:manage], Admin::CarriersController
+      can [:manage], Admin::DestinationsController
+      can [:manage], Admin::StopoversController
+      can [:manage], Admin::DashboardController
+      can [:manage], Admin::CountriesController
 
-      сan [:manage], Products::DashboardController
-      сan [:manage], Products::ProductsController 
+      can [:manage], Products::DashboardController
+      can [:manage], Products::ProductsController 
 
       can [:manage], AgentsController
       can [:manage], ItineraryTemplatesController
-      сan [:manage], SearchesController
-      сan [:manage], SuppliersController
+      can [:manage], SearchesController
+      can [:manage], SuppliersController
       can [:show],   UsersController
       can [:manage], StaticPagesController
     end
