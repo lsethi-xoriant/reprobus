@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to snapshot_path, :alert => exception.message
   end
   
   rescue_from ActionController::InvalidAuthenticityToken, :with => :timed_out
