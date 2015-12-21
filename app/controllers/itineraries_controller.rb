@@ -195,7 +195,7 @@ private
     def itinerary_params
       params.require(:itinerary).permit(:name, :includes, :excludes, :notes, :itinerary_template_id,
       :enquiry_id, :start_date, :num_passengers, :complete, :sent, :quality_check, :flight_reference,
-      :destination_image_id, :user_id, :status, :quote_sent, :agent_id,
+      :destination_image_id, :user_id, :status, :quote_sent, :agent_id, :bedding_type,
       itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
       :group_classification, :comment_for_customer, :comment_for_supplier,  :_destroy ],
