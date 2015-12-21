@@ -64,6 +64,40 @@ class ItineraryPricesController < ApplicationController
     end 
     
   end
+
+  def printQuote
+    @itinerary_price_item = ItineraryPriceItem.includes(:itinerary_price).find(params[:itinerary_price_item_id])
+    @itinerary_price = ItineraryPrice.includes(:itinerary).find(params[:itinerary_price_id])
+    @itinerary = @itinerary_price.try(:itinerary)
+    @supplier = Customer.find(params[:supplier_id])
+    @itinerary_infos = @itinerary
+                        .itinerary_infos
+                        .select { |info| info.supplier_id == @supplier.id } if @itinerary
+
+    respond_to do |format|
+      format.pdf do
+        render  pdf: "Supplier_no_" + @itinerary.id.to_s.rjust(8, '0'),
+                show_as_html: params.key?('debug'),
+                margin: { bottom: 15 }
+      end
+      format.html { render layout: false }
+    end    
+  end
+
+  def emailQuote
+    @itinerary = Itinerary.find(params[:email_settings][:id])
+    
+    if CustomerMailer.send_email_quote(
+      @itinerary, @setting, params[:email_settings]).deliver
+
+      @itinerary.quote_sent_update_date
+      flash[:success] = 'Itinerary Quote has been sent.'
+    else
+      flash[:error] = 'Error occured while sending Quote'
+    end
+    
+    redirect_to edit_itinerary_path(params[:itinerary_id])
+  end
   
 private
   def itinerary_price_params
