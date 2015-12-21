@@ -1,4 +1,6 @@
 class EnquiriesController < ApplicationController
+  authorize_resource class: EnquiriesController, :except => [:webenquiry, :confirmation]
+  
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   skip_before_filter :verify_authenticity_token, only: [:webenquiry, :confirmation]

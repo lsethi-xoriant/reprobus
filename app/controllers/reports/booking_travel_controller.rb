@@ -1,4 +1,5 @@
 class Reports::BookingTravelController < ApplicationController
+  authorize_resource class: Reports::BookingTravelController
   before_filter :define_initial_parameters, unless: "params[:reports_search]"
   before_filter :define_search_parameters, if: "params[:reports_search]"
 

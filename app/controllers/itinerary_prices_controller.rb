@@ -1,4 +1,6 @@
 class ItineraryPricesController < ApplicationController
+  authorize_resource class: ItineraryPricesController
+
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
@@ -68,7 +70,7 @@ class ItineraryPricesController < ApplicationController
 private
   def itinerary_price_params
     params.require(:itinerary_price).permit(:itinerary_id, :deposit_due,
-    :invoice_date, :balance_due, :final_balance_due, :currency_id,
+    :invoice_date, :balance_due, :final_balance_due, :currency_id, :customer_invoice_sent, :customer_invoice_sent_date,
     :deposit, :sale_total, :deposit_system_default, :booking_confirmed, :booking_confirmed_date, 
     itinerary_price_items_attributes: [:id, :booking_ref, :description,
     :price_total,  :deposit, :deposit_percentage,

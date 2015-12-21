@@ -1,4 +1,6 @@
 class ItinerariesController < ApplicationController
+  authorize_resource class: ItinerariesController
+  
   before_filter :signed_in_user
   before_filter :admin_user, only: :destroy
   before_action :setCompanySettings

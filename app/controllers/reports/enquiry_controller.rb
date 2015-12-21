@@ -1,19 +1,18 @@
 class Reports::EnquiryController < ApplicationController
+  authorize_resource class: Reports::EnquiryController
 
   def index
     if params[:reports_search]
       @from        = params[:reports_search][:from].presence
       @to          = params[:reports_search][:to].presence
-      @stage       = params[:reports_search][:stage]
-                      .map {|prm| prm[0] if prm[1] == "1"} ## Warning. This map needed for collect values from checkboxes form
-                      .compact                             ## value == "1" mean checked, value == "0" mean unchecked
-      @stage        = @stage.any? ? @stage : Enquiry::STATUSES ## If there is no values we choose all statuses by default
+      @stage       = params[:reports_search][:stage].presence
+      stage        = @stage ? @stage : Enquiry::STATUSES ## If there is no values we choose all statuses by default
       @assigned_to = params[:reports_search][:assigned_to_id]
     end
 
     @structure = structure
     @users = User.where.not(name: "System")
-    @enquiries = ReportService.enquiry_search(@from, @to, @stage, @assigned_to)
+    @enquiries = ReportService.enquiry_search(@from, @to, stage, @assigned_to)
 
     respond_to do |format|
       format.html

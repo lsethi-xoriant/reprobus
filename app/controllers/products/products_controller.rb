@@ -1,4 +1,5 @@
 class Products::ProductsController < ApplicationController
+  authorize_resource class: Products::ProductsController 
   include ProductsHelper
   
   before_filter :signed_in_user
