@@ -1,0 +1,38 @@
+<% provide(:title, 'Supplier Report') %>
+
+<div class="container">
+  <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
+
+  <%= form_for :reports_search, method: :get, url: reports_supplier_index_path do |c| %>
+    <div class="row">
+
+      <div class="col s1">
+        <%= c.label :from, class: 'active' %>
+        <%= c.date_field :from, class:"datepicker start_leg_itinerary", :"data-value" => (@from || 1.month.ago) %>
+      </div>
+      <div class="col s1">
+        <%= c.label :to, class: 'active' %>
+        <%= c.date_field :to, class:"datepicker start_leg_itinerary", :"data-value" => (@to || Date.today) %>
+      </div>
+
+      <div class="col s2">
+        <%= c.label :supplier, class: 'active' %> 
+        <%= c.select :supplier_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@suppliers, "id", "supplier_name", selected: (@supplier.presence)) %>
+      </div>
+
+      <div class="col s2">
+        <%= c.label :search_by, class: 'active' %> 
+        <%= c.select :search_by, options_for_select([['Confirmed Date', :confirmed_date], ['Travel Date', :travel_date]], @search_by), {} %>
+      </div>
+
+      <div class="section">
+        <div class="col s2">
+          <%= c.submit :search, class: 'btn' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: "reports/supplier/table" %>
+
+</div>

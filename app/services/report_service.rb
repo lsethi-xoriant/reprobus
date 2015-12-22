@@ -39,6 +39,35 @@ class ReportService
                 .where(search_params)
   end
 
+  def self.supplier_search(from, to, search_by, supplier=nil)
+    results = 
+      ItineraryPrice
+        .joins(:itinerary, :supplier_itinerary_price_items)
+        .where(customer_invoice_sent: true)
+        .includes(itinerary: :lead_customer)
+
+    results = 
+      case search_by
+      when 'confirmed_date'
+        results.where(booking_confirmed_date: from..to)
+      when 'travel_date'
+        results.where('itineraries.start_date': from..to)
+      else
+        results
+      end
+
+    if supplier.present?
+      results = results.where(itinerary_price_items: { supplier_id: supplier} )
+    end
+
+    if results.present? 
+      results.map(&:supplier_itinerary_price_items)
+    else
+      ItineraryPriceItem.none
+    end
+
+  end
+
   def self.generate_csv(entities, titles_methods)
     # titles_methods hash structure:
     # key: name of the field

@@ -7,7 +7,8 @@ class Reports::DashboardController < ApplicationController
       [
        'Enquiry', 
        'Booking Travel',
-       'Confirmed Booking'
+       'Confirmed Booking',
+       'Supplier'
       ]
   end
 end
