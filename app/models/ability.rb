@@ -58,6 +58,7 @@ class Ability
       can [:show],   UsersController
       can [:manage], StaticPagesController
     end
+
     if user.management?
       can [:manage], :all
     end
@@ -72,6 +73,7 @@ class Ability
     can [:manage], CustomerInteractionsController
 
     can [:manage], CustomersController
+    cannot [:manage], AgentsController
     cannot [:destroy], CustomersController
 
     can [:manage], InvoicesController

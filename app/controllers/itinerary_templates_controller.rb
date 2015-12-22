@@ -2,7 +2,7 @@ class ItineraryTemplatesController < ApplicationController
   authorize_resource class: ItineraryTemplatesController
   
   before_filter :signed_in_user
-  before_filter :admin_user, only: :destroy
+  # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
   
   def index
