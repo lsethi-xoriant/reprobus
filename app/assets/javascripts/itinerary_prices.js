@@ -110,11 +110,11 @@ $(document).ready(function() {
     });
 
   }
-
-  $(document).on('click', '.supplier-show-hide-btn', function() {
-    $(this).closest(".field").find('.suplier_buttons_row').toggle();
-  });
   
+});
+
+$(document).on('click', '.supplier-show-hide-btn', function() {
+  $(this).closest(".field").find('.suplier_buttons_row').toggle();
 });
 
 function doPricingCalculationsCustomerTotals(e){

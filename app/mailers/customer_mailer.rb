@@ -50,6 +50,26 @@ class CustomerMailer < ActionMailer::Base
       end
     # end
 
-    CustomerInteractionService.record_interaction(attachments, params)
+    CustomerInteractionService.record_interaction(attachments, :quote, params)
+  end
+
+  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, params)
+    @body = params[:body]
+    mail(
+      from: params[:from_email],
+      reply_to: params[:from_email],
+      to: params[:to_email],
+      cc: params[:cc_email],
+      subject: "Supplier Quote") do |format|
+        format.html { render layout: false }
+        format.pdf do
+          if params[:type] == 'PDF'
+            attachments['SupplierQuote.pdf'] = 
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier)
+          end
+        end
+      end
+
+    CustomerInteractionService.record_interaction(attachments, :supplier_quote, params)
   end
 end
