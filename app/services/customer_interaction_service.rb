@@ -1,6 +1,6 @@
 class CustomerInteractionService
 
-  def self.record_interaction(attachments, params)
+  def self.record_interaction(attachments, type, params)
     return unless attachments.present? && params.present?
     attachments.each do |attachment| 
       file = StringIO.new(attachment.decoded)
@@ -8,7 +8,7 @@ class CustomerInteractionService
       file.original_filename = attachment.filename
       file.content_type = attachment.mime_type
 
-      type = :quote # change this when Confirmed Itinerary Email will be implemented
+      # type = :quote # change this when Confirmed Itinerary Email will be implemented
 
       options = 
       {

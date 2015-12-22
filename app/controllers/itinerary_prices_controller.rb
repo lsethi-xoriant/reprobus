@@ -19,6 +19,8 @@ class ItineraryPricesController < ApplicationController
   def edit
     @itinerary_price = ItineraryPrice.includes(:itinerary_price_items).find(params[:id])
     @itinerary = @itinerary_price.itinerary
+
+    set_email_modal_values
   end
   
   def create
@@ -66,13 +68,13 @@ class ItineraryPricesController < ApplicationController
   end
 
   def printQuote
-    @itinerary_price_item = ItineraryPriceItem.includes(:itinerary_price).find(params[:itinerary_price_item_id])
-    @itinerary_price = ItineraryPrice.includes(:itinerary).find(params[:itinerary_price_id])
+    @itinerary_price_item = ItineraryPriceItem.find(params[:itinerary_price_item_id])
+    @itinerary_price = ItineraryPrice.find(@itinerary_price_item.supplier_itinerary_price_id)
     @itinerary = @itinerary_price.try(:itinerary)
-    @supplier = Customer.find(params[:supplier_id])
+    @supplier = @itinerary_price_item.supplier
     @itinerary_infos = @itinerary
                         .itinerary_infos
-                        .select { |info| info.supplier_id == @supplier.id } if @itinerary
+                        .select { |info| info.supplier_id == @supplier.id }
 
     respond_to do |format|
       format.pdf do
@@ -85,18 +87,23 @@ class ItineraryPricesController < ApplicationController
   end
 
   def emailQuote
-    @itinerary = Itinerary.find(params[:email_settings][:id])
-    
-    if CustomerMailer.send_email_quote(
-      @itinerary, @setting, params[:email_settings]).deliver
+    @itinerary_price_item = ItineraryPriceItem.find(params[:itinerary_price_item_id])
+    @itinerary_price = ItineraryPrice.find(@itinerary_price_item.supplier_itinerary_price_id)
+    @itinerary = @itinerary_price.try(:itinerary)
+    @supplier = @itinerary_price_item.supplier
+    @itinerary_infos = @itinerary
+                        .itinerary_infos
+                        .select { |info| info.supplier_id == @supplier.id }
 
-      @itinerary.quote_sent_update_date
-      flash[:success] = 'Itinerary Quote has been sent.'
+    if CustomerMailer.send_email_supplier_quote(
+      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, @supplier, params[:email_settings]).deliver
+
+      flash[:success] = 'Supplier Quote has been sent.'
     else
       flash[:error] = 'Error occured while sending Quote'
     end
-    
-    redirect_to edit_itinerary_path(params[:itinerary_id])
+
+    redirect_to edit_itinerary_price_path(@itinerary_price)
   end
   
 private
@@ -110,5 +117,11 @@ private
     supplier_itinerary_price_items_attributes: [:id, :exchange_rate_total, :booking_ref, :description,
     :price_total, :itinerary_price_id, :supplier_id, :markup, :markup_percentage,
     :item_price, :quantity, :currency_id, :sell_currency_rate, :total_incl_markup,  :_destroy ])
+  end
+
+  def set_email_modal_values
+    @cc_email = current_user.try(:email)
+    @from_email = 
+      @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
   end
 end
