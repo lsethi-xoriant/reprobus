@@ -1,5 +1,6 @@
 class Admin::StopoversController < ApplicationController
-  before_filter :admin_user
+  authorize_resource class: Admin::StopoversController 
+  # before_filter :admin_user
   
   def index
     @stopovers = Stopover.all

@@ -2,7 +2,7 @@ class SettingsController < ApplicationController
   authorize_resource class: SettingsController
   
   before_filter :signed_in_user
-  before_filter :admin_user, only: [:edit, :update]
+  # before_filter :admin_user, only: [:edit, :update]
   skip_before_filter :signed_in_user, only: [:dp_callback]
   
   before_action :setCompanySettings

@@ -1,5 +1,6 @@
 class Admin::CountriesController < ApplicationController
-  before_filter :admin_user
+  authorize_resource class: Admin::CountriesController
+  # before_filter :admin_user
   
   def index
     @countries = Country.all

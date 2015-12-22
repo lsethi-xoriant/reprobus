@@ -13,21 +13,43 @@
     <li class="bold"><a href=<%= customers_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-circle"></i> Customers</a> </li>    
     <li class="bold"><a href=<%= itineraries_path %> class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Quote/Booking</a> </li>
     <!--<li class="bold"><a href=<%#= bookings_path %> class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-assignment-turned-in"></i> Bookings</a> </li>-->
-    <li class="bold"><a href=<%= agents_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-child"></i> Agents</a> </li>
+
+    <% if can? :manage, AgentsController %>
+      <li class="bold"><a href=<%= agents_path %> class="waves-effect waves-cyan"><i class="mdi-action-account-child"></i> Agents</a> </li>
+    <% end %>
+    
     <li class="bold"><a href=<%= suppliers_path %> class="waves-effect waves-cyan"><i class="mdi-action-assignment-ind"></i> Suppliers</a> </li>
     <li class="li-hover">
       <div class="divider"></div>
     </li>
 
-    <% if current_user.admin? %>
-      <li class="bold"><a href=<%= admin_path %> class="waves-effect waves-cyan"><i class="mdi-social-pages"></i> Items</a> </li>
-      <li class="bold"><a href=<%= products_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
-      <li class="bold"><a href=<%= itinerary_templates_path %> class="waves-effect waves-cyan"><i class="mdi-action-list"></i> Itinerary Templates</a> </li>    
-      <li class="bold"><a href=<%= import_path %> class="waves-effect waves-cyan"><i class="mdi-file-file-upload"></i> Imports</a> </li>
-      <li class="bold"><a href=<%= setting_path(1) %> class="waves-effect waves-cyan"><i class="mdi-action-thumb-up"></i> Settings</a> </li>
-      <li class="bold"><a href=<%= reports_path %> class="waves-effect waves-cyan"><i class="mdi-action-assignment"></i> Reports</a> </li>
-      <li class="bold"><a href=<%= users_path %> class="waves-effect waves-cyan"><i class="mdi-action-face-unlock"></i> Users</a> </li>
-    <% end %>
+      <% if can? :manage, Admin::DashboardController %>
+        <li class="bold"><a href=<%= admin_path %> class="waves-effect waves-cyan"><i class="mdi-social-pages"></i> Items</a> </li>
+      <% end %>
+
+      <% if can? :manage, Products::ProductsController %>
+        <li class="bold"><a href=<%= products_path %> class="waves-effect waves-cyan"><i class="mdi-action-dns"></i> Products</a> </li>
+      <% end %>
+
+      <% if can? :manage, ItineraryTemplatesController %>
+        <li class="bold"><a href=<%= itinerary_templates_path %> class="waves-effect waves-cyan"><i class="mdi-action-list"></i> Itinerary Templates</a> </li>
+      <% end %>
+
+      <% if can? :import, StaticPagesController %>
+        <li class="bold"><a href=<%= import_path %> class="waves-effect waves-cyan"><i class="mdi-file-file-upload"></i> Imports</a> </li>
+      <% end %>
+
+      <% if can? :manage, SettingsController %>
+        <li class="bold"><a href=<%= setting_path(1) %> class="waves-effect waves-cyan"><i class="mdi-action-thumb-up"></i> Settings</a> </li>
+      <% end %>
+
+      <% if can? :manage, Reports::DashboardController %>
+        <li class="bold"><a href=<%= reports_path %> class="waves-effect waves-cyan"><i class="mdi-action-assignment"></i> Reports</a> </li>
+      <% end %>
+
+      <% if can? :manage, UsersController %>
+        <li class="bold"><a href=<%= users_path %> class="waves-effect waves-cyan"><i class="mdi-action-face-unlock"></i> Users</a> </li>
+      <% end %>
     
   </ul>
   

@@ -3,7 +3,7 @@ class Products::ProductsController < ApplicationController
   include ProductsHelper
   
   before_filter :signed_in_user
-  before_filter :admin_user
+  # before_filter :admin_user
   
   def index
     #@products = Product.includes(:supplier).where(type: params[:type])

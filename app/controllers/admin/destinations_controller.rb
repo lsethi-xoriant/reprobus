@@ -1,5 +1,6 @@
 class Admin::DestinationsController < ApplicationController
-  before_filter :admin_user, except: ['search_by_name']
+  authorize_resource class: Admin::DestinationsController, except: ['search_by_name']
+  # before_filter :admin_user, except: ['search_by_name']
   before_action :set_settings, only: [:new, :edit]
   protect_from_forgery with: :null_session
   before_action :setCompanySettings
