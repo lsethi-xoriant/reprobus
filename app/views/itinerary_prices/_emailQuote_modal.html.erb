@@ -1,0 +1,71 @@
+<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: 'email_quote_form' } do |c| %>
+
+  <div id="email_quote_modal" class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="email_quote_container" class="col s12">
+
+              <div class="row">
+
+                <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
+
+                <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
+                <div class="input-field col s4">
+                  <!-- To email address -->
+                  <%= c.hidden_field :to_email, value: supplier.email %>
+                  <%= c.text_field :to_email, value: supplier.fullname, disabled: 'disabled' %>
+                  <%= c.label :to_email, 'TO:' %>
+                </div>
+
+                <div class="input-field col s4">
+                  <!-- From email address -->
+                  <%= c.hidden_field :from_email, value: @from_email %>
+                  <%= c.text_field :from_email, value: @from_email, disabled: 'disabled' %>
+                  <%= c.label :from_email, 'FROM:' %>
+                </div>
+
+                <div class="input-field col s4">
+                  <!-- CC email address -->
+                  <%= c.hidden_field :cc_email, value: @cc_email %>
+                  <%= c.text_field :cc_email, value: @cc_email, disabled: 'disabled' %>
+                  <%= c.label :cc_email, 'CC:' %>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="input-field col s5">
+                  <!-- a selection option for either PDF, or Rich Text Document -->
+                  <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']), disabled: 'disabled' %>
+                  <%= c.label :type, 'Document Type' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <!-- body email -->
+                  <%= c.text_field :body %>
+                  <%= c.label :body, 'Body:' %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
+
+      <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+  </div>
+
+<% end %>
