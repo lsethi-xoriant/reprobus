@@ -74,6 +74,7 @@ class Ability
 
     can [:manage], CustomersController
     cannot [:manage], AgentsController
+    cannot [:manage], SuppliersController
     cannot [:destroy], CustomersController
 
     can [:manage], InvoicesController
