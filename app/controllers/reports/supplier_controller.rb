@@ -4,7 +4,7 @@ class Reports::SupplierController < ApplicationController
 
   def index
     @structure = structure
-    @suppliers = Customer.all
+    @suppliers = Customer.where.not(supplier_name: nil)
     @supplier_itinerary_price_items = 
       ReportService.supplier_search(@from, @to, @search_by, @supplier)
 
