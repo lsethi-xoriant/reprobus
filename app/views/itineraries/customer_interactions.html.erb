@@ -2,3 +2,9 @@
 <div class="row">
   <%= render partial: 'customer_interaction_entity', locals: { entity: CustomerInteraction, collect: @customer_interactions } %>
 </div> 
+
+<div class="row">
+  <div class="input-field col s6" >
+    <a href="<%= edit_itinerary_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Back to Itinerary</a>
+  </div>
+</div>

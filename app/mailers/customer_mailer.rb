@@ -1,5 +1,5 @@
 class CustomerMailer < ActionMailer::Base
-  default from: "donotreply@tripease.com"
+  default from: "donotreply@tripeze.com"
   
   # include SessionsHelper
   # before_action :setCompanySettings, only: [:send_email_quote]

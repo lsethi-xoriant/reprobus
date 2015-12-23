@@ -25,6 +25,7 @@
 #  confirmed_itinerary_sent :datetime
 #  agent_id                 :integer
 #  lead_customer_id         :integer
+#  end_date                 :date
 #
 
 class Itinerary < ActiveRecord::Base
