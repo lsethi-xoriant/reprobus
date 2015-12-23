@@ -46,11 +46,11 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       get 'reinstate'
       get 'details'
-      get 'customer_interactions'
+      get 'booking_history'
     end
   end
 
-  resources :customer_interactions, only: [:download] do
+  resources :booking_history, only: [:download] do
     member { get :download }
   end
   

@@ -40,7 +40,7 @@ class Itinerary < ActiveRecord::Base
   has_one       :itinerary_price
   belongs_to    :itinerary_template
   belongs_to    :enquiry
-  has_many      :customer_interactions
+  has_many      :booking_history
 
   belongs_to    :destination_image, :class_name => "ImageHolder", :foreign_key => :destination_image_id
   accepts_nested_attributes_for :destination_image
@@ -61,8 +61,9 @@ class Itinerary < ActiveRecord::Base
 
   enum bedding_type: [ :single, :twin, :double, :triple, :quad ]
 
-  def quote_sent_update_date
-    self.update_attribute(:quote_sent, DateTime.now)
+  def quote_sent_update_date(confirmed)
+    attribute = confirmed ? :confirmed_itinerary_sent : :quote_sent
+    self.update_attribute(attribute, DateTime.now)
   end
 
   def cancel

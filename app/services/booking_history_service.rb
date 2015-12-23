@@ -1,4 +1,4 @@
-class CustomerInteractionService
+class BookingHistoryService
 
   def self.record_interaction(attachments, type, params)
     return unless attachments.present? && params.present?
@@ -8,8 +8,6 @@ class CustomerInteractionService
       file.original_filename = attachment.filename
       file.content_type = attachment.mime_type
 
-      # type = :quote # change this when Confirmed Itinerary Email will be implemented
-
       options = 
       {
         emailed_at: DateTime.now,
@@ -18,7 +16,7 @@ class CustomerInteractionService
         attachment: file,
         itinerary_id: params[:id]
       }
-      customer_interaction = CustomerInteraction.new(options)
+      customer_interaction = BookingHistory.new(options)
       customer_interaction.save
     end
   end

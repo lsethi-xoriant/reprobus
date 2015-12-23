@@ -70,7 +70,7 @@ class Ability
     can [:manage], Reports::EnquiryController
     can [:manage], Reports::BookingTravelController
 
-    can [:manage], CustomerInteractionsController
+    can [:manage], BookingHistoryController
 
     can [:manage], CustomersController
     cannot [:manage], AgentsController
