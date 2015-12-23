@@ -36,14 +36,14 @@
           
           <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total, precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
           
-          <% if current_user.admin && @itinerary_price.booking_confirmed %>
+          <% if current_user.management?&& @itinerary_price.booking_confirmed %>
             <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Confirmed", value: "#{@itinerary_price.booking_confirmed_date.try(:strftime, '%d-%b-%Y')}" } %>
           <% else %>
             <div class="input-field offset-s1 col s1"></div>
           <% end %>
           
           <div class="col s2">
-            <% if current_user.admin && !f.object.new_record? %>
+            <% if current_user.management?&& !f.object.new_record? %>
               <p>
               <%= f.check_box :booking_confirmed, class: "filled-in", disabled: @itinerary_price.booking_confirmed %>
               <%= f.label :booking_confirmed %>
@@ -53,14 +53,14 @@
       </div>
       
       <div class= "row">
-          <% if current_user.admin && @itinerary_price.customer_invoice_sent %>
-            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Sent", value: "#{@itinerary_price.customer_invoice_sent_date.strftime('%d-%b-%Y')}" } %>
+          <% if current_user.management? && @itinerary_price.booking_confirmed %>
+            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Sent", value: "#{@itinerary_price.customer_invoice_sent_date.try(:strftime, '%d-%b-%Y')}" } %>
           <% else %>
             <div class="input-field offset-s1 col s1"></div>
           <% end %>        
         
            <div class="col offset-s8 s2">
-            <% if current_user.admin && !f.object.new_record? %>
+            <% if current_user.management? && !f.object.new_record? %>
               <p>
               <%= f.check_box :customer_invoice_sent, class: "filled-in", disabled: @itinerary_price.customer_invoice_sent %>
               <%= f.label :customer_invoice_sent %>
