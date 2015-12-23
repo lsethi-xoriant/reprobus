@@ -158,6 +158,10 @@
   
           <% end if @itinerary.itinerary_price.present? %>
         </div>
+
+        <div class="input-field col s3" >
+          <%= render partial: 'emailQuote_button', locals: { confirmed: true } %>
+        </div>
   
         <div class="input-field col s2">
           <%= render partial: 'pricingBtn'%>
@@ -217,3 +221,5 @@
 <%= render partial: 'copy_itinerary_modal' %>
 <!-- Email Quote Modal -->
 <%= render partial: 'emailQuote_modal' %>
+<!-- Email Confirmed Quote Modal -->
+<%= render partial: 'emailQuote_modal', locals: { confirmed: true } %>

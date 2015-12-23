@@ -8,8 +8,6 @@ class CustomerInteractionService
       file.original_filename = attachment.filename
       file.content_type = attachment.mime_type
 
-      # type = :quote # change this when Confirmed Itinerary Email will be implemented
-
       options = 
       {
         emailed_at: DateTime.now,

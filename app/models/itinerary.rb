@@ -61,8 +61,9 @@ class Itinerary < ActiveRecord::Base
 
   enum bedding_type: [ :single, :twin, :double, :triple, :quad ]
 
-  def quote_sent_update_date
-    self.update_attribute(:quote_sent, DateTime.now)
+  def quote_sent_update_date(confirmed)
+    attribute = confirmed ? :confirmed_itinerary_sent : :quote_sent
+    self.update_attribute(attribute, DateTime.now)
   end
 
   def cancel

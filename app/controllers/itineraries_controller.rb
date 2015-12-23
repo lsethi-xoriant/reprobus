@@ -31,10 +31,11 @@ class ItinerariesController < ApplicationController
     @itinerary = Itinerary.find(params[:email_settings][:id])
     
     if CustomerMailer.send_email_quote(
-      @itinerary, @setting, params[:email_settings]).deliver
+      @itinerary, @setting, params[:confirmed].presence, params[:email_settings]).deliver
 
-      @itinerary.quote_sent_update_date
-      flash[:success] = 'Itinerary Quote has been sent.'
+      @itinerary.quote_sent_update_date(params[:confirmed].presence)
+      confirmed_name = params[:confirmed].presence ? 'Confirmed' : ''
+      flash[:success] = "#{confirmed_name} Itinerary Quote has been sent."
     else
       flash[:error] = 'Error occured while sending Quote'
     end
@@ -205,6 +206,7 @@ private
     def set_email_modal_values
       @lead_customer = @enquiry.customer_name_and_title
       @agent_name = @enquiry.agent_name_and_title
+      @cc_email = current_user.try(:email)
       @to_email = 
         @enquiry.agent.try(:email).presence || @itinerary.lead_customer.try(:email)
 
