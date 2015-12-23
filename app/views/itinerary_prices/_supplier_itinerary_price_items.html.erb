@@ -47,7 +47,7 @@
 
       <div class="row suplier_buttons_row" style="display:none">
         <div class="field col s12">
-          <% if f.object.id %>
+          <% if f.object.id && f.object.try(:supplier).try(:email) %>
             <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" >
               View Quote Request
             </a>
@@ -55,13 +55,10 @@
               id="EmailQuoteBtn"
               class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
               data-delay="50"
-              href="#email_quote_modal">
+              href=<%="#email_quote_modal_#{f.object.id}"%>>
 
               Email Quote Request
             </a>
-
-            <!-- Email Quote Modal for every itinerary price item -->
-            <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: f.object.id } %>
           <% end %>
         </div>
       </div>

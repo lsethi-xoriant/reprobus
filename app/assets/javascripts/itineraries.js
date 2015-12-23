@@ -233,10 +233,6 @@ $(document).ready(function() {
 
   $('.modal-footer').on('click', '#email_quote_OK', function(e) {
     e.preventDefault();
-    $('<input />').attr('type', 'hidden')
-          .attr('name', "email_settings[body]")
-          .attr('value', $('#email_settings_body').val())
-          .appendTo('#email_quote_form');
     $("#email_quote_form").submit();
   });
 

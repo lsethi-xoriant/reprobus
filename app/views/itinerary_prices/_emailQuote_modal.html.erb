@@ -1,6 +1,6 @@
-<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: 'email_quote_form' } do |c| %>
+<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: "email_quote_form_#{itinerary_price_item_id}" } do |c| %>
 
-  <div id="email_quote_modal" class="modal modal-fixed-footer white">
+  <div id=<%="email_quote_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
     <div class="modal-content">
       <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
 
@@ -61,9 +61,7 @@
     </div>
 
     <div class="modal-footer">
-
-      <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
-
+      <a href="#" id="email_supplier_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
       <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
     </div>
   </div>
