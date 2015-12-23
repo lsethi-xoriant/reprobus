@@ -1,0 +1,7 @@
+<tr>
+  <td><%= supplier_itinerary_price_item.itinerary_price.try(:itinerary).try(:id) %></td>
+  <td><%= supplier_itinerary_price_item.itinerary_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title) %></td>
+  <td><%= supplier_itinerary_price_item.supplier.try(:supplier_name) %></td>
+  <td><%= supplier_itinerary_price_item.price_total %></td>
+  <td><%= supplier_itinerary_price_item.itinerary_price.try(:final_balance_due) %></td>
+</tr>
