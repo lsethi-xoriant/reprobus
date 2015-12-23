@@ -1,4 +1,4 @@
-class CustomerInteractionService
+class BookingHistoryService
 
   def self.record_interaction(attachments, type, params)
     return unless attachments.present? && params.present?
@@ -16,7 +16,7 @@ class CustomerInteractionService
         attachment: file,
         itinerary_id: params[:id]
       }
-      customer_interaction = CustomerInteraction.new(options)
+      customer_interaction = BookingHistory.new(options)
       customer_interaction.save
     end
   end

@@ -1,4 +1,4 @@
-class CustomerInteraction < ActiveRecord::Base
+class BookingHistory < ActiveRecord::Base
 
   # emailed_at:    timestamp
   # emailed_to:    string

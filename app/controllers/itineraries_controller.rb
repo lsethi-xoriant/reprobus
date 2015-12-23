@@ -185,8 +185,8 @@ class ItinerariesController < ApplicationController
     redirect_to edit_itinerary_path(@itinerary)
   end
 
-  def customer_interactions
-    @customer_interactions = CustomerInteraction.where(itinerary_id: params[:id])
+  def booking_history
+    @booking_history = BookingHistory.where(itinerary_id: params[:id])
     respond_to do |format|
       format.html
     end 

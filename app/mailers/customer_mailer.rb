@@ -54,7 +54,7 @@ class CustomerMailer < ActionMailer::Base
       end
     # end
 
-    CustomerInteractionService.record_interaction(attachments, type, params)
+    BookingHistoryService.record_interaction(attachments, type, params)
   end
 
   def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, params)
@@ -75,6 +75,6 @@ class CustomerMailer < ActionMailer::Base
         end
       end
 
-    CustomerInteractionService.record_interaction(attachments, :supplier_quote, params)
+    BookingHistoryService.record_interaction(attachments, :supplier_quote, params)
   end
 end
