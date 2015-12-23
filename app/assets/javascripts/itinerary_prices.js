@@ -117,6 +117,12 @@ $(document).on('click', '.supplier-show-hide-btn', function() {
   $(this).closest(".field").find('.suplier_buttons_row').toggle();
 });
 
+$(document).on('click', '#email_supplier_quote_OK', function(e) {
+  e.preventDefault();
+  formId = $(this).parents('form');
+  $(formId).submit();
+});
+
 function doPricingCalculationsCustomerTotals(e){
   calculateTotalForPricing();
   calculateTotalDepositForPricing();

@@ -163,3 +163,10 @@
   <% end %>
 	 
 </div>
+
+<!-- Email Supplier Quote Modal for every supplier itinerary price item -->
+<% @itinerary_price.supplier_itinerary_price_items.each do |item| %>
+  <% if item.id && item.try(:supplier).try(:email) %>
+    <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id } %>
+  <% end %>
+<% end %>
