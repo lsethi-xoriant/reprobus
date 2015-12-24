@@ -1,6 +1,5 @@
 class Reports::SupplierController < ApplicationController
-  before_filter :define_initial_parameters, unless: "params[:reports_search]"
-  before_filter :define_search_parameters, if: "params[:reports_search]"
+  before_filter :define_parameters
 
   def index
     @structure = structure
@@ -31,16 +30,15 @@ class Reports::SupplierController < ApplicationController
       }
     end
 
-    def define_initial_parameters
-      @from, @to = 1.month.ago.beginning_of_day, Date.today.end_of_day
-      @search_by = :confirmed_date
-    end
-
-    def define_search_parameters
-      @from = params[:reports_search][:from].presence
-      @to   = params[:reports_search][:to].presence
-      @supplier = params[:reports_search][:supplier_id].presence
-      @search_by = params[:reports_search][:search_by].presence
+    def define_parameters
+      search_params = params.try(:[], :reports_search)
+      @from, @to = 
+        ReportService.prepare_dates(
+          search_params.try(:[], :from),
+          search_params.try(:[], :to)
+        )
+      @search_by = search_params.try(:[], :search_by).presence || :confirmed_date
+      @supplier = search_params.try(:[], :supplier_id).presence
     end
 
 end

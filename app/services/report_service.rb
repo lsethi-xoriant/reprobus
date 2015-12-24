@@ -1,4 +1,11 @@
 class ReportService
+
+  def self.prepare_dates(from=nil, to=nil)
+    from = 1.month.ago unless from.present?
+    to   = Date.today unless to.present?
+    [from.to_date.beginning_of_day, to.to_date.end_of_day]
+  end
+
   def self.booking_travel_search(from, to, user=nil, country=nil)
     results = 
         Itinerary.includes(:lead_customer, :agent, itinerary_infos: :product)
