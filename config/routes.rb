@@ -48,6 +48,7 @@ Reprobus::Application.routes.draw do
       get 'details'
       get 'booking_history'
       get 'generate_supplier_documents'
+      get 'customer_updates'
     end
   end
 
