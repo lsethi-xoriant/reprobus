@@ -190,6 +190,14 @@ class ItinerariesController < ApplicationController
       format.html
     end 
   end
+
+  def customer_updates
+    case params[:customer_update][:send_to]
+    when 'lead_customer'
+      CustomerMailer.send_lead_customer_update().deliver
+    when 'individual_customers'
+    end
+  end
   
 private
     def itinerary_params

@@ -47,6 +47,7 @@ Reprobus::Application.routes.draw do
       post 'revert_cancel'
       get 'details'
       get 'customer_interactions'
+      get 'customer_updates'
     end
   end
 

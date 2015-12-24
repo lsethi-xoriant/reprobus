@@ -52,4 +52,10 @@ class CustomerMailer < ActionMailer::Base
 
     CustomerInteractionService.record_interaction(attachments, params)
   end
+
+  def send_lead_customer_update(lead_customer)
+    token = User.new_remember_token
+    date = 7.days.from_now.to_date
+    
+  end
 end
