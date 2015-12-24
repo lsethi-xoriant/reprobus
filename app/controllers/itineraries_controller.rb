@@ -29,12 +29,13 @@ class ItinerariesController < ApplicationController
 
   def emailQuote
     @itinerary = Itinerary.find(params[:email_settings][:id])
-    
-    if CustomerMailer.send_email_quote(
-      @itinerary, @setting, params[:confirmed].presence, params[:email_settings]).deliver
+    confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
 
-      @itinerary.quote_sent_update_date(params[:confirmed].presence)
-      confirmed_name = params[:confirmed].presence ? 'Confirmed' : ''
+    if CustomerMailer.send_email_quote(
+      @itinerary, @setting, confirmed, params[:email_settings]).deliver
+
+      @itinerary.quote_sent_update_date(confirmed)
+      confirmed_name = confirmed ? 'Confirmed' : ''
       flash[:success] = "#{confirmed_name} Itinerary Quote has been sent."
     else
       flash[:error] = 'Error occured while sending Quote'

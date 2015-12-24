@@ -16,6 +16,8 @@
 
                   <%= c.hidden_field :id, value: @itinerary.id %>
 
+                  <%= confirmed %>
+
                   <%= hidden_field_tag :confirmed, confirmed %>
 
                   <div class="input-field col s6">
@@ -58,8 +60,8 @@
 
               <div class="row">
                 <div class="input-field col s6">
-                  <%= c.check_box :cc_email_send, checked: true %>
-                  <%= c.label :cc_email_send, "CC" %>
+                  <input type="checkbox" id=<%="cc_email_send_#{confirmed}"%> name="email_settings[cc_email_send]" class="filled-in" checked="checked"/>
+                  <label for=<%="cc_email_send_#{confirmed}"%>>CC</label>
                 </div>
                 <div class="input-field col s6">
                   <!-- CC email address -->
