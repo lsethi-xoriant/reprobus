@@ -205,11 +205,10 @@ class ItinerariesController < ApplicationController
   end
 
   def customer_updates
-    case params[:customer_update][:send_to]
-    when 'lead_customer'
-      CustomerMailer.send_lead_customer_update().deliver
-    when 'individual_customers'
-    end
+    itinerary = Itinerary.find(params[:id])
+    CustomerMailer.send_profile_update_requests(
+      itinerary, request, params[:customer_update][:send_to]).deliver
+    redirect_to edit_itinerary_path(params[:id])
   end
   
 private
