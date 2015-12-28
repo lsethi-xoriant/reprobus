@@ -193,6 +193,13 @@ class ItinerariesController < ApplicationController
       format.html
     end 
   end
+
+  def customer_updates
+    itinerary = Itinerary.find(params[:id])
+    CustomerMailer.send_profile_update_requests(
+      itinerary, request, params[:customer_update][:send_to]).deliver
+    redirect_to edit_itinerary_path(params[:id])
+  end
   
 private
     def itinerary_params

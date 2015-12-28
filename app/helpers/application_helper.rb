@@ -1,5 +1,19 @@
 module ApplicationHelper
 
+  def edit_customer_profile_url(request, customer)
+    request.protocol + request.host_with_port + 
+    '/customers/details/?auth_key=' + 
+    customer.public_edit_token
+  end
+
+  def customer_title_full_name_email(customer)
+    if customer.present? 
+      "#{customer.fullname_with_title} - #{customer.email.presence || 'No Email'}"
+    else
+      "No customer found"
+    end
+  end
+
   def enquiry_name_in_select(enquiry)
     return nil unless enquiry.present?
     "#{enquiry.id} - #{enquiry.lead_customer.try(:fullname)} - #{enquiry.name}"

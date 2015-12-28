@@ -47,6 +47,7 @@ Reprobus::Application.routes.draw do
       get 'reinstate'
       get 'details'
       get 'booking_history'
+      get 'customer_updates'
     end
   end
 
@@ -68,6 +69,8 @@ Reprobus::Application.routes.draw do
   resources :customers do
     collection do
       get 'addnote'  # /customers/addnote
+      get :details # for customer update form page
+      patch :update_details
     end
   end
 
