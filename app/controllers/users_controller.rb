@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  authorize_resource class: UsersController
+  
   before_filter :signed_in_user, except: [:new, :create]
   before_filter :correct_user, only: [:edit, :update, :destroy]
-  before_filter :admin_user, only: :destroy
+  # before_filter :admin_user, only: :destroy
   
   def index
     @users = User.page(params[:page])
@@ -34,6 +36,7 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @roles = Role.all
   end
   
   def update
@@ -53,8 +56,11 @@ class UsersController < ApplicationController
   
 private
     def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, (:admin if @current_user && @current_user.admin?))
+      params
+        .require(:user)
+        .permit(:name, :email, :password,
+                :password_confirmation, {role_ids: []},
+                (:admin if @current_user && @current_user.admin?))
     end
 	
     def correct_user

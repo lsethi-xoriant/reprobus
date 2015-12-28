@@ -1,4 +1,5 @@
 class Reports::ConfirmedBookingController < ApplicationController
+  authorize_resource class: Reports::ConfirmedBookingController
 
   def index
     if params[:reports_search]

@@ -33,7 +33,7 @@
             <li class="col-lg-9 col-md-9 col-sm-9"><%= value_or_dash( @customer.background_info ) %></li>
           </ul>
 
-        <% if current_user.admin? %>
+        <% if current_user.management? %>
           <%#= link_to "Delete " + @customer.first_name + " " +  @customer.last_name, @customer, method: :delete, data: { confirm: "You sure?" } %>
         <% end %>
 

@@ -100,7 +100,7 @@
         <!-- /well -->
       <div class="activity"></div>
         <!-- /activity -->
-      <% if current_user.admin? && edit %>
+      <% if current_user.management? && edit %>
         <%= link_to "Delete " + @enquiry.name, @enquiry, method: :delete, data: { confirm: "You sure?" } %>
          <!-- next line commented out as was causing errors in Heroku -->
         <%#= render "versions/versions", :object => @enquiry %>
