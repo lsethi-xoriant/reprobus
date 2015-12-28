@@ -38,7 +38,32 @@ class User < ActiveRecord::Base
   
   has_many    :activities, dependent: :destroy
   has_many    :itineraries
-  
+
+  has_many    :user_roles 
+  has_many    :roles, through: :user_roles
+
+  # Role.all.pluck(:name).each do |role_name|
+  #   define_method "#{role_name.parameterize('_')}?" do
+  #     self.roles.find_by(name: role_name).present?
+  #   end
+  # end
+
+  def management?
+    roles.find_by(name: 'Management').present?
+  end
+
+  def admin?
+    roles.find_by(name: 'Admin').present?
+  end
+
+  def accounts?
+    roles.find_by(name: 'Accounts').present?
+  end
+
+  def sales?
+    roles.find_by(name: 'Sales').present?
+  end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

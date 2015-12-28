@@ -1,5 +1,6 @@
 class Admin::CarriersController < ApplicationController
-  before_filter :admin_user
+  authorize_resource class: Admin::CarriersController
+  # before_filter :admin_user
   
   def index
     @carriers = Carrier.all

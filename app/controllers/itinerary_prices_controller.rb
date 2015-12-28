@@ -1,6 +1,8 @@
 class ItineraryPricesController < ApplicationController
+  authorize_resource class: ItineraryPricesController
+
   before_filter :signed_in_user
-  before_filter :admin_user, only: :destroy
+  # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
   
   def new
@@ -124,4 +126,5 @@ private
     @from_email = 
       @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
   end
+
 end
