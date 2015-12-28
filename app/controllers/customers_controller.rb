@@ -32,26 +32,23 @@ class CustomersController < ApplicationController
   end
 
   def details
-    @customer = Customer.find(params[:customer_id])
-    if params[:auth_key] && params[:auth_key] == @customer.try(:public_edit_token) &&
-                @customer.try(:public_edit_token_expiry).try(:to_date) > DateTime.now
-      render '_form', locals: { buttontxt: "Update Details", update_action: "customer_update_details" }
+    @customer = Customer.find_by(public_edit_token: params[:auth_key]) if params[:auth_key].presence
+    if @customer && @customer.try(:public_edit_token_expiry).try(:to_date) >= Date.today
+      render '_form', locals: { buttontxt: "Update Details", update_action: "update_details_customers" }
     else
       redirect_to noaccess_path
     end
   end
 
   def update_details
-    @customer = Customer.find(params[:customer_id])
-
-    if params[:auth_key] && params[:auth_key] == @customer.try(:public_edit_token) &&
-                @customer.try(:public_edit_token_expiry).try(:to_date) > DateTime.now
+    @customer = Customer.find_by(public_edit_token: params[:auth_key]) if params[:auth_key].presence
+    if @customer && @customer.try(:public_edit_token_expiry).try(:to_date) >= Date.today
       if @customer.update_attributes(customer_params)
         flash[:success] = "Your profile was successfully updated."
       else
         flash[:error] = "Some problems occured while updating. Please, try again."
       end
-      redirect_to customer_details_path @customer, auth_key: params[:auth_key]
+      redirect_to details_customers_path(auth_key: params[:auth_key])
     else
       redirect_to noaccess_path
     end

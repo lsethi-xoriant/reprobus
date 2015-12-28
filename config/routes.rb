@@ -65,10 +65,10 @@ Reprobus::Application.routes.draw do
   resources :agents
   
   resources :customers do
-    get :details # for customer update form page
-    patch :update_details
     collection do
       get 'addnote'  # /customers/addnote
+      get :details # for customer update form page
+      patch :update_details
     end
   end
 
