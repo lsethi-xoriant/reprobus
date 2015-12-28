@@ -2,9 +2,7 @@ module ApplicationHelper
 
   def edit_customer_profile_url(request, customer)
     request.protocol + request.host_with_port + 
-    '/customers/' + 
-    customer.id.to_s + 
-    '/details/?auth_key=' + 
+    '/customers/details/?auth_key=' + 
     customer.public_edit_token
   end
 
