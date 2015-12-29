@@ -112,9 +112,12 @@ class CustomerMailer < ActionMailer::Base
     end
 
     def send_update_request(to_email)
+      from_email = 
+        Setting.find(1).try(:itineraries_from_email).presence || 
+          User.find_by_name("System").try(:email)
       mail(
-        from: 'me@email.com',
-        reply_to: 'me@email.com',
+        from: from_email,
+        reply_to: from_email,
         to: to_email, 
         subject: 'Update personal details') if to_email.present?
     end
