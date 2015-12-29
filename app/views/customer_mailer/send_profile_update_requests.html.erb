@@ -1,0 +1,21 @@
+<p> Dear 
+  <% if @send_to == 'lead_customer' %>
+    <%= @lead_customer.fullname_with_title %>
+  <% elsif @send_to == 'individual_customers' %>
+    <%= @current_customer.fullname_with_title %> 
+  <% end %>
+</p>
+
+<p>Thanks for your booking,</p>
+
+<p>in order to confirm your services we require you to complete the following form with your personal details.</p>
+
+<p>Please note your name is to be entered as it is shown on your passport</p>
+
+<% if @send_to == 'lead_customer' %>
+  <% @customers.each do |customer| %>
+    <p><%= link_to customer.fullname, edit_customer_profile_url(@request, customer) %></p>
+  <% end %>
+<% elsif @send_to == 'individual_customers' %>
+  <p><%= link_to @current_customer.fullname, edit_customer_profile_url(@request, @current_customer) %></p>
+<% end %>

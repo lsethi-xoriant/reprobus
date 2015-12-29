@@ -47,6 +47,7 @@ Reprobus::Application.routes.draw do
       post 'revert_cancel'
       get 'details'
       get 'customer_interactions'
+      get 'customer_updates'
     end
   end
 
@@ -66,6 +67,8 @@ Reprobus::Application.routes.draw do
   resources :customers do
     collection do
       get 'addnote'  # /customers/addnote
+      get :details # for customer update form page
+      patch :update_details
     end
   end
 

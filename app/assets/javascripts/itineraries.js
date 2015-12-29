@@ -218,6 +218,11 @@ $(document).ready(function() {
     }
   });
 
+  $('.modal-footer').on('click', '#request_customer_updates_OK', function(e) {
+      e.preventDefault();
+      $("#request_customer_updates_form").submit();
+    });
+
   // Copy Itinerary on Edit Itinerary Page
   $('.modal-footer').on('click', '#copy_itinerary_OK', function(e) {
     e.preventDefault();

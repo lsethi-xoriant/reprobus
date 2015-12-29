@@ -170,6 +170,8 @@
         <div class='input-field col s3'>
           <%= link_to 'Customer Interactions', customer_interactions_itinerary_path(params[:id]), class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
         </div>
+
+        <%= render partial: 'request_customer_updates_button' %>
         
       </div>
 
@@ -217,3 +219,4 @@
 <%= render partial: 'copy_itinerary_modal' %>
 <!-- Email Quote Modal -->
 <%= render partial: 'emailQuote_modal' %>
+<%= render partial: 'request_customer_updates_modal' %>

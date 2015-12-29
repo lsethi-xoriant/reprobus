@@ -1,9 +1,10 @@
 class CustomersController < ApplicationController
   authorize_resource class: CustomersController
   
-  before_filter :signed_in_user
   # before_filter :admin_user, only: :destroy
+  before_filter :signed_in_user, except: [:details, :update_details]
   before_action :setCompanySettings
+  layout "customer_details", :only => [ :details ]
   
   def index
 #  @customers = Customer.where(cust_sup: "Customer")
@@ -30,6 +31,29 @@ class CustomersController < ApplicationController
   def edit
     @customer = Customer.find(params[:id])
     @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(5)
+  end
+
+  def details
+    @customer = Customer.find_by(public_edit_token: params[:auth_key]) if params[:auth_key].presence
+    if @customer && @customer.try(:public_edit_token_expiry).try(:to_date) >= Date.today
+      render '_form', locals: { buttontxt: "Update Details", update_action: "update_details_customers" }
+    else
+      redirect_to noaccess_path
+    end
+  end
+
+  def update_details
+    @customer = Customer.find_by(public_edit_token: params[:auth_key]) if params[:auth_key].presence
+    if @customer && @customer.try(:public_edit_token_expiry).try(:to_date) >= Date.today
+      if @customer.update_attributes(customer_params)
+        flash[:success] = "Your profile was successfully updated."
+      else
+        flash[:error] = "Some problems occured while updating. Please, try again."
+      end
+      redirect_to details_customers_path(auth_key: params[:auth_key])
+    else
+      redirect_to noaccess_path
+    end
   end
   
   def create
@@ -100,7 +124,8 @@ private
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id, :agent_commision_percentage,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
-        :quote_introduction, :confirmed_introduction,
+        :quote_introduction, :confirmed_introduction, :medical_information, :dietary_requirements,
+        :emergency_contact_phone, :emergency_contact, :frequent_flyer_details,
         trigger_attributes: [:email_template_id], company_logo_attributes: [:id, :image_local, :image_remote_url],
         address_attributes: [:street1, :street2, :city, :state, 
         :zipcode, :country, :full_address, :address_type, :addressable_type, :addressable_id])
