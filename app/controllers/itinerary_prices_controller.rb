@@ -126,5 +126,4 @@ private
     @from_email = 
       @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
   end
-
 end

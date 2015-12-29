@@ -9,7 +9,7 @@
 
 .bodWrap { -webkit-print-color-adjust:exact;}
 
-.header { min-height:872px; position:relative;}
+.header { min-height:272px; position:relative;}
 .logo { position:absolute; right:22px; top:0;} .clear100 { clear:both; height:100px;} .clear50 { clear:both; height:30px;} .clear45 { clear:both; height:45px;}
 .clear90 { clear:both; height:90px;} .clear75 { clear:both; height:75px;} .clear60 { clear:both; height:60px;} .clear155 { clear:both; height:155px;}
 
@@ -27,6 +27,23 @@
 .title2 { color:#97bd4e; font-size:18px; line-height:30px; font-weight: 800;}
 .caption { color:#424043; font-size:18px; line-height:28px; font-weight: 400;}
 .page-break { display:block; clear:both; page-break-after:always; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+  border: 1px solid #ddd;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 4px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  font-size: 14px;
+}
+
 </style>
 
 <!--  google font  -->
@@ -38,13 +55,12 @@
 <div class="bodyWrap">
 
   <div class="header">
-      <%= image_tag(@itinerary.get_itinerary_image_link, :class => "") %>
-      <a class="logo" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
+    <a class="logo" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
   </div>
 
   <p><h3>Dear <%= @supplier.supplier_name %>,</h3></p>
   <p><h3>Please quote the following services for quote number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:</h3></p>
-  <p><h3>Itinerary details:</h3></p>
+  
   <table>
     <thead>
       <tr>
@@ -60,10 +76,7 @@
         <td>Bedding</td>
       </tr>
     </thead>
-  </table>
-
-  <% @itinerary_infos.each do |info| %>
-    <table>
+    <% @itinerary_infos.each do |info| %>
       <tr>
         <td><%= info.try(:supplier).try(:supplier_name) %></td>
         <td><%= info.try(:start_date).try(:strftime, "%d-%m-%Y") %></td>
@@ -77,10 +90,13 @@
         <td><%= (info.try(:get_product_type) && ['Hotel', 'Cruise'].include?(info.try(:get_product_type))) ? info.try(:itinerary).try(:bedding_type) : "" %></td>
       </tr>
       <tr>
-        <%= info.try(:get_product_details) %>
+        <td colspan="10">
+          <%= info.try(:get_product_description) %>
+        </td>
       </tr>
-    </table>
-  <% end %>
+    <% end %>
+  </table>
+  <br>
 
   <p><h3>Customer details:</h3></p>
   <% @itinerary.customers.each do |customer| %>
