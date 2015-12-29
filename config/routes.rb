@@ -46,16 +46,18 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       post 'revert_cancel'
       get 'details'
-      get 'customer_interactions'
       get 'customer_updates'
+      get 'booking_history'
     end
   end
 
-  resources :customer_interactions, only: [:download] do
+  resources :booking_history, only: [:download] do
     member { get :download }
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
+    get 'printQuote'
+    get 'emailQuote'
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
     end

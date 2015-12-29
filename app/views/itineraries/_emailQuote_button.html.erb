@@ -1,11 +1,14 @@
+<% form_name = local_assigns.key?(:confirmed) ? 'email_confirmed_quote' : 'email_quote' %>
+<% button_name = local_assigns.key?(:confirmed) ? 'Confirmed Quote' : 'Quote' %>
+
 <a
   id="EmailQuoteBtn"
   class="input-field waves-effect waves-light btn deep-purple darken-1 modal-trigger tooltipped"
   data-position="bottom"
   data-delay="50"
-  data-tooltip="Email Quote"
-  href="#email_quote_modal">
+  data-tooltip=<%="Email #{button_name}"%>
+  href=<%="##{form_name}_modal"%>>
 
-  Email Quote
+  <%="Email #{button_name}"%>
 
 </a>

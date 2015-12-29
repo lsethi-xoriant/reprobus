@@ -238,7 +238,9 @@ $(document).ready(function() {
 
   $('.modal-footer').on('click', '#email_quote_OK', function(e) {
     e.preventDefault();
-    $("#email_quote_form").submit();
+    confirmed = $(this)[0].dataset.confirmed;
+    form_name = JSON.parse(confirmed) ? 'email_confirmed_quote' : 'email_quote';
+    $("#" + form_name + "_form").submit();
   });
 
 });

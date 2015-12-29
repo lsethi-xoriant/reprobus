@@ -26,20 +26,24 @@ class CustomerMailer < ActionMailer::Base
     end
   end
 
-  def send_email_quote(itinerary, setting, params)
+  def send_email_quote(itinerary, setting, confirmed=false, params)
     # In development emails are opened by letter opener
     # Bring back this if its necessery:
     # if !Setting.global_settings.send_emails_turned_off
+    type = confirmed ? :confirmed_itinerary : :quote
+    name = confirmed ? 'Confirmed Itinerary' : 'Itinerary Quote'
+    include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
     mail(
       from: params[:from_email],
       reply_to: params[:from_email],
-      to: params[:to_email], 
-      subject: "Itinerary Quote") do |format|
+      to: params[:to_email],
+      cc: include_cc ? params[:cc_email] : '',
+      subject: name) do |format|
         format.html { render layout: false }
         format.pdf do
           if params[:type] == 'PDF'
-            attachments['ItineraryQuote.pdf'] = 
-              ItineraryRenderService.as_pdf(itinerary, setting)
+            attachments["#{name.delete(' ')}.pdf"] = 
+              ItineraryRenderService.as_pdf(itinerary, setting, confirmed)
           end
         end
         # TODO: need to be updated after Editable Format will be implemented
@@ -51,7 +55,28 @@ class CustomerMailer < ActionMailer::Base
       end
     # end
 
-    CustomerInteractionService.record_interaction(attachments, params)
+    BookingHistoryService.record_interaction(attachments, type, params)
+  end
+
+  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, params)
+    @body = params[:body]
+    include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
+    mail(
+      from: params[:from_email],
+      reply_to: params[:from_email],
+      to: params[:to_email],
+      cc: include_cc ? params[:cc_email] : '',
+      subject: "Supplier Quote") do |format|
+        format.html { render layout: false }
+        format.pdf do
+          if params[:type] == 'PDF'
+            attachments['SupplierQuote.pdf'] = 
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier)
+          end
+        end
+      end
+
+    BookingHistoryService.record_interaction(attachments, :supplier_quote, params)
   end
 
   def send_profile_update_requests(itinerary, request, send_to)

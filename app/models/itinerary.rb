@@ -40,7 +40,7 @@ class Itinerary < ActiveRecord::Base
   has_one       :itinerary_price
   belongs_to    :itinerary_template
   belongs_to    :enquiry
-  has_many      :customer_interactions
+  has_many      :booking_history
 
   belongs_to    :destination_image, :class_name => "ImageHolder", :foreign_key => :destination_image_id
   accepts_nested_attributes_for :destination_image
@@ -61,8 +61,9 @@ class Itinerary < ActiveRecord::Base
 
   enum bedding_type: [ :single, :twin, :double, :triple, :quad ]
 
-  def quote_sent_update_date
-    self.update_attribute(:quote_sent, DateTime.now)
+  def quote_sent_update_date(confirmed)
+    attribute = confirmed ? :confirmed_itinerary_sent : :quote_sent
+    self.update_attribute(attribute, DateTime.now)
   end
 
   def cancel
@@ -218,16 +219,16 @@ class Itinerary < ActiveRecord::Base
   end
   
   def start_date_display
-    self.start_date.strftime('%d %b %Y')
+    self.start_date.try(:strftime, '%d %b %Y')
   end
   def end_date_display
-    self.get_end_date.strftime('%d %b %Y')
+    self.end_date.try(:strftime, '%d %b %Y')
   end
   
   def get_trip_date_range
-    str = self.start_date.strftime('%d %b %Y')
-    if self.get_end_date
-      str += " - #{self.get_end_date.strftime('%d %b %Y')}"
+    str = self.start_date.try(:strftime, '%d %b %Y')
+    if self.end_date
+      str += " - #{self.end_date.strftime('%d %b %Y')}"
     end 
     return str
   end

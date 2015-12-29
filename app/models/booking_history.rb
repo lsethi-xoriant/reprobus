@@ -1,4 +1,4 @@
-class CustomerInteraction < ActiveRecord::Base
+class BookingHistory < ActiveRecord::Base
 
   # emailed_at:    timestamp
   # emailed_to:    string
@@ -9,6 +9,6 @@ class CustomerInteraction < ActiveRecord::Base
 
   belongs_to :itinerary
 
-  enum document_type: [ :quote, :confirmed_itinerary ]
+  enum document_type: [ :quote, :confirmed_itinerary, :supplier_quote ]
 
 end
