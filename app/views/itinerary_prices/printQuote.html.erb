@@ -37,10 +37,11 @@ table {
 }
 
 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    line-height: 1.42857143;
-    vertical-align: top;
+  border: 1px solid #ddd;
+  padding: 4px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  font-size: 14px;
 }
 
 </style>
@@ -59,24 +60,23 @@ td {
 
   <p><h3>Dear <%= @supplier.supplier_name %>,</h3></p>
   <p><h3>Please quote the following services for quote number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:</h3></p>
-  <p><h3>Itinerary details:</h3></p>
-
-  <% @itinerary_infos.each do |info| %>
-    <table>
-      <thead>
-        <tr>
-          <td>Supplier</td>
-          <td>Start</td>
-          <td>End</td>
-          <td>Country</td>
-          <td>Destination</td>
-          <td>Product Type</td>
-          <td>Product</td>
-          <td>Room</td>
-          <td>Classification</td>
-          <td>Bedding</td>
-        </tr>
-      </thead>
+  
+  <table>
+    <thead>
+      <tr>
+        <td>Supplier</td>
+        <td>Start</td>
+        <td>End</td>
+        <td>Country</td>
+        <td>Destination</td>
+        <td>Product Type</td>
+        <td>Product</td>
+        <td>Room</td>
+        <td>Classification</td>
+        <td>Bedding</td>
+      </tr>
+    </thead>
+    <% @itinerary_infos.each do |info| %>
       <tr>
         <td><%= info.try(:supplier).try(:supplier_name) %></td>
         <td><%= info.try(:start_date).try(:strftime, "%d-%m-%Y") %></td>
@@ -91,16 +91,16 @@ td {
       </tr>
       <tr>
         <td colspan="10">
-          <%= info.try(:get_product_details) %>
+          <%= info.try(:get_product_description) %>
         </td>
       </tr>
-    </table>
-    <br>
-  <% end %>
+    <% end %>
+  </table>
+  <br>
 
   <p><h3>Customer details:</h3></p>
   <% @itinerary.customers.each do |customer| %>
-    <%= customer.try(:fullname_with_title) %>
+    <p><%= customer.try(:fullname_with_title) %></p>
   <% end %>
 
 </div>
