@@ -78,10 +78,8 @@ class ReportService
 
     results = 
       ItineraryPriceItem
-        .includes(:supplier)
-        .where.not(supplier_itinerary_price_id: nil)
-        .joins(:itinerary_price)
-        .joins(itinerary_price: :itinerary)
+        .joins(:supplier_itinerary_price)
+        .joins(supplier_itinerary_price: :itinerary)
         .where(itinerary_prices: { customer_invoice_sent: true })
 
     results = 
@@ -100,9 +98,10 @@ class ReportService
     end
 
     results
-      .includes(:itinerary_price)
-      .includes(itinerary_price: :itinerary)
-      .includes(itinerary_price: { itinerary: :lead_customer })
+      .includes(:supplier)
+      .includes(:supplier_itinerary_price)
+      .includes(supplier_itinerary_price: :itinerary)
+      .includes(supplier_itinerary_price: { itinerary: :lead_customer })
 
   end
 
