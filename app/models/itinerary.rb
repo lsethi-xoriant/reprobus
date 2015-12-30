@@ -218,16 +218,16 @@ class Itinerary < ActiveRecord::Base
   end
   
   def start_date_display
-    self.start_date.strftime('%d %b %Y')
+    self.start_date.try(:strftime, '%d %b %Y')
   end
   def end_date_display
-    self.get_end_date.strftime('%d %b %Y')
+    self.end_date.try(:strftime, '%d %b %Y')
   end
   
   def get_trip_date_range
-    str = self.start_date.strftime('%d %b %Y')
-    if self.get_end_date
-      str += " - #{self.get_end_date.strftime('%d %b %Y')}"
+    str = self.start_date.try(:strftime, '%d %b %Y')
+    if self.end_date
+      str += " - #{self.end_date.strftime('%d %b %Y')}"
     end 
     return str
   end
