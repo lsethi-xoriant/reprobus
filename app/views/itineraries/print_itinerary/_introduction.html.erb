@@ -17,6 +17,7 @@
 <div class="clear50"></div>
 <p class="caption"><strong>Trip Dates: </strong><%= @itinerary.get_trip_date_range %><p>
 <p class="caption"><strong>Number of Passengers: </strong><%= @itinerary.enquiry.num_people.to_s %><p>
+<p class="caption"><strong>Bedding Type: </strong><%= @itinerary.bedding_type.try(:humanize) %></p>
 <p class="caption"><strong>Lead Customer: </strong><%= @itinerary.enquiry.lead_customer.fullname_with_title %><p>
 <p class="caption"><strong>Email: </strong><%= @itinerary.enquiry.lead_customer.email %><p>
 <% @enquiry.customers.each do |cust| %>

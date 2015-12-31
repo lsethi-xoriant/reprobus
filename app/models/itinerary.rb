@@ -60,6 +60,8 @@ class Itinerary < ActiveRecord::Base
 
   has_paper_trail :ignore => [:created_at, :updated_at], :meta => { :customer_names  => :customer_names }
 
+  enum bedding_type: [ :single, :twin, :double, :triple, :quad ]
+
   def quote_sent_update_date
     self.update_attribute(:quote_sent, DateTime.now)
   end
