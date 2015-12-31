@@ -1,1 +1,6 @@
-<%= @body.try(:html_safe) %>
+<% if @confirmed %>
+  Please confirm the attached services for booking number 
+  <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>
+<% else %>
+  <%= @body.try(:html_safe) %>
+<% end %>

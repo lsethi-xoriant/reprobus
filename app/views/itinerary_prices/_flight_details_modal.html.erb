@@ -1,0 +1,32 @@
+
+<div id=<%="flight_details_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
+  <div class="modal-content">
+    <h4><i class="mdi-image-add-to-photos"></i>  Flight details</h4>
+
+    <ul>
+      <li>
+        <div class="row">
+          <div id="email_quote_container" class="col s12">
+
+            <div class="row">
+
+              <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
+
+              <div class="input-field col s12">
+                <%= cktext_area_tag "flight_details_#{itinerary_price_item_id}" %>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" id="flight_details_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Ok</a>
+  </div>
+</div>
+
