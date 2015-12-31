@@ -57,6 +57,8 @@ Reprobus::Application.routes.draw do
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
+      match 'invoice_deposit/:id', to: 'itinerary_prices#invoice_deposit',   as: 'invoice_deposit' ,via: 'get'
+      match 'invoice_remaining/:id', to: 'itinerary_prices#invoice_remaining',   as: 'invoice_remaining' ,via: 'get'
     end
   end
     
@@ -90,11 +92,9 @@ Reprobus::Application.routes.draw do
         get 'supplierInvoice'
         get 'syncInvoice'
         post 'createSupplier'
-        #get 'pdfRemaining'
-        match ':id/pdfRemaining', to: 'invoices#pdfRemaining',   as: 'pdfRemaining' ,via: 'get'
-        match ':id/pdfDeposit', to: 'invoices#pdfDeposit',   as: 'pdfDeposit' ,via: 'get'
+        #match ':id/pdfRemaining', to: 'invoices#pdfRemaining',   as: 'pdfRemaining' ,via: 'get'
+        #match ':id/pdfDeposit', to: 'invoices#pdfDeposit',   as: 'pdfDeposit' ,via: 'get'
         match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get'
-       # match 'suppliers/new', to: 'invoices#supplierInvoice',   as: 'supplierInvoice' ,via: 'get'
       end
     end
   end

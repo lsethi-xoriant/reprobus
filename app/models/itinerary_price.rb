@@ -77,6 +77,11 @@ class ItineraryPrice < ActiveRecord::Base
       end
     end
     
+    if !inv.save
+      inv.destroy
+      return false
+    end
+    
     if inv.create_invoice_xero(user)
       inv.save
     end
@@ -144,5 +149,6 @@ class ItineraryPrice < ActiveRecord::Base
     self.deposit_due  = Date.today + 2
     self.final_balance_due = Date.today + 95
   end
+  
   
 end

@@ -49,10 +49,11 @@ class ItineraryPricesController < ApplicationController
 
   def invoice
     @itinerary_price = ItineraryPrice.find(params[:id])
+    @itinerary = @itinerary_price.itinerary
     
     if !@itinerary_price.has_uninvoiced_customer_items
       flash[:error] = "No items requiring invoices!"
-      redirect_to edit_itinerary_price_path(@itinerary_price)
+      return redirect_to edit_itinerary_price_path(@itinerary_price)
     end
     
     if  @itinerary_price.create_customer_invoices(current_user) 
@@ -62,9 +63,42 @@ class ItineraryPricesController < ApplicationController
       flash[:success] = "Invoices smashed it"
       redirect_to edit_itinerary_price_path(@itinerary_price)
     end 
-    
   end
   
+  
+  def invoice_remaining
+    @itinerary_price = ItineraryPrice.find(params[:id])
+    @itinerary = @itinerary_price.itinerary
+    
+    @itinerary_price.itinerary_price_items each do |ipi|
+      @xinvoices << ipi.invoice.x_invoice if ipi.invoice
+      @invoices << ipi.invoice if ipi.invoice
+    end
+    
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_balance"
+      end
+    end
+  end
+ 
+  def invoice_deposit
+    @itinerary_price = ItineraryPrice.find(params[:id])
+    @itinerary = @itinerary_price.itinerary
+    
+    @itinerary_price.itinerary_price_items.each do |ipi|
+      @xinvoices << ipi.invoice.x_invoice if ipi.invoice
+      @invoices << ipi.invoice if ipi.invoice
+    end
+    
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit"
+      end
+    end
+  end
+  
+    
 private
   def itinerary_price_params
     params.require(:itinerary_price).permit(:itinerary_id, :deposit_due,

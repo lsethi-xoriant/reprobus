@@ -71,7 +71,7 @@ class Xero
      # :status => "SUBMITTED",
       :status => "AUTHORISED",
       :date => Date.today,
-      :due_date => (Date.today + 30),
+      :due_date => invoice.final_payment_due,
       :currency_code => currency,
       :line_items => [{
         :description => itinerary.name,

@@ -156,10 +156,19 @@
       <div class="input-field col s6" >
         <a href="<%= edit_itinerary_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Back to Itinerary</a>
       </div>
-      <div class="input-field col s6" >
-        <%= f.submit buttontxt, class: "btn right green"%>
-      </div>
+        <div class="input-field col s6" style="display:none" >
+          <%= f.submit buttontxt, class: "btn itinerary_price_submit_btn right"%>
+        </div>
     </div>
+
+    
+     <div class="fixed-action-btn" style="bottom: 45px; right: 15px;">
+        <a id="saveItineraryPriceFabBtn" class="btn-floating btn-large waves-effect green tooltipped" 
+        data-position="left" data-delay="50" data-tooltip="Save" >
+          <i class="large mdi-content-save"></i>
+        </a>
+      </div>  
+      
   <% end %>
 	 
 </div>

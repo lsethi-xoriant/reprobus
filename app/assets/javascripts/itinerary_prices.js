@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  
+  $("#saveItineraryPriceFabBtn").on('click', function(e) {
+    $('.itinerary_price_submit_btn').click();
+  }); 
 
   if ($('#itinerary_price_items').length) {
     // only do if on itinerary price page...
