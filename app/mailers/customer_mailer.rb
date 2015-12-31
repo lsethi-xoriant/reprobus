@@ -57,24 +57,28 @@ class CustomerMailer < ActionMailer::Base
     BookingHistoryService.record_interaction(attachments, type, params)
   end
 
-  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, params)
+  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed=false, params)
     @body = params[:body]
+    @confirmed = confirmed
+    @itinerary = itinerary
     include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
+    name = confirmed ? "#{supplier.try(:supplier_name)} booking request #{itinerary.id} / #{itinerary.try(:lead_customer).try(:last_name)}" : "Supplier Quote"
+    type = confirmed ? :confirmed_supplier : :supplier_quote
     mail(
       from: params[:from_email],
       reply_to: params[:from_email],
       to: params[:to_email],
       cc: include_cc ? params[:cc_email] : '',
-      subject: "Supplier Quote") do |format|
+      subject: name) do |format|
         format.html { render layout: false }
         format.pdf do
           if params[:type] == 'PDF'
-            attachments['SupplierQuote.pdf'] = 
-              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier)
+            attachments['supplier.pdf'] = 
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed)
           end
         end
       end
 
-    BookingHistoryService.record_interaction(attachments, :supplier_quote, params)
+    BookingHistoryService.record_interaction(attachments, type, params)
   end
 end
