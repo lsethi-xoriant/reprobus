@@ -75,7 +75,7 @@ class CustomerMailer < ActionMailer::Base
         format.pdf do
           if params[:type] == 'PDF'
             attachments['supplier.pdf'] = 
-              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed)
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, params["flight_details_#{itinerary_price_item.id}"])
           end
         end
       end

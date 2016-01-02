@@ -51,6 +51,8 @@ td {
 <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
 <meta charset='utf-8' />
 
+<% confirmed = !!defined?(@confirmed) ? @confirmed : params[:confirmed].presence %>
+
 <body>
 <div class="bodyWrap">
 
@@ -138,6 +140,12 @@ td {
     <% @itinerary.customers.each do |customer| %>
       <p><%= customer.try(:fullname_with_title) %></p>
     <% end %>
+  <% end %>
+
+  <% if confirmed %>
+    <br>
+    <p><h3>Flight details:</h3></p>
+    <%= @flight_details.try(:html_safe) %>
   <% end %>
 
 </div>
