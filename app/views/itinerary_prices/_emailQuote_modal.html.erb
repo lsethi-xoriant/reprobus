@@ -55,6 +55,18 @@
                 </div>
               </div>
 
+              <% if confirmed %>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <!-- flight details -->
+                    <%= c.label :flight_details, 'Flight details (mandatory field):' %>
+                    <br>
+                    <br>
+                    <%= c.cktext_area "flight_details_#{itinerary_price_item_id}" %>
+                  </div>
+                </div>
+              <% end %>
+
               <div class="row">
                 <div class="input-field col s12">
                   <!-- body email -->
@@ -71,7 +83,7 @@
     </div>
 
     <div class="modal-footer">
-      <a href="#" id="email_supplier_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
+      <a href="#" id="email_supplier_quote_OK" class="waves-effect waves-lighten-3 green btn-flat" data-confirmed="<%= confirmed %>" data-id="<%= itinerary_price_item_id %>">Send</a>
       <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
     </div>
   </div>

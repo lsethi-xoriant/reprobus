@@ -169,6 +169,6 @@
   <% if item.id && item.try(:supplier).try(:email) %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id } %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id, confirmed: true } %>
-    <%= render partial: 'flight_details_modal', locals: { itinerary_price_item_id: item.id } %>
+    <!-- <%= render partial: 'flight_details_modal', locals: { itinerary_price_item_id: item.id } %> -->
   <% end %>
 <% end %>
