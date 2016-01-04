@@ -19,8 +19,8 @@
       
       
       <%= render partial: 'shared/material_textfield_cols12', locals: { field: "alt_email", f: f } %>
-      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "fax", f: f } %>
-      <%= render partial: 'shared/material_date_cols6', locals: { field: :born_on, id: :born_on, f: f } %>
+      <!-- <%= render partial: 'shared/material_textfield_cols12', locals: { field: "fax", f: f } %>  -->
+      <%= render partial: 'shared/material_date_cols6', locals: { field: :born_on, id: :born_on, f: f, wide_range: true } %>
       <%= render partial: 'shared/material_textfield_cols12', locals: { field: "insurance", f: f, name: "Insurance details" } %>
       <%= render partial: 'shared/material_textfield_cols12', locals: { field: "passport_num", f: f } %>
       <%= render partial: 'shared/material_textfield_cols12', locals: { field: "nationality", f: f } %>
