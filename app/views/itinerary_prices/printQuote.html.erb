@@ -98,7 +98,7 @@ td {
         <td><%= (info.try(:get_product_type) && ['Tour', 'Transfer'].include?(info.try(:get_product_type))) ? info.try(:get_room_type_name) : "" %></td>
         <td><%= (info.try(:get_product_type) && ['Hotel', 'Cruise'].include?(info.try(:get_product_type))) ? info.try(:itinerary).try(:bedding_type) : "" %></td>
       </tr>
-      <% if info.try(:get_product_type) == 'Hotel' %>
+      <% if info.try(:get_product_type) != 'Hotel' %>
         <tr>
           <td colspan="10">
             <%= info.try(:get_product_description) %>
