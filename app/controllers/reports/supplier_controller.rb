@@ -37,7 +37,7 @@ class Reports::SupplierController < ApplicationController
           search_params.try(:[], :from),
           search_params.try(:[], :to)
         )
-      @search_by = search_params.try(:[], :search_by).presence || :confirmed_date
+      @search_by = search_params.try(:[], :search_by).presence || 'confirmed_date'
       @supplier = search_params.try(:[], :supplier_id).presence
     end
 
