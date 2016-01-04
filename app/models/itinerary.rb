@@ -124,8 +124,8 @@ class Itinerary < ActiveRecord::Base
   end
   
   def get_company_logo_image_link
-    if self.enquiry.agent then 
-      return self.enquiry.agent.get_company_logo_image_link()
+    if self.agent then 
+      return self.try(:agent).try("get_company_logo_image_link()")
     else
       Setting.global_settings.get_company_logo_image_link()
     end 

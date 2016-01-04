@@ -59,6 +59,18 @@
 
               Email Quote Request
             </a>
+            <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, confirmed: true, format: :pdf) %>"
+              class="waves-effect waves-light btn deep-purple darken-1"
+              data-delay="50">
+
+              View Confirmation
+            </a>
+            <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+              data-delay="50"
+              href=<%="#email_confirmed_quote_modal_#{f.object.id}"%>>
+
+              Email Confirmation
+            </a>
           <% end %>
         </div>
       </div>

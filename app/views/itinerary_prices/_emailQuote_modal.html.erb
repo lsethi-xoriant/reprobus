@@ -1,6 +1,9 @@
-<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: "email_quote_form_#{itinerary_price_item_id}" } do |c| %>
+<% form_name = local_assigns.key?(:confirmed) ? 'email_confirmed_quote' : 'email_quote' %>
+<% confirmed = local_assigns.key?(:confirmed) ? confirmed : false %>
 
-  <div id=<%="email_quote_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
+<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: "#{form_name}_form_#{itinerary_price_item_id}" } do |c| %>
+
+  <div id=<%="#{form_name}_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
     <div class="modal-content">
       <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
 
@@ -12,6 +15,8 @@
               <div class="row">
 
                 <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
+
+                <%= hidden_field_tag :confirmed, confirmed %>
 
                 <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
                 <div class="input-field col s6">
@@ -50,6 +55,18 @@
                 </div>
               </div>
 
+              <% if confirmed %>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <!-- flight details -->
+                    <%= c.label :flight_details, 'Flight details (mandatory field):' %>
+                    <br>
+                    <br>
+                    <%= c.cktext_area "flight_details_#{itinerary_price_item_id}" %>
+                  </div>
+                </div>
+              <% end %>
+
               <div class="row">
                 <div class="input-field col s12">
                   <!-- body email -->
@@ -66,7 +83,7 @@
     </div>
 
     <div class="modal-footer">
-      <a href="#" id="email_supplier_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Send</a>
+      <a href="#" id="email_supplier_quote_OK" class="waves-effect waves-lighten-3 green btn-flat" data-confirmed="<%= confirmed %>" data-id="<%= itinerary_price_item_id %>">Send</a>
       <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
     </div>
   </div>

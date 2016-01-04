@@ -96,11 +96,13 @@ class ItineraryPricesController < ApplicationController
     @itinerary_infos = @itinerary
                         .itinerary_infos
                         .select { |info| info.supplier_id == @supplier.id }
+    confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
 
     if CustomerMailer.send_email_supplier_quote(
-      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, @supplier, params[:email_settings]).deliver
+      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver
 
-      flash[:success] = 'Supplier Quote has been sent.'
+      confirmed_name = confirmed ? 'Confirmed' : ''
+      flash[:success] = "#{confirmed_name} Supplier Quote has been sent."
     else
       flash[:error] = 'Error occured while sending Quote'
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218105122) do
+ActiveRecord::Schema.define(version: 20151231083859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(version: 20151218105122) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
+
+  create_table "booking_histories", force: :cascade do |t|
+    t.datetime "emailed_at"
+    t.string   "emailed_to"
+    t.integer  "document_type"
+    t.string   "attachment"
+    t.integer  "itinerary_id"
+  end
 
   create_table "bookings", force: :cascade do |t|
     t.integer  "customer_id"
@@ -86,14 +94,6 @@ ActiveRecord::Schema.define(version: 20151218105122) do
     t.string   "currency",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "customer_interactions", force: :cascade do |t|
-    t.datetime "emailed_at"
-    t.string   "emailed_to"
-    t.integer  "document_type"
-    t.string   "attachment"
-    t.integer  "itinerary_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -139,6 +139,14 @@ ActiveRecord::Schema.define(version: 20151218105122) do
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
+    t.string   "public_edit_token"
+    t.date     "public_edit_token_expiry"
+    t.text     "frequent_flyer_details"
+    t.string   "emergency_contact"
+    t.string   "emergency_contact_phone"
+    t.text     "dietary_requirements"
+    t.text     "medical_information"
+    t.string   "nationality"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -209,7 +217,7 @@ ActiveRecord::Schema.define(version: 20151218105122) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.text     "body"
+    t.string   "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,9 +1,9 @@
 <div class="input-field col s6">
   <% if local_assigns.has_key? :value %>
-    <%= f.date_field field.to_sym, class:"datepicker", :"data-value" => value %>
+    <%= f.date_field field.to_sym, class: local_assigns.has_key?(:wide_range) ? 'datepicker-wide-range' : 'datepicker', :"data-value" => value %>
     <% active = " active" if value %>
   <% else %>
-    <%= f.date_field field.to_sym, class:"datepicker" %>
+    <%= f.date_field field.to_sym, class: local_assigns.has_key?(:wide_range) ? 'datepicker-wide-range' : 'datepicker' %>
   <% end %>
   
   <% if local_assigns.has_key? :name %>

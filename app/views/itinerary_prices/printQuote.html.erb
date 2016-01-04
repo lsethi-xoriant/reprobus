@@ -51,7 +51,9 @@ td {
 <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
 <meta charset='utf-8' />
 
-<body> 
+<% confirmed = !!defined?(@confirmed) ? @confirmed : params[:confirmed].presence %>
+
+<body>
 <div class="bodyWrap">
 
   <div class="header">
@@ -59,7 +61,14 @@ td {
   </div>
 
   <p><h3>Dear <%= @supplier.supplier_name %>,</h3></p>
-  <p><h3>Please quote the following services for quote number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:</h3></p>
+  <p><h3>
+    <% if confirmed %>
+      Please confirm the following services for booking number 
+    <% else %>
+      Please quote the following services for quote number 
+    <% end %>
+    <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:
+  </h3></p>
   
   <table>
     <thead>
@@ -89,18 +98,56 @@ td {
         <td><%= (info.try(:get_product_type) && ['Tour', 'Transfer'].include?(info.try(:get_product_type))) ? info.try(:get_room_type_name) : "" %></td>
         <td><%= (info.try(:get_product_type) && ['Hotel', 'Cruise'].include?(info.try(:get_product_type))) ? info.try(:itinerary).try(:bedding_type) : "" %></td>
       </tr>
-      <tr>
-        <td colspan="10">
-          <%= info.try(:get_product_description) %>
-        </td>
-      </tr>
+      <% if info.try(:get_product_type) != 'Hotel' %>
+        <tr>
+          <td colspan="10">
+            <%= info.try(:get_product_description) %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
   <br>
 
   <p><h3>Customer details:</h3></p>
-  <% @itinerary.customers.each do |customer| %>
-    <p><%= customer.try(:fullname_with_title) %></p>
+  <% if confirmed %>
+    <table>
+      <thead>
+        <tr>
+          <td>Name as per Passport</td>
+          <td>Passport Number</td>
+          <td>Nationality</td>
+          <td>Expiry Date</td>
+          <td>Date of Birth</td>
+          <td>Dietary Requirement</td>
+          <td>Medical: Gluten Free</td>
+          <td>Travel Insurance Details</td>
+        </tr>
+      </thead>
+      <% @itinerary.customers.each do |customer| %>
+        <tr>
+          <td><%= customer.try(:fullname) %></td>
+          <td><%= customer.try(:passport_num) %></td>
+          <td><%= customer.try(:nationality) %></td>
+          <td><%= customer.try(:expiry_date).try(:strftime, "%d-%m-%Y") %></td>
+          <td><%= customer.try(:born_on).try(:strftime, "%d-%m-%Y") %></td>
+          <td><%= customer.try(:dietary_requirements) %></td>
+          <td><%= customer.try(:medical_information) %></td>
+          <td><%= customer.try(:insurance) %></td>
+        </tr>
+      <% end %>
+    </table>
+    <br>
+  <% else %>
+    <% @itinerary.customers.each do |customer| %>
+      <p><%= customer.try(:fullname_with_title) %></p>
+    <% end %>
+  <% end %>
+
+  <% if confirmed %>
+    <br>
+    <p><h3>Flight details:</h3></p>
+    <%= @flight_details.try(:html_safe) %>
   <% end %>
 
 </div>

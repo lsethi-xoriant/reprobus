@@ -8,5 +8,15 @@ $(function() {
 //    min: new Date(), took this out, as if we ever go into a historic date it sets it to todays date....
     hiddenSuffix: '',
     container: 'body'
+  }); 
+
+  $('.datepicker-wide-range').pickadate({
+    selectMonths: true,
+    selectYears: 100,
+    formatSubmit: 'yyyy-mm-dd',
+    format: 'yyyy-mm-dd',
+    max: new Date(2016,1,1),
+    hiddenSuffix: '',
+    container: 'body'
   });   
 });

@@ -9,6 +9,6 @@ class BookingHistory < ActiveRecord::Base
 
   belongs_to :itinerary
 
-  enum document_type: [ :quote, :confirmed_itinerary, :supplier_quote ]
+  enum document_type: [ :quote, :confirmed_itinerary, :supplier_quote, :confirmed_supplier ]
 
 end
