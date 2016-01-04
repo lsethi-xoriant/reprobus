@@ -26,7 +26,7 @@ class Reports::SupplierController < ApplicationController
         'Customer name'        => 'supplier_itinerary_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title)',
         'Supplier'             => 'supplier.try(:supplier_name)',
         'Value'                => 'price_total',
-        'Paid date / Due date' => 'itinerary_price.try(:final_balance_due)'
+        'Paid date / Due date' => 'supplier_itinerary_price.try(:final_balance_due)'
       }
     end
 
