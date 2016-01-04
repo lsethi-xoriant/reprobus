@@ -3,7 +3,7 @@ class Reports::SupplierController < ApplicationController
 
   def index
     @structure = structure
-    @suppliers = Customer.where.not(supplier_name: nil)
+    @suppliers = Customer.where.not(supplier_name: nil).order('supplier_name ASC')
     @supplier_itinerary_price_items = 
       ReportService.supplier_search(@from, @to, @search_by, @supplier)
 
@@ -22,8 +22,8 @@ class Reports::SupplierController < ApplicationController
 
     def structure
       {
-        'Booking ID'           => 'itinerary_price.try(:itinerary).try(:id)',
-        'Customer name'        => 'itinerary_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title)',
+        'Booking ID'           => 'supplier_itinerary_price.try(:itinerary).try(:id)',
+        'Customer name'        => 'supplier_itinerary_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title)',
         'Supplier'             => 'supplier.try(:supplier_name)',
         'Value'                => 'price_total',
         'Paid date / Due date' => 'itinerary_price.try(:final_balance_due)'
