@@ -62,6 +62,7 @@ class CustomerMailer < ActionMailer::Base
     @body = params[:body]
     @confirmed = confirmed
     @itinerary = itinerary
+    params[:id] = @itinerary.id
     include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
     name = confirmed ? "#{supplier.try(:supplier_name)} booking request #{itinerary.id} / #{itinerary.try(:lead_customer).try(:last_name)}" : "Supplier Quote"
     type = confirmed ? :confirmed_supplier : :supplier_quote
