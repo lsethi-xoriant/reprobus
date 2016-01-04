@@ -181,6 +181,7 @@ Reprobus::Application.routes.draw do
     resources :enquiry, only: [:index]
     resources :booking_travel, only: [:index]
     resources :confirmed_booking, only: [:index]
+    resources :supplier, only: [:index]
   end
   
   post "emails/post"

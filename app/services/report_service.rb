@@ -1,4 +1,11 @@
 class ReportService
+
+  def self.prepare_dates(from=nil, to=nil)
+    from = 1.month.ago unless from.present?
+    to   = Date.today unless to.present?
+    [from.to_date.beginning_of_day, to.to_date.end_of_day]
+  end
+
   def self.booking_travel_search(from, to, user=nil, country=nil)
     results = 
         Itinerary.includes(:lead_customer, :agent, itinerary_infos: :product)
@@ -37,6 +44,65 @@ class ReportService
     results = ItineraryPrice
                 .includes(:itinerary)
                 .where(search_params)
+  end
+
+  def self.supplier_search(from, to, search_by, supplier=nil)
+    # Commented code is another way of doing the same thing.
+    # Please remove once the task is resolved.
+
+    # results = 
+    #   ItineraryPrice
+    #     .joins(:itinerary, :supplier_itinerary_price_items)
+    #     .where(customer_invoice_sent: true)
+    #     .includes(itinerary: :lead_customer)
+
+    # results = 
+    #   case search_by
+    #   when 'confirmed_date'
+    #     results.where(booking_confirmed_date: from..to)
+    #   when 'travel_date'
+    #     results.where('itineraries.start_date': from..to)
+    #   else
+    #     results
+    #   end
+
+    # if supplier.present?
+    #   results = results.where(itinerary_price_items: { supplier_id: supplier} )
+    # end
+
+    # if results.present? 
+    #   results.map(&:supplier_itinerary_price_items)
+    # else
+    #   ItineraryPriceItem.none
+    # end
+
+    results = 
+      ItineraryPriceItem
+        .joins(:supplier_itinerary_price)
+        .joins(supplier_itinerary_price: :itinerary)
+        .where(itinerary_prices: { customer_invoice_sent: true })
+
+    results = 
+      case search_by
+      when 'confirmed_date'
+        results
+          .where(itinerary_prices: { booking_confirmed_date: from..to })
+      when 'travel_date'
+        results.where(itineraries: { start_date: from..to })
+      else
+        results
+      end
+
+    if supplier.present?
+      results = results.where(supplier_id: supplier)
+    end
+
+    results
+      .includes(:supplier)
+      .includes(:supplier_itinerary_price)
+      .includes(supplier_itinerary_price: :itinerary)
+      .includes(supplier_itinerary_price: { itinerary: :lead_customer })
+
   end
 
   def self.generate_csv(entities, titles_methods)
