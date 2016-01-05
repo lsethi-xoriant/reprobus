@@ -47,6 +47,7 @@ Reprobus::Application.routes.draw do
       post 'revert_cancel'
       get 'details'
       get 'booking_history'
+      get 'generate_supplier_documents'
     end
   end
 
@@ -57,6 +58,7 @@ Reprobus::Application.routes.draw do
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
     get 'printQuote'
     get 'emailQuote'
+    get 'emailQuote_bulk'
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
     end
