@@ -99,7 +99,8 @@ class ItineraryPricesController < ApplicationController
     confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
 
     if CustomerMailer.send_email_supplier_quote(
-      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver
+      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, 
+      @supplier, confirmed, params[:email_settings]).deliver_later
 
       confirmed_name = confirmed ? 'Confirmed' : ''
       flash[:success] = "#{confirmed_name} Supplier Quote has been sent."
