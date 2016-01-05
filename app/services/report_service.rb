@@ -9,7 +9,9 @@ class ReportService
   def self.booking_travel_search(from, to, user=nil, country=nil)
     results = 
         Itinerary.includes(:lead_customer, :agent, itinerary_infos: :product)
+        .joins(:itinerary_price)
         .eager_load(itinerary_infos: :product)
+        .where(itinerary_prices: { booking_confirmed: true })
         .where('? < itineraries.end_date AND ? > itineraries.start_date', from, to)
 
     results = results.where(user_id: user) if user.present?
@@ -32,7 +34,7 @@ class ReportService
               .where(search_params)
   end
 
-  def self.confirmed_booking(from, to, user=nil)
+  def self.confirmed_booking(from, to, user=nil, confirmed_itinerary_sent = nil)
     search_params = {}
     search_params[:booking_confirmed_date] = (from && to) ? (from.to_date.beginning_of_day..to.to_date.end_of_day) : (1.month.ago.beginning_of_day..Date.today.end_of_day)
     search_params[:booking_confirmed]      = true
@@ -43,7 +45,18 @@ class ReportService
 
     results = ItineraryPrice
                 .includes(:itinerary)
+                .joins(:itinerary)
                 .where(search_params)
+
+    case confirmed_itinerary_sent
+    when 'true'
+      results = 
+        results.where.not(itineraries: {confirmed_itinerary_sent: nil })
+    when 'false'
+      results = 
+        results.where(itineraries: {confirmed_itinerary_sent: nil })
+    end
+    results
   end
 
   def self.supplier_search(from, to, search_by, supplier=nil)

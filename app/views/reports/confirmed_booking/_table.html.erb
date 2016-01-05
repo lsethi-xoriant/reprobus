@@ -3,13 +3,9 @@
   <table class="responsive-table display">
     <thead>
       <tr>
-        <th>Booking ID</th>
-        <th>Booking Name</th>
-        <th>Customer Name</th>
-        <th>Consultant</th>
-        <th>Sale Value</th>
-        <th>Profit amount</th>
-        <th>Agent</th>
+        <% @structure.keys.each do |th_name| %>
+          <th><%= th_name %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -18,10 +14,12 @@
           <td><%= it_price.id %></td>
           <td><%= link_to it_price.try(:itinerary).try(:name), edit_itinerary_price_path(it_price) %></td>
           <td><%= it_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title) %></td>
+          <td><%= it_price.try(:itinerary).try(:start_date) %></td>
           <td><%= it_price.try(:itinerary).try(:user).try(:name) %></td>
           <td><%= it_price.try(:sale_total).try(:to_s) %></td>
           <td><%= it_price.try(:get_total_supplier_profit) %></td>
           <td><%= it_price.try(:itinerary).try(:agent).try(:supplier_name) %></td>
+          <td><%= it_price.try(:itinerary).try(:confirmed_itinerary_sent) ? 'Y' : 'N' %>
         </tr>
       <% end %>
     </tbody>
