@@ -23,6 +23,31 @@ class ReportService
     results
   end
 
+  def self.destination_search(from, to, user=nil, country=nil, destination=nil)
+    results = 
+        Itinerary.includes(:lead_customer, :agent, itinerary_infos: :product)
+        .joins(:itinerary_price)
+        .eager_load(itinerary_infos: :product)
+        .where(itinerary_prices: { booking_confirmed: true })
+        .where('? < itinerary_infos.end_date AND ? > itinerary_infos.start_date', 
+          from, to)
+
+    results = results.where(user_id: user) if user.present?
+
+    if country.present?
+      results = 
+        results.where('products.country_id = :country_id', country_id: country)
+    end
+
+    if destination.present?
+      results = 
+        results.where('products.destination_id = :destination_id', 
+          destination_id: destination)
+    end
+
+    results
+  end
+
   def self.enquiry_search(from, to, stage, assigned_to)
     search_params = {}
     search_params[:created_at]  = (from && to) ? (from.to_date.beginning_of_day..to.to_date.end_of_day) : (1.month.ago.beginning_of_day..Date.today.end_of_day)

@@ -1,4 +1,5 @@
 class Reports::SupplierController < ApplicationController
+  authorize_resource class: Reports::SupplierController
   before_filter :define_parameters
 
   def index
