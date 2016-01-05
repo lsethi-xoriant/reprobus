@@ -9,7 +9,8 @@ class Reports::DashboardController < ApplicationController
        'Enquiry', 
        'Booking Travel',
        'Confirmed Booking',
-       'Supplier'
+       'Supplier',
+       'Destination'
       ]
   end
 end
