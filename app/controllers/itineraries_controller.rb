@@ -34,7 +34,7 @@ class ItinerariesController < ApplicationController
     confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
 
     if CustomerMailer.send_email_quote(
-      @itinerary, @setting, confirmed, params[:email_settings]).deliver
+      @itinerary, @setting, confirmed, params[:email_settings]).deliver_later
 
       @itinerary.quote_sent_update_date(confirmed)
       confirmed_name = confirmed ? 'Confirmed' : ''
