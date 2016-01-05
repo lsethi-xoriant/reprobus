@@ -125,6 +125,10 @@ $(document).on('click', '#email_supplier_quote_OK', function(e) {
   }
   else {
     formId = $(this).parents('form');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', "itinerary_price_item_ids")
+      .attr('value', $("[name='itinerary_price_item_ids']:checked").map(function() { return this.id; }).get())
+      .appendTo(formId);
     $(formId).submit();
   }
 });
