@@ -9,7 +9,7 @@ class Reports::BookingTravelController < ApplicationController
     @users = User.where.not(name: "System")
     @countries = Country.all
     @itineraries = 
-      ReportService.booking_travel_search(@from, @to, @user, @country, @destination)
+      ReportService.booking_travel_search(@from, @to, @user, @country)
 
     respond_to do |format|
       format.html
