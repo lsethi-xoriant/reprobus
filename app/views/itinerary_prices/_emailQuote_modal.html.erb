@@ -17,8 +17,10 @@
               <div class="row">
 
                 <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
-                <%= hidden_field_tag :itinerary_id, @itinerary.id if @itinerary %>
                 <%= hidden_field_tag :confirmed, confirmed %>
+                <%= hidden_field_tag :itinerary_id, @itinerary.id if @itinerary %>
+
+                <%= c.hidden_field :bulk_action, value: bulk_action %>
 
                 <% if !bulk_action %>
                   <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
