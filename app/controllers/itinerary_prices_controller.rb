@@ -129,7 +129,7 @@ class ItineraryPricesController < ApplicationController
                           .select { |info| info.supplier_id == @supplier.id }
 
       CustomerMailer.send_email_supplier_quote(
-        @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver_later
+        @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver
     end
 
     flash[:success] = "Emails has been sent."

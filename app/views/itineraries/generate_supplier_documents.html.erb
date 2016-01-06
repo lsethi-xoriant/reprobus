@@ -29,12 +29,12 @@
 <br>
 
 <% @itinerary_price_items.each do |item| %>
-  <% if item.id && item.try(:supplier).try(:email) %>
+  <% if item.try(:supplier).try(:email).try(:presence) %>
     <br>
     <div class="row">
       <div class="col s2">
         <input type="checkbox" id="<%= item.id %>" name="itinerary_price_item_ids" class="filled-in" />
-        <label for="<%= item.id %>"><%= item.supplier.fullname %></label>
+        <label for="<%= item.id %>"><%= item.supplier.supplier_name %></label>
       </div>
       <div class="col s3">
         <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" target="_blank">
