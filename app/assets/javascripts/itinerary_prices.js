@@ -146,6 +146,22 @@ $(document).ready(function() {
   }
 });
 
+$(document).on('click', '.supplier-show-hide-btn', function() {
+  $(this).closest(".field").find('.suplier_buttons_row').toggle();
+});
+
+$(document).on('click', '#email_supplier_quote_OK', function(e) {
+  e.preventDefault();
+  if (JSON.parse($(this)[0].dataset.confirmed) &&
+      CKEDITOR.instances["email_settings_flight_details_" + $(this)[0].dataset.id].getData().trim() == "") {
+    Materialize.toast("Flight details can't be empty", 4000);
+  }
+  else {
+    formId = $(this).parents('form');
+    $(formId).submit();
+  }
+});
+
 function doPricingCalculationsCustomerTotals(e){
   calculateTotalForPricing();
   calculateTotalDepositForPricing();

@@ -20,6 +20,11 @@
         <%= c.select :user_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@users, "id", "name", selected: (@user.presence)) %>
       </div>
 
+      <div class="col s2">
+        <%= c.label :confirmed_itinerary_sent, class: 'active' %> 
+        <%= c.select :confirmed_itinerary_sent, options_for_select([['Select...', nil], ['Y', true], ['N', false]], selected: @confirmed_itinerary_sent) %>
+      </div>
+
       <div class="section">
         <div class="col s2">
           <%= c.submit :search, class: 'btn' %>

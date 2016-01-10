@@ -61,6 +61,7 @@ GEM
     byebug (5.0.0)
       columnize (= 0.9.0)
     callsite (0.0.11)
+    cancancan (1.10.1)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -439,6 +440,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.1.2)
   better_errors
   byebug
+  cancancan (~> 1.10)
   carrierwave
   ckeditor
   cocoon
@@ -486,3 +488,6 @@ DEPENDENCIES
   wkhtmltopdf-binary-edge (~> 0.12.2.1)
   wkhtmltopdf-heroku
   xeroizer (~> 2.15.6)
+
+BUNDLED WITH
+   1.10.2

@@ -1,6 +1,8 @@
 class ItinerariesController < ApplicationController
+  authorize_resource class: ItinerariesController
+  
   before_filter :signed_in_user
-  before_filter :admin_user, only: :destroy
+  # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
 
   def printQuote
@@ -29,12 +31,14 @@ class ItinerariesController < ApplicationController
 
   def emailQuote
     @itinerary = Itinerary.find(params[:email_settings][:id])
-    
-    if CustomerMailer.send_email_quote(
-      @itinerary, @setting, params[:email_settings]).deliver
+    confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
 
-      @itinerary.quote_sent_update_date
-      flash[:success] = 'Itinerary Quote has been sent.'
+    if CustomerMailer.send_email_quote(
+      @itinerary, @setting, confirmed, params[:email_settings]).deliver_later
+
+      @itinerary.quote_sent_update_date(confirmed)
+      confirmed_name = confirmed ? 'Confirmed' : ''
+      flash[:success] = "#{confirmed_name} Itinerary Quote has been sent."
     else
       flash[:error] = 'Error occured while sending Quote'
     end
@@ -184,8 +188,8 @@ class ItinerariesController < ApplicationController
     redirect_to edit_itinerary_path(@itinerary)
   end
 
-  def customer_interactions
-    @customer_interactions = CustomerInteraction.where(itinerary_id: params[:id])
+  def booking_history
+    @booking_history = BookingHistory.where(itinerary_id: params[:id])
     @itinerary = Itinerary.find(params[:id])
     respond_to do |format|
       format.html
@@ -206,6 +210,7 @@ private
     def set_email_modal_values
       @lead_customer = @enquiry.customer_name_and_title
       @agent_name = @enquiry.agent_name_and_title
+      @cc_email = current_user.try(:email)
       @to_email = 
         @enquiry.agent.try(:email).presence || @itinerary.lead_customer.try(:email)
 

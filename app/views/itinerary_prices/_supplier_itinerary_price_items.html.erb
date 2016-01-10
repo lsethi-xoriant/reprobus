@@ -25,7 +25,43 @@
           <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
             <i class="mdi-content-clear"></i>
           <% end %>
+          <% if f.object.try(:supplier).try(:email).try(:presence) %>
+            <a class="btn-floating btn-small waves-effect waves-light indigo right supplier-show-hide-btn" >
+              <i class="mdi-navigation-unfold-less"></i>
+            </a>
+          <% end %>          
         </div>
+
+        <div class="row suplier_buttons_row" style="display:none">
+          <div class="field col s12">
+            <% if f.object.id && f.object.try(:supplier).try(:email) %>
+              <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" >
+                View Quote Request
+              </a>
+              <a
+                id="EmailQuoteBtn"
+                class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+                data-delay="50"
+                href=<%="#email_quote_modal_#{f.object.id}"%>>
+  
+                Email Quote Request
+              </a>
+              <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, confirmed: true, format: :pdf) %>"
+                class="waves-effect waves-light btn deep-purple darken-1"
+                data-delay="50">
+  
+                View Confirmation
+              </a>
+              <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+                data-delay="50"
+                href=<%="#email_confirmed_quote_modal_#{f.object.id}"%>>
+  
+                Email Confirmation
+              </a>
+            <% end %>
+          </div>
+        </div>        
+
       </div>
     </div>
   </div>
@@ -42,7 +78,7 @@
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Confirmation Ref.", value: f.object.booking_ref,  } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Currency", value: f.object.currencyCode,  class_for_input: "currency_code grey-text text-darken-1 grey lighten-4"} %>
     	  <%= f.hidden_field :currency_id, value: f.object.currencyID, class: "currency_id" %>
-  
+
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Sell Currency Rate", value: f.object.get_sell_currency_rate, class_for_input: "sell_currency_rate grey-text text-darken-1 grey lighten-4" } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", value: @itinerary.num_passengers, label: "Num Pax", class_for_input: "supplier_qty_field grey-text text-darken-1 grey lighten-4" } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Per Person Cost", value: f.object.item_price, class_for_input: "supplier_item_price_field" } %>
@@ -55,8 +91,9 @@
         <div class="input-field col s1 center-align">
           <a href="<%= invoice_deposit_itinerary_prices_path f.object.invoice, format: :pdf %>"  class="btn-floating btn-tiny waves-effect waves-light purple" ><i class="mdi-maps-local-atm"></i></a>
           <a href="<%= invoice_remaining_itinerary_prices_path f.object.invoice, format: :pdf %>"  class="btn-floating btn-tiny waves-effect waves-light purple" ><i class="mdi-editor-attach-money"></i></a>
-        </div>
-      </div>
+        </div
+        >
+       </div>  
     </div>
   </div>
 <% end %>

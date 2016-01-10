@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'pg'
 
+gem 'cancancan', '~> 1.10'
+
 group :development, :production do
   gem 'letter_opener'
 end

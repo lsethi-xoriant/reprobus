@@ -1,4 +1,5 @@
 class SuppliersController < CustomersController
+  authorize_resource class: SuppliersController
   
   def index
 #    @customers = Customer.where(cust_sup: "Supplier").paginate(page: params[:page])

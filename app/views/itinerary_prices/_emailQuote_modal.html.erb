@@ -1,0 +1,91 @@
+<% form_name = local_assigns.key?(:confirmed) ? 'email_confirmed_quote' : 'email_quote' %>
+<% confirmed = local_assigns.key?(:confirmed) ? confirmed : false %>
+
+<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: "#{form_name}_form_#{itinerary_price_item_id}" } do |c| %>
+
+  <div id=<%="#{form_name}_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="email_quote_container" class="col s12">
+
+              <div class="row">
+
+                <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
+
+                <%= hidden_field_tag :confirmed, confirmed %>
+
+                <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
+                <div class="input-field col s6">
+                  <!-- To email address -->
+                  <%= c.hidden_field :to_email, value: supplier.email %>
+                  <%= c.text_field :to_email, value: supplier.fullname, disabled: 'disabled' %>
+                  <%= c.label :to_email, 'TO:' %>
+                </div>
+
+                <div class="input-field col s6">
+                  <!-- From email address -->
+                  <%= c.hidden_field :from_email, value: @from_email %>
+                  <%= c.text_field :from_email, value: @from_email, disabled: 'disabled' %>
+                  <%= c.label :from_email, 'FROM:' %>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="input-field col s6">
+                  <%= c.check_box :cc_email_send, checked: true %>
+                  <%= c.label :cc_email_send, "CC" %>
+                </div>
+                <div class="input-field col s6">
+                  <!-- CC email address -->
+                  <%= c.hidden_field :cc_email, value: @cc_email %>
+                  <%= c.text_field :cc_email, value: @cc_email %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s6">
+                  <!-- a selection option for either PDF, or Rich Text Document -->
+                  <%= c.select :type, options_for_select(['PDF', 'Rich Text Document']), disabled: 'disabled' %>
+                  <%= c.label :type, 'Document Type' %>
+                </div>
+              </div>
+
+              <% if confirmed %>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <!-- flight details -->
+                    <%= c.label :flight_details, 'Flight details (mandatory field):' %>
+                    <br>
+                    <br>
+                    <%= c.cktext_area "flight_details_#{itinerary_price_item_id}" %>
+                  </div>
+                </div>
+              <% end %>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <!-- body email -->
+                  <%= c.text_field :body %>
+                  <%= c.label :body, 'Body:' %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" id="email_supplier_quote_OK" class="waves-effect waves-lighten-3 green btn-flat" data-confirmed="<%= confirmed %>" data-id="<%= itinerary_price_item_id %>">Send</a>
+      <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+  </div>
+
+<% end %>

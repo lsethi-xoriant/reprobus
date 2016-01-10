@@ -32,6 +32,10 @@ class ItineraryPriceItem < ActiveRecord::Base
   validates :description, presence: true, if: Proc.new { |i| i.supplier_id.blank? }
   
   belongs_to      :itinerary_price
+  belongs_to      :supplier_itinerary_price, 
+                  class_name: 'ItineraryPrice',
+                  foreign_key: 'supplier_itinerary_price_id'
+
   belongs_to      :supplier, :class_name => "Customer", :foreign_key => "supplier_id"
   belongs_to      :currency
   belongs_to      :invoice

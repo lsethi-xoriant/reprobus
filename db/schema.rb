@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 20160107083737) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
+  create_table "booking_histories", force: :cascade do |t|
+    t.datetime "emailed_at"
+    t.string   "emailed_to"
+    t.integer  "document_type"
+    t.string   "attachment"
+    t.integer  "itinerary_id"
+  end
+
   create_table "bookings", force: :cascade do |t|
     t.integer  "customer_id"
     t.integer  "enquiry_id"
@@ -86,14 +94,6 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.string   "currency",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "customer_interactions", force: :cascade do |t|
-    t.datetime "emailed_at"
-    t.string   "emailed_to"
-    t.integer  "document_type"
-    t.string   "attachment"
-    t.integer  "itinerary_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -139,6 +139,14 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
+    t.string   "public_edit_token"
+    t.date     "public_edit_token_expiry"
+    t.text     "frequent_flyer_details"
+    t.string   "emergency_contact"
+    t.string   "emergency_contact_phone"
+    t.text     "dietary_requirements"
+    t.text     "medical_information"
+    t.string   "nationality"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -209,7 +217,7 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.text     "body"
+    t.string   "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -516,6 +524,10 @@ ActiveRecord::Schema.define(version: 20160107083737) do
   add_index "products", ["cruise_id"], name: "index_products_on_cruise_id", using: :btree
   add_index "products", ["hotel_id"], name: "index_products_on_hotel_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string   "company_name",               limit: 255
     t.string   "pxpay_user_id",              limit: 255
@@ -577,6 +589,13 @@ ActiveRecord::Schema.define(version: 20160107083737) do
   add_index "triggers", ["email_template_id"], name: "index_triggers_on_email_template_id", using: :btree
   add_index "triggers", ["name"], name: "index_triggers_on_name", using: :btree
   add_index "triggers", ["setting_id"], name: "index_triggers_on_setting_id", using: :btree
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "user_roles", ["user_id", "role_id"], name: "index_user_roles_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                   limit: 255
