@@ -69,10 +69,10 @@ class ItineraryPriceItem < ActiveRecord::Base
   
   def get_supplier_payment_due
     # 30 days prior to start date, or today if that is in past. # or check supplier for configured date. 
-    date = self.itinerary_price.itinerary.start_date - 30
+    date = self.supplier_itinerary_price.itinerary.start_date - 30
     date = Date.today if date.past
     if self.supplier && self.supplier.num_days_payment_due
-      date = self.itinerary_price.itinerary.start_date - self.supplier.num_days_payment_due
+      date = self.supplier_itinerary_price.itinerary.start_date - self.supplier.num_days_payment_due
     end 
   end
 end
