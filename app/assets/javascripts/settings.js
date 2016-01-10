@@ -6,8 +6,13 @@ $(document).ready(function(){
 
     if (val === 'None') {
       $('#paygategroup').hide();
+      $('#pinpaymentsgroup').hide();
     } else if (val === 'Payment Express') {
        $('#paygategroup').show();
+       $('#pinpaymentsgroup').hide();
+    } else if (val === 'Pin Payments') {
+       $('#paygategroup').hide();
+       $('#pinpaymentsgroup').show();
     }
   });
   

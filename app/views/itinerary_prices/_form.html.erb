@@ -1,10 +1,12 @@
+<div class="loading" style="display:none;">Loading...</div>
 
 <div class="row">
 
-  <%= form_for @itinerary_price, :html => {:multipart => true, :class => ""} do |f| %>
+  <%= form_for @itinerary_price, :html => {:multipart => true, :class => "itinerary_price_form"} do |f| %>
 	  <%= render 'shared/error_messages', object: f.object %>
 	  <%= f.hidden_field :itinerary_id %>
 	  <%= f.hidden_field :system_default_for_deposits, value: @setting.deposit_percentage, id: "system_default_for_deposits" %>
+    <%= f.hidden_field :num_passengers, value: @itinerary.num_passengers, id: "itinerary_num_passengers" %>
 
     <%= render partial: 'itinerary_details' %>
 
@@ -36,6 +38,38 @@
           
           <%= render partial: 'shared/material_readonly', locals: { col: "s4 sale_total", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total, precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
           
+          <% if current_user.admin && @itinerary_price.customer_invoice_sent %>
+            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Sent", value: "#{@itinerary_price.customer_invoice_sent_date.strftime('%d-%b-%Y')}" } %>
+          <% else %>
+            <div class="input-field offset-s1 col s1"></div>
+          <% end %>        
+        
+           <div class="col s2">
+            <% if current_user.admin && !f.object.new_record? %>
+              <p>
+              <%= f.check_box :customer_invoice_sent, class: "filled-in", disabled: @itinerary_price.customer_invoice_sent %>
+              <%= f.label :customer_invoice_sent %>
+              </p>
+            <% end %>
+          </div>  
+          
+      </div>
+      
+      <div class= "row">
+          <% if @itinerary_price.booking_confirmed %>
+            <% if  @itinerary_price.get_total_payments_amount > @itinerary_price.deposit %>
+                <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Deposit Status", value: "PAID" } %>
+            <% else %>
+                <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Deposit Status", value: "Outstanding" } %>
+            <% end %>
+          
+            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s2", label: "Amount Paid", value: number_with_precision( @itinerary_price.get_total_payments_amount, precision: 2) } %>
+            <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Total Remaining", value: number_with_precision( @itinerary_price.get_total_remaining, precision: 2) } %>
+          <% else %>
+            <div class="col s8"></div>
+          <% end %>
+        
+        
           <% if current_user.admin && @itinerary_price.booking_confirmed %>
             <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Confirmed", value: "#{@itinerary_price.booking_confirmed_date.strftime('%d-%b-%Y')}" } %>
           <% else %>
@@ -50,25 +84,8 @@
               </p>
             <% end %>
           </div>
-      </div>
-      
-      <div class= "row">
-          <% if current_user.admin && @itinerary_price.customer_invoice_sent %>
-            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s1 s1", label: "Date Sent", value: "#{@itinerary_price.customer_invoice_sent_date.strftime('%d-%b-%Y')}" } %>
-          <% else %>
-            <div class="input-field offset-s1 col s1"></div>
-          <% end %>        
         
-           <div class="col offset-s8 s2">
-            <% if current_user.admin && !f.object.new_record? %>
-              <p>
-              <%= f.check_box :customer_invoice_sent, class: "filled-in", disabled: @itinerary_price.customer_invoice_sent %>
-              <%= f.label :customer_invoice_sent %>
-              </p>
-            <% end %>
-          </div>       
       </div>
-      
 	  </div>
 	  
 	  
@@ -83,31 +100,59 @@
         <% end %>
     	    
     	  <div class="links">
-    	    <div class="row">
-      	    <div class="col s12">
+    	    
+    	    <div class="row customer_totals_row">
+      	    <div class="input-field col s5">
               <%= link_to_add_association  f, :itinerary_price_items, {partial: 'itinerary_price_items', class: "btn grey waves-effect waves-light"} do %>
                 <i class="mdi-content-add-circle left"></i>Add a Line Item
               <% end %>
             </div>
+            <strong>
+            <%= render partial: 'shared/material_readonly', locals: { col: "offset-s3 s1", label: "Deposit total $", value: number_with_precision(@itinerary_price.deposit,precision: 2), class_for_input: "grand_deposit_total blue-text text-darken-4" } %>
+            <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total,precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
+            </strong>            
           </div>
+          
         </div>
           
           
-        <div class="customer_totals_row row">
+        <div class="row">
           <div class="input-field col s2" >
             <% if  !@itinerary_price.new_record? && @itinerary_price.has_uninvoiced_customer_items %>
-              <a href="<%= invoice_itinerary_prices_path @itinerary_price %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
+              <a href=""  id="customer_create_invoice_dummy" class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
+              <a href="<%= invoice_itinerary_prices_path @itinerary_price %>" style="display:none;"  id="customer_create_invoice" ></a>
             <% end %>
           </div>          
           
-          <strong>
-          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s6 s1", label: "Deposit total $", value: number_with_precision(@itinerary_price.deposit,precision: 2), class_for_input: "grand_deposit_total blue-text text-darken-4" } %>
-          <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Sale Total $", value: number_with_precision(@itinerary_price.sale_total,precision: 2), class_for_input: "grand_total blue-text text-darken-4" } %>
-          </strong>
+          <div class="input-field col s2 center-align">
+            <% if !@itinerary_price.invoices.empty? %>
+              <a href="<%= invoice_deposit_itinerary_prices_path @itinerary_price, format: :pdf %>"  target="_blank" class="waves-effect waves-light btn left deep-purple darken-1" >View Deposit</a>
+            <% end %>
+          </div>
+          <div class="input-field col s2 center-align">
+            <% if !@itinerary_price.invoices.empty? %>
+              <a href="<%= invoice_deposit_old_itinerary_prices_path @itinerary_price, format: :pdf %>"  target="_blank" class="waves-effect waves-light btn left deep-purple darken-1" >View Deposit OLD</a>
+            <% end %>
+          </div>
+          
+          <div class="input-field col s2 center-align">
+            <% if !@itinerary_price.invoices.empty? %>
+              <a href="<%= invoice_remaining_itinerary_prices_path @itinerary_price, format: :pdf %>"  target="_blank" class="waves-effect waves-light btn left deep-purple darken-1" >View Remaining</a>
+            <% end %>
+          </div>
+          
+          <div class="input-field col s2 center-align">
+            <% if !@itinerary_price.invoices.empty? %>
+              <a href="<%= payments_itinerary_prices_path @itinerary_price %>"  target="_blank" class="waves-effect waves-light btn left deep-purple darken-1" >View Payments</a>
+            <% end %>
+          </div>
+
+          <div class="input-field col s2 center-align">
+              <a id="saveCustomerItineraryPriceBtn"  href=""  class="waves-effect waves-light btn green right" >SAVE ALL</a>
+          </div> 
         </div>
+        
       </div>
-      
-      
 	  </div>
 	  
 	  <div class ="card-panel">
@@ -121,35 +166,37 @@
           <% end %>
     	    
     	    <div class="links">
-    	      <div class="row">
-      	      <div class="col s12">
+    	      <div class="row supplier_totals_row">
+      	      <div class="input-field col s3">
                 <%= link_to_add_association  f, :supplier_itinerary_price_items, {partial: 'supplier_itinerary_price_items', class: "btn grey waves-effect waves-light"} do %>
                   <i class="mdi-content-add-circle left"></i>Add a Line Item
                 <% end %>
-              </div>
+              </div>  
+              <strong>
+              <%= render partial: 'shared/material_readonly', locals: { col: "offset-s3 s1", label: "Sale Total $", value: number_with_precision(@itinerary_price.get_total_supplier_price,precision: 2), class_for_input: "grand_supplier_total blue-text text-darken-4" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} total $", value: number_with_precision(@itinerary_price.get_total_supplier_sell_total,precision: 2), class_for_input: "grand_supplier_sell_total blue-text text-darken-4" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s1", label: "Sell Price $", value: number_with_precision(@itinerary_price.get_total_incl_supplier_markup,precision: 2), class_for_input: "grand_incl_markup_total blue-text text-darken-4" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Profit $", value: number_with_precision(@itinerary_price.get_total_supplier_profit,precision: 2), class_for_input: "grand_profit_total green-text" } %>
+              </strong>                
+             
             </div>
           </div>
           
-        <div class="supplier_totals_row row">
+        <div class="row">
           <div class="input-field col s2" >
             <% if  !@itinerary_price.new_record? && @itinerary_price.has_uninvoiced_supplier_items %>
-              <a href="<%= invoice_itinerary_prices_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoices</a>
+            <%# hidden at the moment as need to add new action in controller - then sort JS to call non dummy link, and remove false above %>
+              <a href=""  id="supplier_create_invoice_dummy" class="waves-effect waves-light btn left deep-purple darken-1" >Create Invoice</a>
+              <a href="<%= invoice_supplier_itinerary_prices_path @itinerary_price %>" style="display:none;"  id="supplier_create_invoice" ></a>              
             <% end %>
-          </div>              
+          </div>  
           
-          <strong>
-          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s4 s1", label: "Sale Total $", value: number_with_precision(@itinerary_price.get_total_supplier_price,precision: 2), class_for_input: "grand_supplier_total blue-text text-darken-4" } %>
-          
-          <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} total $", value: number_with_precision(@itinerary_price.get_total_supplier_sell_total,precision: 2), class_for_input: "grand_supplier_sell_total blue-text text-darken-4" } %>
-          
-          <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s1", label: "Sell Price $", value: number_with_precision(@itinerary_price.get_total_incl_supplier_markup,precision: 2), class_for_input: "grand_incl_markup_total blue-text text-darken-4" } %>
-
-          <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Profit $", value: number_with_precision(@itinerary_price.get_total_supplier_profit,precision: 2), class_for_input: "grand_profit_total green-text" } %>
-
-          </strong>
+          <div class="input-field col s2 offset-s8 center-align">
+              <a id="saveSupplierItineraryPriceBtn"  href=""  class="waves-effect waves-light btn green right" >SAVE ALL</a>
+          </div>           
         </div>
           
-        </div>
+      </div>
 	  </div>
 	  
     <div class="row">

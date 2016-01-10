@@ -27,14 +27,13 @@
         <%= render partial: 'shared/material_readonly', locals: { col: "s3", label: "Description", f: f, value: f.object.description } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Start Date", f: f, name: "Start Date", value: f.object.start_date } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "End Date", f: f, name: "End Date", value: f.object.end_date } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Quantity", f: f, value: f.object.quantity } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Item Price", name: "Item Price $", f: f, value: f.object.item_price  } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Deposit Percentage", name: "Deposit %", f: f, value: f.object.deposit_percentage } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Quantity", f: f, value: f.object.quantity, class_for_input: 'qty_field' } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Item Price", name: "Item Price $", f: f, value: f.object.item_price, class_for_input: 'price_field'  } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Deposit Percentage", name: "Deposit %", f: f, value: f.object.deposit_percentage, class_for_input: 'deposit_percent_field' } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Deposit $", field: 'deposit', f: f, class_for_input: 'deposit_price_field grey-text text-darken-1 grey lighten-4', value: f.object.deposit } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Price Total", name: "Total Price $", f: f,  value: f.object.price_total } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Price Total", name: "Total Price $", f: f,  value: f.object.price_total, class_for_input: 'price_total_field' } %>
         <div class="input-field col s1 center-align">
-          <a href="<%= invoice_deposit_itinerary_prices_path f.object.invoice, format: :pdf %>"  class="btn-floating btn-tiny waves-effect waves-light purple" ><i class="mdi-maps-local-atm"></i></a>
-          <a href="<%= invoice_remaining_itinerary_prices_path f.object.invoice, format: :pdf %>"  class="btn-floating btn-tiny waves-effect waves-light purple" ><i class="mdi-editor-attach-money"></i></a>
+          <% if f.object.invoice.x_invoice %><p class="center-align">Sent to Xero</p><% end %>
         </div>
       </div>
     </div>

@@ -2,18 +2,20 @@
 #
 # Table name: payments
 #
-#  id                :integer          not null, primary key
-#  amount            :decimal(12, 5)   default("0.0")
-#  payment_ref       :string(255)
-#  invoice_id        :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  reference         :text
-#  date              :date
-#  cc_payment        :boolean          default("false")
-#  cc_payment_ref    :string
-#  cc_client_info    :string
-#  receipt_triggered :boolean          default("false")
+#  id                 :integer          not null, primary key
+#  amount             :decimal(12, 5)   default("0.0")
+#  payment_ref        :string(255)
+#  invoice_id         :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  reference          :text
+#  date               :date
+#  cc_payment         :boolean          default("false")
+#  cc_payment_ref     :string
+#  cc_client_info     :string
+#  receipt_triggered  :boolean          default("false")
+#  payment_type       :string
+#  itinerary_price_id :integer
 #
 
 class Payment < ActiveRecord::Base

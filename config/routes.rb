@@ -57,8 +57,11 @@ Reprobus::Application.routes.draw do
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
+      match 'invoice_supplier/:id', to: 'itinerary_prices#invoice_supplier',   as: 'invoice_supplier' ,via: 'get'
       match 'invoice_deposit/:id', to: 'itinerary_prices#invoice_deposit',   as: 'invoice_deposit' ,via: 'get'
+      match 'invoice_deposit_old/:id', to: 'itinerary_prices#invoice_deposit_old',   as: 'invoice_deposit_old' ,via: 'get'
       match 'invoice_remaining/:id', to: 'itinerary_prices#invoice_remaining',   as: 'invoice_remaining' ,via: 'get'
+      match 'payments/:id', to: 'itinerary_prices#payments',   as: 'payments' ,via: 'get'
     end
   end
     
@@ -85,15 +88,9 @@ Reprobus::Application.routes.draw do
   resources :bookings do
     resources :invoices do
       collection do
-        get 'addxeroinvoice'  # /bookings/addxeroinvoice
         get 'getxeroinvoice'
-        get 'addxeropayment'
-        get 'changexeroinvoice'
         get 'supplierInvoice'
-        get 'syncInvoice'
         post 'createSupplier'
-        #match ':id/pdfRemaining', to: 'invoices#pdfRemaining',   as: 'pdfRemaining' ,via: 'get'
-        #match ':id/pdfDeposit', to: 'invoices#pdfDeposit',   as: 'pdfDeposit' ,via: 'get'
         match 'showSupplier/:id', to: 'invoices#showSupplier',   as: 'showSupplier' ,via: 'get'
       end
     end
@@ -101,10 +98,15 @@ Reprobus::Application.routes.draw do
   
   match '/pxpaymentsuccess',   to: 'invoices#pxpaymentsuccess',   via: 'get'
   match '/pxpaymentfailure',   to: 'invoices#pxpaymentfailure',   via: 'get'
-  
+  match '/changexeroinvoice/:id',   to: 'invoices#changexeroinvoice',  as: 'changexeroinvoice',  via: 'get'
+  match '/addxeropayment/:id',   to: 'invoices#addxeropayment', as: 'addxeropayment',  via: 'get'
+  match '/syncInvoice/:id',   to: 'invoices#syncInvoice', as: 'syncInvoice',  via: 'get'
+
   resources :sessions, only: [:new, :create, :destroy]
 
   match '/about',   to: 'static_pages#about',   via: 'get'
+  get '/successful-pin-payment/:id',   to: 'static_pages#successful_pin_payment',  as: 'successful_pin_payment'
+  
   match '/noaccess',   to: 'static_pages#noaccess',   via: 'get'
   match '/dashboard',   to: 'static_pages#dashboard' ,   via: 'get'
   match '/snapshot',   to: 'static_pages#snapshot' ,   via: 'get'

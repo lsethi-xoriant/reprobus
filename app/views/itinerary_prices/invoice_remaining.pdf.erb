@@ -1,55 +1,458 @@
+<%= render partial: 'itinerary_prices/invoices/css', formats: [:html] %>
 
-<style type="text/css"> .ReadMsgBody {width: 100%; background-color: #ffffff;} .ExternalClass {width: 100%; background-color: #ffffff;} body { width: 100%; background-color: #9CBA5F; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; font-family: Georgia, Times, serif } table {border-collapse: collapse;} @media only screen and (max-width: 640px) { body[yahoo] .deviceWidth {width:440px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } @media only screen and (max-width: 479px) { body[yahoo] .deviceWidth {width:280px!important; padding:0;} body[yahoo] .center {text-align: center!important;} } </style>
-
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="font-family: Georgia, Times, serif"> <!-- Wrapper --> <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center"> <tr> <td width="100%" valign="top" bgcolor="#FFFCFC" style="padding-top: 20px;"> <!-- Start Header--> <table width="580" border="0" cellpadding="0" cellspacing="0" align="center" class="deviceWidth"> <tr> <td width="100%" bgcolor="#ffffff"> <!-- Nav --><!-- End Nav --> </td> </tr> </table><!-- End Header --> <!-- One Column --> <table width="720" class="deviceWidth" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eeeeed"> <tr> <td valign="top" style="padding:0" bgcolor="#ffffff"> <a href="http://eclipsetravel.com.au"><img src="http://eclipsetravel.com.au/wp-content/uploads/2014/03/email-template-header.jpg" alt="" border="0" /></a> </td> </tr> <tr> <td style="font-size: 13px; color: #4B4B4B; font-weight: normal; text-align: left; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 24px; vertical-align: top; padding: 10px 8px 10px 8px" bgcolor="#FCFCFA">
-
-  <strong>Booking start date</strong>	<%= @booking.enquiry.est_date.strftime("%d/%m/%Y")  %><br>
-  <strong>Invoice date</strong>	<%= @invoice.invoice_date.strftime("%d/%m/%Y")  %><br>
-  <strong>Deposit due</strong>	<%= @invoice.deposit_due.strftime("%d/%m/%Y")  %><br>
-  <strong>Final payment due</strong>	<%= @invoice.final_payment_due.strftime("%d/%m/%Y")  %><br>
-  <strong>Customer/s:</strong>		<%= @booking.customer.fullname %><br>
-  
-  <div>
-    <h3 class="page-header" ><%= "Invoice for " +  @booking.name%></h3>
-      <br>
-
-   <table width="100%">
-     <tr>
-       <th width="40%" align="left">Description</th><th width="20%" align="left">Quantity</th><th width="20%" align="left">Price</th><th width="20%" align="left">Total</th>
-     </tr>
-       
-      <% @invoice.line_items.each do |item| %>
-        <%= render partial: 'invoices/line_items', locals: { item: item } %>
-      <% end %>
-      </table>
-  </div>
-  <br>
-  To pay your deposit, please click on the following link **Please note credit card fees apply (2% for Visa and Mastercard, 3% for AMEX)**<br><br>
-
-<% if @setting.usesPaymentGateway %>
-  <% url = @invoice.getPayExpressUrl(false) %>
-  <a href="<%= url %>" target="_blank" >Pay balance with credit card</a><br><br>
-<% end %>
-
-  To avoid this credit card fee please deposit directly into the following account with the following booking number: <%= @booking.id.to_s.rjust(8, '0')  %>:  <br><br>
-
-<strong>Direct Deposit</strong><br>
-<strong>Bank:</strong> Commonwealth Bank <br>
-<strong>Account Name:</strong> Vivid Expeditions Pty Ltd (Trading as Eclipse Travel)<br>
-<strong>BSB:</strong> 062217<br>
-<strong>Account Number:</strong> 10683722<br><br>
-
-
-Deposit	<strong><%= number_to_currency(@invoice.deposit, precision: 2) %></strong><br>
-Amount previously paid	<strong><%= number_to_currency(@invoice.getPaidTotal, precision: 2) %></strong><br>
-Balance <strong><%= number_to_currency(@invoice.getBalance, precision: 2) %></strong><br>
-Total <strong><%=  number_to_currency(@invoice.getTotalAmount, precision: 2) %> </strong><br>
-<br><br>
+<body style="background-color: #f4f4f4;margin: 0;padding: 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;-webkit-font-smoothing: antialiased;width: 100%;">
+<center>
+      <!--=========================================================================================================================== HEADER SECTION ==--> 
+    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+		<tbody><tr bgcolor="#ffffff">
+			<td valign="top" align="center" bgcolor="#ffffff" style="">  
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" class="table600LogoAndMenuContainer">
+                        	<tbody><tr bgcolor="#ffffff">
+                                    <td valign="top" bgcolor="#ffffff" style=""> 
+                                    	<table width="200" align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" class="table600Logo">
+                                                <tbody><tr bgcolor="#ffffff">
+                                                	<!--============================================================ L O G O ==-->
+                                                	<!--================== ATTENTION =======================-->
+                                                      <!--== YOUR LOGO IMAGE'S WIDTH MUST BE MAX 200 px OR LOWER,  ===-->
+                                                      <!--== YOUR LOGO IMAGE'S HEIGHT MUST BE 100 px. ==-->
+                                   			 	<!--===== Just open the "logo.PSD" in photoshop =====-->
+                                                      <!--== Add your logo,  center your logo vertically as I did by default (this ensures to have some space at top and bottom as a padding) ===-->
+                                                      <!--== FOR BEST RESULTS : MAKE YOUR IMAGE'S WIDTH JUST AS WIDE AS YOUR LOGO (this means,NO SPACING at both LEFT and RIGHT sides) ==-->
+                                                      <!--== Please OPEN logo.PSD and examine it. ==-->
+                                                      <td valign="middle" align="left" bgcolor="#ffffff" class="pictureAlternativeTextTD" style="color: #bbbbbb;font-family: sans-serif;font-size: 10px;padding: 0;margin: 0;">
+                                                        <a href="http://eclipsetravel.com.au/" target="_blank" class="buttonsAndImagesLink" style="color: #bbbbbb;text-decoration: none;outline: none;">
+                                                          <%= image_tag(@itinerary.get_company_logo_image_link, :class => "", :width => 150, :height => 100,) %>
+                                                          </a>
+                                                          </td>
+                                                	<!--===================================================== End of the section ==-->
+                                                </tr>
+							</tbody></table>
+                                          <table width="382" align="right" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" class="table600Menu">
+                                                <tbody><tr bgcolor="#ffffff">
+                                                	<td valign="middle" align="center" height="10" bgcolor="#ffffff" style="font-size: 0;line-height: 0;">&nbsp;</td>
+								</tr>
+                                                <tr bgcolor="#ffffff">
+                                                      <!--================================================== THIS IS YOUR MENU SECTION ==-->
+                                                      <!--========== just add desired text between "a" (ANCHOR) tags ==-->
+                                                      <!--=== Please try to use no more than 3 words as your menu items ==-->
+                                                      <!--=== IN FACT, YOU CAN use as many words as you wish , but using more than 3 words may cause aesthetical issues ==-->
+                                                      <td valign="middle" align="right" height="80" bgcolor="#ffffff" class="menuTD" style="color: #6e777e;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 20px;font-weight: bold;padding: 0;margin: 0;text-align: right;line-height: 150%;letter-spacing: 0;">&nbsp;&nbsp; &nbsp;&nbsp;TAX INVOICE</td>
+                                    			<!--========================================================== End of the section ==-->
+                                                </tr>
+                                               	<tr bgcolor="#ffffff">
+                                                	<td valign="middle" align="center" height="10" bgcolor="#ffffff" style="font-size: 0;line-height: 0;">&nbsp;</td>
+								</tr>
+							</tbody></table>
+                                    </td>
+                              </tr>
+				</tbody></table>
+            	</td>
+		</tr>
+	</tbody></table>  	
+      <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#43494e">
+		<tbody><tr bgcolor="#43494e">
+			<td valign="top" align="center" bgcolor="#43494e" style="">
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#43494e" class="table600">
+ 					<tbody><tr bgcolor="#43494e">
+						<td valign="top" align="center" height="15" bgcolor="#43494e" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>                                         	
+					<tr bgcolor="#43494e">
+						<td valign="top" bgcolor="#43494e" style="">
+							<table width="300" align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#43494e" class="table600AnnouncementText">
+								<tbody><tr bgcolor="#43494e">
+									<td valign="top" align="center" height="0" bgcolor="#43494e" style="font-size: 0;line-height: 0;" class="logoMargin2">&nbsp;</td>
+								</tr>
+								<tr bgcolor="#43494e">
+                                                	<!-- ==== THIS IS THE ANNOUNCEMENT, SLOGAN, OR JUST ANY HEADER =====-->
+                                                      <!-- ==== (THE TEXT UNDER THE LOGO WITH THEME COLOR) ============-->
+                                                      <!-- ==== just add desired text between "a" (ANCHOR) tags =============-->																			
+									<td valign="middle" align="center" height="20" bgcolor="#43494e" class="announcementTextTD" style="color: #95c412;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 17px;font-weight: bold;padding: 0;margin: 0;text-align: left;line-height: 130%;letter-spacing: 0;"><span class="announcementTextTD" style="color: #95c412;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 17px;font-weight: bold;padding: 0;margin: 0;text-align: left;line-height: 130%;letter-spacing: 0;"><%= @itinerary.lead_customer.fullname %></span><br>
+								    <%= @itinerary.name %> </td>
+									<!--===================== End of the section ===================-->
+                              </tr>
+								<tr bgcolor="#43494e">
+									<td valign="top" align="center" height="0" bgcolor="#43494e" style="font-size: 0;line-height: 0;" class="logoMargin">&nbsp;</td>
+								</tr>
+							</tbody></table>
+							<table width="282" align="right" cellpadding="0" cellspacing="0" border="0" bgcolor="#43494e" class="tableTextDateSection">
+								<tbody><tr bgcolor="#43494e">
+                                                	<!--================== DATE SECTION ====================-->	
+                                                	<!--== NOTE..: As you have seen , I wrapped the text of the DATE with an anchor tag(the "a" tag, which makes links)==-->
+                                                      <!--== This is for to avoid an iphone glitch which automatically detects some form of numbers as dates/phone numbers, and automatically formats them as links.==-->
+                                                      <!--== The link I added ("a" tag) is just for to be able to cheat iphone operating system, and to avoid default blue text color of iphone's autolinking behaviour. It is not even clickable==-->																		
+									<td valign="middle" align="center" height="20" bgcolor="#43494e" class="date" style="color: #eeeeee;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 13px;font-weight: lighter;padding: 0;margin: 0;text-align: right;line-height: 150%;letter-spacing: 0;">
+									  <strong>INVOICE # <%= @itinerary.id %></strong>
+									  </td>
+									<!--================== End of the section ================-->
+                                                </tr>
+								<tr bgcolor="#43494e">
+										<td valign="middle" align="center" height="20" bgcolor="#43494e" class="date" style="color: #eeeeee;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 13px;font-weight: lighter;padding: 0;margin: 0;text-align: right;line-height: 150%;letter-spacing: 0;"><%= @itinerary_price.invoice_date.strftime("%d/%m/%Y")  %></td>
+								</tr>
+							</tbody></table>
+						</td>
+					</tr>
+					<tr bgcolor="#43494e">
+						<td valign="top" align="center" height="15" bgcolor="#43494e" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>      
+			</td>
+		</tr>
+	</tbody></table>
+      <!--==================================================================================================================== END OF THE HEADER SECTION ==-->
       
-Please Note: This itinerary may change due to local operating conditions. Please see our terms and conditions for more details. Please note that all flights are non-refundable and non-changeable unless advised otherwise. Please be aware that many of our products are based in USD and therefore subject to currency fluctuations until deposit has been made. Additionally if you have booked one of our cruise products - be aware that many operators also reserve the right to apply fuel dependant on the price of crude oil.
+      
+      <!--================================================================================================================================ M O D U L E ==--> 
+	<!--========================================================================================= ONE COLUMN , WITH TEXT AND A BIG 600x270 RECTANGULAR IMAGE ==-->
+       <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="moduleSeperatorLine" style="border-top-style: solid;border-top-color: #e5e5e5;border-top-width: 1px;">
+		<tbody><tr valign="top">
+			<td valign="top" align="center" bgcolor="#f4f4f4" style="">                 
+                        <table width="280" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="eraseForMobile2">
+                        	<tbody><tr>
+                              	<td valign="middle" height="10" align="center" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="table600">
+                        	<tbody><tr>
+                              	<td valign="middle" height="30" align="center" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>
 
-Final payment on bookings is generally due 95 days prior to departure. Please note that if you have an Antarctica booking operated by Quark Expeditions your final payment is due 125 days prior to departure.
+                        <!--==== BULLETPROOF PADDING SECTION WITH GIVEN BG COLOR ====-->
+              <table width="600" align="center" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" border="0" class="table600">
+                        	<tbody><tr>
+                              	<td valign="top" align="center" height="20" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+                </tr>
+                        </tbody></table>
+                        <!--================== End of the section ================-->
+                        <!--================== HEADER SECTION =================-->
+                        
+                        
+                        
+                        
+                        <table width="600px" align="center" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" border="0" class="table600">
+                       	  <tbody><tr>
+                              	<!--================= HEADER SECTION =============-->
+                                    <td height="10" align="center" valign="middle" bgcolor="#f4f4f4" class="sectionsHeaderTD" style="color: #43494e;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 20px;font-weight: lighter;padding: 0;margin: 0;text-align: left;line-height: 140%;letter-spacing: 0;">
+                                    
+<table width="600px" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td>
+      <!-- start bootstrap -->
 
-Please make sure you have read the Booking Terms & Conditions
-<a>www.eclipsetravel.com.au/termsandconditions</a>
-</td> </tr> </table><!-- End One Column --><!-- spacer --> <!-- 2 Column Images & Text Side by SIde --><!-- spacer --> <!-- 4 Columns --> <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center"> <tr> <td bgcolor="#333333" style="padding:30px 0"> <table width="580" border="0" cellpadding="0" cellspacing="0" align="center" class="deviceWidth"> <tr> <td> <table width="45%" cellpadding="0" cellspacing="0" border="0" align="left" class="deviceWidth"> <tr> <td valign="top" style="font-size: 11px; color: #f1f1f1; color:#999; font-family: Arial, sans-serif; padding-bottom:20px" class="center"><p><strong>Eclipse Travel Pty Ltd. </strong><br> Level 6, 115 Pitt St, <br> Sydney NSW, <br> Australia 2000<br> Phone 1300 575 752<br> (+61) 02 8199 9465<br> <br> NSW Travel Agent Licence #: 2TA10218<br> ABN: 42 158 316 959<br> ACN: 158 316 959<br> </p></td> </tr> </table> <table width="40%" cellpadding="0" cellspacing="0" border="0" align="right" class="deviceWidth"> <tr> <td valign="top" style="font-size: 11px; color: #f1f1f1; font-weight: normal; font-family: Georgia, Times, serif; line-height: 26px; vertical-align: top; text-align:right" class="center"> <a href="#"><img src="http://eclipsetravel.com.au/wp-content/uploads/2014/02/eclipselogo-gif.gif" alt="" border="0" /></a><br/></td> </tr> </table> </td> </tr> </table> </td> </tr> </table><!-- End 4 Columns --> </td> </tr> </table> <!-- End Wrapper --> </body>
+<div class="container">
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h5>From: Eclipse Travel</h5>
+            </div>
+            <div class="panel-body">
+              <p>Level 6, 115 Pitt St,<br>
+Sydney NSW, <br>
+Australia 2000<br>
+<br>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6  text-right">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h5>To: <%= @itinerary.lead_customer.fullname %></h5>
+            </div>
+            <div class="panel-body">
+              <p>
+                <%= @itinerary.try(:lead_customer).try(:email) %> <br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / end client details section -->
+      <table class="table table-bordered" width="600px">
+        <thead>
+          <tr>
+            <th width="40%">
+              <h5>Product</h5>
+            </th>
+            <th width="20%">
+              <h5>Quantity</h5>
+            </th>
+            <th width="20%">
+              <h5>Price pp</h5>
+            </th>
+            <th width="20%">
+              <h5>Total</h5>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @itinerary_price.invoices.each do |inv| %>
+            <%= render partial: 'itinerary_prices/invoices/line_items', collection: inv.line_items, as: :item, formats: [:html] %>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="row text-right">
+        <div class="col-xs-2 col-xs-offset-8">
+          <p>
+            <strong>
+            TOTAL : <br>
+            Tax : <br>
+            Balance : <br>
+            </strong>
+          </p>
+        </div>
+        <div class="col-xs-2">
+          <strong>
+          <%= number_to_currency(@itinerary_price.get_total_customer_price, precision: 2) %> <br>
+          N/A <br>
+          <%= number_to_currency(@itinerary_price.get_total_remaining, precision: 2) %> <br>
+          </strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h5>Bank details</h5>
+            </div>
+            <div class="panel-body">
+              <p><strong><a href="<%= @itinerary_price.build_pin_payments_url(@itinerary_price.get_total_remaining, "Balance")%>" target="_blank">Pay now using this link</a></strong>&nbsp;<br>Credit Card link for deposit<br>
+                <br>
+                <strong>Bank Details</strong>&nbsp;<br>
+              Eclipse Travel<br>
+              Bank Name<br>
+              SWIFT : --------<br>
+              Account Number : --------<br>
+              IBAN : --------</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6  text-right">
+          <div class="span7">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h5>Contact Details</h5>
+              </div>
+              <div class="panel-body">
+                <p><strong>Phone numbers:</strong>&nbsp;<br>
+                  1300 575 752&nbsp;<br>
+                (+61) 02 8199 9465</p>
+                <p><strong>Email&nbsp;</strong><br>
+                  enquiry@eclipsetravel.com.au<br>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- end bootstrap -->
+      
+      </td>
+    </tr>
+  </tbody>
+</table>
+                                    
+                                    </td>
+                                    <!--================= End of the section =============-->
+                              </tr>
+                        </tbody></table>
+                        <!--================== End of the section ================-->
+                      	<!--==== BULLETPROOF PADDING SECTION WITH GIVEN BG COLOR ====-->
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" border="0" class="table600">
+                        	 <tbody><tr></tr>
+			  </tbody></table>
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" border="0" class="table600">
+                        	 <tbody><tr>
+						<td valign="top" align="center" height="15" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>
+                        <!--================== End of the section ================-->
+                         <!-- ================== TEXT SECTION ==================-->
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" border="0" class="table600">
+                        	<tbody><tr>			
+                              	<!--=========== JUST ENTER YOUR INFO HERE =========-->																																																			
+                                    <td valign="middle" align="center" bgcolor="#f4f4f4" height="10" class="sectionRegularInfoTextTD" style="color: #6e777e;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 13px;font-weight: lighter;padding: 0;margin: 0;text-align: left;line-height: 165%;letter-spacing: 0;"><div>Save up to 25% off all earlybird on these&nbsp;selected&nbsp;Antarctica cruises for the 2016-17 season, PLUS an extra $500 air credit <strong>for this month only</strong>. This is an incredible opportunity to experience one of the most&nbsp;amazing adventures of a lifetime at unbeatable prices. </div><div><div>
+                                          <p><a href="http://eclipsetravel.com.au/antarctica/sale/" target="_blank" class="sectionRegularInfoTextTDLink" style="color: #95c412;text-decoration: none;outline: none;font-weight: bold;">Click here for more information.&nbsp;</a></p>
+                                        </div>
+                                      </div></td>
+                              	<!--================ End of the section ============-->
+                          </tr>
+                        </tbody></table>
+                        <!--================== End of the section ================-->
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="table600">
+                        	<tbody><tr>
+                              	<td valign="middle" height="30" align="center" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>
+                        <table width="280" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="eraseForMobile2">
+                        	<tbody><tr>
+                              	<td valign="middle" height="10" align="center" bgcolor="#f4f4f4" style="font-size: 0;line-height: 0;">&nbsp;</td>
+					</tr>
+				</tbody></table>
+          </td>
+		</tr>
+	</tbody></table>
+      <!--========================================================================================================================= END OF THE MODULE ==-->
+                        
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+        <!--======================================================================================================================== M O D U L E ( text only) ==-->
+      <!--==============================================================================================JUST SOME TEXT ABOUT YOUR COMPANY, GENERAL INFO ETC. ==--><!--========================================================================================================================= END OF THE MODULE ==-->
+      
+      
+       
+      
+       
+       
+ 
+            
+       
+       
+       
+       
+       
+    
+	
+      
+      
+      
+      
+      <!--================================================================================================================================ M O D U L E GREY==-->
+      <!--=========================================================================================== 2 COLUMNS = 280 x 180 IMAGE ON LEFT , AND TEXT AT RIGHT ====--> 
+      <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="moduleSeperatorLine" style="border-top-style: solid;border-top-color: #e5e5e5;border-top-width: 1px;">
+		<tbody><tr>
+			<td valign="top" align="center" bgcolor="#f4f4f4" style="">&nbsp;</td>
+		</tr>
+	</tbody></table>  
+      <!--========================================================================================================================= END OF THE MODULE ==-->
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       
+      
+      
+      
+      
+      
+     
+      
+       <!--================================================================================================================================ M O D U L E GREY ==-->
+      <!--=========================================================================================== 2 COLUMNS = 280 x 180 IMAGE ON LEFT , AND TEXT AT RIGHT ====--> 
+      <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="moduleSeperatorLine" style="border-top-style: solid;border-top-color: #e5e5e5;border-top-width: 1px;">
+		<tbody><tr>
+			<td valign="top" align="center" bgcolor="#f4f4f4" style="">&nbsp;</td>
+		</tr>
+	</tbody></table>  
+      <!--========================================================================================================================= END OF THE MODULE ==-->
+      
+      
+    
+
+
+      
+       <!--================================================================================================================================ M O D U L E GREY ==-->
+      <!--=========================================================================================== 2 COLUMNS = 280 x 180 IMAGE ON LEFT , AND TEXT AT RIGHT ====--> 
+      <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4" class="moduleSeperatorLine" style="border-top-style: solid;border-top-color: #e5e5e5;border-top-width: 1px;">
+		<tbody><tr>
+			<td valign="top" align="center" bgcolor="#f4f4f4" style="">&nbsp;</td>
+		</tr>
+	</tbody></table>  
+      <!--========================================================================================================================= END OF THE MODULE ==-->
+      
+  
+      
+      
+      
+      
+       
+       <!--================================================================================================================================ M O D U L E ==-->
+      <!--=========================================================================================== 2 COLUMNS = 280 x 180 IMAGE ON LEFT , AND TEXT AT RIGHT ====--><!--========================================================================================================================= END OF THE MODULE ==-->
+      
+      
+      
+           
+      
+      
+      
+      
+      
+      
+  
+  
+  
+     
+     
+     
+<!--======================================================================================= COMPANY INFO (WEB, EMAIL, PHONE ETC.) AND COPYRIGHT SECTION ==== -->           
+	<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#43494e">
+		<tbody><tr>
+			<td valign="top" align="center" height="15" bgcolor="#43494e" style="">
+				<div id="divFooter"></div><table align="center" width="600" cellpadding="0" cellspacing="0" bgcolor="#43494e" border="0" class="table600">
+					<tbody><tr>
+						<!--============ ADDRESS, LINKS, etc. SECTION ===========-->
+						
+						<!--=============== End of the section ================-->
+					</tr>
+
+					<tr>
+						<!--=== MAILING OPTIONS (SUB / UNSUB / FORWARD) SECTION =====-->
+						<!--================== End of the section ================-->	
+					</tr>
+                        
+                  <tr>
+						<!--================ COPYRIGHT SECTION ================-->
+						<td valign="middle" align="center" height="10" bgcolor="#43494e" class="copyrightCompanyTD" style="color: #ffffff;font-family: Arial, Tahoma, Verdana, sans-serif;font-size: 13px;font-weight: lighter;padding: 0;margin: 0;text-align: center;line-height: 200%;letter-spacing: 0;">© Copyright <a href="http://www.eclipsetravel.com.au" target="_blank" class="copyrightCompanyTDLink" style="color: #95c412;text-decoration: none;outline: none;font-weight: bold;">Eclipse Travel</a> 2015</td>
+                        
+
+                
+						<!--================== End of the section ================-->	
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="center" height="35" bgcolor="#43494e" style="font-size: 0;line-height: 0;">&nbsp;</td>
+		</tr>
+	</tbody></table>   
+    
+    
+      <!--========================================================================================================================= END OF THE FOOTER ==--> 
+
+
+</center>
+</body>
+

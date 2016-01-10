@@ -1,0 +1,90 @@
+<div class ="card-panel">
+  
+  <% if invoice.x_invoice %>
+    <% xinvoice = invoice.x_invoice %>
+    <div>
+      <h4>Xero Invoice - <%=xinvoice.invoice_number%></h4><em>Last synced: <%= xinvoice.last_sync.localtime %></em>
+    </div>
+    
+    <div class="table-responsive"><table class="table table-striped">
+      <tr><th>Invoice</th><th>Due Date</th><th>Total</th><th>Amount Due</th><th>Status</th></tr>
+      <tbody>
+      <tr><td><%= xinvoice.invoice_number %> </td><td><%= xinvoice.due_date %> </td>
+        <td><%= number_to_currency(xinvoice.total) %> </td><td><%= number_to_currency(xinvoice.amount_due) %> </td>
+        <td><%= xinvoice.status %> </td></tr>
+      </tbody></table>
+    </div>
+    
+    <%=  form_tag(syncInvoice_path(invoice), method: "get", class: "form-horizontal") do %>
+      <%= hidden_field_tag :id, '', :value => invoice.id %>
+      <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
+    <% end %>
+    
+    <% if invoice.payments.empty? && xinvoice.status != "PAID" %>
+      <div class="well well-sm">
+        <br>
+        <h5>Change Xero Invoice Amount</h5>
+        <%= form_tag(changexeroinvoice_path(invoice), method: "get", class: "form-inline") do %>
+        <%= hidden_field_tag :id, '', :value => invoice.id %>
+        <%= hidden_field_tag :amount_due, '', :value => xinvoice.amount_due %>
+        <%= hidden_field_tag :amount_total, '', :value => xinvoice.total %>
+        <div class="form-group">
+          <div class="input-group">
+            <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+          </div></div>
+        <%= submit_tag "Change Amount", class: "btn btn-warning change-amount" %>
+        <% end %>
+      </div>
+    <% end %>  
+    
+  <% end %>  
+  
+  
+  <div>
+    <br>
+    <h5>Payments</h5>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tr><th>Date</th><th>Amount</th><th>Pay ID</th><th>CC Pay ID</th><th>Receipt Sent</th><th>Reference</th></tr>
+      <tbody>
+      <% invoice.payments.each do |pay| %>
+        <tr>
+          <td><%= pay.date  %> </td>
+          <td><%= number_to_currency(pay.amount) %> </td>
+          <td><%= pay.payment_ref_display %> </td>
+          <td><%= pay.cc_payment_ref %> </td>
+          <td><%= translate( pay.receipt_triggered.class ) %> </td>
+          <td><%= pay.reference %> </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+  <% if !invoice.isSupplierInvoice? && @setting.use_xero %>
+    <div class="well well-sm">
+      <br>
+      <h5>Manually add a Payment</h5>
+      <%= form_tag(addxeropayment_path(invoice), method: "get", class: "form-inline") do %>
+      <%= hidden_field_tag :id, '', :value => invoice.id %>
+      <div class="form-group">
+        <div class="input-group">
+          <%= text_field_tag :amount, "", class: "form-control", placeholder: "$0.00" %>
+        </div></div>
+      <%= submit_tag "Add Payment", class: "btn btn-primary add-payment" %>
+      <% end %>
+    </div>
+    
+  <% else %>  
+    <% if @Setting.use_xero  %>
+      <div><h5>Not previously sent to xero</h5></div>
+      <%=  form_tag(invoice_itinerary_prices_path(@itinerary_price), method: "get", class: "form-horizontal") do %>
+        <%= hidden_field_tag :id, '', :value => @itinerary_price.id %>
+        <%= submit_tag "Send Invoice to Xero", id: "invoiceBtn", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+</div>

@@ -138,6 +138,8 @@ private
     :dropbox_session, :use_dropbox, :dropbox_default_path, :itinerary_includes, :overide_email_addresses, :overide_emails,
     :quote_introduction, :confirmed_introduction, :num_days_balance_due, :num_days_deposit_due,
     :deposit_percentage, :itineraries_from_email, :important_notes, {:supplier_ids => []},
+    :pin_payment_public_key, :pin_payment_secret_key, :invoice_banking_details, :invoice_company_address,  
+    :invoice_company_contact, :invoice_footer, :pin_payment_url, :base_url,
     triggers_attributes: [:id, :email_template_id, :num_days],
     company_logo_attributes: [:id, :image_local, :image_remote_url],
     itinerary_default_image_attributes: [:id, :image_local, :image_remote_url])
