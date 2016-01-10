@@ -139,13 +139,6 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
-    t.string   "public_edit_token"
-    t.date     "public_edit_token_expiry"
-    t.text     "frequent_flyer_details"
-    t.string   "emergency_contact"
-    t.string   "emergency_contact_phone"
-    t.text     "dietary_requirements"
-    t.text     "medical_information"
     t.string   "nationality"
   end
 
@@ -217,7 +210,7 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.string   "body"
+    t.text     "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"
