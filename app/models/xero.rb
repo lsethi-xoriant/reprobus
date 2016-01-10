@@ -43,14 +43,16 @@ class Xero
   
   def create_invoice(invoice)
 
-    itinerary = invoice.itinerary_price.itinerary
+    
 
     #if we have a lead customer create contact in xero if it does not already exist.
     #self.customers.each do |cust| # xero only allows one contact per invoice.
     if invoice.isSupplierInvoice?
       cust = invoice.supplier
+      itinerary = invoice.supplier_itinerary_price.itinerary
     else
       cust = itinerary.lead_customer
+      itinerary = invoice.itinerary_price.itinerary
     end
     
     xcust = self.getContact(cust)
