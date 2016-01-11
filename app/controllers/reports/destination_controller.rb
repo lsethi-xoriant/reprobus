@@ -8,7 +8,7 @@ class Reports::DestinationController < ApplicationController
     @users = User.where.not(name: "System")
     @countries = Country.all
     @itineraries = 
-      ReportService.destination_search(@from, @to, @user, @country)
+      ReportService.destination_search(@from, @to, @user, @country, @destination)
 
     respond_to do |format|
       format.html
@@ -45,7 +45,6 @@ class Reports::DestinationController < ApplicationController
         @user = search_params[:user_id]
         @country = search_params[:country_id]
         @destination = search_params[:destination_id]
-        @destination_name = Destination.find(@destination).name if @destination.present?
       end
 
     end

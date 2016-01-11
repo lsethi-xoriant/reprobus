@@ -27,7 +27,7 @@
 
       <div class="col s2">
         <%= c.label :destination, class: 'active' %> 
-        <%= select_tag(:destination, options_for_select([[@destination_name, @destination.presence || 0]], @destination.presence || 0),{class: "select2-destinations browser-default", id: "reports_search_destination_id", name: "reports_search[destination_id]"}) %>
+        <%= select_tag(:destination, options_for_select([["", 0]], 0),{class: "select2-destinations browser-default", id: "reports_search_destination_id", name: "reports_search[destination_id]"}) %>
       </div>
 
       <div class="section">
