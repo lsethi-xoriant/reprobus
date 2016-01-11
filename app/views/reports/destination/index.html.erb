@@ -22,12 +22,12 @@
 
       <div class="col s2">
         <%= c.label :country, class: 'active' %> 
-        <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, 0),{class: "select2-countries-noajax browser-default", include_blank: true, id: "reports_search_country_id", name: "reports_search[country_id]"}) %>
+        <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, @country || 0),{class: "select2-countries-noajax browser-default", include_blank: true, id: "reports_search_country_id", name: "reports_search[country_id]"}) %>
       </div>
 
       <div class="col s2">
         <%= c.label :destination, class: 'active' %> 
-        <%= select_tag(:destination, options_for_select([["", 0]], 0),{class: "select2-destinations browser-default", id: "reports_search_destination_id", name: "reports_search[destination_id]"}) %>
+        <%= select_tag(:destination, options_for_select([[@destination_name, @destination.presence || 0]], @destination.presence || 0),{class: "select2-destinations browser-default", id: "reports_search_destination_id", name: "reports_search[destination_id]"}) %>
       </div>
 
       <div class="section">
