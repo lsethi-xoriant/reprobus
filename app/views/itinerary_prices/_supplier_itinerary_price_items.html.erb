@@ -71,7 +71,7 @@
       <div class="field  col s12">
         
         <div class="input-field col s1">
-          <%= f.select(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers_for_pricing, :id, :supplier_name, f.object.supplier_id),{include_blank: true},{class: "select2-suppliers supplier-itinerary-price browser-default"}) %>
+          <%= f.select(:supplier_id, options_from_collection_for_select(@itinerary.select_suppliers_for_pricing, :id, :supplier_name, f.object.supplier_id),{include_blank: true},{disabled: true, class: "select2-suppliers supplier-itinerary-price browser-default"}) %>
           <label for="supplier_id" class="active">Supplier</label>
         </div>
       
@@ -81,10 +81,10 @@
 
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Sell Currency Rate", value: f.object.get_sell_currency_rate, class_for_input: "sell_currency_rate grey-text text-darken-1 grey lighten-4" } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", value: @itinerary.num_passengers, label: "Num Pax", class_for_input: "supplier_qty_field grey-text text-darken-1 grey lighten-4" } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Per Person Cost", value: f.object.item_price, class_for_input: "supplier_item_price_field" } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Invoice Amount", value: f.object.price_total, class_for_input: "supplier_sell_total" } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Per Person Cost", value: f.object.item_price, class_for_input: "supplier_item_price_field text-darken-1 grey-text" } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Invoice Amount", value: f.object.price_total, class_for_input: "supplier_sell_total text-darken-1 grey-text" } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} Price $", value: f.object.exchange_rate_total, f: f, class_for_input: "supplier_exchange_total grey-text text-darken-1 grey lighten-4" } %>
-        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Mark up %", value: f.object.markup_percentage, class_for_input: 'markup_percent_field' } %>
+        <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Mark up %", value: f.object.markup_percentage, class_for_input: 'markup_percent_field text-darken-1 grey-text' } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Mark up $", value: f.object.markup, class_for_input: 'markup_price_field grey-text text-darken-1 grey lighten-4' } %>
         <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Sell Price $", value: f.object.total_incl_markup, class_for_input: "supplier_total_inc_markup_field grey-text text-darken-1 grey lighten-4"  } %>
         
