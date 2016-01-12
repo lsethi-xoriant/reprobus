@@ -332,7 +332,7 @@ ActiveRecord::Schema.define(version: 20160107083737) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.date     "end_date"
-    t.integer  "bedding_type"
+    t.integer  "bedding_type",             default: 0
   end
 
   add_index "itineraries", ["customer_id"], name: "index_itineraries_on_customer_id", using: :btree

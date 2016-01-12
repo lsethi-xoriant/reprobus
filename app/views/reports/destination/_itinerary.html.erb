@@ -1,0 +1,9 @@
+<tr>
+  <td><%= itinerary.id %></td>
+  <td><%= link_to itinerary.name, edit_itinerary_path(itinerary) %></td>
+  <td><%= itinerary.lead_customer.try(:fullname) %></td>
+  <td><%= itinerary.agent.try(:supplier_name) %></td>
+  <td><%= itinerary.start_date %></td>
+  <td><%= itinerary.end_date %></td>
+  <td><%= itinerary.status %></td>
+</tr>
