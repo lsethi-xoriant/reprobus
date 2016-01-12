@@ -28,8 +28,8 @@
   <br>
   To pay your deposit, please click on the following link **Please note credit card fees apply (2% for Visa and Mastercard, 3% for AMEX)**<br><br>
 
-<% if @setting.usesPaymentGateway %>
-  <%# url = @invoice.getPayExpressUrl(true) %>
+<% if @setting.usesPinPayments?  %>
+  <% url = @itinerary_price.build_pin_payments_url(@itinerary_price.deposit, "Deposit") %>
   <a href="<%= url %>" target="_blank" >Pay deposit with credit card</a><br><br>
 <% end %>
 

@@ -120,6 +120,10 @@ class Setting < ActiveRecord::Base
     return !self.payment_gateway.blank? && self.payment_gateway != "None"
   end
   
+  def usesPinPayments?
+    return self.payment_gateway == "Pin Payments"
+  end
+  
   def get_cc_mastercard_display
     return self.cc_mastercard * 100 if self.cc_mastercard
   end

@@ -122,7 +122,8 @@ class ItineraryPricesController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_balance"
+        render pdf: "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_balance",
+              show_as_html: params.key?('debug')
       end
     end
   end
@@ -142,7 +143,8 @@ class ItineraryPricesController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit"
+        render pdf: "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit",
+               show_as_html: params.key?('debug')
       end
     end
   end

@@ -68,6 +68,11 @@ class Invoice < ActiveRecord::Base
     return itinerary_price_items.first.itinerary_price
   end
   
+  def supplier_itinerary_price
+    # always only one itinerary_price, so can return first one from itineraryPriceItems
+    return itinerary_price_items.first.supplier_itinerary_price
+  end
+  
 #  def validate_customer_invoice
 #    if self.customer_invoice_id
 #      if self.deposit.blank?

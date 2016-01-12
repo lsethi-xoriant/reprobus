@@ -23,23 +23,18 @@ class StaticPagesController < ApplicationController
     @itinerary_price.set_booking_confirmed_date() 
     @itinerary_price.itinerary.status = "Confirmed Booking"
 
-    
-    if !@itinerary_price.payments.find_by_cc_payment_ref(params[:charge_token])
+    # decided we don't need to do this. As going to do it when payments synced with xero. that way dont have to worry about reconciling split payments on xero invoices. 
+#    if !@itinerary_price.payments.find_by_cc_payment_ref(params[:charge_token])
       # create new payment reconciliation, and hit trigger if we haven't seen this ref before.- shouldnt have - but added in case of page refreshes. 
-      
-      new_pay = @itinerary_price.payments.create( cc_payment_ref: params[:charge_token], amount: @charge.amount.to_d/100, 
-                                                  date: Date.today, cc_client_info: @charge.description, 
-                                                  reference: "CC Payment received through Pin Payments", 
-                                                  cc_payment: true, payment_type: "Card Payment")
-                                                  
-      Trigger.trigger_pay_receipt(@itinerary_price, new_pay) if new_pay
-    
-    end
+#     new_pay = @itinerary_price.payments.create( cc_payment_ref: params[:charge_token], amount: @charge.amount.to_d/100, 
+#                                                  date: Date.today, cc_client_info: @charge.description, 
+#                                                  reference: "CC Payment received through Pin Payments", 
+#                                                  cc_payment: true, payment_type: "Card Payment")
+#     Trigger.trigger_pay_receipt(@itinerary_price, new_pay) if new_pay
+#    end
 
     @itinerary_price.save
     @itinerary_price.itinerary.save
-
-
   end
   
   def timed_out

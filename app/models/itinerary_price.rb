@@ -36,7 +36,7 @@ class ItineraryPrice < ActiveRecord::Base
   belongs_to :currency
   
   has_many :invoices, -> { distinct }, through: :itinerary_price_items
-  has_many :supplier_invoices, through: :supplier_itinerary_price_items, class_name: "Invoice" 
+  has_many :supplier_invoices, through: :supplier_itinerary_price_items, class_name: "Invoice", source: 'invoice' 
  
   has_many :payments
  
@@ -59,7 +59,7 @@ class ItineraryPrice < ActiveRecord::Base
  
   def has_uninvoiced_supplier_items
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.invoice
+      if !price_item.invoice && price_item.supplier.email
         return true
       end
     end
@@ -90,7 +90,7 @@ class ItineraryPrice < ActiveRecord::Base
       end
     end;
     
-    return true
+    return []
   end
   
   def create_supplier_invoices(user)
@@ -101,20 +101,20 @@ class ItineraryPrice < ActiveRecord::Base
     
     # create one invoice for each supplier price item that is not invoiced
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.invoice 
+      if !price_item.invoice  && !price_item.supplier.email.nil?
         #find appropriate currency
         sup = price_item.supplier
         sup.currency ? currID = sup.currency_id : Setting.global_settings.currencyID
         
         inv = Invoice.new({invoice_date: Date.today(), supplier_id: sup.id, currency_id: currID, status: "New", final_payment_due: price_item.get_supplier_payment_due })  
-        inv.line_items.build({item_price: price_item.item_price, quantity: price_item.quantity, description: price_item.description, total: price_item.price_total })
+        inv.line_items.build({item_price: price_item.item_price, quantity: price_item.quantity, description: price_item.get_supplier_invoice_description, total: price_item.price_total })
         inv.set_exchange_currency_amount
         inv.itinerary_price_items << price_item
         
         if inv.save
           invoices_for_xero << inv
         else
-          returnMsgs + inv.errors.full_messages
+          returnMsgs = returnMsgs + inv.errors.full_messages
         end
       end
     end
@@ -126,7 +126,7 @@ class ItineraryPrice < ActiveRecord::Base
           invoiceCreated = invoice.create_invoice_xero(user)
         rescue Xeroizer::ApiException => e
           invoiceCreated = false;
-          returnMsg << nice_xeroizer_ex_messages(e)
+          returnMsgs << nice_xeroizer_ex_messages(e)
         end
         
         if invoiceCreated then 
@@ -134,12 +134,12 @@ class ItineraryPrice < ActiveRecord::Base
         else
           #flag as an issue, and destroy the invoice as well. so this will allow them to recreate and resend. 
           invoice.destroy
-          returnMsg << "Issue sending invoice to xero"
+          returnMsgs << "Issue sending invoice to xero"
         end
       end
     end
     
-    return returnMsg
+    return returnMsgs
   end  
   
   def createSupplier
@@ -209,6 +209,21 @@ class ItineraryPrice < ActiveRecord::Base
   def get_total_remaining
      (get_total_customer_price - get_total_payments_amount())
   end
+
+  def nice_xeroizer_ex_messages(exception)
+    puts exception.message   # output to console to see what is going on
+    errors = []
+    xml = exception.parsed_xml
+    xml.xpath("//ValidationError").each do |err|
+      errors << err.text.gsub(/^\s+/, '').gsub(/\s+$/, '')
+    end
+    
+    message = ""
+    errors.each do |str|
+      message = message + str + '<br>'
+    end
+    message.chomp('<br>')
+  end  
   
   def new_setup
     setting = Setting.global_settings
@@ -243,7 +258,7 @@ class ItineraryPrice < ActiveRecord::Base
     uri = URI.parse(Setting.global_settings.pin_payment_url)
     uri.query = URI.encode_www_form(  amount: sprintf( "%.2f", amount ), 
                 currency: self.currency.code, 
-                description: "#{paymentType} for #{self.itinerary.name}",
+                description: "#{paymentType} for Booking # #{self.itinerary.id} - #{self.itinerary.name}",
                 amount_editable: "false",
                 success_url: callbackUri.to_s )
                                 
