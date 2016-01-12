@@ -35,6 +35,14 @@
 #  important_notes            :text
 #  overide_email_addresses    :text
 #  overide_emails             :boolean
+#  pin_payment_public_key     :string
+#  pin_payment_secret_key     :string
+#  invoice_banking_details    :text
+#  invoice_company_address    :text
+#  invoice_company_contact    :text
+#  invoice_footer             :text
+#  pin_payment_url            :string
+#  base_url                   :string
 #
 
 class Setting < ActiveRecord::Base
@@ -110,6 +118,10 @@ class Setting < ActiveRecord::Base
   
   def usesPaymentGateway
     return !self.payment_gateway.blank? && self.payment_gateway != "None"
+  end
+  
+  def usesPinPayments?
+    return self.payment_gateway == "Pin Payments"
   end
   
   def get_cc_mastercard_display

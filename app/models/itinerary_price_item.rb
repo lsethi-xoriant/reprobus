@@ -66,4 +66,21 @@ class ItineraryPriceItem < ActiveRecord::Base
     end
     return self.sell_currency_rate
   end
+
+  def get_supplier_invoice_description
+    # Note: Only should be called for supplier_itinerary_price_items
+    return "#{self.supplier.supplier_name} for booking # #{self.supplier_itinerary_price.itinerary.id}"
+  end
+  
+  def get_supplier_payment_due
+    # Note: Only should be called for supplier_itinerary_price_items
+    # 30 days prior to start date, or today if that is in past. # or check supplier for configured date. 
+    if self.supplier && !self.supplier.num_days_payment_due.nil?
+      date = self.supplier_itinerary_price.itinerary.start_date - self.supplier.num_days_payment_due
+    else
+      date = self.supplier_itinerary_price.itinerary.start_date - 30
+    end 
+    date = Date.today if date.past?
+    return date
+  end
 end

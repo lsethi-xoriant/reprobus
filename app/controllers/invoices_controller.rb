@@ -4,43 +4,16 @@ class InvoicesController < ApplicationController
   before_filter :signed_in_user, :except => [:pxpaymentsuccess, :pxpaymentfailure]
   # before_filter :admin_user, only: :destroy
   layout 'plain', :only => [:pxpaymentsuccess, :pxpaymentfailure]
-
-  def addxeroinvoice
-    @invoice = Invoice.find(params[:id])
-    @booking = @invoice.booking
-    @setting = Setting.find(1)
-    
-    if Setting.find(1).use_xero
-      begin
-        err = @invoice.create_invoice_xero(current_user)
-      rescue Xeroizer::ApiException => e
-        message = nice_xeroizer_ex_messages(e)
-        err = false;
-      end
-    
-      if !err
-        flash[:error] = "Warning, Xero Invoice could not be created:<br>" + message
-        redirect_to booking_invoice_path( @invoice.booking, @invoice)
-      else
-        @xinvoice = @invoice.x_invoice
-        redirect_to booking_invoice_path( @invoice.booking, @invoice)
-      end
-    else
-       flash[:error] = "Warning, Xero not configured to use in Settings"
-      render "show"
-    end
-    
-  end
   
   def addxeropayment
     @invoice = Invoice.find(params[:id])
     if params[:amount].nil? || !is_number?(params[:amount])
       flash[:error] = "Payment amount must be entered. You entered #{params[:amount]}"
-      redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     else
       @invoice.add_xero_payment(params[:amount])
       flash[:success] = "Payment added succesfully ($#{params[:amount]})"
-      redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     end
   end
 
@@ -48,11 +21,11 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
       flash[:error] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
-      redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     else
       @invoice.change_xero_invoice(params[:amount])
       flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
-      redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     end
   end
 
@@ -67,10 +40,12 @@ class InvoicesController < ApplicationController
   def syncInvoice
     @invoice = Invoice.find(params[:id])
     @invoice.sync_invoice()
-    @xinvoice = @invoice.x_invoice
-    respond_to do |format|
-        format.js
-    end
+    #@xinvoice = @invoice.x_invoice
+    #respond_to do |format|
+    #    format.js
+    #end
+    redirect_to payments_itinerary_prices_path @invoice.itinerary_price
+    
   end
   
   def pxpaymentsuccess
@@ -91,8 +66,6 @@ class InvoicesController < ApplicationController
     end
     
     # check payment back, we will need to udpate invoice with amount.
-    
-    
   end
   
   def pxpaymentfailure
@@ -162,6 +135,50 @@ class InvoicesController < ApplicationController
   def edit
     @invoice = Invoice.find(params[:id])
   end
+
+  def update
+     @invoice = Customer.find(params[:id])
+    if @invoice.update_attributes(invoice_params)
+      flash[:success] = "Invoice updated"
+      redirect_to @invoice
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    Invoice.find(params[:id]).destroy
+    flash[:success] = "Invoice deleted."
+    #redirect_to invoice
+  end
+  
+  ##############################################################
+  ########### OLD CODE DELETE WITH BOOKINGS#####################
+  def addxeroinvoice
+    @invoice = Invoice.find(params[:id])
+    @booking = @invoice.booking
+    @setting = Setting.find(1)
+    
+    if Setting.find(1).use_xero
+      begin
+        err = @invoice.create_invoice_xero(current_user)
+      rescue Xeroizer::ApiException => e
+        message = nice_xeroizer_ex_messages(e)
+        err = false;
+      end
+    
+      if !err
+        flash[:error] = "Warning, Xero Invoice could not be created:<br>" + message
+        redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      else
+        @xinvoice = @invoice.x_invoice
+        redirect_to booking_invoice_path( @invoice.booking, @invoice)
+      end
+    else
+       flash[:error] = "Warning, Xero not configured to use in Settings"
+      render "show"
+    end
+  end  
   
   def create
     @booking = Booking.find(params[:booking_id])
@@ -267,23 +284,7 @@ class InvoicesController < ApplicationController
     else
       render 'supplierInvoice'
     end
-  end
-
-  def update
-     @invoice = Customer.find(params[:id])
-    if @invoice.update_attributes(invoice_params)
-      flash[:success] = "Invoice updated"
-      redirect_to @invoice
-    else
-      render 'edit'
-    end
-  end
-
-  def destroy
-    Invoice.find(params[:id]).destroy
-    flash[:success] = "Invoice deleted."
-    #redirect_to invoice
-  end
+  end  
   
 private
   def invoice_params

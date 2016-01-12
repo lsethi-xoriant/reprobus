@@ -1,7 +1,7 @@
 <% classStr = class_for_input if local_assigns.has_key? :class_for_input %>
-<% classStr = "" if !local_assigns.has_key? :class_for_input %>
+<% classStr = "text-darken-1 grey-text" if !local_assigns.has_key? :class_for_input %>
 
 <div class="input-field col <%=col%>">
-  <input disabled value=<%=value%> id="disabled" type="text" class="validate <%=classStr%>">
+  <input disabled value="<%=value%>" type="text" class="validate <%=classStr%>">
   <label for="disabled"><%=label%></label>
 </div>

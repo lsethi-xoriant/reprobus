@@ -10,7 +10,11 @@
       <td><%= @xinvoice.status %> </td></tr>
     </tbody></table>
   </div>
-    
+  <%=  form_tag({controller: "invoices", action: "syncInvoice", remote: true}, method: "get", class: "form-horizontal", remote: true) do %>
+    <%= hidden_field_tag :id, '', :value => @invoice.id %>
+    <%= submit_tag "Sync Xero Invoice Details", id: "invoiceSyncBtn", class: "btn btn-primary" %>
+  <% end %>
+      
   <% if !@invoice.payments.empty? %>
     <div>
     <h4>Payments</h4>
@@ -63,5 +67,13 @@
     <%= submit_tag "Change Amount", class: "btn btn-warning change-amount" %>
     <% end %>
   </div>
+  <% end %>
+<% else %>
+  <% if @Setting.use_xero  %>
+    <div><h5>Not previously sent to xero</h5></div>
+    <%=  form_tag({controller: "invoices", action: "addxeroinvoice"}, method: "get", class: "form-horizontal") do %>
+      <%= hidden_field_tag :id, '', :value => @invoice.id %>
+      <%= submit_tag "Send Invoice to Xero", id: "invoiceBtn", class: "btn btn-primary" %>
+    <% end %>
   <% end %>
 <% end %>

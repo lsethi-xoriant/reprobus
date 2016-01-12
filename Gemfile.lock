@@ -298,6 +298,7 @@ GEM
       activesupport (>= 3.0, < 6.0)
     pg (0.18.1)
     pg (0.18.1-x86-mingw32)
+    pin_payment (0.5.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -468,6 +469,7 @@ DEPENDENCIES
   nprogress-rails
   paper_trail (~> 4.0.0.beta)
   pg
+  pin_payment
   pxpay
   rails (= 4.2.0)
   rails_12factor
@@ -486,6 +488,3 @@ DEPENDENCIES
   wkhtmltopdf-binary-edge (~> 0.12.2.1)
   wkhtmltopdf-heroku
   xeroizer (~> 2.15.6)
-
-BUNDLED WITH
-   1.10.2

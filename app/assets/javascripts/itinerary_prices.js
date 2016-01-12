@@ -1,4 +1,37 @@
 $(document).ready(function() {
+  $('#customer_create_invoice_dummy').on('click', function(e) {
+      $(".loading").show();  //show spinner
+      e.preventDefault();
+      ajaxSaveItineraryPricingForm(createCustomerInvoiceSubmit);
+  });
+  
+  function createCustomerInvoiceSubmit(){
+    $(".loading").show();  //show spinner.
+    $('#customer_create_invoice')[0].click();
+  }    
+  
+  $('#supplier_create_invoice_dummy').on('click', function(e) {
+      $(".loading").show();  //show spinner
+      e.preventDefault();
+      ajaxSaveItineraryPricingForm(createSupplerInvoiceSubmit);
+  });
+  
+  function createSupplerInvoiceSubmit(){
+    $(".loading").show();  //show spinner.
+    $('#supplier_create_invoice')[0].click();
+  }  
+  
+  $('#saveCustomerItineraryPriceBtn').on('click', function(e) {
+    $(".itinerary_price_form").submit();
+  });  
+  
+  $('#saveSupplierItineraryPriceBtn').on('click', function(e) {
+    $(".itinerary_price_form").submit();
+  });    
+  
+  $("#saveItineraryPriceFabBtn").on('click', function(e) {
+    $('.itinerary_price_submit_btn').click();
+  }); 
 
   if ($('#itinerary_price_items').length) {
     // only do if on itinerary price page...
@@ -38,6 +71,8 @@ $(document).ready(function() {
       });
       
       reset_material_active_labels('#itinerary_price_items');
+      
+      $(insertedItem).closest('.field').find('.qty_field').val($('#itinerary_num_passengers').val());
     });
   
     $(document).on('change', '.deposit_percent_field', function() {
@@ -108,9 +143,7 @@ $(document).ready(function() {
       calculateSupplierMarkupTotalForPricing();
       calculateSupplierProfitForPricing();
     });
-
   }
-  
 });
 
 $(document).on('click', '.supplier-show-hide-btn', function() {
@@ -360,6 +393,30 @@ function calculateTotalDepositFromSystemDefault(){
   deposit_price = (totalSaleAmount.val() * (systemDefaultPercentage.val()/100));
     
   $(".grand_deposit_total").val(deposit_price.toFixed(2));
+}
+
+function ajaxSaveItineraryPricingForm(callBackOnSuccess){
+  var valuesToSubmit = $('.itinerary_price_form').serialize();
+  $.ajax({
+      type: "POST",
+      url: $('.itinerary_price_form').attr('action'), //sumbits it to the given url of the form
+      data: valuesToSubmit, //,
+      error: function(xhr, status, error) {
+        $(".loading").hide();
+        alert("AJAX Error! Form could not be saved");
+      },
+      success: function(json){
+        $(".loading").hide(); 
+        
+        if (json.success == true) {
+          // do normal submission 
+          callBackOnSuccess();
+        } else {
+          // validation error saving form, so toast a message and quit
+          toastr.warning("There are unsaved changes on form that cannot be reconciled - please save form first");    
+        }
+      }
+  });
 }
 
 

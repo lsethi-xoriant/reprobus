@@ -77,6 +77,7 @@ gem 'delayed_job_active_record'
 gem 'cocoon'
 gem 'dropbox-sdk'
 gem 'net-ssh'
+gem 'pin_payment'
 
 gem 'ckeditor' # rich text editor
 

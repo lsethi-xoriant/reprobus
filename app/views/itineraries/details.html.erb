@@ -45,6 +45,13 @@
         </div>
       </div>
       
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select(:user_id, options_for_select([[f.object.user.name, f.object.user_id]],f.object.user_id),{},{class: "select2-users browser-default"}) %>
+          <%= f.label :user_id, "Assigned To",  class: 'active' %>
+        </div>
+      </div>
+      
     </div>
 
     <div class="row">

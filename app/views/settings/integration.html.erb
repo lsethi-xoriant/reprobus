@@ -11,7 +11,7 @@
           <div class="row">
             <div class="input-field col s6">
               <%= f.label :payment_gateway, "Payment Gateway", class: "active"%>
-              <%= f.select :payment_gateway, options_for_select(["None", "Payment Express"], selected: f.object.payment_gateway ), {}, id: "payselect" %>
+              <%= f.select :payment_gateway, options_for_select(["None", "Payment Express", "Pin Payments"], selected: f.object.payment_gateway ), {}, id: "payselect" %>
             </div>
           </div>
         
@@ -21,6 +21,15 @@
             <%= render partial: 'shared/material_textfield_cols6', locals: { field: "pxpay_key", f: f } %>
             </div>
           </div>
+          
+          <div id="pinpaymentsgroup">
+            <div class="row">
+            <%= render partial: 'shared/material_textfield', locals: { col: "s4", field: "pin_payment_public_key", f: f } %>
+            <%= render partial: 'shared/material_textfield', locals: { col: "s4", field: "pin_payment_secret_key", f: f } %>
+            <%= render partial: 'shared/material_textfield', locals: { col: "s4", field: "pin_payment_url", f: f } %>
+            </div>
+          </div>
+          
           <div class="divider"></div>
 <br>
           <p>

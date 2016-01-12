@@ -42,14 +42,13 @@ class Xero
   end
   
   def create_invoice(invoice)
-
-    itinerary = invoice.itinerary_price_items.first.itinerary_price.itinerary
-
     #if we have a lead customer create contact in xero if it does not already exist.
     #self.customers.each do |cust| # xero only allows one contact per invoice.
     if invoice.isSupplierInvoice?
+      itinerary = invoice.supplier_itinerary_price.itinerary
       cust = invoice.supplier
     else
+      itinerary = invoice.itinerary_price.itinerary
       cust = itinerary.lead_customer
     end
     
@@ -62,16 +61,13 @@ class Xero
     end
     
     currency = invoice.getCurrencyCode
-    if currency.blank?
-      currency = Setting.global_settings.getDefaultCurrency.code
-    end
-    
+
     xinv = self.client.Invoice.build({
       :type => type,
      # :status => "SUBMITTED",
       :status => "AUTHORISED",
       :date => Date.today,
-      :due_date => (Date.today + 30),
+      :due_date => invoice.final_payment_due,
       :currency_code => currency,
       :line_items => [{
         :description => itinerary.name,
@@ -181,9 +177,9 @@ class Xero
     
     xInv = self.client.Invoice.find(invoice.xero_id)
     
+    # currently we do not allow the changing xero amount if there are payments - however code left incase we change our mind
     payArray = []
     xInv.payments.each do |pay|
-    #invoice.xpayments.each do |pay|
       deletePay =  self.client.Payment.build
       deletePay.payment_id = pay.payment_id
       deletePay.status = "DELETED"
@@ -191,13 +187,18 @@ class Xero
       payArray << pay
     end
     
+    #back to actual code that updates price
     li = xInv.line_items.first
     li.unit_amount = amount.to_f
-    xInv.save
+    if xInv.save then 
+      # save ok, so update our sync xinvoice invoice with the new price
+      invoice.x_invoice.update_attributes(amount_due: amount, last_sync: Time.now)
+    end
     
     xAcc = self.client.Account.find('855')
     arr = []
     
+    # currently we do not allow the changing xero amount if there are payments - however code left incase we change our mind
     payArray.each do |pay|
       xPay = self.client.Payment.build(:amount => pay.amount, :date => pay.date, :reference => pay.reference)
       xPay.invoice = xInv
@@ -208,6 +209,7 @@ class Xero
       arr <<   xPay.payment_id
     end
     invoice.update_attribute(:xpayments, arr)
+    
   end
   
   def get_invoice(xero_id)

@@ -1,0 +1,14 @@
+<div class="class=col s12 z-depth-4 card-panel">
+  
+  <div class="input-field col s12 center">
+    <a class="logo" href="#"><%= image_tag(@setting.get_company_logo_image_link, :class => "") %></a>
+  </div>
+
+  <div class="input-field col s12 center">
+    <h5>Thank you for your payment of <%= number_to_currency(@charge.amount.to_d/100, precision: 2) %></h5>
+  </div>
+  <br>
+  <%= render partial: 'itinerary_prices/itinerary_details' %>
+
+  
+</div>

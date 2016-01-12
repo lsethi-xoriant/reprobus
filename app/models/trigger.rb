@@ -42,23 +42,22 @@ class Trigger < ActiveRecord::Base
   end
   
   def self.trigger_new_enquiry(enquiry)
-    @trigger = Setting.find(1).triggers.find_by_name("New Enquiry")
+    @trigger = Setting.global_settings.triggers.find_by_name("New Enquiry")
     @enquiry = enquiry
     Trigger.send_mail(@trigger, @enquiry.customer_email, @enquiry.user.email)
   end
   
   def self.trigger_new_booking(booking)
-    @trigger = Setting.find(1).triggers.find_by_name("New Booking")
+    @trigger = Setting.global_settings.triggers.find_by_name("New Booking")
     @booking = booking
     Trigger.send_mail(@trigger, @booking.enquiry.customer_email, @booking.user.email)
   end
   
-  def self.trigger_pay_receipt(invoice, payment)
-    @trigger = Setting.find(1).triggers.find_by_name("Payment Received")
-    @invoice = invoice
-    @booking = @invoice.booking
+  def self.trigger_pay_receipt(itinerary_price, payment)
+    @trigger = Setting.global_settings.triggers.find_by_name("Payment Received")
+    @itinerary = itinerary_price.itinerary
     if !payment.receipt_triggered
-      if Trigger.send_mail(@trigger, @booking.enquiry.customer_email, @booking.user.email)
+      if Trigger.send_mail(@trigger, @itinerary.lead_customer.email, @itinerary.user.email)
         payment.update_attribute(:receipt_triggered, true)
       end
     end

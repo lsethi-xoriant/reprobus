@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.string   "body"
+    t.text     "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -477,17 +477,19 @@ ActiveRecord::Schema.define(version: 20160111122912) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.decimal  "amount",                        precision: 12, scale: 5, default: 0.0
-    t.string   "payment_ref",       limit: 255
+    t.decimal  "amount",                         precision: 12, scale: 5, default: 0.0
+    t.string   "payment_ref",        limit: 255
     t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "reference"
     t.date     "date"
-    t.boolean  "cc_payment",                                             default: false
+    t.boolean  "cc_payment",                                              default: false
     t.string   "cc_payment_ref"
     t.string   "cc_client_info"
-    t.boolean  "receipt_triggered",                                      default: false
+    t.boolean  "receipt_triggered",                                       default: false
+    t.string   "payment_type"
+    t.integer  "itinerary_price_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -559,6 +561,14 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.text     "important_notes"
     t.text     "overide_email_addresses"
     t.boolean  "overide_emails"
+    t.string   "pin_payment_public_key"
+    t.string   "pin_payment_secret_key"
+    t.text     "invoice_banking_details"
+    t.text     "invoice_company_address"
+    t.text     "invoice_company_contact"
+    t.text     "invoice_footer"
+    t.string   "pin_payment_url"
+    t.string   "base_url"
   end
 
   create_table "stopovers", force: :cascade do |t|

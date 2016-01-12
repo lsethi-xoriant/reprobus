@@ -197,6 +197,7 @@ class ItinerariesController < ApplicationController
 
   def booking_history
     @booking_history = BookingHistory.where(itinerary_id: params[:id])
+    @itinerary = Itinerary.find(params[:id])
     respond_to do |format|
       format.html
     end 
