@@ -53,8 +53,8 @@ class Setting < ActiveRecord::Base
   
   belongs_to  :itinerary_default_image, :class_name => "ImageHolder", :foreign_key => :itinerary_default_image_id
   belongs_to  :company_logo, :class_name => "ImageHolder", :foreign_key => :company_logo_id
-  accepts_nested_attributes_for :itinerary_default_image, allow_destroy: true; 
-  accepts_nested_attributes_for :company_logo, allow_destroy: true; 
+  accepts_nested_attributes_for :itinerary_default_image, allow_destroy: true
+  accepts_nested_attributes_for :company_logo, allow_destroy: true
   
   belongs_to :currency
   has_many :exchange_rates
