@@ -70,6 +70,8 @@ class Ability
     can [:manage], Reports::ConfirmedBookingController
     can [:manage], Reports::EnquiryController
     can [:manage], Reports::BookingTravelController
+    can [:manage], Reports::SupplierController
+    can [:manage], Reports::DestinationController
 
     can [:manage], BookingHistoryController
 

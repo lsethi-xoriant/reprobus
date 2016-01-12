@@ -1,0 +1,43 @@
+<% provide(:title, 'Destination Report') %>
+
+<div class="container">
+  <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
+
+  <%= form_for :reports_search, method: :get, url: reports_destination_index_path do |c| %>
+    <div class="row">
+
+      <div class="col s1">
+        <%= c.label :from, class: 'active' %>
+        <%= c.date_field :from, class:"datepicker start_leg_itinerary", :"data-value" => (@from || 1.month.ago) %>
+      </div>
+      <div class="col s1">
+        <%= c.label :to, class: 'active' %>
+        <%= c.date_field :to, class:"datepicker start_leg_itinerary", :"data-value" => (@to || Date.today) %>
+      </div>
+
+      <div class="col s2">
+        <%= c.label :user, class: 'active' %> 
+        <%= c.select :user_id, content_tag(:option, 'Select..', value: "") + options_from_collection_for_select(@users, "id", "name", selected: (@user.presence)) %>
+      </div>
+
+      <div class="col s2">
+        <%= c.label :country, class: 'active' %> 
+        <%= select_tag(:country, options_from_collection_for_select(select_countries,:id, :name, @country || 0),{class: "select2-countries-noajax browser-default", include_blank: true, id: "reports_search_country_id", name: "reports_search[country_id]"}) %>
+      </div>
+
+      <div class="col s2">
+        <%= c.label :destination, class: 'active' %> 
+        <%= select_tag(:destination, options_for_select([["", 0]], 0),{class: "select2-destinations browser-default", id: "reports_search_destination_id", name: "reports_search[destination_id]"}) %>
+      </div>
+
+      <div class="section">
+        <div class="col s2">
+          <%= c.submit :search, class: 'btn' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= render partial: "reports/destination/table" %>
+
+</div>
