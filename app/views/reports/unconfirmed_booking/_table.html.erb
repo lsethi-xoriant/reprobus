@@ -1,0 +1,27 @@
+
+<div class="section">
+  <table class="responsive-table display">
+    <thead>
+      <tr>
+        <% @structure.keys.each do |th_name| %>
+          <th><%= th_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @itinerary_prices.each do |it_price| %> 
+        <tr>
+          <td><%= it_price.id %></td>
+          <td><%= link_to it_price.try(:itinerary).try(:name), edit_itinerary_price_path(it_price) %></td>
+          <td><%= it_price.try(:itinerary).try(:lead_customer).try(:fullname_with_title) %></td>
+          <td><%= it_price.try(:itinerary).try(:start_date) %></td>
+          <td><%= it_price.try(:itinerary).try(:user).try(:name) %></td>
+          <td><%= it_price.try(:sale_total).try(:to_s) %></td>
+          <td><%= it_price.try(:get_total_supplier_profit) %></td>
+          <td><%= it_price.try(:itinerary).try(:agent).try(:supplier_name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
