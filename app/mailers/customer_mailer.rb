@@ -63,9 +63,14 @@ class CustomerMailer < ActionMailer::Base
     @confirmed = confirmed
     @itinerary = itinerary
     params[:id] = @itinerary.id
+
+    bulk_action = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:bulk_action])
+    flight_details = bulk_action ? params["flight_details_1"] : params["flight_details_#{itinerary_price_item.id}"]
+
     include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
     name = confirmed ? "#{supplier.try(:supplier_name)} booking request #{itinerary.id} / #{itinerary.try(:lead_customer).try(:last_name)}" : "Supplier Quote"
     type = confirmed ? :confirmed_supplier : :supplier_quote
+
     mail(
       from: params[:from_email],
       reply_to: params[:from_email],
@@ -76,7 +81,7 @@ class CustomerMailer < ActionMailer::Base
         format.pdf do
           if params[:type] == 'PDF'
             attachments['supplier.pdf'] = 
-              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, params["flight_details_#{itinerary_price_item.id}"])
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, flight_details)
           end
         end
       end
