@@ -139,46 +139,48 @@
       </div>
     
       <%# if @itinerary.isLocked? %>
-      <div class="row">
-  
-        <div class="input-field col s2" >
-          <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
-        </div>
-  
-        <div class="input-field col s2" >
-          <%= render partial: 'emailQuote_button' %>
-        </div>
-  
-        <div class="input-field col s3">
-          <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
-            class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
-            target: '_blank' do %>
-  
-              View Confirmed PDF
-  
-          <% end if @itinerary.itinerary_price.present? %>
-        </div>
+      <% if @itinerary.itinerary_infos.present? %>
+        <div class="row">
+    
+          <div class="input-field col s2" >
+            <a href="<%= itinerary_printQuote_path @itinerary, format: :pdf %>"  class="input-field waves-effect waves-light btn left deep-purple darken-1 col" target="_blank" >View Quote Pdf</a>
+          </div>
+    
+          <div class="input-field col s2" >
+            <%= render partial: 'emailQuote_button' %>
+          </div>
+    
+          <div class="input-field col s3">
+            <%= link_to itinerary_printQuote_path(@itinerary, format: :pdf, confirmed: true),
+              class: 'input-field waves-effect waves-light btn left deep-purple darken-1 col',
+              target: '_blank' do %>
+    
+                View Confirmed PDF
+    
+            <% end if @itinerary.itinerary_price.present? %>
+          </div>
 
-        <div class="input-field col s3" >
-          <%= render partial: 'emailQuote_button', locals: { confirmed: true } %>
+          <div class="input-field col s3" >
+            <%= render partial: 'emailQuote_button', locals: { confirmed: true } %>
+          </div>
+    
+          <div class="input-field col s2">
+            <%= render partial: 'pricingBtn'%>
+          </div>
+    
+          <div class="input-field col s3" >
+            <%= render partial: 'cancel_itinerary_button' %>
+          </div>
+          
+          <div class='input-field col s3'>
+            <%= link_to 'Booking History', booking_history_itinerary_path(params[:id]), class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
+          </div>
+          
+          <div class='input-field col s3'>
+            <%= link_to 'Supplier documents', generate_supplier_documents_itinerary_path, class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
+          </div>
         </div>
-  
-        <div class="input-field col s2">
-          <%= render partial: 'pricingBtn'%>
-        </div>
-  
-        <div class="input-field col s3" >
-          <%= render partial: 'cancel_itinerary_button' %>
-        </div>
-        
-        <div class='input-field col s3'>
-          <%= link_to 'Booking History', booking_history_itinerary_path(params[:id]), class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
-        </div>
-        
-        <div class='input-field col s3'>
-          <%= link_to 'Supplier documents', generate_supplier_documents_itinerary_path, class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
-        </div>
-      </div>
+      <% end %>
 
       <%# end %>
       <br>
