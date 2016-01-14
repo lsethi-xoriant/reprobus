@@ -139,7 +139,7 @@
       </div>
     
       <%# if @itinerary.isLocked? %>
-      <% if @itinerary.itinerary_infos.present? %>
+      <% if @itinerary.itinerary_infos.present? && @itinerary.start_date.present? && @itinerary.end_date.present? %>
         <div class="row">
     
           <div class="input-field col s2" >

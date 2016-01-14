@@ -1,8 +1,6 @@
 class ItineraryPricesController < ApplicationController
-  authorize_resource class: ItineraryPricesController
-
   before_filter :signed_in_user
-  # before_filter :admin_user, only: :destroy
+  before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
   
   def new
@@ -21,8 +19,6 @@ class ItineraryPricesController < ApplicationController
   def edit
     @itinerary_price = ItineraryPrice.includes(:itinerary_price_items).find(params[:id])
     @itinerary = @itinerary_price.itinerary
-
-    set_email_modal_values
   end
   
   def create
@@ -122,8 +118,7 @@ class ItineraryPricesController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        render pdf: "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_balance",
-              show_as_html: params.key?('debug')
+        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_balance"
       end
     end
   end
@@ -143,11 +138,24 @@ class ItineraryPricesController < ApplicationController
     
     respond_to do |format|
       format.pdf do
-        render pdf: "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit",
-               show_as_html: params.key?('debug')
+        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit"
       end
     end
   end
+  
+  def invoice_supplier_pdf
+    @supplier_itinerary_price_item = ItineraryPriceItem.find(params[:id])
+    @supplier_itinerary_price = @supplier_itinerary_price_item
+    @itinerary = @supplier_itinerary_price.itinerary
+    @invoice = @supplier_itinerary_price.invoice 
+    @xinvoice = @invoice.x_invoice
+    
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "invoice_no_ " + @itinerary.id.to_s.rjust(8, '0') + "_deposit"
+      end
+    end
+  end  
   
   def invoice_deposit_old
    @itinerary_price = ItineraryPrice.find(params[:id])
@@ -248,11 +256,5 @@ private
     supplier_itinerary_price_items_attributes: [:id, :exchange_rate_total, :booking_ref, :description,
     :price_total, :itinerary_price_id, :supplier_id, :markup, :markup_percentage,
     :item_price, :quantity, :currency_id, :sell_currency_rate, :total_incl_markup,  :_destroy ])
-  end
-
-  def set_email_modal_values
-    @cc_email = current_user.try(:email)
-    @from_email = 
-      @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
   end
 end
