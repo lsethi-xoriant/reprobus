@@ -143,6 +143,25 @@ class ReportService
 
   end
 
+  def self.unconfirmed_booking(from, to, user=nil)
+    search_params = {}
+    search_params[:customer_invoice_sent_date] = (from && to) ? (from.to_date.beginning_of_day..to.to_date.end_of_day) : (1.month.ago.beginning_of_day..Date.today.end_of_day)
+    search_params[:booking_confirmed]      = false
+    search_params[:customer_invoice_sent]  = true
+    
+    if user
+      search_params[:itineraries] = {}
+      search_params[:itineraries][:user_id] = user
+    end
+
+    results = ItineraryPrice
+                .includes(:itinerary)
+                .joins(:itinerary)
+                .where(search_params)
+
+    results
+  end
+
   def self.generate_csv(entities, titles_methods)
     # titles_methods hash structure:
     # key: name of the field

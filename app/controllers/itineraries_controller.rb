@@ -148,6 +148,14 @@ class ItinerariesController < ApplicationController
     @customer = @itinerary.lead_customer
   end
 
+  def generate_supplier_documents
+    @itinerary = Itinerary.find(params[:id])
+    @itinerary_price = @itinerary.itinerary_price
+    @itinerary_price_items = @itinerary_price.supplier_itinerary_price_items
+
+    set_email_modal_values_supplier_documents
+  end
+
   def destroy
     Itinerary.find(params[:id]).destroy
     flash[:success] = "Itinerary deleted."
@@ -216,6 +224,12 @@ private
 
       @from_email = 
         @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
+    end
+
+    def set_email_modal_values_supplier_documents
+      @from_email = 
+        @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
+      @cc_email = current_user.try(:email)
     end
 
     def set_customers_for_itinerary

@@ -1,7 +1,9 @@
 <% form_name = local_assigns.key?(:confirmed) ? 'email_confirmed_quote' : 'email_quote' %>
 <% confirmed = local_assigns.key?(:confirmed) ? confirmed : false %>
+<% bulk_action = local_assigns.key?(:bulk_action) %>
+<% url = bulk_action ? itinerary_price_emailQuote_bulk_path(itinerary_price_item_id) : itinerary_price_emailQuote_path(params[:id]) %>
 
-<%= form_for :email_settings, url: itinerary_price_emailQuote_path(params[:id]), method: :get, html: { id: "#{form_name}_form_#{itinerary_price_item_id}" } do |c| %>
+<%= form_for :email_settings, url: url, method: :get, html: { id: "#{form_name}_form_#{itinerary_price_item_id}" } do |c| %>
 
   <div id=<%="#{form_name}_modal_#{itinerary_price_item_id}"%> class="modal modal-fixed-footer white">
     <div class="modal-content">
@@ -15,16 +17,20 @@
               <div class="row">
 
                 <%= hidden_field_tag :itinerary_price_item_id, itinerary_price_item_id %>
-
                 <%= hidden_field_tag :confirmed, confirmed %>
+                <%= hidden_field_tag :itinerary_id, @itinerary.id if @itinerary %>
 
-                <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
-                <div class="input-field col s6">
-                  <!-- To email address -->
-                  <%= c.hidden_field :to_email, value: supplier.email %>
-                  <%= c.text_field :to_email, value: supplier.fullname, disabled: 'disabled' %>
-                  <%= c.label :to_email, 'TO:' %>
-                </div>
+                <%= c.hidden_field :bulk_action, value: bulk_action %>
+
+                <% if !bulk_action %>
+                  <% supplier = ItineraryPriceItem.find(itinerary_price_item_id).supplier %>
+                  <div class="input-field col s6">
+                    <!-- To email address -->
+                    <%= c.hidden_field :to_email, value: supplier.email %>
+                    <%= c.text_field :to_email, value: supplier.fullname, disabled: 'disabled' %>
+                    <%= c.label :to_email, 'TO:' %>
+                  </div>
+                <% end %>
 
                 <div class="input-field col s6">
                   <!-- From email address -->

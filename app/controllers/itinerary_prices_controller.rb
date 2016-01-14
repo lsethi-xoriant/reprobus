@@ -176,6 +176,74 @@ class ItineraryPricesController < ApplicationController
       end
     end
   end  
+
+  def printQuote
+    @itinerary_price_item = ItineraryPriceItem.find(params[:itinerary_price_item_id])
+    @itinerary_price = ItineraryPrice.find(@itinerary_price_item.supplier_itinerary_price_id)
+    @itinerary = @itinerary_price.try(:itinerary)
+    @supplier = @itinerary_price_item.supplier
+    @itinerary_infos = @itinerary
+                        .itinerary_infos
+                        .select { |info| info.supplier_id == @supplier.id }
+
+    respond_to do |format|
+      format.pdf do
+        render  pdf: "Supplier_no_" + @itinerary.id.to_s.rjust(8, '0'),
+                show_as_html: params.key?('debug'),
+                margin: { bottom: 15 }
+      end
+      format.html { render layout: false }
+    end    
+  end
+
+  def emailQuote
+    @itinerary_price_item = ItineraryPriceItem.find(params[:itinerary_price_item_id])
+    @itinerary_price = ItineraryPrice.find(@itinerary_price_item.supplier_itinerary_price_id)
+    @itinerary = @itinerary_price.try(:itinerary)
+    @supplier = @itinerary_price_item.supplier
+    @itinerary_infos = @itinerary
+                        .itinerary_infos
+                        .select { |info| info.supplier_id == @supplier.id }
+    confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
+
+    if CustomerMailer.send_email_supplier_quote(
+      @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, 
+      @supplier, confirmed, params[:email_settings]).deliver_later
+
+      confirmed_name = confirmed ? 'Confirmed' : ''
+      flash[:success] = "#{confirmed_name} Supplier Quote has been sent."
+    else
+      flash[:error] = 'Error occured while sending Quote'
+    end
+
+    redirect_to edit_itinerary_price_path(@itinerary_price)
+  end
+
+  def emailQuote_bulk
+    @itinerary = Itinerary.find(params[:itinerary_id])
+    @itinerary_price = @itinerary.itinerary_price
+    confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
+
+    @itinerary_price_item_ids = params[:itinerary_price_item_ids]
+                                  .split(",")
+                                  .map(&:to_i)
+                                  .uniq
+    @itinerary_price_items = ItineraryPriceItem.includes(:supplier).where(id: @itinerary_price_item_ids)
+
+    @itinerary_price_items.each do |item|
+      @supplier = item.supplier
+      @itinerary_infos = @itinerary
+                          .itinerary_infos
+                          .select { |info| info.supplier_id == @supplier.id }
+
+      CustomerMailer.send_email_supplier_quote(
+        @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver_later
+    end
+
+    flash[:success] = "Emails has been sent."
+
+    redirect_to edit_itinerary_path(params[:itinerary_id])
+  end
   
 private
   def itinerary_price_params

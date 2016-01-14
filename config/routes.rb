@@ -46,7 +46,8 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       post 'revert_cancel'
       get 'details'
-      get 'customer_interactions'
+      get 'booking_history'
+      get 'generate_supplier_documents'
     end
   end
 
@@ -55,6 +56,9 @@ Reprobus::Application.routes.draw do
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
+    get 'printQuote'
+    get 'emailQuote'
+    get 'emailQuote_bulk'
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
       match 'invoice_deposit/:id', to: 'itinerary_prices#invoice_deposit',   as: 'invoice_deposit' ,via: 'get'
@@ -181,6 +185,9 @@ Reprobus::Application.routes.draw do
     resources :enquiry, only: [:index]
     resources :booking_travel, only: [:index]
     resources :confirmed_booking, only: [:index]
+    resources :supplier, only: [:index]
+    resources :destination, only: [:index]
+    resources :unconfirmed_booking, only: [:index]
   end
   
   post "emails/post"

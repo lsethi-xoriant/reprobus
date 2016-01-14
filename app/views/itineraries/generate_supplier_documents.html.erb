@@ -1,0 +1,56 @@
+
+<% itinerary_price_item_id = 1 # just for itinerary price email popup template %>
+
+<br>
+<div class="row">
+  <div class="col s2">
+    For selected suppliers
+  </div>
+  <div class="col s3" >
+    <a
+      id="EmailQuoteBtn"
+      class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+      data-delay="50"
+      href=<%="#email_quote_modal_#{itinerary_price_item_id}"%>>
+
+      Email Quote Request
+    </a>
+  </div>
+  <div class="col s3" >
+    <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+      data-delay="50"
+      href=<%="#email_confirmed_quote_modal_#{itinerary_price_item_id}"%>>
+
+      Email Confirmation
+    </a>
+  </div>
+</div>
+
+<br>
+
+<% @itinerary_price_items.each do |item| %>
+  <% if item.try(:supplier).try(:email).try(:presence) %>
+    <br>
+    <div class="row">
+      <div class="col s2">
+        <input type="checkbox" id="<%= item.id %>" name="itinerary_price_item_ids" class="filled-in" />
+        <label for="<%= item.id %>"><%= item.supplier.supplier_name %></label>
+      </div>
+      <div class="col s3">
+        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" target="_blank">
+          View Quote Request
+        </a>
+      </div>
+      <div class="col s3">
+        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, confirmed: true, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" data-delay="50" target="_blank">
+          View Confirmation
+        </a>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- Modal for bulk emailing -->
+<%= render partial: 'itinerary_prices/emailQuote_modal', locals: { itinerary_price_item_id: itinerary_price_item_id, bulk_action: true } %>
+<!-- Email for confirmed bulk emailing -->
+<%= render partial: 'itinerary_prices/emailQuote_modal', locals: { itinerary_price_item_id: itinerary_price_item_id, bulk_action: true, confirmed: true } %>
