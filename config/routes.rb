@@ -46,23 +46,21 @@ Reprobus::Application.routes.draw do
       get 'cancel'
       post 'revert_cancel'
       get 'details'
-      get 'booking_history'
+      get 'customer_interactions'
     end
   end
 
-  resources :booking_history, only: [:download] do
+  resources :customer_interactions, only: [:download] do
     member { get :download }
   end
   
   resources :itinerary_prices, only: [:new, :edit, :update, :create] do
-    get 'printQuote'
-    get 'emailQuote'
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
-      match 'invoice_supplier/:id', to: 'itinerary_prices#invoice_supplier',   as: 'invoice_supplier' ,via: 'get'
       match 'invoice_deposit/:id', to: 'itinerary_prices#invoice_deposit',   as: 'invoice_deposit' ,via: 'get'
       match 'invoice_deposit_old/:id', to: 'itinerary_prices#invoice_deposit_old',   as: 'invoice_deposit_old' ,via: 'get'
       match 'invoice_remaining/:id', to: 'itinerary_prices#invoice_remaining',   as: 'invoice_remaining' ,via: 'get'
+#      match 'invoice_supplier_pdf/:id', to: 'itinerary_prices#invoice_supplier_pdf',   as: 'invoice_supplier_pdf' ,via: 'get'
       match 'payments/:id', to: 'itinerary_prices#payments',   as: 'payments' ,via: 'get'
     end
   end
@@ -183,8 +181,6 @@ Reprobus::Application.routes.draw do
     resources :enquiry, only: [:index]
     resources :booking_travel, only: [:index]
     resources :confirmed_booking, only: [:index]
-    resources :supplier, only: [:index]
-    resources :destination, only: [:index]
   end
   
   post "emails/post"
