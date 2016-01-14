@@ -51,7 +51,7 @@ Reprobus::Application.routes.draw do
     end
   end
 
-  resources :customer_interactions, only: [:download] do
+  resources :booking_histories, only: [:download] do
     member { get :download }
   end
   
