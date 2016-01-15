@@ -9,24 +9,30 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     if params[:amount].nil? || !is_number?(params[:amount])
       flash[:error] = "Payment amount must be entered. You entered #{params[:amount]}"
-      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     else
       @invoice.add_xero_payment(params[:amount])
       flash[:success] = "Payment added succesfully ($#{params[:amount]})"
-      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     end
+    if @invoice.isSupplierInvoice?
+      redirect_to supplier_invoice_details_itinerary_prices_path( @invoice.supplier_itinerary_price )
+    else
+      redirect_to invoice_details_itinerary_prices_path( @invoice.itinerary_price )
+    end    
   end
 
   def changexeroinvoice
     @invoice = Invoice.find(params[:id])
     if params[:amount].to_f < (params[:amount_total].to_f - params[:amount_due].to_f)
       flash[:error] = "Payment amount cannot be less than amount paid. You entered #{params[:amount]}"
-      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     else
       @invoice.change_xero_invoice(params[:amount])
       flash[:success] = "Invoice updated succesfully ($#{params[:amount]})"
-      redirect_to payments_itinerary_prices_path( @invoice.itinerary_price )
     end
+    if @invoice.isSupplierInvoice?
+      redirect_to supplier_invoice_details_itinerary_prices_path( @invoice.supplier_itinerary_price )
+    else
+      redirect_to invoice_details_itinerary_prices_path( @invoice.itinerary_price )
+    end    
   end
 
   def getxeroinvoice
@@ -44,7 +50,11 @@ class InvoicesController < ApplicationController
     #respond_to do |format|
     #    format.js
     #end
-    redirect_to payments_itinerary_prices_path @invoice.itinerary_price
+    if @invoice.isSupplierInvoice?
+      redirect_to supplier_invoice_details_itinerary_prices_path( @invoice.supplier_itinerary_price )
+    else
+      redirect_to invoice_details_itinerary_prices_path( @invoice.itinerary_price )
+    end
     
   end
   

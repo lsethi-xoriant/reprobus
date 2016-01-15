@@ -63,8 +63,7 @@
     </table>
   </div>
   
-  <% if !invoice.isSupplierInvoice? %>
-    <% if invoice.x_invoice && @setting.use_xero %>
+  <% if !invoice.isSupplierInvoice? && @setting.use_xero %>
     <div class="well well-sm">
       <br>
       <h5>Manually add a Payment</h5>
@@ -79,7 +78,7 @@
     </div>
     
   <% else %>  
-    <% if @setting.use_xero  %>
+    <% if @Setting.use_xero  %>
       <div><h5>Not previously sent to xero</h5></div>
       <%=  form_tag(invoice_itinerary_prices_path(@itinerary_price), method: "get", class: "form-horizontal") do %>
         <%= hidden_field_tag :id, '', :value => @itinerary_price.id %>
@@ -87,5 +86,5 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>  
+  
 </div>
