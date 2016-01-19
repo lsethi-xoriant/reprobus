@@ -5,6 +5,37 @@ class ItinerariesController < ApplicationController
   # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
 
+  def printItineraryCsv
+    @itinerary_infos = 
+      Itinerary.includes(:itinerary_infos)
+        .find(params[:itinerary_id])
+        .itinerary_infos
+        .includes(:itinerary)
+        .includes(itinerary: :lead_customer)
+
+    @structure = 
+      {
+        'Supplier'           => 'supplier_name',
+        'DateofService'      => 'start_date',
+        'EndService'         => 'end_date',
+        'Country'            => 'get_product_country',
+        'Destination'        => 'get_product_destination',
+        'ProductName'        => 'get_product_name',
+        'RoomCabinName'      => 'get_room_type_name',
+        'QuoteNo'            => 'itinerary.try(:id)',
+        'CustomerName'       => 'itinerary.try(:lead_customer).try(:fullname)',
+        'ProductDescription' => 'get_product_description'
+      }
+
+    respond_to do |format|
+      format.csv do
+        csv_string = ReportService.generate_csv(@itinerary_infos, @structure)
+        send_data csv_string
+      end
+      format.html { render layout: false }
+    end
+  end
+
   def printQuote
     @itinerary = Itinerary.find(params[:itinerary_id])
     @enquiry = @itinerary.enquiry

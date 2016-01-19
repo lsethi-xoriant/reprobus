@@ -38,6 +38,7 @@ Reprobus::Application.routes.draw do
     end
   end
   resources :itineraries do
+    get 'printItineraryCsv'
     get 'printQuote'
     get 'printConfirmed'
     get 'emailQuote'
