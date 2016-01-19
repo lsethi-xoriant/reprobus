@@ -179,6 +179,9 @@
           <div class='input-field col s3'>
             <%= link_to 'Supplier documents', generate_supplier_documents_itinerary_path, class: "input-field waves-effect waves-light btn left deep-purple darken-1 col" %>
           </div>
+
+          <%= render partial: 'request_customer_updates_button' %>
+          
         </div>
       <% end %>
 
@@ -228,3 +231,4 @@
 <%= render partial: 'emailQuote_modal' %>
 <!-- Email Confirmed Quote Modal -->
 <%= render partial: 'emailQuote_modal', locals: { confirmed: true } %>
+<%= render partial: 'request_customer_updates_modal' %>
