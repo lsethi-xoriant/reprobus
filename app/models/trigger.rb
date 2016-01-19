@@ -53,9 +53,9 @@ class Trigger < ActiveRecord::Base
     Trigger.send_mail(@trigger, @booking.enquiry.customer_email, @booking.user.email)
   end
   
-  def self.trigger_pay_receipt(itinerary_price, payment)
+  def self.trigger_pay_receipt(invoice, payment)
     @trigger = Setting.global_settings.triggers.find_by_name("Payment Received")
-    @itinerary = itinerary_price.itinerary
+    @itinerary = invoice.itinerary_price.itinerary
     if !payment.receipt_triggered
       if Trigger.send_mail(@trigger, @itinerary.lead_customer.email, @itinerary.user.email)
         payment.update_attribute(:receipt_triggered, true)

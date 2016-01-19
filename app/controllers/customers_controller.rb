@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
-  authorize_resource class: CustomersController
-  before_filter :signed_in_user
+  authorize_resource class: CustomersController, except: [:details, :update_details]
+  
   # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
   layout "customer_details", :only => [ :details ]
@@ -123,8 +123,14 @@ private
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
         :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id, :agent_commision_percentage,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
+<<<<<<< HEAD
         :quote_introduction, :confirmed_introduction, :medical_information, :dietary_requirements,
         :emergency_contact_phone, :emergency_contact, :frequent_flyer_details, :nationality,
+=======
+        :quote_introduction, :confirmed_introduction, :nationality,
+        :medical_information, :dietary_requirements,
+        :emergency_contact_phone, :emergency_contact, :frequent_flyer_details,
+>>>>>>> aa61ec86edf785719bdfbda95eea6d053a2b248b
         trigger_attributes: [:email_template_id], company_logo_attributes: [:id, :image_local, :image_remote_url],
         address_attributes: [:street1, :street2, :city, :state, 
         :zipcode, :country, :full_address, :address_type, :addressable_type, :addressable_id])

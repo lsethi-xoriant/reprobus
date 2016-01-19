@@ -333,10 +333,10 @@ function calculateSupplierSellTotalForPricing(){
 }
 
 function calculateSupplierProfitForPricing(){
-  var totalPrice = Number($('.grand_supplier_sell_total').val());
-  var totalPriceIncMarkup = Number($('.grand_incl_markup_total').val());
+  var totalPriceSupplier = Number($('.grand_supplier_sell_total').val());
+  var totalPriceSell = Number($('.grand_total').val());
     
-  $(".grand_profit_total").val((totalPriceIncMarkup- totalPrice).toFixed(2));
+  $(".grand_profit_total").val((totalPriceSell- totalPriceSupplier).toFixed(2));
 }
 
 function calculateSupplierMarkupTotalForPricing(){

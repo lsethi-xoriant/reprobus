@@ -49,6 +49,7 @@ Reprobus::Application.routes.draw do
       get 'booking_history'
       get 'customer_updates'
       get 'generate_supplier_documents'
+      get 'customer_updates'
     end
   end
 
@@ -62,11 +63,13 @@ Reprobus::Application.routes.draw do
     get 'emailQuote_bulk'
     collection do
       match 'invoice/:id', to: 'itinerary_prices#invoice',   as: 'invoice' ,via: 'get'
+      match 'invoice_supplier/:id', to: 'itinerary_prices#invoice_supplier',   as: 'invoice_supplier' ,via: 'get'
       match 'invoice_deposit/:id', to: 'itinerary_prices#invoice_deposit',   as: 'invoice_deposit' ,via: 'get'
       match 'invoice_deposit_old/:id', to: 'itinerary_prices#invoice_deposit_old',   as: 'invoice_deposit_old' ,via: 'get'
       match 'invoice_remaining/:id', to: 'itinerary_prices#invoice_remaining',   as: 'invoice_remaining' ,via: 'get'
 #      match 'invoice_supplier_pdf/:id', to: 'itinerary_prices#invoice_supplier_pdf',   as: 'invoice_supplier_pdf' ,via: 'get'
-      match 'payments/:id', to: 'itinerary_prices#payments',   as: 'payments' ,via: 'get'
+      match 'invoice_details/:id', to: 'itinerary_prices#invoice_details',   as: 'invoice_details' ,via: 'get'
+      match 'supplier_invoice_details/:id', to: 'itinerary_prices#supplier_invoice_details',   as: 'supplier_invoice_details' ,via: 'get'
     end
   end
     
