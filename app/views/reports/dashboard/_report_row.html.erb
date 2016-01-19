@@ -1,7 +1,7 @@
 <li>
-  <h4><%= report_row %></h4>
+  <h4><%= report_row.pluralize %></h4>
   <%= link_to send("reports_#{report_row.parameterize('_')}_index_path") do %>
-    <%= button_tag (report_row + ' Reports'), class: 'waves-effect waves-light btn right', type: 'button', method: :get %>
+    <%= button_tag (report_row.pluralize + ' Reports'), class: 'waves-effect waves-light btn right', type: 'button', method: :get %>
   <% end %>
   <p>Reports</p>
 </li>

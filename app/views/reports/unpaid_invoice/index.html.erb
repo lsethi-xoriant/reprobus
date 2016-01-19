@@ -1,9 +1,9 @@
-<% provide(:title, 'Unconfirmed Booking Report') %>
+<% provide(:title, 'Unpaid Invoices Report') %>
 
 <div class="container">
   <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
 
-  <%= form_for :reports_search, method: :get, url: reports_unconfirmed_booking_index_path do |c| %>
+  <%= form_for :reports_search, method: :get, url: reports_unpaid_invoice_index_path do |c| %>
     <div class="row">
 
       <div class="col s1">
@@ -28,6 +28,6 @@
     </div>
   <% end %>
 
-  <%= render partial: "reports/unconfirmed_booking/table" %>
+  <%= render partial: "reports/unpaid_invoice/table" %>
 
 </div>

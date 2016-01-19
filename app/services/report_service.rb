@@ -143,7 +143,7 @@ class ReportService
 
   end
 
-  def self.unconfirmed_booking(from, to, user=nil)
+  def self.unpaid_invoices(from, to, user=nil)
     search_params = {}
     search_params[:customer_invoice_sent_date] = (from && to) ? (from.to_date.beginning_of_day..to.to_date.end_of_day) : (1.month.ago.beginning_of_day..Date.today.end_of_day)
     search_params[:booking_confirmed]      = false

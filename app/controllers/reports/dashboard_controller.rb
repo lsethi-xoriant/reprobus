@@ -11,7 +11,7 @@ class Reports::DashboardController < ApplicationController
        'Confirmed Booking',
        'Supplier',
        'Destination',
-       'Unconfirmed Booking'
+       'Unpaid Invoice'
       ]
   end
 end
