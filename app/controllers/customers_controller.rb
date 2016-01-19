@@ -1,7 +1,6 @@
 class CustomersController < ApplicationController
-  authorize_resource class: CustomersController
+  authorize_resource class: CustomersController, except: [:details, :update_details]
   
-  before_filter :signed_in_user, except: [:details, :update_details]
   # before_filter :admin_user, only: :destroy
   before_action :setCompanySettings
   layout "customer_details", :only => [ :details ]
