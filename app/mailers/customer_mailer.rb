@@ -151,9 +151,4 @@ class CustomerMailer < ActionMailer::Base
         subject: 'Update personal details') if to_email.present?
     end
 
-    def send_lead_customer_update(lead_customer)
-      token = User.new_remember_token
-      date = 7.days.from_now.to_date
-      
-    end
 end
