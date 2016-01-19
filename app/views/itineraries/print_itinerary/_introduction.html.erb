@@ -5,9 +5,9 @@
 <div class="clear50"></div>
 <p class="caption">
   <% if @confirmed %>
-    <%= (h (@enquiry.agent && !@enquiry.agent.confirmed_introduction.blank? ? @enquiry.agent.confirmed_introduction : @setting.confirmed_introduction).html_safe).to_s.gsub("\n", "<br />").html_safe %>
+    <%= (h (@itinerary.agent && !@itinerary.agent.confirmed_introduction.blank? ? @itinerary.agent.confirmed_introduction : @setting.confirmed_introduction).html_safe).to_s.gsub("\n", "<br />").html_safe %>
   <% else %>
-    <%= (h (@enquiry.agent && !@enquiry.agent.quote_introduction.blank? ? @enquiry.agent.quote_introduction : @setting.quote_introduction).html_safe).gsub("\n", "<br />").html_safe %>
+    <%= (h (@itinerary.agent && !@itinerary.agent.quote_introduction.blank? ? @itinerary.agent.quote_introduction : @setting.quote_introduction).html_safe).gsub("\n", "<br />").html_safe %>
   <% end %>
 </p>
 
@@ -20,8 +20,8 @@
 <p class="caption"><strong>Bedding Type: </strong><%= @itinerary.bedding_type.try(:humanize) %></p>
 <p class="caption"><strong>Lead Customer: </strong><%= @itinerary.enquiry.lead_customer.fullname_with_title %><p>
 <p class="caption"><strong>Email: </strong><%= @itinerary.enquiry.lead_customer.email %><p>
-<% @enquiry.customers.each do |cust| %>
-    <% if cust != @enquiry.lead_customer %>
+<% @itinerary.customers.each do |cust| %>
+    <% if cust != @itinerary.lead_customer %>
     <p class="caption"><strong>Other Customer/s:</strong>		<%= cust.fullname_with_title %><p>
         <% if !cust.email.blank? %>
             <p class="caption"><strong>Email: </strong><%= cust.email %><p>
