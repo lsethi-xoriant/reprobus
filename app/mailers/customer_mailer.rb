@@ -108,25 +108,6 @@ class CustomerMailer < ActionMailer::Base
     end
   end
 
-  def send_profile_update_requests(itinerary, request, send_to)
-    @lead_customer = itinerary.lead_customer
-    @customers = itinerary.customers
-    @request = request
-    @send_to = send_to
-
-    update_customers_tokens_and_expiry_dates(@customers)
-
-    case @send_to
-    when 'lead_customer'
-      send_update_request(@lead_customer.try(:email))
-    when 'individual_customers'
-      @customers.each do |customer| 
-        @current_customer = customer
-        send_update_request(customer.email)
-      end
-    end
-  end
-
   private
 
     def update_customers_tokens_and_expiry_dates(customers)
