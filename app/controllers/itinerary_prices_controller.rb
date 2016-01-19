@@ -99,10 +99,17 @@ class ItineraryPricesController < ApplicationController
     end 
   end
   
-  def payments
+  def invoice_details
     @itinerary_price = ItineraryPrice.find(params[:id])
     @itinerary = @itinerary_price.itinerary
     @invoices =  @itinerary_price.invoices
+  end
+  
+  def supplier_invoice_details
+    @itinerary_price = ItineraryPrice.find(params[:id])
+    @itinerary = @itinerary_price.itinerary
+    @invoices =  @itinerary_price.supplier_invoices
+    render "invoice_details"
   end
   
   def invoice_remaining
