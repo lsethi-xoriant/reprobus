@@ -193,7 +193,7 @@ Reprobus::Application.routes.draw do
     resources :confirmed_booking, only: [:index]
     resources :supplier, only: [:index]
     resources :destination, only: [:index]
-    resources :unconfirmed_booking, only: [:index]
+    resources :unpaid_invoice, only: [:index]
   end
   
   post "emails/post"

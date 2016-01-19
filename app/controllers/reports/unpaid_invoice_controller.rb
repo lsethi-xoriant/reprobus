@@ -1,5 +1,5 @@
-class Reports::UnconfirmedBookingController < ApplicationController
-  authorize_resource class: Reports::UnconfirmedBookingController
+class Reports::UnpaidInvoiceController < ApplicationController
+  authorize_resource class: Reports::UnpaidInvoiceController
 
   def index
     if params[:reports_search]
@@ -11,7 +11,7 @@ class Reports::UnconfirmedBookingController < ApplicationController
     @structure = structure
     @users = User.where.not(name: "System")
     @itinerary_prices = 
-      ReportService.unconfirmed_booking(@from, @to, @user)
+      ReportService.unpaid_invoices(@from, @to, @user)
 
     respond_to do |format|
       format.html
