@@ -1,5 +1,5 @@
 <% provide(:title, "Edit user") %>
-<h1 class="page-header">Update profile</h1>
+<h4 class="page-header">Update profile</h4>
 
 <div class="row">
   <div class="span6 offset3">
@@ -20,20 +20,14 @@
       </div>
 
       <div class="row">
-        <% @roles.each do |role| %>
-          <%= check_box_tag "user[role_ids][]", role.id, f.object.roles.include?(role), id: role.id %>
-          <label for="<%= role.id %>"><%= role.name %></label>
+        <% if current_user.management? %>
+          <% @roles.each do |role| %>
+            <%= check_box_tag "user[role_ids][]", role.id, f.object.roles.include?(role), id: role.id %>
+            <label for="<%= role.id %>"><%= role.name %></label>
+          <% end %>
         <% end %>
       </div>
       
-      <% if @user.management? || current_user.management? %>
-        <div class="form-group">
-          <%= f.check_box :admin %>
-          <div class="col-sm-6">
-          <%= f.label :admin, :class => "checkbox inline" %>
-          </div></div>
-      <% end %>
-
       <%= render partial: 'shared/std_grp_btn_pos', locals: { name: "Save changes", f: f } %>
     <% end %>
   </div>

@@ -108,10 +108,15 @@
       </div>
  
       <div class="row">
-        <div class="input-field col s6">
-          <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
-          <%= f.label :assigned_to, "Assign To",  class: 'active' %>
-        </div>
+        <% if current_user.management? %>
+          <div class="input-field col s6">
+            <%= f.select(:assigned_to, options_for_select([[f.object.assigned_to_name, f.object.assigned_to_id]],f.object.assigned_to_id),{},{class: "select2-users browser-default"}) %>
+            <%= f.label :assigned_to, "Assign To",  class: 'active' %>
+          </div>
+        <% else %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "s6", label: "Assigned To", value: f.object.assigned_to_name, class_for_input: ""  } %>
+          <%= f.hidden_field :assigned_to, value: f.object.assigned_to_id %>
+        <% end %>
       </div>
     </div>
 

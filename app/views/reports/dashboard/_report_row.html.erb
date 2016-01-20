@@ -1,8 +1,8 @@
 <li>
-  <h4><%= report_row %></h4>
-  <%= link_to send("reports_#{report_row.parameterize('_')}_index_path") do %>
-    <%= button_tag (report_row + ' Reports'), class: 'waves-effect waves-light btn right', type: 'button', method: :get %>
+  <h4><%= report_row[0] %></h4>
+  <%= link_to send("reports_#{report_row[0].parameterize('_')}_index_path") do %>
+    <%= button_tag (report_row[0] + ' Reports'), class: 'waves-effect waves-light btn right', type: 'button', method: :get %>
   <% end %>
-  <p>Reports</p>
+  <p><%= report_row[1] %></p>
 </li>
 <div class="divider"></div>

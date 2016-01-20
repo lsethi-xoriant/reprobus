@@ -6,12 +6,13 @@ class Reports::DashboardController < ApplicationController
   def index
     @collection = 
       [
-       'Enquiry', 
-       'Booking Travel',
-       'Confirmed Booking',
-       'Supplier',
-       'Destination',
-       'Unconfirmed Booking'
+        [ 'Enquiry', 'Enquiry Report'],  
+        [ 'Booking Travel', 'Booking Travel Report'],  
+        [ 'Confirmed Booking', 'Confirmed Booking Report'],  
+        [ 'Supplier', 'Supplier Report'],  
+        [ 'Destination', 'Destination Report'],  
+        [ 'Unconfirmed Booking', 'Unconfirmed Booking Report'] 
       ]
+      
   end
 end

@@ -51,10 +51,6 @@ class EnquiriesController < ApplicationController
     end
   end
   
-  def index_bookings
-    @bookings = Enquiry.bookings.page(params[:page])
-  end
-  
   def new
     @enquiry = Enquiry.new
     if params[:customer_id]
@@ -78,10 +74,6 @@ class EnquiriesController < ApplicationController
   def edit
     @enquiry = Enquiry.find(params[:id])
     @customer = @enquiry.lead_customer
-  end
-  
-  def edit_booking
-    @booking = Enquiry.find(params[:id])
   end
   
   def create
@@ -120,38 +112,7 @@ class EnquiriesController < ApplicationController
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
   
     if @enquiry.update_attributes(enquiry_params)
-      
-# move these to nested form type arrangement - maybe with coocon?
-      if params[:enquiry][:carriers] then
-        @enquiry.carriers.clear
-        params[:enquiry][:carriers].split(",").each do |id|
-          if numericID?(id) then
-            @enquiry.carriers << Carrier.find(id)
-          end
-        end
-      end
-
-      if params[:enquiry][:stopovers] then
-        @enquiry.stopovers.clear
-        params[:enquiry][:stopovers].split(",").each do |id|
-          if numericID?(id) then
-            @enquiry.stopovers << Stopover.find(id)
-          end
-        end
-      end
-        
-      if params[:enquiry][:destinations] then
-        @enquiry.destinations.clear
-        params[:enquiry][:destinations].split(",").each do |id|
-          if numericID?(id) then
-            @enquiry.destinations << Destination.find(id)
-          end
-        end
-      end
-        
-      #@enquiry.touch_with_version  #put this in so when just adding customers, papertrail is triggered.
-      @enquiry.save
-#end bad code
+    
       
       undo_link = view_context.link_to("(Undo)",
       revert_version_path(@enquiry.versions.last), :method => :post)
@@ -164,7 +125,6 @@ class EnquiriesController < ApplicationController
         redirect_to edit_enquiry_path(@enquiry)
       end
     else
-      @enquiry.removeInvalidCustomerError
       render 'edit'
     end
   end
