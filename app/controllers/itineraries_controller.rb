@@ -20,6 +20,7 @@ class ItinerariesController < ApplicationController
         'EndService'         => 'end_date',
         'Country'            => 'get_product_country',
         'Destination'        => 'get_product_destination',
+        'ProductType'        => 'get_product_type',
         'ProductName'        => 'get_product_name',
         'RoomCabinName'      => 'get_room_type_name',
         'QuoteNo'            => 'itinerary.try(:id)',
