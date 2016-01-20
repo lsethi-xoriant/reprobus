@@ -74,7 +74,7 @@ class Ability
     can [:manage], Reports::DestinationController
     can [:manage], Reports::UnpaidInvoiceController
 
-    can [:manage], BookingHistoryController
+    can [:manage], BookingHistoriesController
 
     can [:manage], CustomersController
     cannot [:manage], AgentsController
