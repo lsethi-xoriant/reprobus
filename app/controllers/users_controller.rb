@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, except: [:new, :create]
   before_filter :correct_user, only: [:edit, :update, :destroy]
   # before_filter :admin_user, only: :destroy
+  before_action :setCompanySettings
   
   def index
     @users = User.page(params[:page])
@@ -37,6 +38,7 @@ class UsersController < ApplicationController
   
   def edit
     @roles = Role.all
+    @user.profile_image = ImageHolder.new if !@user.profile_image
   end
   
   def update
@@ -58,9 +60,10 @@ private
     def user_params
       params
         .require(:user)
-        .permit(:name, :email, :password,
+        .permit(:name, :email, :password, :phone, :profile_description,
                 :password_confirmation, {role_ids: []},
-                (:admin if @current_user && @current_user.admin?))
+                (:admin if @current_user && @current_user.admin?),
+                profile_image_attributes: [:id, :image_local, :image_remote_url])
     end
 	
     def correct_user
