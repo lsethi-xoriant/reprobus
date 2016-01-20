@@ -71,7 +71,7 @@ class Ability
     can [:manage], Reports::BookingTravelController
     can [:manage], Reports::SupplierController
     can [:manage], Reports::DestinationController
-    can [:manage], Reports::UnconfirmedBookingController
+    can [:manage], Reports::UnpaidInvoiceController
 
     can [:manage], BookingHistoryController
 

@@ -1,0 +1,65 @@
+<%= form_for :customer_update, url: { controller: "itineraries", action: "customer_updates" }, method: :get, html: { id: 'request_customer_updates_form' } do |c| %>
+
+  <div id="request_customer_updates_modal" class="modal modal-fixed-footer white">
+    
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Request Customer Updates</h4>
+
+      <div class="row">
+
+        <div class="input-field col s6">
+           <%= c.label :send_to, class: 'active' %> 
+           <%= c.select :send_to, options_for_select(
+                [
+                  ['Send to Lead customer only', :lead_customer], 
+                  ['Send to individual customers', :individual_customers]
+                ], :lead_customer), {} %>
+        </div>
+
+        <div class="input-field col s6">
+          <% lead = @itinerary.lead_customer %>
+            <%= c.label :lead_customer, class: 'active' %> 
+            <%= c.text_field :lead_customer, 
+              value: customer_title_full_name_email(lead), 
+              disabled: 'disabled'
+            %>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <% customers = @itinerary.customers %>
+        <% if customers.present? %>
+          <% customers.each_with_index do |customer, index| %>
+            <div class="input-field col s6">
+              <%= c.label "customer_#{index+1}".to_sym, class: 'active' %> 
+              <%= c.text_field "customer_#{index+1}".to_sym,
+                value: customer_title_full_name_email(customer),
+                disabled: 'disabled' %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="input-field col s6">
+            <%= c.text_field :customers,
+              value: 'No customers found',
+              disabled: 'disabled' %>
+            </div>
+        <% end %>
+      </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+
+      <a href="#" id="request_customer_updates_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat">Request Updates</a>
+
+      <a href="#" id="request_customer_updates_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+    </div>
+
+  </div>
+
+
+
+
+<% end %>

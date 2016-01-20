@@ -8,6 +8,15 @@
 
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "name", f: f } %>
       <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "email", f: f } %>
+      <%= render partial: 'shared/standard_grouped_textfield', locals: { field: "phone", f: f } %>
+
+      <div class="row">
+        <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "profile_description", f: f, name: "Profile description", ckeditor_field: true } %>
+      </div>
+
+      <%= f.fields_for :profile_image, @user.profile_image do |t| %>
+        <%= render partial: 'shared/image_field', locals: { imageHolder: @user.profile_image, f: t, title: "Profile Image" } %>
+      <% end %>
 
       <%= render partial: 'shared/std_grp_pw_field', locals: { field: :password, f: f } %>
       <%= render partial: 'shared/std_grp_pw_field', locals: { field: :password_confirmation, f: f } %>

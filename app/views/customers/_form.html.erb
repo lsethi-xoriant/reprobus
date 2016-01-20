@@ -1,5 +1,5 @@
 <div class="row">
-    <%= form_for @customer, :html => {:multipart => true, :class => "col s12"} do |f| %>
+    <%= form_for @customer, url: self.send("#{update_action}_path", auth_key: params[:auth_key]), :html => {:multipart => true, :class => "col s12"} do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.hidden_field :cust_sup, :value => "Customer" %>
 
@@ -28,6 +28,13 @@
       <%= render partial: 'shared/material_date_cols6', locals: { field: :issue_date, id: :issue_date, f: f } %>
       <%= render partial: 'shared/material_date_cols6', locals: { field: :expiry_date, id: :expiry_date, f: f } %>
       
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "frequent_flyer_details", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "emergency_contact", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "emergency_contact_phone", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "dietary_requirements", f: f } %>
+      <%= render partial: 'shared/material_textfield_cols12', locals: { field: "medical_information", f: f } %>
+
+
       <div class="input-field col s12">
         <%= f.submit buttontxt, class: "btn" %>
       </div>

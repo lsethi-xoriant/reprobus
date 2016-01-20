@@ -131,4 +131,5 @@ class CustomerMailer < ActionMailer::Base
         to: to_email, 
         subject: 'Update personal details') if to_email.present?
     end
+
 end

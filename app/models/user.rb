@@ -42,6 +42,9 @@ class User < ActiveRecord::Base
   has_many    :user_roles 
   has_many    :roles, through: :user_roles
 
+  belongs_to  :profile_image, :class_name => "ImageHolder", :foreign_key => :profile_image_id
+  accepts_nested_attributes_for :profile_image, allow_destroy: true
+
   # Role.all.pluck(:name).each do |role_name|
   #   define_method "#{role_name.parameterize('_')}?" do
   #     self.roles.find_by(name: role_name).present?

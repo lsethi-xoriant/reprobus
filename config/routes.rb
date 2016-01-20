@@ -38,6 +38,7 @@ Reprobus::Application.routes.draw do
     end
   end
   resources :itineraries do
+    get 'printItineraryCsv'
     get 'printQuote'
     get 'printConfirmed'
     get 'emailQuote'
@@ -48,6 +49,7 @@ Reprobus::Application.routes.draw do
       get 'details'
       get 'booking_history'
       get 'generate_supplier_documents'
+      get 'customer_updates'
     end
   end
 
@@ -77,6 +79,8 @@ Reprobus::Application.routes.draw do
   resources :customers do
     collection do
       get 'addnote'  # /customers/addnote
+      get :details # for customer update form page
+      patch :update_details
     end
   end
 
@@ -189,7 +193,7 @@ Reprobus::Application.routes.draw do
     resources :confirmed_booking, only: [:index]
     resources :supplier, only: [:index]
     resources :destination, only: [:index]
-    resources :unconfirmed_booking, only: [:index]
+    resources :unpaid_invoice, only: [:index]
   end
   
   post "emails/post"

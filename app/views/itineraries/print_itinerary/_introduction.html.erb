@@ -15,19 +15,34 @@
 <div class="clear75"></div>
 <p class="bigBigtitle2"><%= @confirmed? 'Confirmed Itinerary Details' : 'Quote Details' %></p>
 <div class="clear50"></div>
-<p class="caption"><strong>Trip Dates: </strong><%= @itinerary.get_trip_date_range %><p>
+<p class="caption"><strong>Trip Dates: </strong><%= @itinerary.get_trip_date_range %></p>
 <p class="caption"><strong>Number of Passengers: </strong><%= @itinerary.enquiry.num_people.to_s %><p>
 <p class="caption"><strong>Bedding Type: </strong><%= @itinerary.bedding_type.try(:humanize) %></p>
-<p class="caption"><strong>Lead Customer: </strong><%= @itinerary.enquiry.lead_customer.fullname_with_title %><p>
-<p class="caption"><strong>Email: </strong><%= @itinerary.enquiry.lead_customer.email %><p>
+<p class="caption"><strong>Lead Customer: </strong><%= @itinerary.enquiry.lead_customer.fullname_with_title %></p>
+<p class="caption"><strong>Email: </strong><%= @itinerary.enquiry.lead_customer.email %></p>
 <% @itinerary.customers.each do |cust| %>
     <% if cust != @itinerary.lead_customer %>
-    <p class="caption"><strong>Other Customer/s:</strong>		<%= cust.fullname_with_title %><p>
+    <p class="caption"><strong>Other Customer/s:</strong>		<%= cust.fullname_with_title %></p>
         <% if !cust.email.blank? %>
-            <p class="caption"><strong>Email: </strong><%= cust.email %><p>
+            <p class="caption"><strong>Email: </strong><%= cust.email %></p>
         <% end %>
     <% end %>
 <% end %>
-<p class="caption"><strong>Consultant: </strong><%= @itinerary.enquiry.user.name %><p>
+<p class="caption"><strong>Your Consultant: </strong> <%= @itinerary.user.try(:name) %></p>
+
+<div>
+  <% if @setting.use_dropbox %>
+    <%= image_tag(@itinerary.user.profile_image.get_dropbox_image_link, height: '100', class: "consultant-image") if !!@itinerary.user.profile_image %>
+  <% else %>
+    <%= image_tag(@itinerary.user.profile_image.image_local_url, height: '100', class: "consultant-image") if @itinerary.user.profile_image.image_local? %>
+  <% end %>
+</div>
+<div class="consultant-info">
+  <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:phone) %></p>
+  <p class="caption"><strong>Email</strong> <%= @itinerary.user.try(:email) %></p>
+</div>
+<%= @itinerary.user.try(:profile_description).try(:html_safe) %>
+
+<p class="caption"><strong>About us</strong> <%= @setting.try(:about_company).try(:html_safe) %></p>
 
 <div class="page-break"></div>

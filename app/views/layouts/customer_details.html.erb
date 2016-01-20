@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+                  
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+    <%= render 'layouts/toastr_settings' %>
+    <%= favicon_link_tag 'favicon-32x32.png' %>
+  </head>
+  <body class="loaded">
+    <%= yield %>
+
+    <% flash.each do |key, value| %>
+       <script type="text/javascript">
+          toastr.<%= raw(key.to_s) %>(<%= raw(value.inspect) %>)
+       </script>
+    <% end %>
+    
+    <div class="col s12 m12 l12"><pre class="debug_dump">
+      <%= debug(params) if Rails.env.development? && !current_user.nil? && current_user.admin && (current_user.name == "Hamish Gardiner" || current_user.name == "hamcool") %>
+    </div>
+  </body>
+
+</html>

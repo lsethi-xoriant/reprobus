@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111122912) do
+ActiveRecord::Schema.define(version: 20160112093235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,7 +139,21 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
+    t.string   "public_edit_token"
+    t.date     "public_edit_token_expiry"
+    t.text     "frequent_flyer_details"
+    t.string   "emergency_contact"
+    t.string   "emergency_contact_phone"
+    t.text     "dietary_requirements"
+    t.text     "medical_information"
     t.string   "nationality"
+    t.string   "public_edit_token"
+    t.date     "public_edit_token_expiry"
+    t.text     "frequent_flyer_details"
+    t.string   "emergency_contact"
+    t.string   "emergency_contact_phone"
+    t.text     "dietary_requirements"
+    t.text     "medical_information"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -210,7 +224,7 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.string   "from_email",         limit: 255
     t.string   "from_name",          limit: 255
     t.string   "subject",            limit: 255
-    t.text     "body"
+    t.string   "body"
     t.boolean  "copy_assigned_user"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -562,6 +576,7 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.text     "invoice_footer"
     t.string   "pin_payment_url"
     t.string   "base_url"
+    t.text     "about_company"
   end
 
   create_table "stopovers", force: :cascade do |t|
@@ -601,6 +616,9 @@ ActiveRecord::Schema.define(version: 20160111122912) do
     t.boolean  "admin",                              default: false
     t.string   "password_reset_token",   limit: 255
     t.datetime "password_reset_sent_at"
+    t.integer  "profile_image_id"
+    t.string   "phone"
+    t.text     "profile_description"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
