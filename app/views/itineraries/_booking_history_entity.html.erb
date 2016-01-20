@@ -15,7 +15,7 @@
           <% collect.each do |ob| %> 
             <tr>
               <td><%= ob.id %></td>
-              <td><%= ob.emailed_at %></td>
+              <td><%= ob.emailed_at.try(:strftime, "%d/%m/%Y") %></td>
               <td><%= ob.emailed_to %></td>
               <td><%= ob.document_type.try(:titleize) %></td>
               <td><%= link_to 'Download', download_booking_history_path(ob), target: :blank %></td>
