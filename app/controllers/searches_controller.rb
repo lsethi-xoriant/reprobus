@@ -2,6 +2,33 @@ class SearchesController < ApplicationController
   authorize_resource class: SearchesController
   
   before_filter :signed_in_user
+
+  def similar_last_names
+    @customers = 
+      Customer
+        .select([:id, :first_name, :last_name])
+        .where('last_name like ?', "#{params[:q]}%") 
+
+    # TODO: add only customers selection
+    # TODO: add counters for itineraries and enquiries
+
+    respond_to do |format|
+      format.json do 
+        render json: 
+          {
+            items: @customers.map do |c| 
+              { 
+                first_name: c.first_name, 
+                last_name: c.last_name,
+                enquiries: 0,
+                itineraries: 0
+              }
+            end
+          }
+      end
+    end
+
+  end
  
   def product
     @product = Product.find(params[:id])
