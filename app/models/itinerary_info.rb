@@ -28,6 +28,17 @@ class ItineraryInfo < ActiveRecord::Base
   belongs_to  :product
   belongs_to  :supplier, :class_name => "Customer", :foreign_key => :supplier_id
 
+  before_validation :convert_overrided_product_description_to_nil
+
+  def convert_overrided_product_description_to_nil
+    # if product absent - nothing to override, setting override back to nil
+    # if override is equal to product description, setting back to nil too
+    # otherwise keeping the entered override string
+    if self.product.blank? || (self.product_description == self.product.try(:description))
+      self.product_description = nil
+    end
+  end
+
   def get_product_name
     return self.product.name if self.product
   end
@@ -53,9 +64,12 @@ class ItineraryInfo < ActiveRecord::Base
   end
 
   def get_product_description
-    return self.product.description if self.product
+    # if override present then return override
+    # if override absent and product present return original product description
+    # else return nil
+    self.product_description.presence || self.product.try(:description).presence
   end
-  
+
   def get_product_type
     return self.product.type.underscore.humanize if self.product
   end  
