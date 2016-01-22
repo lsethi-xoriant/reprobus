@@ -6,6 +6,7 @@ class SearchesController < ApplicationController
   def similar_last_names
     @customers = 
       Customer
+        .includes(:itineraries, :enquiries)
         .select([:id, :first_name, :last_name])
         .where.not(cust_sup: 'Agent')
         .where.not(cust_sup: 'Supplier')
@@ -22,8 +23,8 @@ class SearchesController < ApplicationController
                 id: c.id,
                 first_name: c.first_name, 
                 last_name: c.last_name,
-                enquiries: 0,
-                itineraries: 0
+                enquiries: c.enquiries.size,
+                itineraries: c.itineraries.size
               }
             end
           }
