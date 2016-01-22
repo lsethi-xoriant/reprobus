@@ -148,6 +148,7 @@ Reprobus::Application.routes.draw do
   post "admin/stopovers/importfile"
   post "admin/countries/importfile"
   
+  get 'searches/similar_last_names'
   get 'searches/product'
   get 'searches/product_search'
   get 'searches/agent_search'
