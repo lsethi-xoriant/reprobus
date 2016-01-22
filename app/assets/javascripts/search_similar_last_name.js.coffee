@@ -3,7 +3,6 @@ $(document).ready ->
     $('table.tableSection > tbody > tr').remove()
     last_name = e.target.value
     if last_name.length > 2
-      console.log last_name
       $.ajax(
         url: '/searches/similar_last_names'
         data: { q: last_name }
@@ -11,9 +10,10 @@ $(document).ready ->
           items = response.items
           if items.length > 0
             for i in items
+              link = '/customers/' + i.id + '/edit'
               $('table.tableSection > tbody').append("
                 <tr>
-                  <td>#{i.id}</td>
+                  <td><a href=#{link}>#{i.id}</a></td>
                   <td>#{i.first_name}</td>
                   <td>#{i.last_name}</td>
                   <td>#{i.enquiries}</td>
