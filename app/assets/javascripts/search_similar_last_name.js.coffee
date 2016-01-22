@@ -12,9 +12,9 @@ $(document).on 'keyup', "[id^=enquiry_customers_attributes_][id$=_last_name]", (
             link = '/customers/' + i.id + '/edit'
             $('table.tableSection > tbody').append("
               <tr>
-                <td><a href=#{link}>#{i.id}</a></td>
+                <td>#{i.id}</td>
                 <td>#{i.first_name}</td>
-                <td>#{i.last_name}</td>
+                <td><a href=#{link} target='_blank'>#{i.last_name}</a></td>
                 <td>#{i.enquiries}</td>
                 <td>#{i.itineraries}</td>
               </tr>

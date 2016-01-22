@@ -12,8 +12,6 @@ class SearchesController < ApplicationController
         .where.not(cust_sup: 'Supplier')
         .where('last_name like ?', "#{params[:q]}%") 
 
-    # TODO: add counters for itineraries and enquiries
-
     respond_to do |format|
       format.json do 
         render json: 
