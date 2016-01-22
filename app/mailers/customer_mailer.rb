@@ -89,9 +89,9 @@ class CustomerMailer < ActionMailer::Base
     BookingHistoryService.record_interaction(attachments, type, params)
   end
 
-  def send_profile_update_requests(itinerary, request, send_to)
+  def send_profile_update_requests(itinerary, request, send_to, customer_ids)
     @lead_customer = itinerary.lead_customer
-    @customers = itinerary.customers
+    @customers = Customer.where(id: customer_ids)
     @request = request
     @send_to = send_to
 
