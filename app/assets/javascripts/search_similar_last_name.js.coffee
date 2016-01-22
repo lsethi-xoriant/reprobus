@@ -1,5 +1,5 @@
 $(document).ready ->
-  $('#enquiry_customers_attributes_0_last_name').on 'keyup', (e) ->
+  $("[id^=enquiry_customers_attributes_][id$=_last_name]").on 'keyup', (e) ->
     $('table.tableSection > tbody > tr').remove()
     last_name = e.target.value
     if last_name.length > 2
@@ -13,6 +13,7 @@ $(document).ready ->
             for i in items
               $('table.tableSection > tbody').append("
                 <tr>
+                  <td>#{i.id}</td>
                   <td>#{i.first_name}</td>
                   <td>#{i.last_name}</td>
                   <td>#{i.enquiries}</td>

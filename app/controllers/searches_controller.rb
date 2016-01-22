@@ -7,9 +7,10 @@ class SearchesController < ApplicationController
     @customers = 
       Customer
         .select([:id, :first_name, :last_name])
+        .where.not(cust_sup: 'Agent')
+        .where.not(cust_sup: 'Supplier')
         .where('last_name like ?', "#{params[:q]}%") 
 
-    # TODO: add only customers selection
     # TODO: add counters for itineraries and enquiries
 
     respond_to do |format|
@@ -18,6 +19,7 @@ class SearchesController < ApplicationController
           {
             items: @customers.map do |c| 
               { 
+                id: c.id,
                 first_name: c.first_name, 
                 last_name: c.last_name,
                 enquiries: 0,
