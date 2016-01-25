@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120141017) do
+ActiveRecord::Schema.define(version: 20160125085015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.string   "type",        limit: 255
+    t.text     "type"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -101,41 +101,41 @@ ActiveRecord::Schema.define(version: 20160120141017) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",                 limit: 64,  default: "",    null: false
-    t.string   "last_name",                  limit: 64,  default: "",    null: false
-    t.string   "title",                      limit: 64
-    t.string   "source",                     limit: 32
-    t.string   "email",                      limit: 64
-    t.string   "alt_email",                  limit: 64
-    t.string   "phone",                      limit: 255
-    t.string   "mobile",                     limit: 32
-    t.string   "fax",                        limit: 32
-    t.string   "blog",                       limit: 128
-    t.string   "linkedin",                   limit: 128
-    t.string   "facebook",                   limit: 128
-    t.string   "twitter",                    limit: 128
+    t.string   "first_name",                   limit: 64,  default: "",    null: false
+    t.string   "last_name",                    limit: 64,  default: "",    null: false
+    t.string   "title",                        limit: 64
+    t.string   "source",                       limit: 32
+    t.string   "email",                        limit: 64
+    t.string   "alt_email",                    limit: 64
+    t.string   "phone",                        limit: 255
+    t.string   "mobile",                       limit: 32
+    t.string   "fax",                          limit: 32
+    t.string   "blog",                         limit: 128
+    t.string   "linkedin",                     limit: 128
+    t.string   "facebook",                     limit: 128
+    t.string   "twitter",                      limit: 128
     t.date     "born_on"
-    t.boolean  "do_not_call",                            default: false, null: false
+    t.boolean  "do_not_call",                              default: false, null: false
     t.datetime "deleted_at"
-    t.string   "background_info",            limit: 255
-    t.string   "skype",                      limit: 128
+    t.string   "background_info",              limit: 255
+    t.string   "skype",                        limit: 128
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "issue_date"
     t.date     "expiry_date"
-    t.string   "place_of_issue",             limit: 255
-    t.string   "passport_num",               limit: 255
-    t.string   "insurance",                  limit: 255
-    t.string   "gender",                     limit: 255
-    t.string   "emailID",                    limit: 255
-    t.string   "xero_id",                    limit: 255
-    t.string   "cust_sup",                   limit: 255
-    t.string   "supplier_name",              limit: 255
+    t.string   "place_of_issue",               limit: 255
+    t.string   "passport_num",                 limit: 255
+    t.string   "insurance",                    limit: 255
+    t.string   "gender",                       limit: 255
+    t.string   "emailID",                      limit: 255
+    t.string   "xero_id",                      limit: 255
+    t.string   "cust_sup",                     limit: 255
+    t.string   "supplier_name",                limit: 255
     t.integer  "currency_id"
     t.integer  "num_days_payment_due"
-    t.string   "after_hours_phone",          limit: 255
+    t.string   "after_hours_phone",            limit: 255
     t.integer  "company_logo_id"
-    t.integer  "agent_commision_percentage",             default: 0
+    t.integer  "agent_commision_percentage",               default: 0
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160120141017) do
     t.text     "dietary_requirements"
     t.text     "medical_information"
     t.string   "nationality"
+    t.integer  "who_requested_update_user_id"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -496,6 +497,8 @@ ActiveRecord::Schema.define(version: 20160120141017) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -509,8 +512,6 @@ ActiveRecord::Schema.define(version: 20160120141017) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"

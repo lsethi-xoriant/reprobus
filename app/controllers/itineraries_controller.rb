@@ -241,7 +241,7 @@ class ItinerariesController < ApplicationController
     send_to = params[:customer_update][:send_to]
     customer_ids = params[:customer_update][:customer_ids]
     CustomerMailer.send_profile_update_requests(
-      itinerary, request, send_to, customer_ids).deliver if customer_ids.present?
+      itinerary, request, send_to, customer_ids, current_user).deliver if customer_ids.present?
     redirect_to edit_itinerary_path(params[:id])
   end
   
