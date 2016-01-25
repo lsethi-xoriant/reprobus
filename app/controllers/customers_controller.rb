@@ -28,7 +28,7 @@ class CustomersController < ApplicationController
   end
   
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = Customer.includes(:enquiries, :itineraries).find(params[:id])
     @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(5)
   end
 

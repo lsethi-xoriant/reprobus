@@ -1,0 +1,10 @@
+<tr>
+  <td><%= enquiry.id %></td>
+  <td><%= enquiry.name %></td>
+  <td><%= enquiry.est_date.try(:strftime, "%d-%b-%Y") %></td>
+  <td><%= enquiry.fin_date.try(:strftime, "%d-%b-%Y") %></td>
+  <td><%= enquiry.created_at.strftime("%d-%b-%Y") %></td>
+  <td class="no-sort">
+    <%= link_to 'Edit', edit_enquiry_path(enquiry), target: '_blank' %>
+  </td>
+</tr>

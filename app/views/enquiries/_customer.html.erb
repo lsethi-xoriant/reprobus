@@ -11,6 +11,22 @@
         <%= f.check_box :lead_customer, {class: "lead-customer-check", checked: main_object.is_customer_lead(f.object)}, true, false %>
         <%= f.label :lead_customer %>
       </div>
+
+      
+      <% if f.object.id.present? %>
+        <div class="input-field col s12">
+          <a
+            class="input-field waves-effect waves-light btn right deep-purple darken-1 modal-trigger tooltipped"
+            data-position="bottom"
+            data-delay="50"
+            data-tooltip="Edit Customer"
+            target='_blank'
+            href="<%= edit_customer_path(f.object.id) %>">
+
+            Edit Customer
+          </a>
+        </div>
+      <% end %>
     </div>
   </div>
   
