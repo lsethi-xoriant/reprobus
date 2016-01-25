@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160127131417) do
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.string   "type",        limit: 255
+    t.text     "type"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -101,19 +101,19 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",                 limit: 64,  default: "",    null: false
-    t.string   "last_name",                  limit: 64,  default: "",    null: false
-    t.string   "title",                      limit: 64
-    t.string   "source",                     limit: 32
-    t.string   "email",                      limit: 64
-    t.string   "alt_email",                  limit: 64
-    t.string   "phone",                      limit: 255
-    t.string   "alt_phone",                  limit: 32
-    t.string   "fax",                        limit: 32
-    t.string   "blog",                       limit: 128
-    t.string   "linkedin",                   limit: 128
-    t.string   "facebook",                   limit: 128
-    t.string   "twitter",                    limit: 128
+    t.string   "first_name",                   limit: 64,  default: "",    null: false
+    t.string   "last_name",                    limit: 64,  default: "",    null: false
+    t.string   "title",                        limit: 64
+    t.string   "source",                       limit: 32
+    t.string   "email",                        limit: 64
+    t.string   "alt_email",                    limit: 64
+    t.string   "phone",                        limit: 255
+    t.string   "mobile",                       limit: 32
+    t.string   "fax",                          limit: 32
+    t.string   "blog",                         limit: 128
+    t.string   "linkedin",                     limit: 128
+    t.string   "facebook",                     limit: 128
+    t.string   "twitter",                      limit: 128
     t.date     "born_on"
     t.boolean  "do_not_call",                              default: false, null: false
     t.datetime "deleted_at"
@@ -498,6 +498,8 @@ ActiveRecord::Schema.define(version: 20160127131417) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -511,8 +513,6 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
