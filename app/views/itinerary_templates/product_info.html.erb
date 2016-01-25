@@ -18,10 +18,17 @@ data-position="bottom" data-delay="50" data-tooltip="Product Info" >
             
             <div class="col offset-s1 s10">
               <p class="product_details" ><%= @info.get_product_description %></p>
-            </div>             
+            </div> 
           </div>
         </li> 
       </ul>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <%= f.label :product_description_override, class: 'control-label' %>
+          <%= f.text_field :product_description, value: f.object.get_product_description %>
+        </div>
+      </div>
       
     </div>
 
