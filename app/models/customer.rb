@@ -71,6 +71,10 @@ class Customer < ActiveRecord::Base
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
+  belongs_to  :who_requested_update, 
+              :class_name => "User",
+              :foreign_key => :who_requested_update_user_id
+              
 #  has_many    :customers_enquiries
  # has_many    :enquiries, -> { order("enquiries.id DESC")}, :through => :customers_enquiries
   has_and_belongs_to_many :enquiries

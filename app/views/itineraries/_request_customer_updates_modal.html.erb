@@ -31,12 +31,9 @@
         <% customers = @itinerary.customers %>
         <% if customers.present? %>
           <% customers.each_with_index do |customer, index| %>
-            <div class="input-field col s6">
-              <%= c.label "customer_#{index+1}".to_sym, class: 'active' %> 
-              <%= c.text_field "customer_#{index+1}".to_sym,
-                value: customer_title_full_name_email(customer),
-                disabled: 'disabled' %>
-            </div>
+            <%= check_box_tag "customer_update[customer_ids][]", customer.id, true, id: customer.id %>
+            <label for="<%= customer.id %>"><%= customer_title_full_name_email(customer) %></label>
+            <br/>
           <% end %>
         <% else %>
           <div class="input-field col s6">
@@ -46,7 +43,6 @@
             </div>
         <% end %>
       </div>
-
 
     </div>
 

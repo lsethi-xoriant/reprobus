@@ -89,13 +89,14 @@ class CustomerMailer < ActionMailer::Base
     BookingHistoryService.record_interaction(attachments, type, params)
   end
 
-  def send_profile_update_requests(itinerary, request, send_to)
+  def send_profile_update_requests(itinerary, request, send_to, customer_ids, 
+    who_requested_update)
     @lead_customer = itinerary.lead_customer
-    @customers = itinerary.customers
+    @customers = Customer.where(id: customer_ids)
     @request = request
     @send_to = send_to
 
-    update_customers_tokens_and_expiry_dates(@customers)
+    update_customers_tokens_and_expiry_dates(@customers, who_requested_update)
 
     case @send_to
     when 'lead_customer'
@@ -110,12 +111,13 @@ class CustomerMailer < ActionMailer::Base
 
   private
 
-    def update_customers_tokens_and_expiry_dates(customers)
+    def update_customers_tokens_and_expiry_dates(customers, who_requested_update)
       customers.each do |customer|
         customer.update_attributes(
           { 
             public_edit_token: User.new_remember_token, 
-            public_edit_token_expiry: 7.days.from_now.to_date
+            public_edit_token_expiry: 7.days.from_now.to_date,
+            who_requested_update_user_id: who_requested_update.id
           }
         )
       end
