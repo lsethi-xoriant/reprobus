@@ -1,4 +1,5 @@
 <div class="row">
+    <% update_action = 'customers' unless update_action.present? %>
     <%= form_for @customer, url: self.send("#{update_action}_path", auth_key: params[:auth_key]), :html => {:multipart => true, :class => "col s12"} do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.hidden_field :cust_sup, :value => "Customer" %>

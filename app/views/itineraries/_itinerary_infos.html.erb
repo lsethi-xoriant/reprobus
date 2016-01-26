@@ -29,7 +29,7 @@
         <div class="product_details_cont col s1 center-align" style=<%=displayProductDetails%> >
           <% if f.object.get_product_type != "Cruise" %>
             <% @info = f.object %>
-            <%= render template: 'itinerary_templates/product_info' %>
+            <%= render template: 'itinerary_templates/product_info', locals:{f: f} %>
           <% end %>        
         </div>        
         

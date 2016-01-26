@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112093235) do
+ActiveRecord::Schema.define(version: 20160120141017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,13 +140,6 @@ ActiveRecord::Schema.define(version: 20160112093235) do
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
     t.string   "nationality"
-    t.string   "public_edit_token"
-    t.date     "public_edit_token_expiry"
-    t.text     "frequent_flyer_details"
-    t.string   "emergency_contact"
-    t.string   "emergency_contact_phone"
-    t.text     "dietary_requirements"
-    t.text     "medical_information"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -364,6 +357,7 @@ ActiveRecord::Schema.define(version: 20160112093235) do
     t.boolean  "includes_lunch"
     t.boolean  "includes_dinner"
     t.string   "group_classification"
+    t.text     "product_description"
   end
 
   add_index "itinerary_infos", ["itinerary_id"], name: "index_itinerary_infos_on_itinerary_id", using: :btree
