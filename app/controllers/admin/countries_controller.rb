@@ -3,7 +3,7 @@ class Admin::CountriesController < ApplicationController
   # before_filter :admin_user
   
   def index
-    @countries = Country.all
+    @countries = Country.order(:name)
     respond_to do |format|
       format.html
       format.csv { send_data @countries.to_csv }

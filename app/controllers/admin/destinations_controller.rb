@@ -6,7 +6,7 @@ class Admin::DestinationsController < ApplicationController
   before_action :setCompanySettings
   
   def index
-    @destinations = Destination.includes(:country).all
+    @destinations = Destination.includes(:country).order(:name)
     respond_to do |format|
       format.html
       format.csv { send_data @destinations.to_csv }

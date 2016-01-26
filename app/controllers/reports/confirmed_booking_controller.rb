@@ -11,7 +11,7 @@ class Reports::ConfirmedBookingController < ApplicationController
     end
 
     @structure = structure
-    @users = User.where.not(name: "System")
+    @users = User.where.not(name: "System").order(:name)
     @itinerary_prices = 
       ReportService.confirmed_booking(@from, @to, @user, @confirmed_itinerary_sent)
 

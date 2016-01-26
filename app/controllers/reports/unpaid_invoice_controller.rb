@@ -9,7 +9,7 @@ class Reports::UnpaidInvoiceController < ApplicationController
     end
 
     @structure = structure
-    @users = User.where.not(name: "System")
+    @users = User.where.not(name: "System").order(:name)
     @itinerary_prices = 
       ReportService.unpaid_invoices(@from, @to, @user)
 

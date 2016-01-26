@@ -11,7 +11,7 @@ class Reports::EnquiryController < ApplicationController
     end
 
     @structure = structure
-    @users = User.where.not(name: "System")
+    @users = User.where.not(name: "System").order(:name)
     @enquiries = ReportService.enquiry_search(@from, @to, stage, @assigned_to)
 
     respond_to do |format|
