@@ -65,65 +65,54 @@
       <h4 class="header2">Enquiry Details</h4>
       
       <div class="row">
-        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "name", f: f, name: "Enquiry Name"} %>
-      </div>
-
-      <div class="row">
-        <div class="input-field col s12">
+        <%= render partial: 'shared/material_textfield', locals: { col: "s4",  field: "name", f: f, name: "Enquiry Name"} %>
+        <div class="input-field col s4">
           <%= f.select :destination_id, content_tag(:option, 'Select Destination...', value: "") + options_from_collection_for_select(Destination.all.order('name ASC'), "id", "name", selected: @enquiry.destination_id), {}, class: 'select2-enquiry-destinations browser-default' %>
           <%= f.label :destination_id, "Destination",  class: 'active' %>
         </div>
-      </div>
-
-      <div class="row">
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "est_date", f: f, name: "Departure Date", value: @enquiry.est_date } %>
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "fin_date", f: f, name: "Return Date", value: @enquiry.fin_date } %>
+        <%= render partial: 'shared/material_date', locals: { col: "s2", field: "est_date", f: f, name: "Departure Date", value: @enquiry.est_date } %>
+        <%= render partial: 'shared/material_date', locals: { col: "s2", field: "fin_date", f: f, name: "Return Date", value: @enquiry.fin_date } %>
       </div>
       
       <div class="row">
-        <div class="input-field col s6">
+        <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "num_people", f: f, name: "Number Traveling" } %>
+        
+        <div class="input-field col s3">
           <%= f.select :standard, options_for_select(["Class", "Budget", "Comfort", "Superior", "Deluxe", "Boutique"],
               disabled: "Class", selected: f.object.standard || "Class" ), {} %>
         </div>
-
-        <%= render partial: 'shared/material_textfield_cols6', locals: { field: "num_people", f: f, name: "Number Traveling" } %>
+        
+        <%= render partial: 'shared/material_textfield', locals: { col: "s3", field: "amount", f: f, name: "Booking Value"} %>
+        <p>
+        <br>
+          <%= f.check_box :insurance, class: "filled-in" %>
+          <%= f.label :insurance, "Insurance Required"  %>
+        </p>
       </div>
 
-      <p>
-        <%= f.check_box :insurance, class: "filled-in" %>
-        <%= f.label :insurance, "Insurance Required"  %>
-      </p>
-
-  
       <div class="row">
-         <%= render partial: 'shared/material_textfield_cols6', locals: { field: "amount", f: f, name: "Booking Value"} %>
-         
-        <div class="input-field col s6">
+        <div class="input-field col s3">
           <%= f.select :probability, options_for_select(["Probability", "High", "Medium", "Low"],
               disabled: "Probability", selected: f.object.probability || "Probability" ), {} %>
         </div>
-      </div>
-  
-  
-      <div class="row">
-        <%= render partial: 'shared/material_date_cols6', locals: { field: "reminder", f: f, name: "Set Reminder", value: @enquiry.reminder } %>
-        
+
         <% if !itinerary_has_been_created %>
-          <div class="input-field col s6">
+          <div class="input-field col s3">
             <%= f.select :stage, options_for_select(Enquiry::AVAILABLE_STATUSES, @enquiry.stage ) %>
           </div>
         <% end %>
+        
+        <%= render partial: 'shared/material_date', locals: { col: "s3", field: "reminder", f: f, name: "Set Reminder", value: @enquiry.reminder } %>
       </div>
-
+      
+      <div class="row">
+        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "campaign", f: f, name: "Advertising Campaign"} %>
+      </div>
     
       <div class="row">
         <%= render partial: 'shared/material_textareafield_cols12', locals: { field: "background_info", f: f, name: "Additional Details", length: "180"} %>
       </div>
-      
-       <div class="row">
-        <%= render partial: 'shared/material_textfield_cols12', locals: { field: "campaign", f: f, name: "Advertising Campaign"} %>
-      </div>
- 
+    
       <div class="row">
         <% if current_user.management? %>
           <div class="input-field col s6">
@@ -135,10 +124,39 @@
           <%= f.hidden_field :assigned_to, value: f.object.assigned_to_id %>
         <% end %>
       </div>
+      
+      <% if @enquiry.persisted? %>
+      	  <%= f.fields_for :activities, :html => {:class => "col s12"}  do |c| %>
+        	  <% if !c.object.persisted? %>
+        	      <br>
+                <div class ="row">
+                  <div class="field">
+                    <%= render partial: 'shared/material_textareafield_cols12', locals: { length: "500", field: "description", name: "Add Note", f: c } %>
+                    <%= c.hidden_field :enquiry_id, :value => @enquiry.id %>
+                    <%= c.hidden_field :type, :value => "Note" %>
+                    <%= c.hidden_field :user_id, :value => current_user.id %>
+                  </div>    
+          	    </div>
+          	<% end %>        
+          <% end %>      
+      <% end %>   
+      
     </div>
 
   <div class="row">
-    <div class="input-field col s12">
+    <div class="input-field col s6">
+      <% if @enquiry.persisted? && !itinerary_has_been_created %>
+        <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
+          <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
+          <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light left purple") %>
+        <% end %>
+      <% elsif @enquiry.persisted? && itinerary_has_been_created %>
+          <% @enquiry.itineraries.each do |itin| %>
+          <a href="<%= edit_itinerary_path itin %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Edit Itinerary # <%=itin.id %></a><br>
+          <% end %>
+      <% end %>
+    </div>    
+    <div class="input-field col s6">
         <%= button_tag( :class => "btn waves-effect waves-light right") do %>
           <%= buttontxt %><i class="mdi-content-send right"></i>
         <% end %>
@@ -146,21 +164,25 @@
   </div>
    
   <% end %>
+</div>
 
 
-  <div class="input-field col s12">
-    <% if @enquiry.persisted? && !itinerary_has_been_created %>
-      <%=  form_tag({controller: "itineraries", action: "new"}, method: "get") do %>
-        <%= hidden_field_tag :enquiry_id, '', :value => @enquiry.id %>
-        <%= button_tag( "Create Quote", :class => "btn waves-effect waves-light right purple") %>
-      <% end %>
-    <% elsif @enquiry.persisted? && itinerary_has_been_created %>
-        <% @enquiry.itineraries.each do |itin| %>
-        <a href="<%= edit_itinerary_path itin %>"  class="waves-effect waves-light btn right deep-purple darken-1" >Edit Itinerary # <%=itin.id %></a><br>
-        <% end %>
-    <% end %>
-  </div>
-     
+<% if @enquiry.persisted? && @hasActivities %>
+<br>
+  <div class ="card-panel">
+    <h5 class="header2">Previous Notes</h5>
+    <br>
+    <ul class="collection">
+      <% @activities.each do |act| %>
+        <%= render partial: 'shared/activity', locals: { activity: act } %>
+      <% end %>        
+    </ul>
+    <ul class="pagination">
+      <%= paginate  @activities, :container => false %>
+    </ul>
+  </div> 
+<% end %>
+  
   <div id="cust_search_modal" class="modal">
     <div class="modal-content">
       <h4>Search for customer</h4>
@@ -169,7 +191,7 @@
           <div class="col s12 m12 l12">
             <div class ="card-panel">
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s8">
                 <%= select_tag(:customer_id, options_for_select([[]],''),{class: "select2-customers browser-default", :style => "width:350px"}) %>
                 <label for="customer_id" class="active">Customers</label>
               </div>
@@ -186,7 +208,7 @@
     </div>
   </div>
 
-</div>
+
 
 
 

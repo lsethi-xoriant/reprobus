@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: booking_histories
+#
+#  id            :integer          not null, primary key
+#  emailed_at    :datetime
+#  emailed_to    :string
+#  document_type :integer
+#  attachment    :string
+#  itinerary_id  :integer
+#
+
 class BookingHistory < ActiveRecord::Base
 
   # emailed_at:    timestamp

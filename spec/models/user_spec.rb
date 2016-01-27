@@ -13,6 +13,9 @@
 #  admin                  :boolean          default("false")
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
+#  profile_image_id       :integer
+#  phone                  :string
+#  profile_description    :text
 #
 
 require 'spec_helper'

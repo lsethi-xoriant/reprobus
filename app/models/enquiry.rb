@@ -76,6 +76,8 @@ class Enquiry < ActiveRecord::Base
   validates_associated :customers
   
   has_many    :activities,  dependent: :destroy
+  accepts_nested_attributes_for :activities, allow_destroy: true
+  
   has_one     :booking
   has_many    :itineraries
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id

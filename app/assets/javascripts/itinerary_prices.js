@@ -75,6 +75,10 @@ $(document).ready(function() {
       $(insertedItem).closest('.field').find('.qty_field').val($('#itinerary_num_passengers').val());
     });
   
+    $(document).on('change', '.grand_total', function() {
+      calculateSupplierProfitForPricing();
+    });
+  
     $(document).on('change', '.deposit_percent_field', function() {
      calculateDepositFromTotalPrice($(this));
      calculateTotalDepositForPricing();
@@ -312,6 +316,7 @@ function calculateTotalForPricing(){
   });
     
   $(".grand_total").val(sum.toFixed(2));
+  $('.grand_total').change();  
 }
 
 function calculateSupplierTotalForPricing(){

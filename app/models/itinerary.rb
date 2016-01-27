@@ -26,7 +26,7 @@
 #  agent_id                 :integer
 #  lead_customer_id         :integer
 #  end_date                 :date
-#  bedding_type             :integer
+#  bedding_type             :integer          default("0")
 #
 
 class Itinerary < ActiveRecord::Base

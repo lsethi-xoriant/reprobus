@@ -9,29 +9,6 @@ class EnquiriesController < ApplicationController
   
   @pageName = "Enquiry"
   
-  def addbooking
-    @enquiry = Enquiry.find(params[:id])
-    ## move these condtions to a validation.... so they all pop up if they are not meet, rather than the first one.
-
-    if @enquiry.customers.blank? || @enquiry.customers.count == 0
-      flash[:warning] = "Must have a customer when converting to a Booking."
-      redirect_to @enquiry
-    elsif @enquiry.est_date.blank? || @enquiry.fin_date.blank?
-      flash[:warning] = "Start and finish date must be set before converting to booking."
-      redirect_to @enquiry
-    elsif !@enquiry.booking.nil?
-      flash[:warning] = "Enquiry previously converted to Booking. <a href='" + booking_path(@enquiry.booking) +"'>Show Booking</a>"
-      redirect_to @enquiry
-    else
-      if @enquiry.convert_to_booking!(current_user)
-        flash[:success] = "Converted to booking"
-        redirect_to @enquiry.booking
-      else
-        render 'show'
-      end
-    end
-  end
-  
   def addnote
     @enquiry = Enquiry.find(params[:id])
     act = @enquiry.activities.create(type: params[:type], description: params[:note])
@@ -68,12 +45,15 @@ class EnquiriesController < ApplicationController
 
   def show
     @enquiry = Enquiry.find(params[:id])
-    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per(5)
+    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per(20)
   end
 
   def edit
     @enquiry = Enquiry.find(params[:id])
     @customer = @enquiry.lead_customer
+    @hasActivities = !@enquiry.activities.empty?
+    @enquiry.activities.build
+    @activities = @enquiry.activities.order('created_at DESC').page(params[:page]).per(20)
   end
   
   def create
@@ -223,7 +203,8 @@ private
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent, :campaign,
         :fin_date, :standard, :insurance, :reminder, :destination_id,
-        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy] )
+        customers_attributes: [:id, :first_name, :last_name, :email, :phone, :alt_phone, :title, :lead_customer, :_destroy], 
+        activities_attributes: [:id, :enquiry_id, :description, :type, :user_id, :_destroy] )
     end
 
     def undo_link
