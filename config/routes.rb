@@ -29,6 +29,9 @@ Reprobus::Application.routes.draw do
     collection do
       post 'dismiss'
     end
+    member do
+      post 'lost'
+    end
   end
 
   get '/dropbox_authorize' => 'settings#db_authorize', as: 'dropbox_authorize'
