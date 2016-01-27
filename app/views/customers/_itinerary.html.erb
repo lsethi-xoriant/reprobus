@@ -1,0 +1,10 @@
+<tr>
+  <td><%= itinerary.id %></td>
+  <td><%= itinerary.name %></td>
+  <td><%= itinerary.start_date.try(:strftime, "%d-%b-%Y") %></td>
+  <td><%= itinerary.end_date.try(:strftime, "%d-%b-%Y") %></td>
+  <td><%= itinerary.created_at.strftime("%d-%b-%Y") %></td>
+  <td class="no-sort">
+    <%= link_to 'Edit', edit_itinerary_path(itinerary), target: '_blank' %>
+  </td>
+</tr>
