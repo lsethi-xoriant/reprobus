@@ -1,0 +1,9 @@
+<tr>
+  <td><%= open_enquiry.name %></td>
+  <td><%= open_enquiry.est_date.try(:strftime, '%d-%b-%Y') %></td>
+  <td><%= open_enquiry.fin_date.try(:strftime, '%d-%b-%Y') %></td>
+  <td><%= open_enquiry.created_at.try(:strftime, '%d-%b-%Y') %></td>
+  <td><%= link_to 'Open', enquiry_path(open_enquiry) ,target: '_blank' %></td>
+  <td class="no-sort">Dismiss</td>
+  <td class="no-sort">Dismiss Until</td>
+</tr>
