@@ -50,3 +50,53 @@
     </div>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <h4>Customer's Enquiries</h4>
+          <div class="card-panel">
+            <table class="responsive-table display">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Created</th>
+                  <th class="no-sort">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "enquiry", collection: @customer.enquiries %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col s6 m6 l6">
+          <h4>Customer's Itineraries</h4>
+          <div class="card-panel">
+            <table class="responsive-table display">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Created</th>
+                  <th class="no-sort">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render partial: "itinerary", collection: @customer.itineraries %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
