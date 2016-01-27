@@ -3,7 +3,13 @@
     <li class="bold"><a href="/snapshot" class="waves-effect waves-cyan"><i class="mdi-image-wb-sunny"></i> Snapshot</a> </li>
 
     <% if can? :manage, RemindersController %>
-      <li class="bold"><a href=<%= reminders_path %> class="waves-effect waves-cyan"><i class="mdi-action-alarm"></i> Reminders</a> </li>
+      <li class="bold">
+        <a href=<%= reminders_path %> class="waves-effect waves-cyan">
+          <i class="mdi-action-alarm"></i> 
+          Reminders
+          <span class="new badge"><%= Enquiry.open_enquiries(current_user).size.to_s %></span>
+        </a>
+      </li>
     <% end %>
 
     <li class="bold"><a href="/dashboard" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a> </li>

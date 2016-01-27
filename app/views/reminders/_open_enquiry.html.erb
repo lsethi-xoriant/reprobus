@@ -4,8 +4,8 @@
   <td><%= open_enquiry.fin_date.try(:strftime, '%d-%b-%Y') %></td>
   <td><%= open_enquiry.created_at.try(:strftime, '%d-%b-%Y') %></td>
   <td><%= link_to 'Open', enquiry_path(open_enquiry) ,target: '_blank' %></td>
-  <td><%= link_to 'Dismiss', dismiss_reminder_path(open_enquiry), method: :post %></td>
+  <td><%= link_to 'Dismiss', '#', method: :post %></td>
   <td>
-    <%= link_to 'Dismiss Until', dismiss_until_reminder_path(open_enquiry), method: :post %>
+    <%= render partial: 'dismiss_button', locals: { object: open_enquiry } %>
   </td>
 </tr>

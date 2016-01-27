@@ -26,9 +26,8 @@ Reprobus::Application.routes.draw do
   end
 
   resources :reminders, only: [:index] do
-    member do
+    collection do
       post 'dismiss'
-      post 'dismiss_until'
     end
   end
 
