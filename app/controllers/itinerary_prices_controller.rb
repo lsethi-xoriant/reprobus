@@ -27,8 +27,6 @@ class ItineraryPricesController < ApplicationController
     @itinerary = @itinerary_price.itinerary
     
     if @itinerary_price.save
-      @itinerary_price.itinerary.status = "Pricing Created"
-      @itinerary_price.itinerary.save
       flash[:success] = "Itinerary Pricing created!"
       redirect_to  edit_itinerary_price_path(@itinerary_price)
     else

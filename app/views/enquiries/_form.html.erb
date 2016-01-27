@@ -110,7 +110,7 @@
         
         <% if !itinerary_has_been_created %>
           <div class="input-field col s6">
-            <%= f.select :stage, options_for_select(["New Enquiry", "Open", "In Progress", "Closed"], @enquiry.stage ) %>
+            <%= f.select :stage, options_for_select(Enquiry::AVAILABLE_STATUSES, @enquiry.stage ) %>
           </div>
         <% end %>
       </div>

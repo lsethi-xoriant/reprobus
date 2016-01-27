@@ -94,7 +94,7 @@ class ItinerariesController < ApplicationController
     
     @itinerary = Itinerary.new
     @itinerary.user = current_user
-    @itinerary.status = "Itinerary"
+    @itinerary.status = "In Progress"
     @itinerary.enquiry = @enquiry
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
@@ -220,7 +220,7 @@ class ItinerariesController < ApplicationController
 
   def revert_cancel
     @itinerary = Itinerary.find(params[:id])
-    if @itinerary.update_attributes(status: 'Reinstated')
+    if @itinerary.update_attributes(status: 'In Progress')
       flash[:success] = "Itinerary reinstated"
     else
       flash[:error] = "Error while undo cancelling Itinerary"

@@ -140,6 +140,13 @@ ActiveRecord::Schema.define(version: 20160120141017) do
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
     t.string   "nationality"
+    t.string   "public_edit_token"
+    t.date     "public_edit_token_expiry"
+    t.text     "frequent_flyer_details"
+    t.string   "emergency_contact"
+    t.string   "emergency_contact_phone"
+    t.text     "dietary_requirements"
+    t.text     "medical_information"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree

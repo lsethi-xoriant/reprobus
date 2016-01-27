@@ -55,6 +55,12 @@
         <% end %>
       </div>
       
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select :status, options_for_select(Itinerary::AVAILABLE_STATUSES, f.object.status ) %>
+        </div>
+      </div>      
+      
     </div>
 
     <div class="row">

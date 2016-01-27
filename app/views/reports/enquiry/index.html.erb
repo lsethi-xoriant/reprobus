@@ -1,8 +1,8 @@
 <% provide(:title, 'Enquiry Report') %>
 
-<div class="container">
-  <%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
+<%= render partial: 'reports/partials/export_buttons', locals: { search_params: params } %>
 
+<div class="container">
   <%= form_for :reports_search, method: :get, url: reports_enquiry_index_path do |c| %>
     <div class="row">
       <div class="col s1">
@@ -14,9 +14,11 @@
         <%= c.date_field :to, class:"datepicker start_leg_itinerary", :"data-value" => (@to || Date.today) %>
       </div>
       <div class="col s2">
+        <br>
         <% Enquiry::STATUSES.each do |stage| %>
           <%= check_box_tag "reports_search[stage][]", stage, (@stage ? @stage.include?(stage) : false), id: stage.downcase.split.join('_') %>
           <label for=<%= stage.downcase.split.join('_') %>><%= stage %></label>
+          <br>
         <% end %>
       </div>
       <div class="col s2">
@@ -30,6 +32,7 @@
       </div>
     </div>
   <% end %>
-
+   <br>
   <%= render partial: "reports/enquiry/table" %>
+  
 </div>
