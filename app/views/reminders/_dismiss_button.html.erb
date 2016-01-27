@@ -1,13 +1,12 @@
-<a
-  id=<%= "dismiss_btn_#{object.class.name.underscore}_#{object.id}" %>
-  class="input-field waves-effect waves-light btn deep-purple darken-1 modal-trigger tooltipped"
-  data-type=<%= object.class.name %>
-  data-id=<%= object.id %>
-  data-position="bottom"
-  data-delay="50"
-  data-tooltip='Dismiss Until'
-  href='#dismiss_until_modal'>
-
-  Dismiss Until
-
-</a>
+<%= link_to 'Dismiss', 
+      dismiss_reminders_path(
+        dismiss_until: { 
+          type: object.class.name,
+          id:   object.id,
+          date: Date.tomorrow 
+        }
+      ), 
+      method: :post,
+      data: { tooltip: 'Dismiss'},
+      class: "input-field waves-effect waves-light btn deep-purple darken-1 tooltipped"
+%>
