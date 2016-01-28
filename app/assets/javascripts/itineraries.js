@@ -4,7 +4,32 @@ $(document).ready(function() {
   
   itinerary_common_controls_init();  
 
-  $(".select2-room-types-noajax").select2();  
+  $(".select2-room-types-noajax").select2();
+
+  $(document).on('click', '#select-between-itinerary-infos', function(event) {
+    checkboxes_array = $('.itinerary-info-checkbox .muli-select-itinerary');
+
+    count = 0
+    checked_elements_indexes = []
+    checkboxes_array.each(function(index) {
+      if ($(this).is(":checked")) {
+        count = count + 1;
+        checked_elements_indexes.push(index)
+      };
+    });
+
+    if (count >= 2) {
+      first_index = checked_elements_indexes[0];
+      last_index = checked_elements_indexes.pop();
+
+      checkboxes_array.each(function(index) {
+        if ((index >= first_index) && (index <= last_index)) {
+          console.log(index);
+          this.checked = true;
+        };
+      });
+    };
+  });
   
   // set up insert function on both pages, so can insert rows where we decide
   $("#itinerary_infos a.add_fields").
