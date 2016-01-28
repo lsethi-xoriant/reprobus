@@ -39,6 +39,7 @@ class Ability
       default_abilities
       can [:manage], AgentsController
       can [:manage], EnquiriesController
+      can [:manage], RemindersController
       cannot [:destroy], EnquiriesController
     end
 
@@ -56,7 +57,6 @@ class Ability
       can [:manage], ItineraryTemplatesController
       can [:manage], SearchesController
       can [:manage], SuppliersController
-      can [:show],   UsersController
       can [:manage], StaticPagesController
     end
 
@@ -91,7 +91,7 @@ class Ability
     cannot [:destroy], ItineraryPricesController
 
     can [:manage], SearchesController
-    can [:show], UsersController
+    can [:manage], UsersController
     can [:home, :about, :timed_out, :dashboard, :dashboard_list, :snapshot, 
          :currencysearch, :noaccess], StaticPagesController
   end

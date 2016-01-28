@@ -5,7 +5,7 @@ class Reports::DestinationController < ApplicationController
   def index
     @structure = structure
 
-    @users = User.where.not(name: "System")
+    @users = User.where.not(name: "System").order(:name)
     @countries = Country.all
     @itineraries = 
       ReportService.destination_search(@from, @to, @user, @country, @destination)

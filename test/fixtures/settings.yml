@@ -43,6 +43,7 @@
 #  invoice_footer             :text
 #  pin_payment_url            :string
 #  base_url                   :string
+#  about_company              :text
 #
 
 firstcompany:

@@ -29,7 +29,10 @@ class CustomersController < ApplicationController
   
   def edit
     @customer = Customer.includes(:enquiries, :itineraries).find(params[:id])
-    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(5)
+    @hasActivities = !@customer.activities.empty?
+    @customer.activities.build
+    @activities = @customer.activities.order('created_at DESC').page(params[:page]).per(20)
+    
   end
 
   def details
@@ -122,13 +125,14 @@ class CustomersController < ApplicationController
 private
     def customer_params
       params.require(:customer).permit(:last_name, :first_name, :title, :cust_sup, :num_days_payment_due,
-        :source, :email, :alt_email, :phone, :mobile, :issue_date, :expiry_date, :currency_id, :agent_commision_percentage,
+        :source, :email, :alt_email, :phone, :alt_phone, :issue_date, :expiry_date, :currency_id, :agent_commision_percentage,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
         :quote_introduction, :confirmed_introduction, :nationality,
         :medical_information, :dietary_requirements,
         :emergency_contact_phone, :emergency_contact, :frequent_flyer_details,
         trigger_attributes: [:email_template_id], company_logo_attributes: [:id, :image_local, :image_remote_url],
         address_attributes: [:street1, :street2, :city, :state, 
-        :zipcode, :country, :full_address, :address_type, :addressable_type, :addressable_id])
+        :zipcode, :country, :full_address, :address_type, :addressable_type, :addressable_id],
+        activities_attributes: [:id, :enquiry_id, :description, :type, :user_id, :_destroy])
     end
 end

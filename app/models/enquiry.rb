@@ -39,7 +39,6 @@ class Enquiry < ActiveRecord::Base
   include CustomerRelation
 
   validates :name, presence: true, length: { maximum: 64 }
-  #validates :source, presence: true, length: { maximum: 32 }
   validates :stage, presence: true, length: { maximum: 32 }
   validates :num_people, allow_nil: true,  numericality: { only_integer: true }, allow_blank: true
   validates :amount, numericality: true,  allow_blank: true
@@ -56,33 +55,35 @@ class Enquiry < ActiveRecord::Base
   belongs_to :destination
   
   serialize :xpayments
+
+  scope :open_enquiries, -> (assignee) { 
+    where(assignee: assignee)
+    .where(stage: ['New Enquiry', 'In Progress', 'Long Term'])
+    .where("dismissed_until <= :date OR dismissed_until IS NULL", date: Date.today)
+  }
   
   scope :new_enquirires, -> { where(stage: 'New Enquiry') }
-  scope :open, -> { where(stage: 'Open') }
-  scope :in_progress, -> { where(stage: 'In Progress') }
-  scope :bookings, -> { where(stage: 'Booking') }
-  scope :is_itinerary, -> { where(stage: 'Itinerary') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
 
-  STATUSES = ['In Progress', 'Open', 'New Enquiry', 'Itinerary']
+  STATUSES = ['New Enquiry', 'In Progress', 'Long Term', 'Dead', 'Quote']
+  AVAILABLE_STATUSES = ['New Enquiry', 'In Progress', 'Long Term', 'Dead']
   
   scope :active_plus_this_id, -> (id=0) { 
     where("id = :id OR stage IN (:active_stages)",
       id: id,
-      active_stages: ['In Progress', 'Open', 'New Enquiry'])
+      active_stages: ['New Enquiry', 'In Progress', 'Long Term'])
   }
- # scope :notClosed, -> {where('stage != "Closed"') }
   
   belongs_to  :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
  
-#  has_many    :customers_enquiries
- # has_many    :customers, -> { order("customers.id ASC") }, through: :customers_enquiries
   has_and_belongs_to_many :customers
   accepts_nested_attributes_for :customers, allow_destroy: true
   validates_associated :customers
   
   has_many    :activities,  dependent: :destroy
+  accepts_nested_attributes_for :activities, allow_destroy: true
+  
   has_one     :booking
   has_many    :itineraries
   belongs_to  :agent, :class_name => "Customer", :foreign_key => :agent_id
@@ -97,30 +98,7 @@ class Enquiry < ActiveRecord::Base
   #    errors.add(:lead_customer, "must have phone or email")
   #  end
   #end
-
-  def isActive
-    return stage == "Open" || stage == "In Progress"
-  end
   
-  def convert_to_booking!(user)
-    book = self.build_booking(name: self.name, amount: self.amount, status: "New Booking")
-    book.user = user
-    book.customer = self.lead_customer
-    book.enquiry = self
-    if book.save
-      act = self.activities.create(type: "Converted", description: "Enquiry converted to Booking")
-      if act
-       user.activities<<(act)
-      end
-      self.update_attribute(:stage, "Booking")
-      
-      Trigger.trigger_new_booking(book)
-      
-      return true
-    else
-      return false
-    end
-  end
 
   def carrier_names
     str = ""

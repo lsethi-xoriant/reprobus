@@ -31,9 +31,7 @@ class Xero
       xcust.first_name = cust.first_name
       xcust.last_name =  cust.last_name
       xcust.email_address = cust.email
-      #xcust.add_address(:type => 'STREET', :line1 => '12 Testing Lane', :city => 'Brisbane') # TO BE ADDED
-      #xcust.add_phone(:type => 'DEFAULT', :area_code => '07', :number => '3033 1234')  # TO BE ADDED
-      xcust.add_phone(:type => 'MOBILE', :number => cust.mobile)  # ADD nomal phone - may need to structure our phone records like xero does.
+      xcust.add_phone(:type => 'DEFAULT', :number => cust.phone)  # ADD nomal phone - may need to structure our phone records like xero does.
       xcust.save
     else
       xcust = xcontacts.first

@@ -19,6 +19,7 @@
 #  includes_lunch       :boolean
 #  includes_dinner      :boolean
 #  group_classification :string
+#  product_description  :text
 #
 
 class ItineraryInfo < ActiveRecord::Base

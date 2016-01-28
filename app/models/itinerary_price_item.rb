@@ -52,6 +52,10 @@ class ItineraryPriceItem < ActiveRecord::Base
     self.currency_id ? self.currency.displayName : Setting.global_settings.getDefaultCurrency.displayName
   end
   
+  def get_quantity_for_forms( itineraryQty )
+    self.quantity == 0 ? itineraryQty  : self.quantity
+  end 
+  
   def get_item_sell_total
     return self.quantity * self.item_price
   end

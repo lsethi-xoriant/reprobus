@@ -39,7 +39,7 @@ class ItineraryCloneService
     itinerary_copy.name = original_itinerary.name + ' COPY'
     itinerary_copy.start_date = start_date
     
-    itinerary_copy.status = "New Itinerary"
+    itinerary_copy.status = "In Progress"
     itinerary_copy.user = current_user
     itinerary_copy.enquiry = enquiry # default if not selected
 

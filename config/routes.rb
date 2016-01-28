@@ -25,6 +25,13 @@ Reprobus::Application.routes.draw do
     end
   end
 
+  resources :reminders, only: [:index] do
+    member do
+      post 'dismiss'
+      post 'lost'
+    end
+  end
+
   get '/dropbox_authorize' => 'settings#db_authorize', as: 'dropbox_authorize'
   get '/dropbox_unauthorize' => 'settings#db_unauthorize', as: 'dropbox_unauthorize'
   get '/dropbox_path_change' => 'settings#db_path_change', as: 'dropbox_path_change'

@@ -19,6 +19,7 @@ class ItineraryPricesController < ApplicationController
   def edit
     @itinerary_price = ItineraryPrice.includes(:itinerary_price_items).find(params[:id])
     @itinerary = @itinerary_price.itinerary
+    set_email_modal_values_supplier_documents
   end
   
   def create
@@ -26,8 +27,6 @@ class ItineraryPricesController < ApplicationController
     @itinerary = @itinerary_price.itinerary
     
     if @itinerary_price.save
-      @itinerary_price.itinerary.status = "Pricing Created"
-      @itinerary_price.itinerary.save
       flash[:success] = "Itinerary Pricing created!"
       redirect_to  edit_itinerary_price_path(@itinerary_price)
     else
@@ -253,6 +252,12 @@ class ItineraryPricesController < ApplicationController
   end
   
 private
+  def set_email_modal_values_supplier_documents
+      @from_email = 
+      @setting.try(:itineraries_from_email).presence || User.find_by_name("System").try(:email)
+      @cc_email = current_user.try(:email)
+  end
+
   def itinerary_price_params
     params.require(:itinerary_price).permit(:itinerary_id, :deposit_due,
     :invoice_date, :balance_due, :final_balance_due, :currency_id, :customer_invoice_sent, :customer_invoice_sent_date,

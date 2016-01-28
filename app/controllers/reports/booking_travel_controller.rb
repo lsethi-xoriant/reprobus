@@ -6,10 +6,10 @@ class Reports::BookingTravelController < ApplicationController
   def index
     @structure = structure
 
-    @users = User.where.not(name: "System")
-    @countries = Country.all
+    @users = User.where.not(name: "System").order(:name)
+    @countries = Country.order(:name)
     @itineraries = 
-      ReportService.booking_travel_search(@from, @to, @user, @country, @destination)
+      ReportService.booking_travel_search(@from, @to, @user, @country)
 
     respond_to do |format|
       format.html

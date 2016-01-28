@@ -26,7 +26,7 @@
 #  agent_id                 :integer
 #  lead_customer_id         :integer
 #  end_date                 :date
-#  bedding_type             :integer
+#  bedding_type             :integer          default("0")
 #
 
 class Itinerary < ActiveRecord::Base
@@ -63,9 +63,15 @@ class Itinerary < ActiveRecord::Base
 
   enum bedding_type: [ :single, :twin, :double, :triple, :quad ]
 
+  STATUSES = ['In Progress', 'Quote Sent', 'Invoice Sent', 'Long Term', 'Dead', 'Confirmed Booking']
+  AVAILABLE_STATUSES = ['In Progress', 'Long Term', 'Dead']
+
   def quote_sent_update_date(confirmed)
     attribute = confirmed ? :confirmed_itinerary_sent : :quote_sent
     self.update_attribute(attribute, DateTime.now)
+    if !confirmed && (self.in_progress || self.is_long_term)
+      self.update_attribute(:status, "Quote Sent")
+    end
   end
 
   def cancel
@@ -84,6 +90,14 @@ class Itinerary < ActiveRecord::Base
   def isLocked?
     return self.complete 
   end
+
+  def in_progress
+    self.status == "In Progress"  
+  end 
+  
+  def is_long_term
+    self.status == "Long Term"  
+  end 
   
   def template_name
     return self.itinerary_template.name if self.itinerary_template
@@ -139,8 +153,10 @@ class Itinerary < ActiveRecord::Base
     end
     
     # populates itinerary from a template
-    self.includes = template.includes.presence || Setting.global_settings.itinerary_includes
-    self.excludes = template.excludes.presence || Setting.global_settings.itinerary_excludes
+    self.includes = Setting.global_settings.itinerary_includes ? "#{Setting.global_settings.itinerary_includes}\r\n#{template.includes}" : template.includes
+    self.excludes = Setting.global_settings.itinerary_excludes ? "#{Setting.global_settings.itinerary_excludes}\r\n#{template.excludes}" : template.excludes
+    #self.includes = template.includes.presence || Setting.global_settings.itinerary_includes
+    #self.excludes = template.excludes.presence || Setting.global_settings.itinerary_excludes
     self.notes = template.notes.presence || Setting.global_settings.itinerary_notes
     
     startleg = self.start_date
@@ -158,6 +174,9 @@ class Itinerary < ActiveRecord::Base
   def insert_template(template_id, pos)
     newTemplate = ItineraryTemplate.find(template_id)
     
+    self.includes = self.includes ? "#{self.includes}\r\n#{newTemplate.includes}" : newTemplate.includes
+    self.excludes = self.excludes ? "#{self.excludes}\r\n#{newTemplate.excludes}" : newTemplate.excludes
+     
     # find date where we are inserting. 
     if pos == 0 
       # start date will be start of itineary. 

@@ -71,6 +71,6 @@ private
       if @user.isSystemUser then
         redirect_to(noaccess_url)
       end
-      redirect_to(noaccess_url) unless current_user?(@user) || current_user.admin?
+      redirect_to(noaccess_url) unless current_user?(@user) || current_user.management?
     end
 end

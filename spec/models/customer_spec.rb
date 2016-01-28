@@ -45,6 +45,14 @@
 #  setting_id                 :integer
 #  quote_introduction         :text
 #  confirmed_introduction     :text
+#  nationality                :string
+#  public_edit_token          :string
+#  public_edit_token_expiry   :date
+#  frequent_flyer_details     :text
+#  emergency_contact          :string
+#  emergency_contact_phone    :string
+#  dietary_requirements       :text
+#  medical_information        :text
 #
 
 require 'spec_helper'

@@ -28,21 +28,27 @@
         <% end %>
     <% end %>
 <% end %>
-<p class="caption"><strong>Your Consultant: </strong> <%= @itinerary.user.try(:name) %></p>
 
-<div>
+<div class="clear50"></div>
+<p class="bigBigtitle2">Your Consultant</p>
+    
+<div class="detailsbox">
   <% if @setting.use_dropbox %>
-    <%= image_tag(@itinerary.user.profile_image.get_dropbox_image_link, height: '100', class: "consultant-image") if !!@itinerary.user.profile_image %>
+    <%= image_tag(@itinerary.user.profile_image.get_dropbox_image_link, height: '100', class: "imgdetails") if !!@itinerary.user.profile_image %>
   <% else %>
-    <%= image_tag(@itinerary.user.profile_image.image_local_url, height: '100', class: "consultant-image") if @itinerary.user.profile_image.image_local? %>
+    <%= image_tag(@itinerary.user.profile_image.image_local_url, height: '100', class: "imgdetails") if @itinerary.user.profile_image.image_local? %>
   <% end %>
-</div>
-<div class="consultant-info">
-  <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:phone) %></p>
-  <p class="caption"><strong>Email</strong> <%= @itinerary.user.try(:email) %></p>
-</div>
-<%= @itinerary.user.try(:profile_description).try(:html_safe) %>
 
+
+
+  <div class="contdetails">
+    <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:name) %></p>
+    <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:phone) %></p>
+    <p class="caption"><strong>Email</strong> <%= @itinerary.user.try(:email) %></p>
+    <%= @itinerary.user.try(:profile_description).try(:html_safe) %>
+  </div>
+</div>
+<div class="clear45"></div>
 <p class="caption"><strong>About us</strong> <%= @setting.try(:about_company).try(:html_safe) %></p>
 
 <div class="page-break"></div>

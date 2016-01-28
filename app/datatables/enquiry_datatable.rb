@@ -1,5 +1,5 @@
 class EnquiryDatatable < AjaxDatatablesRails::Base
-  def_delegators :@view, :link_to, :h, :enquiry_path, :edit_enquiry_path, :get_status_color
+  def_delegators :@view, :link_to, :h, :enquiry_path, :edit_enquiry_path, :get_status_color, :current_user
 
   include AjaxDatatablesRails::Extensions::Kaminari
 
@@ -38,7 +38,11 @@ class EnquiryDatatable < AjaxDatatablesRails::Base
   def get_raw_records
     # insert query here
     #Enquiry.joins(:lead_customer, :assignee).active  #needed to add left join below incase no user assigned. can do same thing for lead cust etc. 
-    Enquiry.joins(:lead_customer).joins("LEFT OUTER JOIN users ON users.id = enquiries.assigned_to").active
+    if current_user.management?
+      Enquiry.joins(:lead_customer).joins("LEFT OUTER JOIN users ON users.id = enquiries.assigned_to").active
+    else
+      Enquiry.joins(:lead_customer, :assignee).active
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

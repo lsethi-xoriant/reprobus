@@ -4,8 +4,6 @@
   <%= form_for @itinerary, :html => {:multipart => true, :class => "col s12"} do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <%= render partial: 'shared/error_messages', collection: f.object.customers, as: :object %>
-    
-    <%= f.hidden_field :user_id, :value => current_user.id %>
 
     <div class ="card-panel">
 
@@ -46,11 +44,22 @@
       </div>
       
       <div class="row">
-        <div class="input-field col s6">
-          <%= f.select(:user_id, options_for_select([[f.object.user.name, f.object.user_id]],f.object.user_id),{},{class: "select2-users browser-default"}) %>
-          <%= f.label :user_id, "Assigned To",  class: 'active' %>
-        </div>
+        <% if current_user.management? %>
+          <div class="input-field col s6">
+            <%= f.select(:user_id, options_for_select([[f.object.user.name, f.object.user_id]],f.object.user_id),{},{class: "select2-users browser-default"}) %>
+            <%= f.label :user_id, "Assigned To",  class: 'active' %>
+          </div>
+        <% else %>
+          <%= render partial: 'shared/material_readonly', locals: { col: "s6", label: "Assigned To", value: f.object.user_id, class_for_input: ""  } %>
+          <%= f.hidden_field :user_id, value: f.object.user_id %>
+        <% end %>
       </div>
+      
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select :status, options_for_select(Itinerary::AVAILABLE_STATUSES, f.object.status ) %>
+        </div>
+      </div>      
       
     </div>
 

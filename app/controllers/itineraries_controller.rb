@@ -94,7 +94,7 @@ class ItinerariesController < ApplicationController
     
     @itinerary = Itinerary.new
     @itinerary.user = current_user
-    @itinerary.status = "Itinerary"
+    @itinerary.status = "In Progress"
     @itinerary.enquiry = @enquiry
     @itinerary.num_passengers = @enquiry.num_people
     @itinerary.start_date = @enquiry.est_date
@@ -219,7 +219,7 @@ class ItinerariesController < ApplicationController
 
   def reinstate
     @itinerary = Itinerary.find(params[:id])
-    if @itinerary.update_attributes(status: 'Reinstated')
+    if @itinerary.update_attributes(status: 'In Progress')
       flash[:success] = "Itinerary reinstated"
     else
       flash[:error] = "Error while undo cancelling Itinerary"
@@ -252,7 +252,7 @@ private
       itinerary_infos_attributes: [:id, :position, :product_id, :start_date,
       :end_date, :length, :room_type, :supplier_id, :includes_breakfast, :includes_lunch, :includes_dinner, 
       :group_classification, :comment_for_customer, :comment_for_supplier, :product_description,  :_destroy ],
-      customers_attributes: [:id, :first_name, :last_name, :email, :phone, :mobile, :title, :lead_customer, :_destroy])
+      customers_attributes: [:id, :first_name, :last_name, :email, :phone, :alt_phone, :title, :lead_customer, :_destroy])
     end
 
     def set_email_modal_values

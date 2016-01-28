@@ -5,7 +5,7 @@
 
   <div id=<%="#{form_name}_modal"%> class="modal modal-fixed-footer white">
     <div class="modal-content">
-      <h4><i class="mdi-image-add-to-photos"></i>  Email Quote</h4>
+      <h4><i class="mdi-image-add-to-photos"></i>  <%= form_name.humanize %></h4>
 
       <ul>
         <li>
@@ -76,10 +76,15 @@
     </div>
 
     <div class="modal-footer">
-
-      <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat" data-confirmed=<%= confirmed%>>Send</a>
-
-      <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+      <div class="row">
+        <div class="col s10">
+          <a href="#" id="email_quote_OK" class="modal-action modal-close waves-effect waves-lighten-3 green btn-flat" data-confirmed=<%= confirmed%>>Send</a>
+        </div>
+        
+        <div class="col s2">
+          <a href="#" id="email_quote_CANCEL" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+        </div>
+      </div>
     </div>
   </div>
 

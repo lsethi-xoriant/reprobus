@@ -45,6 +45,14 @@
 #  setting_id                 :integer
 #  quote_introduction         :text
 #  confirmed_introduction     :text
+#  nationality                :string
+#  public_edit_token          :string
+#  public_edit_token_expiry   :date
+#  frequent_flyer_details     :text
+#  emergency_contact          :string
+#  emergency_contact_phone    :string
+#  dietary_requirements       :text
+#  medical_information        :text
 #
 
 class Customer < ActiveRecord::Base
@@ -60,8 +68,8 @@ class Customer < ActiveRecord::Base
   validates :alt_email, presense: false,
                     format:     { with: VALID_EMAIL_REGEX_INCL_BLANK }, :allow_blank => true,
                     uniqueness: { case_sensitive: false }
-  validates :phone,  length: { maximum: 255 }
-  validates :mobile, length: { maximum: 32 }
+  validates :phone,  length: { maximum: 32 }
+  validates :alt_phone, length: { maximum: 32 }
   validates :fax, length: { maximum: 32 }
   validates :after_hours_phone, length: { maximum: 255 }
   validates :num_days_payment_due, numericality: true,  allow_blank: true
@@ -90,6 +98,8 @@ class Customer < ActiveRecord::Base
   accepts_nested_attributes_for :address
   
   has_many    :activities,  dependent: :destroy
+  accepts_nested_attributes_for :activities 
+  
   has_many    :bookings
   belongs_to  :currency
 
