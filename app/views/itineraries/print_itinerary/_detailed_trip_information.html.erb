@@ -1,0 +1,46 @@
+
+
+<% leg_count = 0 %>
+<% currCruise = nil %>
+<% cruiseDay = 0 %>
+
+<div class="page-break"></div>
+
+<p class="bigBigtitle4">Confirmation of services</p>
+<div class="border"></div>
+<div class="clear45"></div>
+<p class="bigBigtitle2">Trip Details</p>
+
+<% hotelArray = [] %>
+
+<% @itinerary.start_date.upto(@itinerary.get_end_date) do |date|  %>
+  <% leg_count = leg_count + 1 %>
+  <% dayInfos = ItineraryInfosDay.new %>
+  <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
+
+  <div class="detailsbox">
+    
+  	<p class="headdetails"><span class="itinerary_date_color"><%= date.strftime("#{date.day.ordinalize} %b %Y") %></span><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
+    
+      <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: "", type: "other"}  %>        
+      
+      <% if dayInfos.hotel %>
+          <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel,  type: "hotel"}  %>
+      <% elsif dayInfos.cruise %>
+          <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise,  type: "cruise"}  %>
+      <% end %>
+
+  	<div class="clear"></div>
+  </div>
+
+<% end %>
+
+<div class="page-break"></div>
+    
+<p class="bigBigtitle4">Accommodation Details</p>
+<div class="border"></div>
+<div class="clear25"></div>
+<%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_long', collection: hotelArray , as: :info,  formats: [:html], locals: {preFix: ""}  %>    
+<div class="page-break"></div>

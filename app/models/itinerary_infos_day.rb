@@ -6,6 +6,8 @@ class ItineraryInfosDay
     @standard_infos = []
     @leg_count = leg_count
     @all_infos = itinerary.get_infos_for_date(date) 
+    
+    
   
     @all_infos.order('start_date').each do |info|    
       if !@first_start_date
@@ -22,11 +24,14 @@ class ItineraryInfosDay
           @hotel = info
         end     
       elsif info.product.type == "Transfer"
-        @transfer = info
+        #@transfer = info
+        @standard_infos << info
       elsif info.product.type == "Cruise"
         @cruise = info        
         @destination = info.get_product_destination if !@destination 
-        @country = info.get_product_country if !@country         
+        @country = info.get_product_country if !@country    
+        #add in cruise day, so day details are added. NOTE this is a product as opposed to an ItineraryInfo
+        @standard_infos << info.product.getCruiseDay(date - info.start_date + 1)
       else
          @standard_infos << info
          # set country and destination - this should be main dest/count - not if motel departure. 

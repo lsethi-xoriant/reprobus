@@ -30,14 +30,19 @@ $(document).ready(function() {
     $(".muli-select-itinerary").each(function(){
       if ($(this).is(":checked")) {
       // start date  
+      /* Not using Pickadate now. 
       var start_$input = $(this).closest('.field').find(".start_leg_itinerary").pickadate(),
            start_picker = start_$input.pickadate('picker');
-      bump_pickadate_date_to_new_date(start_picker,bumpNumDays,start_picker.get());     
-      
+      bump_pickadate_date_to_new_date(start_picker,bumpNumDays,start_picker.get()); 
       // now do end date
       var end_$input = $(this).closest('.field').find(".end_leg_itinerary").pickadate(),
            end_picker = end_$input.pickadate('picker');
-      bump_pickadate_date_to_new_date(end_picker,bumpNumDays,end_picker.get());     
+      bump_pickadate_date_to_new_date(end_picker,bumpNumDays,end_picker.get());   */
+      var  start_date_field = $(this).closest('.field').find(".start_leg_itinerary");
+      bump_pickadate_date_to_new_date( start_date_field , bumpNumDays, start_date_field.val() );
+      var end_date_field = $(this).closest('.field').find(".end_leg_itinerary");
+      bump_pickadate_date_to_new_date(end_date_field , bumpNumDays, end_date_field.val() );
+      
       }
     });
     
@@ -47,9 +52,20 @@ $(document).ready(function() {
   
   function bump_pickadate_date_to_new_date(picker,numdays, dateStr){
       // month is minus one as months are 0-11
-      var current_date = new Date(parseInt(dateStr.substring(0,4),10),parseInt(dateStr.substring(5,7),10)-1,parseInt(dateStr.substring(8,10),10));   
+      //var current_date = new Date(parseInt(dateStr.substring(0,4),10),parseInt(dateStr.substring(5,7),10)-1,parseInt(dateStr.substring(8,10),10));  
+console.log("datestr: " +  dateStr);      
+      var current_date = new Date(dateStr);
+console.log("newdate: " +  current_date);      
       current_date.setDate(current_date.getDate() + parseInt(numdays,10));
-      picker.set('select', current_date);  
+      
+      var day = ("0" + current_date.getDate()).slice(-2);
+      var month = ("0" + (current_date.getMonth() + 1)).slice(-2); 
+      
+console.log("newdate after add : " +  current_date);        
+      var formatted_date = current_date.getFullYear()+"-"+(month)+"-"+(day) ;
+      $(picker).val(formatted_date);
+      
+      //picker.set('select', current_date);   - removed as dont want to use pickadate on this screen
   }
   
   
@@ -117,6 +133,7 @@ $(document).ready(function() {
   });
   
   $('#itinerary_template_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+  
     var prev_value = parseInt(insertedItem.prev().find(".itinerary-days-from-start").val(),10);
     prev_value += parseInt(insertedItem.prev().find(".itinerary-number-days").val(),10);
     if (isNaN(prev_value) == false) {insertedItem.find(".itinerary-days-from-start").val(prev_value); }
@@ -135,8 +152,10 @@ $(document).ready(function() {
   });
   
   $('#itinerary_infos').on('cocoon:after-insert', function(e, insertedItem) {   // this container is on itinerary new form
+ 
     itineraryForm_initialise_elements_after_insert(insertedItem);
 
+/*  REMOVED pikadate as we dont like it on the itienary screen. too annoying...
     // reinit Pikadate datepicker
     $(insertedItem).find('.start_leg_itinerary').pickadate({
       selectMonths: true, // Creates a dropdown to control month
@@ -154,17 +173,23 @@ $(document).ready(function() {
 //      min: new Date(),
       hiddenSuffix: ''
     });  
-    
-    // get last date from previous element 
+  
     var prev_$input = insertedItem.prev().find('.end_leg_itinerary').pickadate(),
         prev_picker = prev_$input.pickadate('picker');
     var start_$input = insertedItem.find('.start_leg_itinerary').pickadate(),
         start_picker = start_$input.pickadate('picker');   
     var end_$input = insertedItem.find('.end_leg_itinerary').pickadate(),
         end_picker = end_$input.pickadate('picker');        
-//console.log(prev_picker.get());        
+        
     bump_pickadate_date_to_new_date(start_picker,0,prev_picker.get());
     bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
+*/
+
+    insertedItem.find('.start_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
+    insertedItem.find('.end_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
+
+console.log($(insertedItem).prevAll("nested-fields:first"));
+  
   });
   
 

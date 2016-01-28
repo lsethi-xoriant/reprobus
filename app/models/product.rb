@@ -101,8 +101,11 @@ class Product < ActiveRecord::Base
   
   def get_product_phone
     return self.phone
+  end  
+  
+  def get_product_type
+    return self.type.underscore.humanize
   end   
-    
   
   def get_group_classification
     if (self.type = "Transfer" || self.type = "Tour") && self.group_classification != "none" 
@@ -115,7 +118,7 @@ class Product < ActiveRecord::Base
   def get_itinerary_header_details(prefix)
     group = self.get_group_classification
     group += " " if group
-    prefix += " - " if prefix 
+    #prefix += " - " if prefix 
     str = "#{group}#{prefix}#{self.get_product_name}  #{self.get_product_destination}, #{self.get_product_country}"
     return str
   end

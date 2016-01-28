@@ -1,10 +1,14 @@
 <% if info %>
   <div class="detailsbox">
     
-    <% if type != "transfer" && info.get_product_image_remote_url %>
+    <% if info.get_product_type != "Transfer" && info.get_product_image_remote_url %>
       <div class="imgdetails"><img src=<%= info.get_dropbox_image_link %> alt="" /></div>
     <% else %>
       <div class="imgdetails">&nbsp;</div>
+    <% end %>
+    
+    <% if info.get_product_type == "Cruise" || info.get_product_type == "Cruise day" %>
+    <% preFix = "Cruise" %>
     <% end %>
       
     <div class="contdetails">

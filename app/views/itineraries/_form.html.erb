@@ -103,11 +103,11 @@
           
           <div id="addNestedAboveHere"></div>
           
-          <div class="links input-field col s1">
+          <div class="links input-field col s12">
             <% if !@itinerary.isLocked? %>
               <%= link_to_add_association  f, :itinerary_infos, partial: 'itinerary_infos', 
-                  class: "btn-floating btn-small waves-effect waves-light green" do %>
-                <i class="mdi-content-add" id='add_new_trip_detail'></i>
+                  class: "btn-floating btn-small waves-effect waves-light right blue" do %>
+                <i class="mdi-hardware-keyboard-return" id='add_new_trip_detail'></i>
               <% end %>
             <% end %>
           </div>

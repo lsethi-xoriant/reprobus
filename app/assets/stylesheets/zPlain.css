@@ -208,3 +208,30 @@
   line-height: 52px;
 }
 
+.end_leg_itinerary, .start_leg_itinerary{
+  border-bottom: 0px !important;
+}
+
+.end_leg_itinerary::-webkit-inner-spin-button,
+.end_leg_itinerary::-webkit-clear-button,
+.start_leg_itinerary::-webkit-inner-spin-button,
+.start_leg_itinerary::-webkit-clear-button{
+    display: none;
+    -webkit-appearance: none;
+} 
+
+.no-padding-for-dates{
+  padding-right: 0.1em !important;
+  padding-left: 0.1em !important;
+}
+
+.end_leg_itinerary:before, .start_leg_itinerary:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3rem;
+    margin: 0 0 15px 0;
+    width: 75%;
+    border-bottom: 1px solid #9e9e9e;
+}

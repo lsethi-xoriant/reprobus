@@ -50,7 +50,7 @@
 <% end %>
 
 <%= render partial: 'itineraries/print_itinerary/summary', formats: [:html]  %>
-<%= render partial: 'itineraries/print_itinerary/trip_detailed', formats: [:html] %>
+<%= render partial: 'itineraries/print_itinerary/detailed_trip_information', formats: [:html] %>
 
 <% if @confirmed %>
   <%= render partial: 'itineraries/print_itinerary/flight_and_supplier_details', formats: [:html]  %>

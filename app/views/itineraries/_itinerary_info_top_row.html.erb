@@ -27,14 +27,14 @@
       </div>
     </div>
     
-    <div class="input-field col s1">
-        <%= f.date_field :start_date, class:"datepicker start_leg_itinerary", :"data-value" =>  f.object.start_date %>
+    <div class="no-padding-for-dates input-field col s1">
+        <%= f.date_field :start_date, class:"start_leg_itinerary", :"data-value" =>  f.object.start_date %>
         <%#= f.date_field :start_date, class:"start-date_field", :"data-value" =>  f.object.start_date, readonly: true %>
         <%= f.label :start_date, class: 'active' %>
     </div>
     
-    <div class="input-field col s1">
-        <%= f.date_field :end_date, class:"datepicker end_leg_itinerary", :"data-value" =>  f.object.end_date %>
+    <div class="no-padding-for-dates input-field col s1">
+        <%= f.date_field :end_date, class:"end_leg_itinerary", :"data-value" =>  f.object.end_date %>
         <%#= f.date_field :end_date, class:"end-date_field", :"data-value" =>  f.object.end_date, readonly: true %>
         <%= f.label :end_date, class: 'active' %>
     </div>
