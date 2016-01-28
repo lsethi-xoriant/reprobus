@@ -1,8 +1,7 @@
 <%= link_to 'Dismiss', 
-      dismiss_reminders_path(
+      dismiss_reminder_path(object,
         dismiss_until: { 
           type: object.class.name,
-          id:   object.id,
           date: Date.tomorrow 
         }
       ), 

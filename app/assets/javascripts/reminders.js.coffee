@@ -4,6 +4,9 @@ $(document).on 'click', "[id^=dismiss_btn_]", (event) ->
   $('#dismiss_until_type').attr('value', button.data('type'))
   $('#dismiss_until_id').attr('value', button.data('id'))
 
+  dismiss_path = '/reminders/' + button.data('id') + '/dismiss'
+  $('#dismiss_until_form').attr('action', dismiss_path)
+
   $('#dismiss_until_modal').openModal()
 
 $(document).ready ->

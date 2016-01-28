@@ -4,9 +4,9 @@
   <td><%= open_enquiry.fin_date.try(:strftime, '%d-%b-%Y') %></td>
   <td><%= open_enquiry.created_at.try(:strftime, '%d-%b-%Y') %></td>
   <td>
-    <%= render partial: 'open_button', locals: { object: open_enquiry } %>
-    <%= render partial: 'dismiss_button', locals: { object: open_enquiry } %>
+    <%= render partial: 'open_button',          locals: { object: open_enquiry } %>
+    <%= render partial: 'dismiss_button',       locals: { object: open_enquiry } %>
     <%= render partial: 'dismiss_until_button', locals: { object: open_enquiry } %>
-    <%= render partial: 'lost_button', locals: { object: open_enquiry } %>
+    <%= render partial: 'lost_button',          locals: { object: open_enquiry } %>
   </td>
 </tr>

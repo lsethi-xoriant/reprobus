@@ -11,7 +11,7 @@ class RemindersController < ApplicationController
 
   def dismiss
     dsm = params[:dismiss_until]
-    type, id, str_date, note = dsm[:type], dsm[:id], dsm[:date], dsm[:note]
+    type, id, str_date, note = dsm[:type], params[:id], dsm[:date], dsm[:note]
     @object = find_object(type, id)
     
     if @object.present?
