@@ -1,6 +1,6 @@
 <p class="bigBigtitle4">Introduction</p>
 <div class="border"></div>
-<div class="clear75"></div>
+<div class="clear45"></div>
 <p class="bigBigtitle2">Introduction</p>
 <div class="clear50"></div>
 <p class="caption">
@@ -12,7 +12,7 @@
 </p>
 
 
-<div class="clear75"></div>
+<div class="clear50"></div>
 <p class="bigBigtitle2"><%= @confirmed? 'Confirmed Itinerary Details' : 'Quote Details' %></p>
 <div class="clear50"></div>
 <p class="caption"><strong>Trip Dates: </strong><%= @itinerary.get_trip_date_range %></p>
@@ -34,15 +34,15 @@
     
 <div class="detailsbox">
   <% if @setting.use_dropbox %>
-    <%= image_tag(@itinerary.user.profile_image.get_dropbox_image_link, height: '100', class: "imgdetails") if !!@itinerary.user.profile_image %>
+    <%= image_tag(@itinerary.user.profile_image.get_dropbox_image_link , class: "imgdetails") if !!@itinerary.user.profile_image %>
   <% else %>
-    <%= image_tag(@itinerary.user.profile_image.image_local_url, height: '100', class: "imgdetails") if @itinerary.user.profile_image.image_local? %>
+    <%= image_tag(@itinerary.user.profile_image.image_local_url, class: "imgdetails") if @itinerary.user.profile_image.image_local? %>
   <% end %>
 
 
 
   <div class="contdetails">
-    <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:name) %></p>
+    <p class="caption"><strong>Name</strong> <%= @itinerary.user.try(:name) %></p>
     <p class="caption"><strong>Phone</strong> <%= @itinerary.user.try(:phone) %></p>
     <p class="caption"><strong>Email</strong> <%= @itinerary.user.try(:email) %></p>
     <%= @itinerary.user.try(:profile_description).try(:html_safe) %>
