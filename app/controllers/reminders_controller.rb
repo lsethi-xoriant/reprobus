@@ -16,6 +16,9 @@ class RemindersController < ApplicationController
     
     if @object.present?
       @object.update_attribute(:dismissed_until, str_date.to_date) 
+      if str_date.to_date > (Date.today + 2.month)
+        @object.update_attribute(:stage, 'Long Term')
+      end
       flash[:success] = "#{type} dismissed until #{str_date}."
     else
       flash[:error] = "Error while dismissing"
