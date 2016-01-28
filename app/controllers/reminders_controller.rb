@@ -10,29 +10,19 @@ class RemindersController < ApplicationController
   end
 
   def dismiss
-    dsm = params[:dismiss_until]
-    type, id, str_date, note = dsm[:type], params[:id], dsm[:date], dsm[:note]
-    @object = find_object(type, id)
-    
-    if @object.present?
-      @object.update_attribute(:dismissed_until, str_date.to_date) 
-      if str_date.to_date > (Date.today + 2.month)
-        @object.update_attribute(:stage, 'Long Term')
-      end
+    if RemindersService.record_dismission(params, current_user)
+      type = params[:dismiss_until][:type]
+      str_date = params[:dismiss_until][:date]
       flash[:success] = "#{type} dismissed until #{str_date}."
     else
       flash[:error] = "Error while dismissing"
     end
 
-    # TODO: add note to DB
-    
     redirect_to reminders_path
   end
 
   def lost
-    @object = find_object(params[:type], params[:id])
-    if @object.present?
-      @object.update_attribute(:stage, 'Dead') 
+    if RemindersService.mark_as_lost(params)
       flash[:success] = "#{params[:type]} marked as Lost." 
     else
       flash[:error] = "Error while marking as Lost"
@@ -40,16 +30,4 @@ class RemindersController < ApplicationController
     redirect_to reminders_path
   end
 
-  private
-
-    def find_object(type, id)
-      case type
-        when 'Enquiry'
-          Enquiry.where(id: id).first
-        when 'Itinerary'
-          Itinerary.where(id: id).first
-        else
-          nil
-        end
-    end
 end
