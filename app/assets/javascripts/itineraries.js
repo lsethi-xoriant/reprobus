@@ -34,27 +34,6 @@ $(document).ready(function() {
       };
     });
 
-    $(document).keyup(function(event) {
-      if (event.shiftKey) {
-        switch(event.which) {
-          case 37:
-            console.log("shift + left arrow");
-            break;
-          case 38:
-            console.log("shift + up arrow");
-            break;
-          case 39:
-            console.log("shift + right arrow");
-            break;
-          case 40:
-            console.log("shift + down arrow");
-            break;
-          default:
-            break;
-        }
-      }
-    });
-
   };
   
   // set up insert function on both pages, so can insert rows where we decide
