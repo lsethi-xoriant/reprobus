@@ -1,13 +1,17 @@
 class @ItineraryInfosLastCheckedControls
   constructor: ->
     self = this
+    self.assignCheckboxChangeEvent(self)
+    self.assignKeyupForShiftAndArrows(self)
 
+  assignCheckboxChangeEvent: (self) =>
     $(document).on 'change', '.itinerary-info-checkbox .muli-select-itinerary', (event) ->
       if @checked
         checkbox_array = $('.itinerary-info-checkbox .muli-select-itinerary')
         self.cleanCheckedLast(checkbox_array)
         self.markCheckedLast($(this), checkbox_array)
 
+  assignKeyupForShiftAndArrows: (self) =>
     $(document).keyup (event) ->
       if event.shiftKey
         starting_index = window.checked_last
