@@ -10,7 +10,7 @@ class SearchesController < ApplicationController
         .select([:id, :first_name, :last_name])
         .where.not(cust_sup: 'Agent')
         .where.not(cust_sup: 'Supplier')
-        .where('last_name like ?', "#{params[:q]}%") 
+        .where('last_name ilike ?', "#{params[:q]}%") 
 
     respond_to do |format|
       format.json do 
