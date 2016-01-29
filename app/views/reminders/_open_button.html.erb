@@ -1,0 +1,7 @@
+<% url_prefix = object.class.name.underscore %>
+<%= link_to 'Open', 
+      send("#{url_prefix}_path", object),
+      target: '_blank',
+      data: { tooltip: 'Open'},
+      class: "input-field waves-effect waves-light btn deep-purple darken-1 tooltipped"
+%>

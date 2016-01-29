@@ -1,0 +1,44 @@
+<%= form_for :dismiss_until, url: '#', method: :post, html: { id: 'dismiss_until_form' } do |c| %>
+  <div id="dismiss_until_modal" class="modal modal-fixed-footer white">
+    <div class="modal-content">
+      <h4><i class="mdi-image-add-to-photos"></i>  Dismiss Until</h4>
+
+      <ul>
+        <li>
+          <div class="row">
+            <div id="dismiss_until_container" class="col s12">
+
+              <div class="row">
+                  <%= c.hidden_field :type, value: nil %>
+                  <%= c.hidden_field :id, value: nil %>
+
+                  <div class="input-field col s2">
+                    <%= c.date_field :date, class: 'datepicker' , :"data-value" =>  Date.tomorrow %>
+                    <%= c.label :date, class: 'active' %>
+                  </div>
+
+                  <div class="input-field col s10">
+                    <%= c.text_field :note %>
+                    <%= c.label :note, class: 'active' %>
+                  </div>
+
+              </div>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="col s10">
+        <a href="#" class="modal-action waves-effect waves-lighten-3 green btn-flat" id='dismiss_until_OK'>Dismiss</a>
+      </div>
+      <div class="col s2">
+        <a href="#" class="modal-action modal-close waves-effect waves-lighten-3 red btn-flat">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+<% end %>

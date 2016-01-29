@@ -39,6 +39,7 @@ class Ability
       default_abilities
       can [:manage], AgentsController
       can [:manage], EnquiriesController
+      can [:manage], RemindersController
       cannot [:destroy], EnquiriesController
     end
 

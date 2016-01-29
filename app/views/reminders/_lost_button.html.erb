@@ -1,0 +1,6 @@
+<%= link_to 'Lost', 
+      lost_reminder_path(object, type: object.class.name), 
+      method: :post,
+      data: { tooltip: 'Lost'},
+      class: "input-field waves-effect waves-light btn deep-purple darken-1 tooltipped"
+%>
