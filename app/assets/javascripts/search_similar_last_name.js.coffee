@@ -1,5 +1,7 @@
 $(document).on 'keyup', "[id^=enquiry_customers_attributes_][id$=_last_name]", (e) ->
   last_name = e.target.value
+  # hide table until we have some results present
+  $('#similar_last_name').css('display', 'none')
   if last_name.length > 2
     $.ajax(
       url: '/searches/similar_last_names'
@@ -19,5 +21,8 @@ $(document).on 'keyup', "[id^=enquiry_customers_attributes_][id$=_last_name]", (
                 <td>#{i.itineraries}</td>
               </tr>
             ")
+
+          # we have results, make table visible
+          $('#similar_last_name').css('display', 'block')
 
 

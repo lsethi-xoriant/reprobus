@@ -34,6 +34,10 @@ on Enquiry page
 ****************************
 ***************************/
 
+#similar_last_name {
+  display: none;
+}
+
 table.tableSection {
     display: table;
     width: 100%;
