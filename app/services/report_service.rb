@@ -175,6 +175,6 @@ class ReportService
         end
         csv << row
       end
-    end
+    end.encode('WINDOWS-1252', :undef => :replace, :replace => '')
   end
 end
