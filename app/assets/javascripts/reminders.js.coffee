@@ -34,31 +34,27 @@ $(document).on 'click', "[id^=lost_btn_]", (event) ->
   $('#lost_modal').openModal()
 
 $(document).ready ->
-  $('.modal-footer').on 'click', '#dismiss_until_OK', (e) ->
+  $('.modal-footer').on 'click', $('#dismiss_until_OK', '#lost_OK'), (e) ->
     e.preventDefault()
-
-    # invalidate date and note if empty
-    note = $('#dismiss_until_note')
-    date = $('#dismiss_until_date')
-    note.addClass('invalid') if (note.prop('value') == "")
-    date.addClass('invalid') if (date.prop('value') == "")
-
-    # submit only if date and note valid
-    unless note.hasClass('invalid') || date.hasClass('invalid')
-      $('#dismiss_until_form').submit()
-
-  $('.modal-footer').on 'click', '#lost_OK', (e) ->
-    e.preventDefault()
-
-    # invalidate note if empty
-    note = $('#lost_note')
-    note.addClass('invalid') if (note.prop('value') == "")
-
-    # submit only if date and note valid
-    unless note.hasClass('invalid')
-      $('#lost_form').submit()
+    clicked_selector = $(e.target)
+    modal_name = clicked_selector.attr('id').replace("_OK", '')
+    note = $('#' + modal_name + '_note')
+    date = $('#' + modal_name + '_date')
+    $.each [note, date], (index, element) ->
+      element.addClass('invalid') if (note.prop('value') == "")
+    condition_to_fail_validation = switch
+      when modal_name == 'dismiss_until' then (note.hasClass('invalid') && date.hasClass('invalid'))
+      when modal_name == 'lost' then (note.hasClass('invalid'))
+      else null
+    unless condition_to_fail_validation
+      $('#' + modal_name + '_form').submit()
 
 # make valid if user start typing
-$(document).on 'keyup', $("#dismiss_until_note", '#lost_note', '#dismiss_until_date'), (e) ->
+$(document).on 'keyup', $("#dismiss_until_note", '#lost_note'), (e) ->
+  selector_to_be_marked_valid = $(e.target)
+  selector_to_be_marked_valid.removeClass('invalid')
+
+# make valid if date changes
+$(document).on 'change', $('#dismiss_until_date'), (e) ->
   selector_to_be_marked_valid = $(e.target)
   selector_to_be_marked_valid.removeClass('invalid')
