@@ -22,8 +22,8 @@ class RemindersController < ApplicationController
   end
 
   def lost
-    if RemindersService.mark_as_lost(params)
-      flash[:success] = "#{params[:type]} marked as Lost." 
+    if RemindersService.mark_as_lost(params[:lost], current_user)
+      flash[:success] = "#{params[:lost][:type]} marked as Lost." 
     else
       flash[:error] = "Error while marking as Lost"
     end

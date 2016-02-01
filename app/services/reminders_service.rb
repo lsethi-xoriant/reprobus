@@ -11,20 +11,20 @@ class RemindersService
         object.update_attribute(:stage, 'Long Term')
       end
       
-      if note.present?
-        act = object.activities.create(type: 'Note', description: note)
-        current_user.activities<<(act) if act
-      end
+      record_note(object, note, current_user)
+
       true
     else
       false
     end
   end
 
-  def self.mark_as_lost(params)
+  def self.mark_as_lost(params, current_user)
     object = find_object(params[:type], params[:id])
+    note = params[:note]
     if object.present?
-      object.update_attribute(:stage, 'Dead') 
+      object.update_attribute(:stage, 'Dead')
+      record_note(object, note, current_user)
       true
     else
       false
@@ -32,6 +32,12 @@ class RemindersService
   end
 
   private
+
+    def self.record_note(object, note, current_user)
+      return unless (note.present? && current_user.present?)
+      act = object.activities.create(type: 'Note', description: note)
+      current_user.activities<<(act) if act
+    end
 
     def self.find_object(type, id)
       case type
