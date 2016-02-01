@@ -47,7 +47,6 @@ $(document).ready ->
     unless note.hasClass('invalid') || date.hasClass('invalid')
       $('#dismiss_until_form').submit()
 
-$(document).ready ->
   $('.modal-footer').on 'click', '#lost_OK', (e) ->
     e.preventDefault()
 
@@ -59,15 +58,7 @@ $(document).ready ->
     unless note.hasClass('invalid')
       $('#lost_form').submit()
 
-$(document).on 'keyup', $('#dismiss_until_note'), (e) ->
-  # make valid if user start typing
-  $('#dismiss_until_note').removeClass('invalid')
-
-$(document).on 'keyup', $('#lost_note'), (e) ->
-  # make valid if user start typing
-  $('#lost_note').removeClass('invalid')
-
-$(document).on 'change', $('#dismiss_until_date'), (e) ->
-  # make valid if user changed date
-  $('#dismiss_until_date').removeClass('invalid')
-
+# make valid if user start typing
+$(document).on 'keyup', $("#dismiss_until_note", '#lost_note', '#dismiss_until_date'), (e) ->
+  selector_to_be_marked_valid = $(e.target)
+  selector_to_be_marked_valid.removeClass('invalid')
