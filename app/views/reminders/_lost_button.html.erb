@@ -1,6 +1,13 @@
-<%= link_to 'Lost', 
-      lost_reminder_path(object, type: object.class.name), 
-      method: :post,
-      data: { tooltip: 'Lost'},
-      class: "input-field waves-effect waves-light btn deep-purple darken-1 tooltipped"
-%>
+<a
+  id=<%= "lost_btn_#{object.class.name.underscore}_#{object.id}" %>
+  class="input-field waves-effect waves-light btn deep-purple darken-1 modal-trigger tooltipped"
+  data-type=<%= object.class.name %>
+  data-id=<%= object.id %>
+  data-position="bottom"
+  data-delay="50"
+  data-tooltip='Lost'
+  href='#lost_modal'>
+
+  Lost
+
+</a>
