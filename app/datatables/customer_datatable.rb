@@ -6,12 +6,12 @@ class CustomerDatatable < AjaxDatatablesRails::Base
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
-    @sortable_columns ||= %w(Customer.last_name Customer.first_name Customer.title Customer.email Customer.phone)
+    @sortable_columns ||= %w(Customer.first_name Customer.last_name Customer.title Customer.email Customer.phone)
   end
 
   def searchable_columns
     # Declare strings in this format: ModelName.column_name
-    @searchable_columns ||= %w(Customer.last_name Customer.first_name Customer.email Customer.phone)
+    @searchable_columns ||= %w(Customer.first_name Customer.last_name Customer.email Customer.phone)
   end
 
   private
@@ -21,7 +21,7 @@ class CustomerDatatable < AjaxDatatablesRails::Base
       [
         # comma separated list of the values for each cell of a table row
         # example: record.attribute,
-        record.last_name, record.first_name, record.title, record.email,
+        record.first_name, record.last_name, record.title, record.email,
         record.phone,
         link_to("<i class='mdi-image-edit'></i>".html_safe, edit_customer_path(record), class: "btn-floating waves-effect waves-light pink")
 
