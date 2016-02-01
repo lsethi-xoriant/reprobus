@@ -57,7 +57,7 @@
         </div>
       <% else %>  
         <div class="row">
-          <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date} %>
+          <%= render partial: 'shared/material_date_cols6', locals: { field: "start_date", f: f, name: "Start Date", value: @itinerary.start_date.try(:strftime, "%d/%m/%Y")} %>
           <div class="input-field input-field col s3" >
           </div>  
           <div class="input-field insert_template_cont input-field col s3" >
@@ -91,6 +91,10 @@
         <% if !@itinerary.isLocked? %>
         <% sortableClass = "sortable" %>  
         <% end %>
+
+        <div class="#testdatepicker">
+
+        </div>
         
         <div class=<%=sortableClass%>>
       	  <%= f.fields_for :itinerary_infos, :html => {:class => "form-horizontal"}  do |i| %>

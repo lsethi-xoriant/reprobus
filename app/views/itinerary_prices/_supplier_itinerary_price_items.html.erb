@@ -36,28 +36,40 @@
           <div class="field col s12">
             <% if f.object.id && f.object.try(:supplier).try(:email) %>
               <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" >
-                View Quote Request
+                View Quote
               </a>
               <a
                 id="EmailQuoteBtn"
                 class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
                 data-delay="50"
-                href=<%="#email_quote_modal_#{f.object.id}"%>>
+                href=<%="#supplier_quote_request_modal_#{f.object.id}"%>>
   
-                Email Quote Request
+                Email Quote
               </a>
               <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, confirmed: true, format: :pdf) %>"
                 class="waves-effect waves-light btn deep-purple darken-1"
                 data-delay="50">
   
-                View Confirmation
+                View Request
               </a>
               <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
                 data-delay="50"
-                href=<%="#email_confirmed_quote_modal_#{f.object.id}"%>>
+                href=<%="#supplier_booking_request_modal_#{f.object.id}"%>>
   
-                Email Confirmation
+                Email Request
               </a>
+              <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, check: true, format: :pdf) %>"
+                class="waves-effect waves-light btn deep-purple darken-1"
+                data-delay="50">
+  
+                View Check
+              </a>
+              <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
+                data-delay="50"
+                href=<%="#supplier_booking_check_modal_#{f.object.id}"%>>
+  
+                Email Check
+              </a>              
             <% end %>
           </div>
         </div>        

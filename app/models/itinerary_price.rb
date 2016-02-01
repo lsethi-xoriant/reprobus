@@ -190,16 +190,16 @@ class ItineraryPrice < ActiveRecord::Base
     self.supplier_itinerary_price_items.sum(:price_total)
   end
   
-  def get_total_supplier_sell_total
+  def get_supplier_total_exchange_rate_total
     self.supplier_itinerary_price_items.sum(:exchange_rate_total)
   end
   
-  def get_total_incl_supplier_markup
+  def get_total_sell_price
     self.supplier_itinerary_price_items.sum(:total_incl_markup)
   end
   
-  def get_total_supplier_profit
-    return get_total_incl_supplier_markup - get_total_supplier_sell_total
+  def get_total_profit
+    return get_total_sell_price - self.sale_total
   end
 
   def get_total_payments_amount

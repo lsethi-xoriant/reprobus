@@ -1,5 +1,5 @@
 class SupplierRenderService
-  def self.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, flight_details)
+  def self.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, check, flight_details)
     locals = { 
                 :@itinerary_price_item => itinerary_price_item,
                 :@itinerary_price      => itinerary_price,
@@ -7,6 +7,7 @@ class SupplierRenderService
                 :@itinerary            => itinerary,
                 :@itinerary_infos      => itinerary_infos,
                 :@confirmed            => confirmed,
+                :@check                 => check,
                 :@flight_details       => flight_details
               }
 

@@ -9,8 +9,8 @@
 
 .bodWrap { -webkit-print-color-adjust:exact;}
 
-.header { min-height:272px; position:relative;}
-.logo { position:absolute; right:22px; top:0;} .clear100 { clear:both; height:100px;} .clear50 { clear:both; height:30px;} .clear45 { clear:both; height:45px;}
+.header { min-height:220px; position:relative;}
+.logo { position:absolute; right:22px; top:0; width:300px;} .clear100 { clear:both; height:100px;} .clear50 { clear:both; height:50px;} .clear45 { clear:both; height:45px;} .clear25 { clear:both; height:25px;}
 .clear90 { clear:both; height:90px;} .clear75 { clear:both; height:75px;} .clear60 { clear:both; height:60px;} .clear155 { clear:both; height:155px;}
 
 .bigBigtitle1 { color:#9cbd52; font-size:55px; line-height:30px; font-family: 'Raleway'; font-weight: 400;}
@@ -33,15 +33,15 @@ table {
   border-spacing: 0;
   width: 100%;
   display: table;
-  border: 1px solid #ddd;
+  border: 0.3px solid #ddd;
 }
 
 td {
-  border: 1px solid #ddd;
+  border: 0.3px solid #ddd;
   padding: 4px;
   line-height: 1.42857143;
   vertical-align: top;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 </style>
@@ -52,24 +52,28 @@ td {
 <meta charset='utf-8' />
 
 <% confirmed = !!defined?(@confirmed) ? @confirmed : params[:confirmed].presence %>
+<% check = !!defined?(@check) ? @check : params[:check].presence %>
 
 <body>
 <div class="bodyWrap">
 
   <div class="header">
-    <a class="logo" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
+    <a class="imgdetails" href="#"><%= image_tag(@itinerary.get_company_logo_image_link, :class => "") %></a>
   </div>
 
-  <p><h3>Dear <%= @supplier.supplier_name %>,</h3></p>
-  <p><h3>
-    <% if confirmed %>
-      Please confirm the following services for booking number 
+  <p><h4>Dear <%= @supplier.supplier_name %>,</h4></p>
+  <div class="clear25"></div>
+  <p>
+    <% if check %>
+      Our clients are soon to depart, can you please check the following service match your confirmation for booking number <%= @itinerary.nice_id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>. <strong>If there are any discrepancies please notify us immediately:<strong>
+    <% elsif confirmed %>
+      Please confirm the following services for booking number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:
     <% else %>
-      Please quote the following services for quote number 
+      Please quote the following services for quote number <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:
     <% end %>
-    <%= @itinerary.id %> and <%= @itinerary.try(:lead_customer).try(:last_name) %>:
-  </h3></p>
-  
+  </p>
+  <div class="clear25"></div>
+  <p><h4>Product details:</h4></p>
   <table>
     <thead>
       <tr>
@@ -109,8 +113,8 @@ td {
   </table>
   <br>
 
-  <p><h3>Customer details:</h3></p>
-  <% if confirmed %>
+  <p><h4>Customer details:</h4></p>
+  <% if confirmed || check %>
     <table>
       <thead>
         <tr>
@@ -120,8 +124,8 @@ td {
           <td>Expiry Date</td>
           <td>Date of Birth</td>
           <td>Dietary Requirement</td>
-          <td>Medical: Gluten Free</td>
-          <td>Travel Insurance Details</td>
+          <td>Medical</td>
+          <td>Travel Insurance</td>
         </tr>
       </thead>
       <% @itinerary.customers.each do |customer| %>
@@ -144,9 +148,9 @@ td {
     <% end %>
   <% end %>
 
-  <% if confirmed %>
-    <br>
-    <p><h3>Flight details:</h3></p>
+  <% if confirmed || check %>
+    <p><h4>Flight details:</h4></p>
+    <% if check %> <strong>These will have likely changed:</strong> <% end %>
     <%= @flight_details.try(:html_safe) %>
   <% end %>
 

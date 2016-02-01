@@ -36,7 +36,7 @@ class Reports::ConfirmedBookingController < ApplicationController
         'Booking Start Date' => 'try(:itinerary).try(:start_date)',
         'Consultant'    => 'try(:itinerary).try(:user).try(:name)',
         'Sale Value'    => 'try(:sale_total).try(:to_s)',
-        'Profit amount' => 'try(:get_total_supplier_profit)',
+        'Profit amount' => 'try(:get_total_profit)',
         'Agent'         => 'try(:itinerary).try(:agent).try(:supplier_name)',
         'Confirmed Itinerary Sent' => 
           "try(:itinerary).try(:confirmed_itinerary_sent) ? 'Y' : 'N'"

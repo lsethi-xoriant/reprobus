@@ -3,7 +3,7 @@
     <%= f.date_field field.to_sym, class: local_assigns.has_key?(:wide_range) ? 'datepicker-wide-range' : 'datepicker', :"data-value" => value %>
     <% active = " active" if value %>
   <% else %>
-    <%= f.date_field field.to_sym, class: local_assigns.has_key?(:wide_range) ? 'datepicker-wide-range' : 'datepicker' %>
+    <%= f.date_field field.to_sym, class: local_assigns.has_key?(:wide_range) ? 'datepicker-wide-range' : 'datepicker', :"data-value" => f.object.try(field.to_sym) %>
   <% end %>
   
   <% if local_assigns.has_key? :name %>

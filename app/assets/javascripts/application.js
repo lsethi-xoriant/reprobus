@@ -10,7 +10,9 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//
 // IF = it is included...
+// note: select2.min and date are in vendor/assets/
 //
 //= require jquery
 //= require jquery.turbolinks
@@ -22,7 +24,8 @@
 //= require nprogress-turbolinks
 //= require nprogress-ajax
 //= require cocoon
-//= require select2.min
+//= require select2.min  
+//= require date          
 //= require ckeditor/init
 //= require_tree .
 //= require turbolinks

@@ -17,7 +17,7 @@
           <td><%= it_price.try(:itinerary).try(:start_date) %></td>
           <td><%= it_price.try(:itinerary).try(:user).try(:name) %></td>
           <td><%= it_price.try(:sale_total).try(:to_s) %></td>
-          <td><%= it_price.try(:get_total_supplier_profit) %></td>
+          <td><%= it_price.try(:get_total_profit) %></td>
           <td><%= it_price.try(:itinerary).try(:agent).try(:supplier_name) %></td>
           <td><%= it_price.try(:itinerary).try(:confirmed_itinerary_sent) ? 'Y' : 'N' %>
         </tr>

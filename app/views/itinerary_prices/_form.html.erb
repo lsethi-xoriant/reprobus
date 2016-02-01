@@ -174,9 +174,9 @@
               </div>  
               <strong>
               <%= render partial: 'shared/material_readonly', locals: { col: "offset-s3 s1", label: "Sale Total $", value: number_with_precision(@itinerary_price.get_total_supplier_price,precision: 2), class_for_input: "grand_supplier_total blue-text text-darken-4" } %>
-              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} total $", value: number_with_precision(@itinerary_price.get_total_supplier_sell_total,precision: 2), class_for_input: "grand_supplier_sell_total blue-text text-darken-4" } %>
-              <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s1", label: "Sell Price $", value: number_with_precision(@itinerary_price.get_total_incl_supplier_markup,precision: 2), class_for_input: "grand_incl_markup_total blue-text text-darken-4" } %>
-              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Profit $", value: number_with_precision(@itinerary_price.get_total_supplier_profit,precision: 2), class_for_input: "grand_profit_total green-text" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "#{@setting.currencyCode} total $", value: number_with_precision(@itinerary_price.get_supplier_total_exchange_rate_total,precision: 2), class_for_input: "grand_supplier_sell_total blue-text text-darken-4" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s1", label: "Sell Price $", value: number_with_precision(@itinerary_price.get_total_sell_price,precision: 2), class_for_input: "grand_incl_markup_total blue-text text-darken-4" } %>
+              <%= render partial: 'shared/material_readonly', locals: { col: "s1", label: "Profit $", value: number_with_precision(@itinerary_price.get_total_profit,precision: 2), class_for_input: "grand_profit_total green-text" } %>
               </strong>                
              
             </div>
@@ -231,6 +231,7 @@
   <% if item.id && item.try(:supplier).try(:email) %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id } %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id, confirmed: true } %>
+    <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id, check: true } %>
     <!-- <%= render partial: 'flight_details_modal', locals: { itinerary_price_item_id: item.id } %> -->
   <% end %>
 <% end %>

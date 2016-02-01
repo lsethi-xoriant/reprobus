@@ -34,7 +34,7 @@ class Reports::UnpaidInvoiceController < ApplicationController
         'Booking Start Date' => 'try(:itinerary).try(:start_date)',
         'Consultant'    => 'try(:itinerary).try(:user).try(:name)',
         'Sale Value'    => 'try(:sale_total).try(:to_s)',
-        'Profit amount' => 'try(:get_total_supplier_profit)',
+        'Profit amount' => 'try(:get_total_profit)',
         'Agent'         => 'try(:itinerary).try(:agent).try(:supplier_name)'
       }
     end

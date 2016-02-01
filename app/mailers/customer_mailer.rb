@@ -58,9 +58,10 @@ class CustomerMailer < ActionMailer::Base
     BookingHistoryService.record_interaction(attachments, type, params)
   end
 
-  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed=false, params)
+  def send_email_supplier_quote(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed=false, check=false, params)
     @body = params[:body]
-    @confirmed = confirmed
+    @confirmed = confirmed || check
+    @check = check
     @itinerary = itinerary
     params[:id] = @itinerary.id
 
@@ -68,7 +69,14 @@ class CustomerMailer < ActionMailer::Base
     flight_details = bulk_action ? params["flight_details_1"] : params["flight_details_#{itinerary_price_item.id}"]
 
     include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
-    name = confirmed ? "#{supplier.try(:supplier_name)} booking request #{itinerary.id} / #{itinerary.try(:lead_customer).try(:last_name)}" : "Supplier Quote"
+    
+    #  e.g. Blumar quote request (quote no / Surname)
+    #  e.g. Blumar booking request (booking no / Surname)
+    #  e.g. Blumar booking final check prior to travel (booking no / Surname)
+  
+    reportname = confirmed ? "booking request" : "quote request"
+    reportname = check ? "booking final check prior to travel" : reportname
+    emailSubject = "#{supplier.try(:supplier_name)} #{reportname} #{itinerary.id} / #{itinerary.try(:lead_customer).try(:last_name)}"
     type = confirmed ? :confirmed_supplier : :supplier_quote
 
     mail(
@@ -76,12 +84,12 @@ class CustomerMailer < ActionMailer::Base
       reply_to: params[:from_email],
       to: params[:to_email],
       cc: include_cc ? params[:cc_email] : '',
-      subject: name) do |format|
+      subject: emailSubject) do |format|
         format.html { render layout: false }
         format.pdf do
           if params[:type] == 'PDF'
             attachments['supplier.pdf'] = 
-              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, flight_details)
+              SupplierRenderService.as_pdf(itinerary, itinerary_price, itinerary_price_item, itinerary_infos, supplier, confirmed, check, flight_details)
           end
         end
       end

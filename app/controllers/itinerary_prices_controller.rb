@@ -211,10 +211,11 @@ class ItineraryPricesController < ApplicationController
                         .itinerary_infos
                         .select { |info| info.supplier_id == @supplier.id }
     confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
+    check = params[:check].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:check]) : false
 
     if CustomerMailer.send_email_supplier_quote(
       @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, 
-      @supplier, confirmed, params[:email_settings]).deliver_later
+      @supplier, confirmed, check, params[:email_settings]).deliver_later
 
       confirmed_name = confirmed ? 'Confirmed' : ''
       flash[:success] = "#{confirmed_name} Supplier Quote has been sent."
@@ -229,6 +230,7 @@ class ItineraryPricesController < ApplicationController
     @itinerary = Itinerary.find(params[:itinerary_id])
     @itinerary_price = @itinerary.itinerary_price
     confirmed = params[:confirmed].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:confirmed]) : false
+    check = params[:check].presence ? ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:check]) : false
 
     @itinerary_price_item_ids = params[:itinerary_price_item_ids]
                                   .split(",")
@@ -243,7 +245,7 @@ class ItineraryPricesController < ApplicationController
                           .select { |info| info.supplier_id == @supplier.id }
 
       CustomerMailer.send_email_supplier_quote(
-        @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, params[:email_settings]).deliver_later
+        @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, check, params[:email_settings]).deliver_later
     end
 
     flash[:success] = "Emails has been sent."

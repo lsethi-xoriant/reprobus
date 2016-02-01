@@ -1,3 +1,35 @@
+.sort_itinerary_item_col{
+  margin-top: 0px;
+  
+}
+
+.itinerary-infos-action-buttons {
+  display: none;
+}
+
+.itinerary-info-checkbox {
+  top: 42px;
+  left: 53px;
+  position: absolute;
+  margin-top: 15px;
+}
+
+.itinerary-info-position-select {
+  width: 40px !important;
+  float: right;
+  margin-top: -10px;
+}
+
+.itinerary-info-margin {
+  margin-right: 5px !important;
+}
+
+.itineraryCommentNotification {
+    font-size: 1.2rem;
+    margin-left: 5px;
+    line-height: 2em;
+}
+
 .itinerary_group_clasification_label{
   top:40px !important;
   font-size:0.8em !important;
@@ -6,3 +38,53 @@
 }
 
 .sort_itinerary_item_col{ cursor: pointer; cursor: hand; }
+
+
+.openCalendar{
+    padding: 0rem !important; 
+    padding-top: 5px;
+}
+
+/* itinerary form shrink font to get in box*/
+.itinerary_leg_datepicker {
+  font-size: 0.9em !important;
+  line-height: 52px;
+  width: 75% !important;
+}
+
+.no-padding-for-dates{
+  padding-right: 0.1em !important;
+  padding-left: 0.1em !important;
+}
+
+/* Sortable js plugin.... */
+.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.sortable-placeholder.miniplaceholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.sortable {
+  display: list-item;
+  list-style-type: none;
+}
+
+.iti_postion_number{
+  padding-left: 10px;
+  margin-top: 0px;
+}
+
+.itinerary-infos {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

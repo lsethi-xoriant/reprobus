@@ -22,7 +22,51 @@ $(document).ready(function() {
     $('.add_fields').click();
   });
 
-    
+ $('.start_leg_itinerary, .end_leg_itinerary').on({
+    blur: function() {
+      var parsedDate = Date.parse( this.value );
+      if ( parsedDate ) {
+        //$(this).removeClass("invalid");
+        }
+      else 
+        {$(this).addClass("invalid"); }
+    }
+ });
+
+$('.openCalendar').on('click', function(e) {
+  var parsedDate = Date.parse($(this).closest('.input-field').find('.itinerary_leg_datepicker').val());
+  
+  // init picker
+  $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate({
+    editable: true,
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 5, // Creates a dropdown of 15 years to control year
+    formatSubmit: 'dd/mm/yyyy',
+    format: 'dd/mm/yyyy',
+    hiddenSuffix: '', 
+  });  
+  
+  // set date on picker
+  var picker = $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate('picker');
+  if ( parsedDate ) {
+    //alert('ok' + parsedDate);
+    picker.set( 'select', [parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate()] );
+    //$(this).removeClass("invalid");
+  } else {
+    $(this).addClass("invalid");
+  }
+  
+  // now open picker
+  if (picker.get('open')) { 
+    picker.close();
+  } else {
+    picker.open();
+  }
+  
+  e.stopPropagation();   
+});
+
+
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
 
@@ -187,11 +231,9 @@ console.log("newdate after add : " +  current_date);
 
     insertedItem.find('.start_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
     insertedItem.find('.end_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
-
-console.log($(insertedItem).prevAll("nested-fields:first"));
   
   });
-  
+
 
   $(".itinerary_form").submit(function(e) {
     var valerror = false;
@@ -200,6 +242,7 @@ console.log($(insertedItem).prevAll("nested-fields:first"));
     var i = 0;
     
     $(".itinerary-number-days").each(function() {
+    // Note: Itinerary Template screen only. 
       i = i + 1;
       var numdays = $(this).val();
       $(this).removeClass("invalid");
@@ -211,6 +254,7 @@ console.log($(insertedItem).prevAll("nested-fields:first"));
     });
     
     $(".itinerary-days-from-start").each(function() {
+    // Note: Itinerary Template screen only. 
       i = i + 1;
       var numdays = $(this).val();
       $(this).removeClass("invalid");
@@ -278,6 +322,7 @@ function sort_itinerary_items(){
   // call sortable on our div with the sortable class
   $('.sortable').sortable({
     items: '.sortable-item',
+    handle: '.sort_itinerary_item_col'
     // items: ':not(.nosort)'  - this was for testing grouping items. 
   });
 }
@@ -374,6 +419,7 @@ function reset_material_active_labels(container_id) {
 }
 
 function check_dates_are_in_seq(){ 
+// Note: Itinerary Template screen only. 
   var prevSeq = 0;
   var isOutOfSeq = false;
   $('.itinerary-days-from-start').each(function(){
@@ -385,6 +431,7 @@ function check_dates_are_in_seq(){
 }
 
 function check_days_from_start_seq(){ 
+// Note: Itinerary Template screen only. 
   var isOutOfSeq = false;
   var prevNumNights = 0, prevDaysFromStart = 0, days_from_start = 0;
   $('.itinerary-days-from-start').each(function(){

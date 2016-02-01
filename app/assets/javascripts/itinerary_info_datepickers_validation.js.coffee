@@ -25,7 +25,7 @@ class @ItineraryInfosDatesValidator
 
   # compare with start date
   validateCurrentIsAfterStart: (current_element, current_element_date, index) =>
-    if current_element_date < @itinerary_start_date
+    if Date.parse(current_element_date) < Date.parse(@itinerary_start_date)
       @validationFailed(current_element)
 
   # compare with previous element
@@ -33,7 +33,7 @@ class @ItineraryInfosDatesValidator
     if (index > 0)
       previous_element = @start_dates.eq(index - 1)
       previous_element_date = previous_element.prop('value')
-      if current_element_date < previous_element_date
+      if Date.parse(current_element_date) < Date.parse(previous_element_date)
         @validationFailed(current_element)
 
   # compare with end_date
@@ -42,7 +42,7 @@ class @ItineraryInfosDatesValidator
     end_date_element = $(end_date_id)
     end_date_element.removeClass('invalid')
     end_date_date = end_date_element.prop('value')
-    if current_element_date > end_date_date
+    if Date.parse(current_element_date) > Date.parse(end_date_date)
       @validationFailed(end_date_element)
 
   # what to do if validation fails
