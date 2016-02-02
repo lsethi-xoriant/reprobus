@@ -20,4 +20,14 @@ class UserMailer < ActionMailer::Base
       mail(to: @user.email, subject: "Welcome!", from: "donotreply@superapp.com")
     end
   end
+
+  def send_customer_updated_notification(customer)
+    @user = customer.who_requested_update
+    @customer = customer
+    if !Setting.global_settings.send_emails_turned_off
+      mail(to: @user.email, 
+           subject: 'Customer updated profile',
+           from: "donotreply@superapp.com")
+    end
+  end
 end
