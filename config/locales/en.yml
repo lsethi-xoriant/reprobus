@@ -29,6 +29,7 @@ en:
       enquiry:
         num_people: "Number of People"
         name: "Enquiry Name"
+        activities: "Note"
       setting:
         cc_mastercard: "Mastercard % fee"
         cc_visa: "Visa % fee"
