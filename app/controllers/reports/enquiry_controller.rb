@@ -37,7 +37,7 @@ class Reports::EnquiryController < ApplicationController
         'Quote'                 => '(itineraries.any? ? "Y" : "N")',
         'Booking'               => '(try(:itineraries).map(&:itinerary_price).compact.any? ? "Y" : "N")',
         'Adv. campaign'         => '',
-        'Destination'           => 'try(:destination).try(:name)',
+        'Country'               => 'try(:country).try(:name)'
       }
     end
 

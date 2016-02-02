@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127131417) do
+ActiveRecord::Schema.define(version: 20160202131147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,19 +101,19 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.integer  "lead_id"
     t.integer  "assigned_to"
     t.integer  "reports_to"
-    t.string   "first_name",                 limit: 64,  default: "",    null: false
-    t.string   "last_name",                  limit: 64,  default: "",    null: false
-    t.string   "title",                      limit: 64
-    t.string   "source",                     limit: 32
-    t.string   "email",                      limit: 64
-    t.string   "alt_email",                  limit: 64
-    t.string   "phone",                      limit: 255
-    t.string   "alt_phone",                  limit: 32
-    t.string   "fax",                        limit: 32
-    t.string   "blog",                       limit: 128
-    t.string   "linkedin",                   limit: 128
-    t.string   "facebook",                   limit: 128
-    t.string   "twitter",                    limit: 128
+    t.string   "first_name",                   limit: 64,  default: "",    null: false
+    t.string   "last_name",                    limit: 64,  default: "",    null: false
+    t.string   "title",                        limit: 64
+    t.string   "source",                       limit: 32
+    t.string   "email",                        limit: 64
+    t.string   "alt_email",                    limit: 64
+    t.string   "phone",                        limit: 255
+    t.string   "alt_phone",                    limit: 32
+    t.string   "fax",                          limit: 32
+    t.string   "blog",                         limit: 128
+    t.string   "linkedin",                     limit: 128
+    t.string   "facebook",                     limit: 128
+    t.string   "twitter",                      limit: 128
     t.date     "born_on"
     t.boolean  "do_not_call",                              default: false, null: false
     t.datetime "deleted_at"
@@ -253,9 +253,9 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
-    t.integer  "destination_id"
     t.text     "campaign"
     t.date     "dismissed_until"
+    t.integer  "country_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree

@@ -55,7 +55,7 @@ class ReportService
     search_params[:assigned_to] = assigned_to if assigned_to.presence
 
     results = Enquiry
-              .includes(:destination, itineraries: [:itinerary_price])
+              .includes(:country, itineraries: [:itinerary_price])
               .where(search_params)
   end
 

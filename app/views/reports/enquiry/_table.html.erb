@@ -12,7 +12,7 @@
         <th>Quote</th>
         <th>Booking</th>
         <th>Adv. campaign</th>
-        <th>Destination</th>
+        <th>Country</th>
       </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
           <td><%= enq.itineraries.any? ? "Y" : "N" %></td>
           <td><%= enq.try(:itineraries).map(&:itinerary_price).compact.any? ? "Y" : "N" %></td>
           <td></td>
-          <td><%= enq.try(:destination).try(:name) %></td>
+          <td><%= enq.try(:country).try(:name) %></td>
         </tr>
       <% end %>
     </tbody>

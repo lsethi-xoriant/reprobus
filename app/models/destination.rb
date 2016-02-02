@@ -13,7 +13,6 @@
 class Destination < Admin
   validates :name, presence: true, length: { maximum: 255 }
    
-  has_and_belongs_to_many :enquiries
   belongs_to :country
 
   belongs_to :default_image, :class_name => "ImageHolder", :foreign_key => :default_image_id

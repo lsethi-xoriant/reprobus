@@ -102,7 +102,7 @@ $(document).ready(function() {
       $('.lead-customer-check').not(this).prop('checked', false);
   });
 
-  $('.select2-enquiry-destinations').select2();
+  $('.select2-enquiry-countries').select2();
 
 });
 
