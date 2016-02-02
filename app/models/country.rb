@@ -13,6 +13,8 @@
 
 class Country < Admin
   validates :name, presence: true, length: { maximum: 255 }
+
+  has_and_belongs_to_many :enquiries
   
   has_many :destinations
   has_many :products

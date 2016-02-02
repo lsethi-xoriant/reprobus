@@ -183,7 +183,7 @@ class EnquiriesController < ApplicationController
   end
 
 
-  def destinationsearch
+  def countrysearch
     @entities = Destination.select([:id, :name]).
                             where("name ILIKE :q", q: "%#{params[:q]}%").
                             order('name')
@@ -202,7 +202,7 @@ private
       params.require(:enquiry).permit(:id, :name, :source, :stage, :agent_id,
         :probability, :amount, :discount, :closes_on, :background_info, :user_id,
         :assigned_to, :num_people, :duration, :est_date, :percent, :campaign,
-        :fin_date, :standard, :insurance, :reminder, :destination_id,
+        :fin_date, :standard, :insurance, :reminder, :country_id,
         customers_attributes: [:id, :first_name, :last_name, :email, :phone, :alt_phone, :title, :lead_customer, :_destroy], 
         activities_attributes: [:id, :enquiry_id, :description, :type, :user_id, :_destroy] )
     end

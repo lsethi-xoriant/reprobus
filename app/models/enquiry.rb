@@ -49,10 +49,10 @@ class Enquiry < ActiveRecord::Base
 #  validate :check_lead_customer_has_phone_email
 
   has_and_belongs_to_many  :carriers
-  has_and_belongs_to_many  :destinations
+  has_and_belongs_to_many  :countries
   has_and_belongs_to_many  :stopovers
 
-  belongs_to :destination
+  belongs_to :country
   
   serialize :xpayments
 

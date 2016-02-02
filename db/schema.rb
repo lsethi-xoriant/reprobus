@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127131417) do
+ActiveRecord::Schema.define(version: 20160202131147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.text     "type"
+    t.string   "type",        limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.string   "email",                        limit: 64
     t.string   "alt_email",                    limit: 64
     t.string   "phone",                        limit: 255
-    t.string   "mobile",                       limit: 32
+    t.string   "alt_phone",                    limit: 32
     t.string   "fax",                          limit: 32
     t.string   "blog",                         limit: 128
     t.string   "linkedin",                     limit: 128
@@ -253,9 +253,9 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
-    t.integer  "destination_id"
     t.text     "campaign"
     t.date     "dismissed_until"
+    t.integer  "country_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
@@ -498,8 +498,6 @@ ActiveRecord::Schema.define(version: 20160127131417) do
   create_table "products", force: :cascade do |t|
     t.string   "type"
     t.string   "name"
-    t.string   "country_search"
-    t.string   "destination_search"
     t.text     "description"
     t.decimal  "price_single",         precision: 12, scale: 2
     t.decimal  "price_double",         precision: 12, scale: 2
@@ -513,6 +511,8 @@ ActiveRecord::Schema.define(version: 20160127131417) do
     t.string   "image"
     t.integer  "country_id"
     t.integer  "destination_id"
+    t.string   "country_search"
+    t.string   "destination_search"
     t.string   "image_remote_url"
     t.integer  "hotel_id"
     t.text     "address"
