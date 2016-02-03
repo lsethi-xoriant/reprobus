@@ -1,0 +1,32 @@
+<% provide(:title, 'Open Enquiries') %>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <table class="responsive-table display">
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= render partial: 'open_enquiry', collection: @open_enquiries %>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Dismiss Until Modal -->
+<%= render partial: 'dismiss_until_modal' %>
+<!-- Lost Modal -->
+<%= render partial: 'lost_modal' %>

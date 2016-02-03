@@ -65,9 +65,11 @@
   </div>  
 </div>
 
+<a href="<%= edit_itinerary_path @itinerary %>"  class="waves-effect waves-light btn left deep-purple darken-1" >Back to Itinerary</a>
+
 <!-- Modal for bulk emailing -->
 <%= render partial: 'itinerary_prices/emailQuote_modal', locals: { itinerary_price_item_id: itinerary_price_item_id, bulk_action: true } %>
 <!-- Email for confirmed bulk emailing -->
 <%= render partial: 'itinerary_prices/emailQuote_modal', locals: { itinerary_price_item_id: itinerary_price_item_id, bulk_action: true, confirmed: true } %>
-
+<!-- Email for check bulk emailing -->
 <%= render partial: 'itinerary_prices/emailQuote_modal', locals: { itinerary_price_item_id: itinerary_price_item_id, bulk_action: true, check: true } %>

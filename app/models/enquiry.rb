@@ -55,6 +55,12 @@ class Enquiry < ActiveRecord::Base
   belongs_to :destination
   
   serialize :xpayments
+
+  scope :open_enquiries, -> (assignee) { 
+    where(assignee: assignee)
+    .where(stage: ['New Enquiry', 'In Progress', 'Long Term'])
+    .where("dismissed_until <= :date OR dismissed_until IS NULL", date: Date.today)
+  }
   
   scope :new_enquirires, -> { where(stage: 'New Enquiry') }
   scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}

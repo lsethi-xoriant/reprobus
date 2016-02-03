@@ -4,7 +4,37 @@ $(document).ready(function() {
   
   itinerary_common_controls_init();  
 
-  $(".select2-room-types-noajax").select2();  
+  $(".select2-room-types-noajax").select2();
+
+  if (window.location.pathname.match(/\/itineraries\/\d+\/edit/)) {
+
+    // fill range feature for itenerary infos on edit Itinerary page
+    $(document).on('click', '#fill-range-itinerary-infos', function(event) {
+      // all checkboxes on page
+      checkboxes_array = $('.itinerary-info-checkbox .muli-select-itinerary');
+
+      // indexes of checked checkboxes
+      indexes = $.map(checkboxes_array, function(cb, index) {
+        if(cb.checked == true) { return index; };
+      });
+
+      if (indexes.length >= 2) {
+        first_index = indexes[0];
+        last_index = indexes.pop();
+
+        // leave checkboxes between first and last checked
+        checkboxes_array = checkboxes_array.slice(first_index, last_index+1);
+
+        // check each checkbox in range
+        checkboxes_array.each(function(index) {
+          if ((index >= first_index) && (index <= last_index)) {
+            this.checked = true;
+          };
+        });
+      };
+    });
+
+  };
   
   // set up insert function on both pages, so can insert rows where we decide
   $("#itinerary_infos a.add_fields").

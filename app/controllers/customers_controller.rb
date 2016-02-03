@@ -48,6 +48,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find_by(public_edit_token: params[:auth_key]) if params[:auth_key].presence
     if @customer && @customer.try(:public_edit_token_expiry).try(:to_date) >= Date.today
       if @customer.update_attributes(customer_params)
+        UserMailer.send_customer_updated_notification(@customer).deliver_later
         flash[:success] = "Your profile was successfully updated."
       else
         flash[:error] = "Some problems occured while updating. Please, try again."

@@ -1,11 +1,11 @@
 $(document).on 'keyup', "[id^=enquiry_customers_attributes_][id$=_last_name]", (e) ->
   last_name = e.target.value
+  $('table.tableSection > tbody > tr').remove()
   if last_name.length > 2
     $.ajax(
       url: '/searches/similar_last_names'
       data: { q: last_name }
       context: document.body).done (response) ->
-        $('table.tableSection > tbody > tr').remove()
         items = response.items
         if items.length > 0
           for i in items
@@ -19,5 +19,8 @@ $(document).on 'keyup', "[id^=enquiry_customers_attributes_][id$=_last_name]", (
                 <td>#{i.itineraries}</td>
               </tr>
             ")
+
+          # we have results, make table visible
+          $('#similar_last_name').css('display', 'block')
 
 

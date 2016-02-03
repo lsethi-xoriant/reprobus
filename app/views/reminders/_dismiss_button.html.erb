@@ -1,0 +1,11 @@
+<%= link_to 'Dismiss', 
+      dismiss_reminder_path(object,
+        dismiss_until: { 
+          type: object.class.name,
+          date: Date.tomorrow 
+        }
+      ), 
+      method: :post,
+      data: { tooltip: 'Dismiss'},
+      class: "input-field waves-effect waves-light btn deep-purple darken-1 tooltipped"
+%>
