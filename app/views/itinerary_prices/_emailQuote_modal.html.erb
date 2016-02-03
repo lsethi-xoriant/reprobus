@@ -79,7 +79,11 @@
                     <%= c.label :flight_details, 'Flight details (mandatory field):' %>
                     <br>
                     <br>
-                    <%= c.cktext_area "flight_details_#{itinerary_price_item_id}" %>
+                    <% if confirmed %>
+                      <%= c.cktext_area "flight_details_#{itinerary_price_item_id}" %>
+                    <% else %>
+                      <%= c.cktext_area "check_flight_details_#{itinerary_price_item_id}" %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>

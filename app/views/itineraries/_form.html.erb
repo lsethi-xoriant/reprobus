@@ -91,10 +91,6 @@
         <% if !@itinerary.isLocked? %>
         <% sortableClass = "sortable" %>  
         <% end %>
-
-        <div class="#testdatepicker">
-
-        </div>
         
         <div class=<%=sortableClass%>>
       	  <%= f.fields_for :itinerary_infos, :html => {:class => "form-horizontal"}  do |i| %>

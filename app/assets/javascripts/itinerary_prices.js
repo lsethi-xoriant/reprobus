@@ -65,9 +65,12 @@ $(document).ready(function() {
       $(insertedItem).find('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 5, // Creates a dropdown of 15 years to control year
-        formatSubmit: 'dd/mm/yyyy',
+        formatSubmit: 'yyyy-mm-dd',
         format: 'dd/mm/yyyy',
-        hiddenSuffix: ''
+        hiddenSuffix: '',
+        onSet: function (e) {
+            if (e.select) {this.close();}
+        }
       });
       
       reset_material_active_labels('#itinerary_price_items');
@@ -156,18 +159,26 @@ $(document).on('click', '.supplier-show-hide-btn', function() {
 
 $(document).on('click', '#email_supplier_quote_OK', function(e) {
   e.preventDefault();
-  if (JSON.parse($(this)[0].dataset.confirmed) &&
-      CKEDITOR.instances["email_settings_flight_details_" + $(this)[0].dataset.id].getData().trim() == "") {
+  
+  if  (JSON.parse($(this)[0].dataset.confirmed) &&
+  CKEDITOR.instances["email_settings_flight_details_" + $(this)[0].dataset.id].getData().trim() == "") {
     Materialize.toast("Flight details can't be empty", 4000);
+    return;
   }
-  else {
-    formId = $(this).parents('form');
-    $('<input />').attr('type', 'hidden')
-      .attr('name', "itinerary_price_item_ids")
-      .attr('value', $("[name='itinerary_price_item_ids']:checked").map(function() { return this.id; }).get())
-      .appendTo(formId);
-    $(formId).submit();
-  }
+  if (JSON.parse($(this)[0].dataset.check) &&
+  CKEDITOR.instances["email_settings_check_flight_details_" + $(this)[0].dataset.id].getData().trim() == "") {
+    Materialize.toast("Flight details can't be empty", 4000);
+    return;
+  }  
+  
+  // else all ok
+  formId = $(this).parents('form');
+  $('<input />').attr('type', 'hidden')
+    .attr('name', "itinerary_price_item_ids")
+    .attr('value', $("[name='itinerary_price_item_ids']:checked").map(function() { return this.id; }).get())
+    .appendTo(formId);
+  $(formId).submit();
+  
 });
 
 function doPricingCalculationsCustomerTotals(e){

@@ -90,10 +90,14 @@ class EnquiriesController < ApplicationController
     end
 
     @enquiry.assignee = User.find(params[:assigned_to]) if params[:assigned_to].to_i > 0
-  
+
+    # on enquiry edit we are building a activity so to provide a note if one is entered. if there is no note, delete the build so we dont get a validation error or an empty note...
+    if params[:enquiry][:activities_attributes]["0"][:description] == "" 
+      params[:enquiry].delete(:activities_attributes)
+    end
+
     if @enquiry.update_attributes(enquiry_params)
     
-      
       undo_link = view_context.link_to("(Undo)",
       revert_version_path(@enquiry.versions.last), :method => :post)
       
@@ -105,6 +109,7 @@ class EnquiriesController < ApplicationController
         redirect_to edit_enquiry_path(@enquiry)
       end
     else
+      flash[:error] = "Validation errors"
       render 'edit'
     end
   end

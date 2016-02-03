@@ -25,11 +25,14 @@ $(document).ready(function() {
  $('.start_leg_itinerary, .end_leg_itinerary').on({
     blur: function() {
       var parsedDate = Date.parse( this.value );
+      var picker = $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate('picker');
       if ( parsedDate ) {
-        //$(this).removeClass("invalid");
-        }
-      else 
-        {$(this).addClass("invalid"); }
+        // need to set this if picker initalised as it keeps a hidden input field which will overwrite our standard text one. 
+        if (picker) {picker.set( 'select', [parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate()] );}
+      } else {
+        $(this).addClass("invalid"); 
+        if (picker) { picker.set( 'clear' );}
+      } 
     }
  });
 
@@ -44,6 +47,9 @@ $('.openCalendar').on('click', function(e) {
     formatSubmit: 'dd/mm/yyyy',
     format: 'dd/mm/yyyy',
     hiddenSuffix: '', 
+    onSet: function (e) {
+        if (e.select) {this.close();}
+    }
   });  
   
   // set date on picker
@@ -65,7 +71,6 @@ $('.openCalendar').on('click', function(e) {
   
   e.stopPropagation();   
 });
-
 
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
@@ -97,8 +102,8 @@ $('.openCalendar').on('click', function(e) {
   function bump_pickadate_date_to_new_date(picker,numdays, dateStr){
       // month is minus one as months are 0-11
       //var current_date = new Date(parseInt(dateStr.substring(0,4),10),parseInt(dateStr.substring(5,7),10)-1,parseInt(dateStr.substring(8,10),10));  
-console.log("datestr: " +  dateStr);      
-      var current_date = new Date(dateStr);
+console.log("datestr: " +  dateStr);    
+      var current_date = new Date.parse( dateStr ); 
 console.log("newdate: " +  current_date);      
       current_date.setDate(current_date.getDate() + parseInt(numdays,10));
       
@@ -106,7 +111,8 @@ console.log("newdate: " +  current_date);
       var month = ("0" + (current_date.getMonth() + 1)).slice(-2); 
       
 console.log("newdate after add : " +  current_date);        
-      var formatted_date = current_date.getFullYear()+"-"+(month)+"-"+(day) ;
+      //var formatted_date = current_date.getFullYear()+"-"+(month)+"-"+(day) ;
+      var formatted_date = (day)+"/"+(month)+"/"+current_date.getFullYear() ;
       $(picker).val(formatted_date);
       
       //picker.set('select', current_date);   - removed as dont want to use pickadate on this screen
@@ -129,10 +135,7 @@ console.log("newdate after add : " +  current_date);
   });  
   
   $("#toggleShowEditItinerary").on('click', function(e) {
-    //$('.itinerary_top_row_show').toggle();
-    //$('.itinerary_info_top_row_edit').toggle();
     $('.itinerary_info_bottom_row_edit').toggle();
- //   $(".sortable-placeholder").toggleClass("miniplaceholder");    - this doesnt work - need to find a way to update the DOM object as it is added. 
   });
   
   $("#saveItineraryFabBtn").on('click', function(e) {
@@ -342,8 +345,6 @@ function set_sort_positions_and_dates(){
     if ($(this).closest('.nested-fields').is(":visible")){int++; $(this).text(int);} //non visible will be marked for deletion
   });
   
-  recalcDates(); // does nothing at moment, as recalc dates switched off. 
-
   check_days_from_start_seq();
 }
 
@@ -559,13 +560,13 @@ Date.prototype.yyyymmdd = function() {
   return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
 }; 
 
-function recalcDates(){
+/*function recalcDates(){
     // if on itinerary page, need to recalc dates.
   if ($('#itinerary_start_date').length) {
   // NOT DOING THIS ANYMORE - no recalc of dates... is manual  
-  if (true) {
-    return;
-  }
+    if (true) {
+      return;
+    }
 console.log('NOOOOOOOOOOOOOOOOOO!!! - shouldnt be doing this ');  
     var start_$input = $('#itinerary_start_date').pickadate(),
          start_picker = start_$input.pickadate('picker');
@@ -624,7 +625,7 @@ console.log('NOOOOOOOOOOOOOOOOOO!!! - shouldnt be doing this ');
       }
     });
   }  
-}
+}*/
 
 
  

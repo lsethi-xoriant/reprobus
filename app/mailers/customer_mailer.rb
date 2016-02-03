@@ -66,8 +66,12 @@ class CustomerMailer < ActionMailer::Base
     params[:id] = @itinerary.id
 
     bulk_action = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:bulk_action])
-    flight_details = bulk_action ? params["flight_details_1"] : params["flight_details_#{itinerary_price_item.id}"]
-
+    if @check then 
+      flight_details = bulk_action ? params["check_flight_details_1"] : params["check_flight_details_#{itinerary_price_item.id}"]
+    else
+      flight_details = bulk_action ? params["flight_details_1"] : params["flight_details_#{itinerary_price_item.id}"]
+    end
+    
     include_cc = ActiveRecord::Type::Boolean.new.type_cast_from_user(params[:cc_email_send])
     
     #  e.g. Blumar quote request (quote no / Surname)
