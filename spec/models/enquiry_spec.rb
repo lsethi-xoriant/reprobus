@@ -33,6 +33,7 @@
 #  lead_customer_name :string
 #  destination_id     :integer
 #  campaign           :text
+#  dismissed_until    :date
 #
 
 require 'spec_helper'

@@ -2,11 +2,13 @@
 /*It relies on the sortable.js plug in, Coccoon gem hooks, and the select2 search products js    */
 $(document).ready(function() {
   
+  
   itinerary_common_controls_init();  
 
   $(".select2-room-types-noajax").select2();
 
   if (window.location.pathname.match(/\/itineraries\/\d+\/edit/)) {
+    var nextDateFromHolder= "";
 
     // fill range feature for itenerary infos on edit Itinerary page
     $(document).on('click', '#fill-range-itinerary-infos', function(event) {
@@ -45,11 +47,23 @@ $(document).ready(function() {
     data("association-insertion-method", 'before').
     data("association-insertion-node", '#addNestedAboveHere');
     
+  $('.add_fields').on('click', function(){
+    // Doing this because having trouble getting previous element when using the add_fields button at bottom of form. normal insert was ok. 
+    nextDateFromHolder = $('.sortable div.nested-fields:last').find('.start_leg_itinerary').val();
+  });
+    
+  $('.insertItineraryBtn').on('click', function(){
+    // Doing this because having trouble getting previous element when using the add_fields button at bottom of form. normal insert was ok. 
+    nextDateFromHolder = $(this).closest('.nested-fields').find('.start_leg_itinerary').val();
+  });
+  
+  
   // when click insert button, call cocoon insert btn.  
   $('.insertItineraryBtn').on('click', function(e) {
     // move div placeholder that determines where insert happens, then call click. 
     $(this).closest(".nested-fields").after($("#addNestedAboveHere").detach());
     $('.add_fields').click();
+    $('.links:first').before($("#addNestedAboveHere").detach()); // reset this so it is in the very end position again. 
   });
 
  $('.start_leg_itinerary, .end_leg_itinerary').on({
@@ -66,41 +80,7 @@ $(document).ready(function() {
     }
  });
 
-$('.openCalendar').on('click', function(e) {
-  var parsedDate = Date.parse($(this).closest('.input-field').find('.itinerary_leg_datepicker').val());
-  
-  // init picker
-  $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate({
-    editable: true,
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 5, // Creates a dropdown of 15 years to control year
-    formatSubmit: 'dd/mm/yyyy',
-    format: 'dd/mm/yyyy',
-    hiddenSuffix: '', 
-    onSet: function (e) {
-        if (e.select) {this.close();}
-    }
-  });  
-  
-  // set date on picker
-  var picker = $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate('picker');
-  if ( parsedDate ) {
-    //alert('ok' + parsedDate);
-    picker.set( 'select', [parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate()] );
-    //$(this).removeClass("invalid");
-  } else {
-    $(this).addClass("invalid");
-  }
-  
-  // now open picker
-  if (picker.get('open')) { 
-    picker.close();
-  } else {
-    picker.open();
-  }
-  
-  e.stopPropagation();   
-});
+  setUpCalendarPicker();
 
   $("#bump_dates_modal_button").on('click',function(){
     var bumpNumDays = $("#bump_days").val();
@@ -132,15 +112,12 @@ $('.openCalendar').on('click', function(e) {
   function bump_pickadate_date_to_new_date(picker,numdays, dateStr){
       // month is minus one as months are 0-11
       //var current_date = new Date(parseInt(dateStr.substring(0,4),10),parseInt(dateStr.substring(5,7),10)-1,parseInt(dateStr.substring(8,10),10));  
-console.log("datestr: " +  dateStr);    
       var current_date = new Date.parse( dateStr ); 
-console.log("newdate: " +  current_date);      
       current_date.setDate(current_date.getDate() + parseInt(numdays,10));
       
       var day = ("0" + current_date.getDate()).slice(-2);
       var month = ("0" + (current_date.getMonth() + 1)).slice(-2); 
       
-console.log("newdate after add : " +  current_date);        
       //var formatted_date = current_date.getFullYear()+"-"+(month)+"-"+(day) ;
       var formatted_date = (day)+"/"+(month)+"/"+current_date.getFullYear() ;
       $(picker).val(formatted_date);
@@ -262,9 +239,26 @@ console.log("newdate after add : " +  current_date);
     bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
 */
 
-    insertedItem.find('.start_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
-    insertedItem.find('.end_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
+
+   // insertedItem.find('.start_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
+    //insertedItem.find('.end_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
+    var ts = new Date().getTime();
+    insertedItem.find('.muli-select-itinerary').attr("id", "muli-select-itinerary"+ ts);
+    insertedItem.find('.muli-select-itinerary-label').attr("for", "muli-select-itinerary"+ ts);
+    
+    
+    insertedItem.find('.start_leg_itinerary').val(nextDateFromHolder);
+    insertedItem.find('.end_leg_itinerary').val(nextDateFromHolder);
+console.log(insertedItem)    ;
+console.log(insertedItem.prev('.nested-fields'))    ;
+console.log( $('#addNestedAboveHere').prev('.nested-fields').prev('.nested-fields')   );
+    setUpCalendarPicker();
   
+  });
+
+
+  $("#add_new_trip_detail").on('click', function(){
+    
   });
 
 
@@ -355,7 +349,7 @@ function sort_itinerary_items(){
   // call sortable on our div with the sortable class
   $('.sortable').sortable({
     items: '.sortable-item',
-    handle: '.sort_itinerary_item_col'
+    handle: '.sort_handle'
     // items: ':not(.nosort)'  - this was for testing grouping items. 
   });
 }
@@ -411,6 +405,7 @@ function itineraryForm_initialise_elements_after_insert(insertedItem){
     // move div placeholder that determines where insert happens, then call click. 
     $(this).closest(".nested-fields").after($("#addNestedAboveHere").detach());
     $('.add_fields').click();
+    $('links:first').before($("#addNestedAboveHere").detach()); // reset this so it is in the very end position again.     
   });  
 }
 
@@ -517,6 +512,10 @@ var checkedAll = false;
 $(document).on('click', '#select-all-itinerary-infos', function(e) {
   e.preventDefault();
   checkedAll = !checkedAll;
+  
+  if (!checkedAll ){$(this).html("Select All")}
+  if (checkedAll ){$(this).html("Deselect All")}
+  
   infosElements = $('.itinerary-info-checkbox .muli-select-itinerary');
   $.each(infosElements, function(index, entry) {
     entry.checked = checkedAll;
@@ -579,6 +578,44 @@ var updateItineraryInfosNumberSelect = function() {
   }
   $('.itinerary-info-position-select').html(s);
   $('select').not('.disabled').material_select();
+}
+
+
+function setUpCalendarPicker(){
+  
+  $('.openCalendar').on('click', function(e) {
+    var parsedDate = Date.parse($(this).closest('.input-field').find('.itinerary_leg_datepicker').val());
+    
+    // init picker
+    $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate({
+      editable: true,
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 5, // Creates a dropdown of 15 years to control year
+      formatSubmit: 'dd/mm/yyyy',
+      format: 'dd/mm/yyyy',
+      hiddenSuffix: '', 
+      onSet: function (e) {
+          if (e.select) {this.close();}
+      }
+    });  
+    
+    // set date on picker
+    var picker = $(this).closest('.input-field').find('.itinerary_leg_datepicker').pickadate('picker');
+    if ( parsedDate ) {
+      picker.set( 'select', [parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate()] );
+    } else {
+      $(this).addClass("invalid");
+    }
+    
+    // now open picker
+    if (picker.get('open')) { 
+      picker.close();
+    } else {
+      picker.open();
+    }
+    
+    e.stopPropagation();   
+  });
 }
 
 /*JS override on date. this is to get datepicker and calculating dates working properly */

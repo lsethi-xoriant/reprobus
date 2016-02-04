@@ -1,7 +1,7 @@
 <% if @itinerary.itinerary_price %>
    <%= link_to "Edit Pricing", {:controller => :itinerary_prices, :action => :edit, :id => @itinerary.itinerary_price.id},
-       {class: "input-field waves-effect waves-light btn right deep-purple darken-1"} %>
+       {class: "input-field waves-effect waves-light btn deep-purple darken-1"} %>
 <% else %>
    <%= link_to "Create Pricing", {:controller => :itinerary_prices, :action => :new, :itinerary_id => @itinerary.id},
-       {class: "input-field waves-effect waves-light btn right deep-purple darken-1"} %>
+       {class: "input-field waves-effect waves-light btn deep-purple darken-1"} %>
 <% end %>       

@@ -18,10 +18,7 @@
       
       <div class="row itinerary_info_bottom_row_edit" style="display:none">
         
-        <div class="">
-          <p>
-            <input type="checkbox" class="filled-in muli-select-itinerary" id="muli-select-<%=f.object.id  || f.object.object_id %>" />
-          </p>          
+        <div class="input-field col s1 offset-s6">
         </div>
         
         <%= render partial: 'itineraries/controls/comments', locals: {f: f, info: f.object} %>
@@ -41,7 +38,7 @@
           <% end %>
         </div>
         
-        <div class="input-field col s1 offset-s6">
+        <div class="input-field col s1 offset-s2">
           <% if !@itinerary || !@itinerary.isLocked? %>
             <%= link_to_remove_association  f, { class: "btn-floating btn-small waves-effect waves-light red right"} do %>
               <i class="mdi-content-clear"></i>
