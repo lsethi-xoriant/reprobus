@@ -6,6 +6,10 @@ class ReportService
     [from.to_date.beginning_of_day, to.to_date.end_of_day]
   end
 
+  def self.booking_profit_search(from, to, user=nil)
+    ItineraryPrice.all
+  end
+
   def self.booking_travel_search(from, to, user=nil, country=nil)
     results = 
         Itinerary.includes(:lead_customer, :agent, itinerary_infos: :product)

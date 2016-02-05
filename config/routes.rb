@@ -202,6 +202,7 @@ Reprobus::Application.routes.draw do
     resources :supplier, only: [:index]
     resources :destination, only: [:index]
     resources :unpaid_invoice, only: [:index]
+    resources :booking_profit, only: [:index]
   end
   
   post "emails/post"

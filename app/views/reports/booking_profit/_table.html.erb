@@ -1,0 +1,14 @@
+<div class="section">
+  <table class="responsive-table display">
+    <thead>
+      <tr>
+        <% @structure.keys.each do |th_name| %>
+          <th><%= th_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'reports/booking_profit/itinerary_price', collection: @itinerary_prices %>
+    </tbody>
+  </table>
+</div>
