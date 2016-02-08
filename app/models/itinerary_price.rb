@@ -59,7 +59,7 @@ class ItineraryPrice < ActiveRecord::Base
  
   def has_uninvoiced_supplier_items
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.invoice && price_item.supplier.email
+      if !price_item.invoice && !price_item.supplier.dummy_supplier
         return true
       end
     end
@@ -101,7 +101,7 @@ class ItineraryPrice < ActiveRecord::Base
     
     # create one invoice for each supplier price item that is not invoiced
     self.supplier_itinerary_price_items.each do |price_item|
-      if !price_item.invoice  && !price_item.supplier.email.nil?
+      if !price_item.invoice  && !price_item.supplier.dummy_supplier
         #find appropriate currency
         sup = price_item.supplier
         sup.currency ? currID = sup.currency_id : Setting.global_settings.currencyID

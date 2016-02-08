@@ -128,7 +128,7 @@ private
         :source, :email, :alt_email, :phone, :alt_phone, :issue_date, :expiry_date, :currency_id, :agent_commision_percentage,
         :place_of_issue, :passport_num, :insurance, :gender, :born_on, :supplier_name, :after_hours_phone,
         :quote_introduction, :confirmed_introduction, :nationality,
-        :medical_information, :dietary_requirements,
+        :medical_information, :dietary_requirements, :dummy_supplier,
         :emergency_contact_phone, :emergency_contact, :frequent_flyer_details,
         trigger_attributes: [:email_template_id], company_logo_attributes: [:id, :image_local, :image_remote_url],
         address_attributes: [:street1, :street2, :city, :state, 

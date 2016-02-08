@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20160208082320) do
     t.integer  "setting_id"
     t.text     "quote_introduction"
     t.text     "confirmed_introduction"
-    t.string   "nationality"
     t.string   "public_edit_token"
     t.date     "public_edit_token_expiry"
     t.text     "frequent_flyer_details"
@@ -147,8 +146,9 @@ ActiveRecord::Schema.define(version: 20160208082320) do
     t.string   "emergency_contact_phone"
     t.text     "dietary_requirements"
     t.text     "medical_information"
+    t.string   "nationality"
     t.integer  "who_requested_update_user_id"
-    t.boolean  "dummy_supplier"
+    t.boolean  "dummy_supplier",                           default: false
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
@@ -400,7 +400,7 @@ ActiveRecord::Schema.define(version: 20160208082320) do
     t.boolean  "supplier_request_sent"
     t.boolean  "supplier_check_sent"
     t.boolean  "supplier_invoice_matched"
-    t.boolean  "invoice_matched"
+    t.boolean  "invoice_matched",                                      default: false
   end
 
   add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree

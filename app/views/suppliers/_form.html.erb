@@ -45,6 +45,11 @@
         <%= render :partial => 'shared/address', :locals => {:f => address} %>
       <% end %>
     </div>
+
+    <div class="col s12">
+      <%= f.check_box :dummy_supplier, { class: 'dummy_supplier', value: f.object.dummy_supplier }, "true", "false" %>
+      <%= f.label :dummy_supplier %>
+    </div>
     
     <div class="input-field col s12">
       <%= f.submit buttontxt, class: "btn" %>

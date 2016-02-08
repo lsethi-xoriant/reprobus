@@ -229,7 +229,7 @@
 
 <!-- Email Supplier Quote Modal for every supplier itinerary price item -->
 <% @itinerary_price.supplier_itinerary_price_items.each do |item| %>
-  <% if item.id && item.try(:supplier).try(:email) %>
+  <% if item.id && !item.try(:supplier).try(:dummy_supplier) %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id } %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id, confirmed: true } %>
     <%= render partial: 'emailQuote_modal', locals: { itinerary_price_item_id: item.id, check: true } %>

@@ -25,7 +25,7 @@
           <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
             <i class="mdi-content-clear"></i>
           <% end %>
-          <% if f.object.id && f.object.try(:supplier).try(:email).try(:presence) %>
+          <% if f.object.id && !f.object.try(:supplier).try(:dummy_supplier) %>
             <a class="btn-floating btn-small waves-effect waves-light indigo right supplier-show-hide-btn" >
               <i class="mdi-navigation-unfold-less"></i>
             </a>
