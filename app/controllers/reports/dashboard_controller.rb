@@ -12,7 +12,7 @@ class Reports::DashboardController < ApplicationController
         [ 'Supplier', 'Displays Supplier amounts by each Booking, over a date range'],  
         [ 'Destination', 'Displays Confirmed Bookings, over a date range. Can be filtered by Destination which must be visited between entered date range'],  
         [ 'Unpaid Invoice', 'Displays Bookings where invoices have been sent, but where the Booking is not yet Confirmed'],
-        [ 'Booking Profit', 'Please provide the correct description for this new report'] 
+        [ 'Booking Profit', 'Displays a financial summary of bookings over a defined time period.'] 
       ]
       
   end

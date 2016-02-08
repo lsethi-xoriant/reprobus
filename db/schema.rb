@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205082857) do
+ActiveRecord::Schema.define(version: 20160205135334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,9 +253,9 @@ ActiveRecord::Schema.define(version: 20160205082857) do
     t.integer  "agent_id"
     t.integer  "lead_customer_id"
     t.string   "lead_customer_name"
-    t.integer  "destination_id"
     t.text     "campaign"
     t.date     "dismissed_until"
+    t.integer  "country_id"
   end
 
   add_index "enquiries", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
@@ -399,6 +399,7 @@ ActiveRecord::Schema.define(version: 20160205082857) do
     t.boolean  "supplier_request_sent"
     t.boolean  "supplier_check_sent"
     t.boolean  "supplier_invoice_matched"
+    t.boolean  "invoice_matched"
   end
 
   add_index "itinerary_price_items", ["itinerary_price_id"], name: "index_itinerary_price_items_on_itinerary_price_id", using: :btree

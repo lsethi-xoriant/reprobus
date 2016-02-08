@@ -70,6 +70,8 @@
                 <%= f.object.supplier_check_sent ? "&#9745;&nbsp;".html_safe : "&nbsp;&#9744;".html_safe %>
                 Email Check 
               </a>              
+              <%= f.check_box :invoice_matched, { class: 'invoice_matched', value: f.object.invoice_matched }, "true", "false" %>
+              <%= f.label :invoice_matched %>
             <% end %>
           </div>
         </div>        

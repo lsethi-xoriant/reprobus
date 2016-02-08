@@ -277,6 +277,7 @@ private
     :item_price, :quantity, :start_date, :end_date, :_destroy ],
     supplier_itinerary_price_items_attributes: [:id, :exchange_rate_total, :booking_ref, :description,
     :price_total, :itinerary_price_id, :supplier_id, :markup, :markup_percentage,
-    :item_price, :quantity, :currency_id, :sell_currency_rate, :total_incl_markup,  :_destroy ])
+    :item_price, :quantity, :currency_id, :sell_currency_rate, :total_incl_markup,
+    :invoice_matched, :_destroy ])
   end
 end
