@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205135334) do
+ActiveRecord::Schema.define(version: 20160208082320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20160205135334) do
     t.text     "dietary_requirements"
     t.text     "medical_information"
     t.integer  "who_requested_update_user_id"
+    t.boolean  "dummy_supplier"
   end
 
   add_index "customers", ["assigned_to"], name: "index_customers_on_assigned_to", using: :btree
