@@ -34,7 +34,7 @@
 
         <div class="row suplier_buttons_row" style="display:none">
           <div class="field col s12">
-            <% if f.object.id && f.object.try(:supplier).try(:email) %>
+            <% if f.object.id && !f.object.try(:supplier).try(:dummy_supplier) %>
               <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" >
                 View Quote
               </a>

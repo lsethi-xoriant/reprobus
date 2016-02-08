@@ -1,0 +1,16 @@
+<tr>
+  <td>
+    <% itinerary_id = itinerary_price.try(:itinerary).try(:id) %>
+    <% if itinerary_id.present? %>
+      <%= link_to itinerary_id, edit_itinerary_path(itinerary_id) %>
+    <% end %>
+  </td>
+  <td><%= itinerary_price.try(:itinerary).try(:lead_customer).try(:fullname) %></td>
+  <td><%= itinerary_price.try(:itinerary).try(:agent).try(:supplier_name) %></td>
+  <td><%= itinerary_price.try(:itinerary).try(:user).try(:name) %></td>
+  <td><%= itinerary_price.try(:currency).try(:code) %></td>
+  <td><%= number_with_precision(itinerary_price.try(:sale_total), precision: 2) %></td>
+  <td><%= number_with_precision(itinerary_price.try(:get_total_sell_price),precision: 2)%></td>
+  <td><%= number_with_precision(itinerary_price.try(:get_total_profit),precision: 2) %></td>
+  <td><%= itinerary_price.invoices_matched %></td>
+</tr>

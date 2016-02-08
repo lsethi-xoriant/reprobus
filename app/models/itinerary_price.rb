@@ -40,6 +40,19 @@ class ItineraryPrice < ActiveRecord::Base
  
   has_many :payments
  
+  def invoices_matched 
+    s_i_p_i = self.supplier_itinerary_price_items
+    return 'N' unless s_i_p_i.present?
+    criterias = s_i_p_i.map do |item| 
+      [item.invoice_matched, item.supplier.try(:dummy_supplier)]
+    end
+    return 'N' unless criterias.present?
+    not_dummy = criterias.select{ |c| c[1] == false }
+    return 'N' unless not_dummy.present?
+    invoices_matched = not_dummy.all? { |c| c[0] == true}
+    invoices_matched ? 'Y' : 'N'
+  end
+
   def set_booking_confirmed_date 
     self.booking_confirmed_date = Date.today if !self.booking_confirmed_date && self.booking_confirmed
   end 

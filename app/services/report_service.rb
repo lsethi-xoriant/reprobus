@@ -7,7 +7,18 @@ class ReportService
   end
 
   def self.booking_profit_search(from, to, user=nil)
-    ItineraryPrice.all
+    results = ItineraryPrice
+      .includes(:itinerary, :currency)
+      .includes(itinerary: :lead_customer)
+      .includes(itinerary: :agent)
+      .includes(:supplier_itinerary_price_items)
+      .includes(supplier_itinerary_price_items: :supplier)
+      .where(booking_confirmed_date: from..to)
+      # .includes(itinerary: :user)
+    # results = results.where(itinerary: { user: user }) if user.present?
+    results
+
+
   end
 
   def self.booking_travel_search(from, to, user=nil, country=nil)

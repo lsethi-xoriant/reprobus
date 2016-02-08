@@ -6,21 +6,29 @@ class Reports::BookingProfitController < ApplicationController
     @structure = structure
     @users = User.where.not(name: "System").order(:name)
     @itinerary_prices = ReportService.booking_profit_search(@from, @to, @user)
+
+    respond_to do |format|
+      format.html
+      format.xls
+      format.csv do
+        send_data ReportService.generate_csv(@itinerary_prices, @structure)
+      end
+    end
   end
 
   private
 
     def structure
       {
-        'Booking ID' => 'ItineraryPrice.itinerary.id (link to edit itinerary screen)',
-        'Customer Name' => 'ItineraryPrice.itinerary.lead_customer.fullname',
-        'Agent' => 'ItineraryPrice.itinerary.agent.supplier_name(if present)',
-        'Consultant' => 'ItineraryPrice.itinerary.user.name',
-        'Currency' => 'ItineraryPrice.currency.code',
-        'Sale Total' => 'ItineraryPrice.sale_total (formatted for currency)',
-        'Sell Price' => 'ItineraryPrice.get_total_sell_price (formatted for currency)',
-        'Profit Amount' => 'ItineraryPrice.get_total_profit (formatted for currency)',
-        'Invoices Matched' => 'All supplier_itinerary_price_items that are not a dummy_supplier have invoice_matched = true. Output for this would be Y/N.'
+        'Booking ID' => 'try(:itinerary).try(:id)',
+        'Customer Name' => 'try(:itinerary).try(:lead_customer).try(:fullname)',
+        'Agent' => 'try(:itinerary).try(:agent).try(:supplier_name)',
+        'Consultant' => 'try(:itinerary).try(:user).try(:name)',
+        'Currency' => 'try(:currency).try(:code)',
+        'Sale Total' => 'try(:sale_total)',
+        'Sell Price' => 'try(:get_total_sell_price)',
+        'Profit Amount' => 'try(:get_total_profit)',
+        'Invoices Matched' => 'try(:invoices_matched)'
       }
     end
 
