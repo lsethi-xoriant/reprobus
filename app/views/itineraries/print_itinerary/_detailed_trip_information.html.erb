@@ -12,12 +12,16 @@
 <p class="bigBigtitle2">Trip Details</p>
 
 <% hotelArray = [] %>
+<% prevHotel = nil %>
+<% currHotel = nil %>
 
 <% @itinerary.start_date.upto(@itinerary.get_end_date) do |date|  %>
   <% leg_count = leg_count + 1 %>
   <% dayInfos = ItineraryInfosDay.new %>
   <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
-
+  <% prevHotel = currHotel %>
+  <% currHotel = dayInfos.hotel %>
+  
   <div class="detailsbox">
     
   	<p class="headdetails"><span class="itinerary_date_color"><%= date.strftime("#{date.day.ordinalize} %b %Y") %></span><%= " : Day #{leg_count} - #{dayInfos.country}, #{dayInfos.destination}" %></p>
@@ -25,8 +29,9 @@
       <%= render partial: 'itineraries/print_itinerary/trip_detail_item', collection: dayInfos.standard_infos , as: :info,  formats: [:html], locals: {preFix: "", type: "other"}  %>        
       
       <% if dayInfos.hotel %>
+           
           <% hotelArray << dayInfos.hotel unless hotelArray.include?(dayInfos.hotel) %>
-          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel,  type: "hotel"}  %>
+          <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Spend the night at:", info: dayInfos.hotel,  type: "hotel", moreThanOneNight: (prevHotel == prevHotel)}  %>
       <% elsif dayInfos.cruise %>
           <% hotelArray << dayInfos.cruise unless hotelArray.include?(dayInfos.cruise) %>
           <%= render partial: 'itineraries/print_itinerary/trip_detail_hotel_cruise_short', formats: [:html], locals: {preFix: "Stay aboard:", info: dayInfos.cruise,  type: "cruise"}  %>

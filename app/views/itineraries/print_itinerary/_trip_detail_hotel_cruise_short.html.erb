@@ -1,6 +1,6 @@
 <% if info %>
   <div class="detailsbox">
-    <% if info.get_product_image_remote_url %>
+    <% if info.get_product_image_remote_url && !moreThanOneNight %>
       <div class="imgdetails"><img src=<%= info.get_dropbox_image_link %> alt="" /></div>
     <% else %>
       <div class="imgdetails">&nbsp;</div>
