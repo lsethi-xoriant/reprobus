@@ -73,15 +73,17 @@ $(document).ready(function() {
         customer_fields[0].getElementsByTagName('input')[5].value = customer_search_phone;
         customer_fields[0].getElementsByTagName('input')[6].value = customer_search_id;
         
-        
-        
       //  customer_fields[0].getElementsByTagName('input').prop('readonly', true);
         customer_fields.find(':input').prop('readonly', true); // set all to readonly - probably as nested fields would go crazy if we changed things.
         customer_fields.find('label').addClass('active');
 
         customer_search_occured = false;
     }
-        
+    
+    $('.lead-customer-check').on('change', function() {
+        $('.lead-customer-check').not(this).prop('checked', false);
+    });
+  
     $('select').not('.disabled').material_select();
   });
   

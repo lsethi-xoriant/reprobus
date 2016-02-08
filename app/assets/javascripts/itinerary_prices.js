@@ -47,6 +47,9 @@ $(document).ready(function() {
     // onload calc all markup totals
     $('.markup_percent_field').each(function() {calculateSupplierMarkupFromTotalPrice($(this));});
     
+    // colour profit field on load
+    colourProfitField();
+    
   
     $('#supplier_itinerary_price_items').on('cocoon:after-remove', function() {   // this container is on itinerary new form
   
@@ -349,10 +352,11 @@ function calculateSupplierSellTotalForPricing(){
 }
 
 function calculateSupplierProfitForPricing(){
-  var totalPriceSupplier = Number($('.grand_supplier_sell_total').val());
+  var totalPriceSupplier = Number($('.grand_supplier_sell_total ').val());
   var totalPriceSell = Number($('.grand_total').val());
     
   $(".grand_profit_total").val((totalPriceSell- totalPriceSupplier).toFixed(2));
+  colourProfitField();
 }
 
 function calculateSupplierMarkupTotalForPricing(){
@@ -364,6 +368,37 @@ function calculateSupplierMarkupTotalForPricing(){
   $(".grand_incl_markup_total").val(sum.toFixed(2));
 }
 
+function colourProfitField(){
+  $(".grand_profit_total").removeClass('green-text orange-text red-text');
+  
+  var profit =  $(".grand_profit_total").val();
+  var sellPrice = $('.grand_incl_markup_total').val();
+  var profitPercent = profit / sellPrice * 100;
+  
+  var nicePercentStr = Math.round( profitPercent * 10 ) / 10;  
+  var hasAgent = false;
+  if ($('#itinerary_price_has_agent').val() != "") { hasAgent = true }
+console.log(nicePercentStr);
+  
+  var good = 15;
+  var average = 10;
+  
+  if (hasAgent) {
+    good = 10;
+    average = 5;   
+  }
+  
+  if ( profitPercent > good ){
+    $(".grand_profit_total").addClass('green-text');
+    
+  } else if (profitPercent > average ){
+    $(".grand_profit_total").addClass('orange-text');
+  } else {
+    $(".grand_profit_total").addClass('red-text');
+  }
+  
+  //IF AGENT THEN DO DIFFERENT PRICE
+}
 
 function calculateTotalDepositForPricing(){
   // if doing system default ignore this calculation!

@@ -7,6 +7,7 @@
 	  <%= f.hidden_field :itinerary_id %>
 	  <%= f.hidden_field :system_default_for_deposits, value: @setting.deposit_percentage, id: "system_default_for_deposits" %>
     <%= f.hidden_field :num_passengers, value: @itinerary.num_passengers, id: "itinerary_num_passengers" %>
+    <%= f.hidden_field :has_agent, value: @itinerary.try(:agent).try(:cust_sup) %>
 
     <%= render partial: 'itinerary_details' %>
 
@@ -66,7 +67,7 @@
             <%= render partial: 'shared/material_readonly', locals: { col: "offset-s2 s2", label: "Amount Paid", value: number_with_precision( @itinerary_price.get_total_payments_amount, precision: 2) } %>
             <%= render partial: 'shared/material_readonly', locals: { col: "s2", label: "Total Remaining", value: number_with_precision( @itinerary_price.get_total_remaining, precision: 2) } %>
           <% else %>
-            <div class="col s8"></div>
+            <div class="col s8">&nbsp;</div>
           <% end %>
         
         

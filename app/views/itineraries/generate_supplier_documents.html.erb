@@ -10,20 +10,29 @@
         <input type="checkbox" id="<%= item.id %>" name="itinerary_price_item_ids" class="filled-in" />
         <label for="<%= item.id %>"><%= item.supplier.supplier_name %></label>
       </div>
-      <div class="col s3">
-        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" target="_blank">
+      <div class="col s2">
+        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, format: :pdf) %>" class="waves-effect waves-light btn right deep-purple darken-1" target="_blank">
           View Quote Request
         </a>
       </div>
-      <div class="col s3">
-        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, confirmed: true, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" data-delay="50" target="_blank">
+      <div class="col s1">
+        <% if item.supplier_quote_sent %><i class="mdi-toggle-check-box green-text text-darken-1 small"></i><% else %>&nbsp; <% end %>
+      </div> 
+      <div class="col s2">
+        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, confirmed: true, format: :pdf) %>" class="waves-effect waves-light btn right deep-purple darken-1" data-delay="50" target="_blank">
           View Booking Request
         </a>
       </div>
-      <div class="col s3">
-        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, confirmed: true, check: true, format: :pdf) %>" class="waves-effect waves-light btn deep-purple darken-1" data-delay="50" target="_blank">
+      <div class="col s1">
+        <% if item.supplier_request_sent %><i class="mdi-toggle-check-box green-text text-darken-1 small"></i><% else %>&nbsp; <% end %>
+      </div>      
+      <div class="col s2">
+        <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: item.id, confirmed: true, check: true, format: :pdf) %>" class="waves-effect waves-light btn right deep-purple darken-1" data-delay="50" target="_blank">
           View Booking Check
         </a>
+      </div>
+      <div class="col s1">
+        <% if item.supplier_check_sent %><i class="mdi-toggle-check-box green-text text-darken-1 small"></i><% else %>&nbsp; <% end %>
       </div>      
     </div>
   <% end %>

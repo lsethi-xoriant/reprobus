@@ -24,6 +24,10 @@
 #  markup                      :decimal(12, 2)   default("0.0")
 #  exchange_rate_total         :decimal(12, 2)   default("0.0")
 #  total_incl_markup           :decimal(12, 2)   default("0.0")
+#  supplier_quote_sent         :boolean
+#  supplier_request_sent       :boolean
+#  supplier_check_sent         :boolean
+#  supplier_invoice_matched    :boolean
 #
 
 class ItineraryPriceItem < ActiveRecord::Base

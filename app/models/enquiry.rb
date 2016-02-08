@@ -62,9 +62,14 @@ class Enquiry < ActiveRecord::Base
     .where(stage: ['New Enquiry', 'In Progress', 'Long Term'])
     .where("dismissed_until <= :date OR dismissed_until IS NULL", date: Date.today)
   }
+
+  scope :new_enquiries_for_user, -> (assignee) { 
+    where(assignee: assignee)
+    .where(stage: ['New Enquiry'])
+  }
   
-  scope :new_enquirires, -> { where(stage: 'New Enquiry') }
-  scope :active, -> {where(:stage => ['In Progress', 'Open', 'New Enquiry'])}
+  scope :new_enquiries, -> { where(stage: 'New Enquiry') }
+  scope :active, -> {where(:stage => ['New Enquiry', 'In Progress', 'Long Term'])}
 
   STATUSES = ['New Enquiry', 'In Progress', 'Long Term', 'Dead', 'Quote']
   AVAILABLE_STATUSES = ['New Enquiry', 'In Progress', 'Long Term', 'Dead']

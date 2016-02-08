@@ -216,7 +216,11 @@ class ItineraryPricesController < ApplicationController
     if CustomerMailer.send_email_supplier_quote(
       @itinerary, @itinerary_price, @itinerary_price_item, @itinerary_infos, 
       @supplier, confirmed, check, params[:email_settings]).deliver_later
-
+      
+      @itinerary_price_item.update_attribute(:supplier_quote_sent, true) if (!confirmed && !check)
+      @itinerary_price_item.update_attribute(:supplier_request_sent, true) if (confirmed)
+      @itinerary_price_item.update_attribute(:supplier_check_sent, true) if (check)
+      
       confirmed_name = confirmed ? 'Confirmed' : ''
       flash[:success] = "#{confirmed_name} Supplier Quote has been sent."
     else
@@ -246,6 +250,10 @@ class ItineraryPricesController < ApplicationController
 
       CustomerMailer.send_email_supplier_quote(
         @itinerary, @itinerary_price, item, @itinerary_infos, @supplier, confirmed, check, params[:email_settings]).deliver_later
+      
+      item.update_attribute(:supplier_quote_sent, true) if (!confirmed && !check)
+      item.update_attribute(:supplier_request_sent, true) if (confirmed)
+      item.update_attribute(:supplier_check_sent, true) if (check)
     end
 
     flash[:success] = "Emails has been sent."

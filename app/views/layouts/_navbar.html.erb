@@ -21,7 +21,13 @@
     <% if can? :manage, EnquiriesController %>
       <li class="bold">
         <a href=<%= enquiries_path %> class="waves-effect waves-cyan">
-        <i class="mdi-communication-email"></i> Enquiries <span class="new badge"><%= Enquiry.new_enquirires.count.to_s %></span>
+        <i class="mdi-communication-email"></i> Enquiries <span class="new badge">
+          <% if current_user.management? %>
+            <%= Enquiry.new_enquiries_for_user(current_user).size.to_s %>
+          <% else %>
+            <%= Enquiry.new_enquiries.size.to_s %>
+          <% end %>
+        </span>
         </a>
       </li>
     <% end %>

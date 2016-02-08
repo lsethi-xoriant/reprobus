@@ -5,7 +5,7 @@ module StaticPagesHelper
   end
   
   def count_new_enquiries_for_me
-    current_user.assigned_enquiries.new_enquirires.count
+    current_user.assigned_enquiries.new_enquiries.count
   end
   
   def count_total_outstanding_enquiries_for_me

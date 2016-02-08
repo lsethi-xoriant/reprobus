@@ -199,7 +199,7 @@ class ItineraryPrice < ActiveRecord::Base
   end
   
   def get_total_profit
-    return get_total_sell_price - self.sale_total
+    return self.get_total_customer_price - self.get_supplier_total_exchange_rate_total
   end
 
   def get_total_payments_amount

@@ -239,19 +239,14 @@ $(document).ready(function() {
     bump_pickadate_date_to_new_date(end_picker,0,prev_picker.get());
 */
 
-
-   // insertedItem.find('.start_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
-    //insertedItem.find('.end_leg_itinerary').val(insertedItem.prev('.nested-fields').find('.start_leg_itinerary').val());
     var ts = new Date().getTime();
     insertedItem.find('.muli-select-itinerary').attr("id", "muli-select-itinerary"+ ts);
     insertedItem.find('.muli-select-itinerary-label').attr("for", "muli-select-itinerary"+ ts);
     
-    
+    // add dates that were saved when add button clicked above. 
     insertedItem.find('.start_leg_itinerary').val(nextDateFromHolder);
     insertedItem.find('.end_leg_itinerary').val(nextDateFromHolder);
-console.log(insertedItem)    ;
-console.log(insertedItem.prev('.nested-fields'))    ;
-console.log( $('#addNestedAboveHere').prev('.nested-fields').prev('.nested-fields')   );
+
     setUpCalendarPicker();
   
   });

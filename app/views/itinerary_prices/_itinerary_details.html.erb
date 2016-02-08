@@ -1,11 +1,13 @@
 <div class ="card-panel light-blue lighten-5">
   <h5 class="teal-text"><i class="mdi-editor-insert-invitation Tiny"></i> ITINERARY DETAILS</h5>
   <div class="row">
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Client", value: @itinerary_price.itinerary.try(:lead_customer).try(:fullname_with_title) } %>
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Reference", value: @itinerary.nice_id } %>
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Tour Name", value: @itinerary_price.itinerary.name } %>
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Start Date", value: @itinerary_price.itinerary.start_date_display } %>
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "End Date", value: @itinerary_price.itinerary.end_date_display } %>
-    <%= render partial: 'shared/material_display', locals: { col: "s4", label: "Total Price", value: @itinerary_price.get_total_customer_price } %>	 
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Client", value: @itinerary_price.itinerary.try(:lead_customer).try(:fullname_with_title) } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Agent", value: @itinerary_price.itinerary.try(:agent).try(:supplier_name) || "N/A" } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Reference", value: @itinerary.nice_id } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Tour Name", value: @itinerary_price.itinerary.name } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Start Date", value: @itinerary_price.itinerary.start_date_display } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "End Date", value: @itinerary_price.itinerary.end_date_display } %>
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Total Price", value: number_to_currency( @itinerary_price.get_total_customer_price ) } %>	 
+    <%= render partial: 'shared/material_display', locals: { col: "s3", label: "Status", value: @itinerary_price.itinerary.status } %>	 
   </div>
 </div> 

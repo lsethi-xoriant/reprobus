@@ -25,7 +25,7 @@
           <%= link_to_remove_association  f, { class: "btn-floating btn-tiny waves-effect waves-light red"} do %>
             <i class="mdi-content-clear"></i>
           <% end %>
-          <% if f.object.try(:supplier).try(:email).try(:presence) %>
+          <% if f.object.id && f.object.try(:supplier).try(:email).try(:presence) %>
             <a class="btn-floating btn-small waves-effect waves-light indigo right supplier-show-hide-btn" >
               <i class="mdi-navigation-unfold-less"></i>
             </a>
@@ -43,7 +43,7 @@
                 class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
                 data-delay="50"
                 href=<%="#supplier_quote_request_modal_#{f.object.id}"%>>
-  
+                <%= f.object.supplier_quote_sent ? "&#9745;&nbsp;".html_safe : "&nbsp;&#9744;".html_safe %>
                 Email Quote
               </a>
               <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, confirmed: true, format: :pdf) %>"
@@ -55,8 +55,8 @@
               <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
                 data-delay="50"
                 href=<%="#supplier_booking_request_modal_#{f.object.id}"%>>
-  
-                Email Request
+                <%= f.object.supplier_request_sent ? "&#9745;&nbsp;".html_safe : "&nbsp;&#9744;".html_safe %>
+                Email Request 
               </a>
               <a href="<%= itinerary_price_printQuote_path(params[:id], itinerary_price_item_id: f.object.id, check: true, format: :pdf) %>"
                 class="waves-effect waves-light btn deep-purple darken-1"
@@ -67,8 +67,8 @@
               <a class="waves-effect waves-light btn deep-purple darken-1 modal-trigger"
                 data-delay="50"
                 href=<%="#supplier_booking_check_modal_#{f.object.id}"%>>
-  
-                Email Check
+                <%= f.object.supplier_check_sent ? "&#9745;&nbsp;".html_safe : "&nbsp;&#9744;".html_safe %>
+                Email Check 
               </a>              
             <% end %>
           </div>
