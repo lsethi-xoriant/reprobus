@@ -20,7 +20,7 @@
   <% dayInfos = ItineraryInfosDay.new %>
   <% dayInfos.set_up_day(@itinerary, date, leg_count) %>
   <% prevHotel = currHotel %>
-  <% currHotel = dayInfos.hotel %>
+  <% currHotel = dayInfos.hotel.try(:product) %>
   
   <div class="detailsbox">
     
